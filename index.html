@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrdnerSystem</title>
 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: url("https://images.unsplash.com/photo-1518770660439-4636190af475")
+                        center/cover fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 90%;
+            max-width: 420px;
+            padding: 35px;
+            background: rgba(0, 0, 0, 0.82);
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #2196f3;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1976d2;
+        }
+
+        #fehler {
+            color: #ff5555;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h1>🔐 OrdnerSystem</h1>
+
+        <input id="benutzer" type="text" placeholder="Benutzername">
+        <input id="passwort" type="password" placeholder="Passwort">
+
+        <button onclick="anmelden()">ANMELDEN</button>
+
+        <p id="fehler"></p>
+    </div>
+
+    <script>
+        function anmelden() {
+            const benutzer = document.getElementById("benutzer").value;
+            const passwort = document.getElementById("passwort").value;
+
+            if (benutzer === "admin" && passwort === "1234") {
+                alert("Anmeldung erfolgreich!");
+            } else {
+                document.getElementById("fehler").textContent =
+                    "Benutzername oder Passwort falsch.";
+            }
+        }
+    </script>
+
+</body>
+</html>
