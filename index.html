@@ -13,25 +13,100 @@ header{height:70px;background:#fff;border-bottom:1px solid var(--line);padding:0
 .modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.48);z-index:50;align-items:center;justify-content:center;padding:20px}.modalBox{background:#fff;width:100%;max-width:500px;max-height:90vh;overflow:auto;padding:26px;border-radius:15px;box-shadow:0 20px 60px #0003}.modalBox h2{margin:0 0 18px}.modalBtns{display:flex;gap:8px;margin-top:14px}.modalBtns button{flex:1}.editPhoto{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px}.editAvatar{width:112px;height:112px;border-radius:50%;overflow:hidden;background:#e8efff;color:var(--blue);display:grid;place-items:center;font-size:42px;font-weight:800}.editAvatar img{width:100%;height:100%;object-fit:cover}.fileBtn{background:var(--blue);color:#fff;padding:10px 14px;border-radius:8px;font-weight:650;cursor:pointer}.fileBtn input{display:none}.help{line-height:1.6}.help button{margin:4px}.helpAnswer{background:#f8fafc;border:1px solid var(--line);padding:15px;border-radius:10px;margin-top:10px}
 .empty{padding:25px;text-align:center;color:var(--muted);border:1px dashed #cbd5e1;border-radius:10px}.adminActions{display:flex;gap:8px;flex-wrap:wrap}.smallNote{font-size:13px;color:var(--muted)}
 @media(max-width:720px){header{padding:0 14px}.headerBrand span{display:none}.headText{display:none}.container{padding:18px 14px}.stats{grid-template-columns:1fr}.profile{align-items:flex-start;flex-direction:column}.chip{align-items:flex-start;flex-direction:column}.chipBtns{justify-content:flex-start;width:100%}.adminbar{padding:9px 14px;gap:10px;flex-direction:column;align-items:flex-start}}
+
+/* OrdnerSystem Layout */
+.workspace{max-width:1440px;margin:0 auto;padding:22px 24px;display:grid;grid-template-columns:240px minmax(0,1fr) 270px;gap:20px;align-items:start}
+.container{max-width:none;margin:0;padding:0;min-width:0}
+.sidebar,.rightPanel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);position:sticky;top:92px;overflow:hidden}
+.sidebarHead{padding:18px;border-bottom:1px solid var(--line);font-weight:800}
+.sidebarHead small{display:block;color:var(--muted);font-weight:500;margin-top:3px}
+.sideSection{border-bottom:1px solid var(--line)}
+.sideToggle{width:100%;background:#fff;color:var(--text);display:flex;justify-content:space-between;align-items:center;text-align:left;border-radius:0;padding:13px 15px}
+.sideToggle:hover{background:#f8fafc;transform:none}
+.chev{transition:.2s}.sideSection.open .chev{transform:rotate(180deg)}
+.sideLinks{display:none;padding:0 9px 9px}.sideSection.open .sideLinks{display:block}
+.sideLink{display:block;width:100%;text-align:left;background:transparent;color:#475569;padding:9px 10px;border-radius:7px;font-weight:550}.sideLink:hover{background:#eef4ff;color:var(--blue);transform:none}
+.rightPanel{padding:18px}.rightTitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.rightTitle h2{font-size:18px;margin:0}.category{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:9px;background:#f8fafc}.category b{display:block}.category span{font-size:12px;color:var(--muted)}
+@media(max-width:1050px){.workspace{grid-template-columns:210px minmax(0,1fr)}.rightPanel{display:none}}
+@media(max-width:720px){.workspace{display:block;padding:14px}.sidebar{position:static;margin-bottom:14px}.sidebar .sideSection:not(:first-of-type){display:none}.sidebarHead{padding:14px}.container{padding:0}}
+
+/* Einstellungen / Dark Mode */
+body.dark{--bg:#0f172a;--surface:#111827;--text:#e5e7eb;--muted:#94a3b8;--line:#263244;--shadow:0 8px 28px rgba(0,0,0,.25)}
+body.dark header,body.dark .sidebar,body.dark .rightPanel,body.dark .card,body.dark .stat,body.dark .chip,body.dark .modalBox,body.dark .category,body.dark .login{background:#111827;color:var(--text);border-color:var(--line)}
+body.dark .sideToggle,body.dark .sideLink{background:#111827;color:var(--text)}
+body.dark .sideLink:hover,body.dark .sideToggle:hover{background:#1e293b}
+body.dark .sideSection,body.dark .sidebarHead{border-color:var(--line)}
+body.dark .category,body.dark .scan{background:#172033;border-color:var(--line)}
+body.dark .loginScreen{background:linear-gradient(135deg,#0f172a,#111827)}
+body.dark input{background:#0f172a;color:#e5e7eb;border-color:#334155}
+.settingsOption{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:10px;margin:8px 0;cursor:pointer;background:var(--surface)}
+.settingsOption:hover{border-color:var(--blue)}
+.settingsOption input{width:auto;margin:0}
+
+.workspace.settingsMode{grid-template-columns:1fr}.workspace.settingsMode .sidebar,.workspace.settingsMode .rightPanel{display:none}.settingsHeader{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}.settingsProfileCard{display:flex;justify-content:space-between;align-items:center;gap:20px}.settingsActions{display:flex;gap:8px;flex-wrap:wrap}.dark .settingsOption{background:#1e293b;border-color:#334155}
 </style>
 </head>
 <body>
 <div id="loginScreen"><div class="login"><div class="brand"><div class="brandMark">OS</div><div><h1>OrdnerSystem</h1><div class="smallNote">Digitale Ordnerverwaltung</div></div></div><h2>Anmelden</h2><p>Melde dich mit deinem Konto an.</p><input id="email" type="email" placeholder="E-Mail"><input id="password" type="password" placeholder="Passwort"><button class="blue" id="login">Anmelden</button><div id="loginError" class="error"></div></div></div>
 <div id="app" class="hidden">
-<header><div class="headerBrand"><div class="headerMark">OS</div><span>OrdnerSystem</span></div><div class="head"><div class="headUser"><div class="headText"><div id="headName" class="headName">Benutzer</div><div id="headRole" class="role">Benutzer</div></div><div id="headAvatar" class="avatar">?</div></div><button id="profileEdit" class="iconBtn" title="Profil bearbeiten">✏️</button><button id="adminEdit" class="iconBtn hidden" title="Admin-Modus">⚙️</button><button id="help" class="iconBtn" title="Hilfe">?</button><button id="logout" class="gray">Abmelden</button></div></header>
+<header><div class="headerBrand"><div class="headerMark">OS</div><span>OrdnerSystem</span></div><div class="head"><div class="headUser"><div class="headText"><div id="headName" class="headName">Benutzer</div><div id="headRole" class="role">Benutzer</div></div><div id="headAvatar" class="avatar">?</div></div><button id="logout" class="gray">Abmelden</button></div></header>
 <div id="adminBar" class="adminbar hidden"><b>Administrationsbereich aktiv</b><button id="closeAdmin" class="gray">Schließen</button></div>
-<main class="container"><h1 class="pageTitle">Übersicht</h1><p class="pageSub">Verwalte Ordner, Chips und Benutzer zentral.</p>
+<div class="workspace">
+<aside class="sidebar">
+  <div class="sidebarHead">📁 OrdnerSystem<small>Navigation</small></div>
+  <div class="sideSection open">
+    <button class="sideToggle" onclick="toggleSide(this)">Übersicht <span class="chev">⌄</span></button>
+    <div class="sideLinks">
+      <button class="sideLink" onclick="showPage('dashboard')">🏠 Dashboard</button>
+      <button class="sideLink" onclick="goTo('chips')">📁 Alle Ordner</button>
+      <button class="sideLink" onclick="goTo('lastScan')">📡 Letzter Scan</button>
+    </div>
+  </div>
+  <div class="sideSection">
+    <button class="sideLink settingsStandalone" id="settingsOpen">⚙️ Einstellungen</button>
+  </div>
+  <div class="sideSection">
+    <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
+    <div class="sideLinks">
+      <button class="sideLink" onclick="showCategory('Anwälte')">⚖️ Anwälte</button>
+      <button class="sideLink" onclick="showCategory('Verträge')">📄 Verträge</button>
+      <button class="sideLink" onclick="showCategory('Mandanten')">👤 Mandanten</button>
+    </div>
+  </div>
+  <div class="sideSection">
+    <button class="sideToggle" onclick="toggleSide(this)">System <span class="chev">⌄</span></button>
+    <div class="sideLinks">
+      <button class="sideLink" onclick="openProfile()">Mein Profil</button>
+      <button class="sideLink" onclick="open('helpModal')">❓ Hilfe</button>
+    </div>
+  </div>
+</aside>
+<main class="container" id="dashboardPage"><h1 class="pageTitle">Übersicht</h1><p class="pageSub">Verwalte Ordner, Chips und Benutzer zentral.</p>
 <section class="card profile"><div class="profileLeft"><div id="profileAvatar" class="profileAvatar">?</div><div><div id="profileName" class="bigName">Benutzer</div><div id="profileEmail" class="muted"></div></div></div><button id="profileEdit2" class="blue">Profil bearbeiten</button></section>
 <section class="stats"><div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div><div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div><div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div></section>
 <section id="adminPanel" class="card hidden"><div class="sectionTitle"><h2>Administration</h2></div><div class="adminActions"><button id="newChip" class="blue">+ Chip hinzufügen</button><button id="newUser" class="blue">+ Benutzer erstellen</button></div></section>
 <section class="card"><div class="sectionTitle"><h2>Letzter NFC-Scan</h2></div><div id="lastScan" class="scan">Noch kein Scan.</div></section>
 <section class="card"><div class="sectionTitle"><h2>Ordner & Chips</h2></div><div id="chips">Laden...</div></section>
 <section id="usersSection" class="card hidden"><div class="sectionTitle"><h2>Benutzer</h2></div><div id="users">Laden...</div></section>
-</main></div>
+</main>
+<section id="settingsPage" class="container hidden">
+  <div class="settingsHeader"><div><h1 class="pageTitle">Einstellungen</h1><p class="pageSub">Verwalte dein Profil und die Einstellungen von OrdnerSystem.</p></div><button id="settingsBack" class="gray">← Übersicht</button></div>
+  <section class="card settingsProfileCard"><div class="profileLeft"><div id="settingsAvatar" class="profileAvatar">?</div><div><div id="settingsName" class="bigName">Benutzer</div><div id="settingsEmail" class="muted"></div></div></div><div class="settingsActions"><button id="settingsProfileBtn" class="blue">✏️ Profil bearbeiten</button><button id="settingsAdminBtn" class="blue hidden">⚙️ Admin-Modus</button></div></section>
+  <section class="card"><div class="sectionTitle"><h2>Darstellung</h2></div><p class="muted">Wähle aus, wie OrdnerSystem aussehen soll.</p><label class="settingsOption"><input type="radio" name="theme2" id="themeLight2" value="light"><span><b>☀️ Hellmodus</b><br><span class="smallNote">Heller und übersichtlich</span></span></label><label class="settingsOption"><input type="radio" name="theme2" id="themeDark2" value="dark"><span><b>🌙 Dunkelmodus</b><br><span class="smallNote">Dunkle Darstellung</span></span></label></section>
+</section>
+<aside class="rightPanel">
+  <div class="rightTitle"><h2 id="categoryTitle">⚖️ Anwälte</h2></div>
+  <div id="categoryContent">
+    <div class="category"><b>Anwälte</b><span>Rechtsanwälte und Kanzleien</span></div>
+    <div class="category"><b>Ordner</b><span>Dokumente dieser Kategorie</span></div>
+  </div>
+</aside>
+</div></div>
 <div id="chipModal" class="modal"><div class="modalBox"><h2 id="chipTitle">Chip hinzufügen</h2><input id="chipName" placeholder="Ordnername"><input id="chipId" placeholder="Chip-ID, z. B. 001"><div class="modalBtns"><button id="saveChip" class="green">Speichern</button><button data-close="chipModal" class="gray">Abbrechen</button></div></div></div>
 <div id="userModal" class="modal"><div class="modalBox"><h2>Benutzer erstellen</h2><input id="newName" placeholder="Name"><input id="newEmail" type="email" placeholder="E-Mail"><input id="newPassword" type="password" placeholder="Passwort"><div class="modalBtns"><button id="saveUser" class="green">Erstellen</button><button data-close="userModal" class="gray">Abbrechen</button></div><div id="userError" class="error"></div></div></div>
 <div id="profileModal" class="modal"><div class="modalBox"><h2>Mein Profil</h2><div class="editPhoto"><div id="editAvatar" class="editAvatar">?</div><label class="fileBtn">📷 Bild auswählen<input id="photo" type="file" accept="image/*"></label><button id="removePhoto" class="gray">Bild entfernen</button></div><input id="nameEdit" placeholder="Name"><p class="smallNote">Die E-Mail-Adresse ist deine Login-Adresse.</p><div class="modalBtns"><button id="saveProfile" class="green">Speichern</button><button data-close="profileModal" class="gray">Abbrechen</button></div><div id="profileMsg" class="error"></div></div></div>
 <div id="helpModal" class="modal"><div class="modalBox help"><h2>Hilfe</h2><input id="helpSearch" placeholder="Frage zu OrdnerSystem eingeben..."><div id="helpAnswer"></div><div class="modalBtns"><button data-close="helpModal" class="gray">Schließen</button></div></div></div>
+
 <script type="module">
 import {initializeApp,getApps,getApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import {getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged,createUserWithEmailAndPassword,deleteUser} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
@@ -47,9 +122,9 @@ function nameKey(name){return name.trim().toLowerCase()}
 function avatar(id,url,name){$(id).innerHTML=url?`<img src="${esc(url)}" alt="Profilbild">`:esc((name||"?")[0].toUpperCase())}
 function compressImage(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const max=320,s=Math.min(max/img.width,max/img.height,1),c=document.createElement("canvas");c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",.72))};img.onerror=reject;img.src=e.target.result};r.onerror=reject;r.readAsDataURL(file)})}
 $("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);$("loginError").innerText=""}catch(e){$("loginError").innerText="E-Mail oder Passwort falsch."}};$("password").onkeydown=e=>{if(e.key==="Enter")$("login").click()};$("logout").onclick=()=>signOut(auth);
-$("adminEdit").onclick=()=>{if(!isAdmin())return;admin=true;$("adminBar").classList.remove("hidden");$("adminPanel").classList.remove("hidden");$("usersSection").classList.remove("hidden");loadUsers()};$("closeAdmin").onclick=()=>{admin=false;$("adminBar").classList.add("hidden");$("adminPanel").classList.add("hidden");$("usersSection").classList.add("hidden")};$("profileEdit").onclick=$("profileEdit2").onclick=()=>openProfile();$("help").onclick=()=>{open("helpModal");helpStart()};
+function enterAdminMode(){if(!isAdmin())return;admin=true;$("adminBar").classList.remove("hidden");$("adminPanel").classList.remove("hidden");$("usersSection").classList.remove("hidden");loadUsers();closeSettings()}$("closeAdmin").onclick=()=>{admin=false;$("adminBar").classList.add("hidden");$("adminPanel").classList.add("hidden");$("usersSection").classList.add("hidden")};$("profileEdit").onclick=$("profileEdit2").onclick=()=>openProfile();$("help").onclick=()=>{open("helpModal");helpStart()};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>close(b.dataset.close));document.querySelectorAll(".modal").forEach(m=>m.onclick=e=>{if(e.target===m)m.style.display="none"});
-onAuthStateChanged(auth,async u=>{user=u;if(!u){$("loginScreen").style.display="flex";$("app").classList.add("hidden");return}$("loginScreen").style.display="none";$("app").classList.remove("hidden");$("adminEdit").classList.toggle("hidden",!isAdmin());await ensureProfile();loadProfile();loadChips();loadScan();setTimeout(scanNFC,1000)});
+onAuthStateChanged(auth,async u=>{user=u;if(!u){$("loginScreen").style.display="flex";$("app").classList.add("hidden");return}$("loginScreen").style.display="none";$("app").classList.remove("hidden");await ensureProfile();loadProfile();loadChips();loadScan();setTimeout(scanNFC,1000)});
 async function ensureProfile(){
   const userRef=doc(db,"users",user.uid);
   const snap=await getDoc(userRef);
@@ -75,6 +150,30 @@ function openProfile(){selectedFile=null;removeImage=false;$("nameEdit").value=n
 $("photo").onchange=e=>{const f=e.target.files[0];if(f){if(f.size>5*1024*1024)return alert("Das Bild darf maximal 5 MB groß sein.");selectedFile=f;removeImage=false;avatar("editAvatar",URL.createObjectURL(f),nameOf())}};$("removePhoto").onclick=()=>{selectedFile=null;removeImage=true;$("photo").value="";avatar("editAvatar","",$("nameEdit").value||nameOf())};$("saveProfile").onclick=async()=>{const n=$("nameEdit").value.trim();if(!n)return $("profileMsg").innerText="Bitte einen Namen eingeben.";try{const oldName=nameOf(),oldKey=nameKey(oldName),newKey=nameKey(n);let image=profile.profileImageData||"";if(removeImage)image="";if(selectedFile)image=await compressImage(selectedFile);await runTransaction(db,async tx=>{const userRef=doc(db,"users",user.uid);const newNameRef=doc(db,"userNames",newKey);const oldNameRef=doc(db,"userNames",oldKey);const newNameSnap=await tx.get(newNameRef);const oldNameSnap=newKey!==oldKey?await tx.get(oldNameRef):null;if(newKey!==oldKey&&newNameSnap.exists()&&newNameSnap.data().uid!==user.uid)throw new Error("NAME_ALREADY_USED");if(newKey!==oldKey){tx.set(newNameRef,{uid:user.uid,name:n});if(oldNameSnap&&oldNameSnap.exists()&&oldNameSnap.data().uid===user.uid)tx.delete(oldNameRef)}tx.update(userRef,{name:n,nameKey:newKey,profileImageData:image});});for(const c of chips.filter(x=>x.assignedTo===user.uid))await updateDoc(doc(db,"chips",c.firestoreId),{assignedName:n,assignedProfileImageData:image});$("profileMsg").style.color="#16a34a";$("profileMsg").innerText="Profil gespeichert.";selectedFile=null;removeImage=false}catch(e){$("profileMsg").style.color="#dc2626";$("profileMsg").innerText=e.message==="NAME_ALREADY_USED"?"❌ Dieser Name ist bereits vergeben.":"Fehler: "+e.message}};
 $("newUser").onclick=()=>{$("userError").innerText="";open("userModal")};$("saveUser").onclick=async()=>{let createdUser=null,secondaryAuth=null;try{const n=$("newName").value.trim(),e=$("newEmail").value.trim(),p=$("newPassword").value;if(!n||!e||!p)return $("userError").innerText="Bitte alles ausfüllen.";if(p.length<6)return $("userError").innerText="Das Passwort muss mindestens 6 Zeichen haben.";const appName="UserCreationApp",a=getApps().find(x=>x.name===appName)||initializeApp(config,appName);secondaryAuth=getAuth(a);const r=await createUserWithEmailAndPassword(secondaryAuth,e,p);createdUser=r.user;const key=nameKey(n);await runTransaction(db,async tx=>{const nameRef=doc(db,"userNames",key);const snap=await tx.get(nameRef);if(snap.exists())throw new Error("NAME_ALREADY_USED");tx.set(nameRef,{uid:r.user.uid,name:n});tx.set(doc(db,"users",r.user.uid),{name:n,nameKey:key,email:e,role:"user",profileImageData:"",createdAt:serverTimestamp(),createdBy:user.uid})});await signOut(secondaryAuth);$("newName").value="";$("newEmail").value="";$("newPassword").value="";$("userError").style.color="#16a34a";$("userError").innerText="✅ Benutzer erfolgreich erstellt."}catch(e){if(createdUser&&secondaryAuth){try{await deleteUser(createdUser)}catch(_){} }$("userError").style.color="#dc2626";$("userError").innerText=e.message==="NAME_ALREADY_USED"?"❌ Dieser Name ist bereits vergeben.":e.message}};
 function loadUsers(){unsub.push(onSnapshot(collection(db,"users"),s=>{$("users").innerHTML="";s.forEach(d=>{const x=d.data(),n=x.name||x.email||"Unbekannt",p=x.profileImageData||"";$("users").innerHTML+=`<div class="user"><div class="mini">${p?`<img src="${esc(p)}" alt="">`:esc(n[0]?.toUpperCase()||"?")}</div><div><b>${esc(n)}</b><br><span class="muted">${esc(x.email||"")}</span><br><small>${esc(x.role||"user")}</small></div></div>`})}))}
+
+function applyTheme(theme){document.body.classList.toggle("dark",theme==="dark");localStorage.setItem("ordnersystem-theme",theme);["themeLight2"].forEach(id=>{if($(id))$(id).checked=theme!=="dark"});["themeDark2"].forEach(id=>{if($(id))$(id).checked=theme==="dark"})}
+function openSettings(){
+  $("dashboardPage").classList.add("hidden");
+  $("settingsPage").classList.remove("hidden");
+  document.querySelector(".workspace")?.classList.add("settingsMode");
+  const n=nameOf(),p=profile.profileImageData||"";
+  $("settingsName").innerText=n;$("settingsEmail").innerText=user?.email||"";avatar("settingsAvatar",p,n);
+  $("settingsAdminBtn").classList.toggle("hidden",!isAdmin());
+  applyTheme(localStorage.getItem("ordnersystem-theme")||"light");
+}
+function closeSettings(){$("settingsPage").classList.add("hidden");$("dashboardPage").classList.remove("hidden");document.querySelector(".workspace")?.classList.remove("settingsMode")}
+$("settingsOpen")?.addEventListener("click",openSettings);
+$("settingsBack")?.addEventListener("click",closeSettings);
+$("settingsProfileBtn")?.addEventListener("click",openProfile);
+$("settingsAdminBtn")?.addEventListener("click",()=>enterAdminMode());
+$("themeLight2")?.addEventListener("change",()=>applyTheme("light"));
+$("themeDark2")?.addEventListener("change",()=>applyTheme("dark"));
+applyTheme(localStorage.getItem("ordnersystem-theme")||"light");
 function helpStart(){$("helpAnswer").innerHTML=`<b>Wobei brauchst du Hilfe?</b><br><button class="blue" onclick="help('chip')">Chips</button><button class="blue" onclick="help('nfc')">NFC</button><button class="blue" onclick="help('admin')">Admin</button><button class="blue" onclick="help('profile')">Profil</button>`}window.help=t=>{const a=$("helpAnswer"),b='<br><button class="gray" onclick="helpStart()">← Zurück</button>';if(t==='chip')a.innerHTML='<h3>Chips</h3><p>Grün bedeutet frei. Rot bedeutet aktiv oder vergeben.</p>'+b;if(t==='nfc')a.innerHTML='<h3>NFC</h3><p>Der NFC-Link enthält die Chip-ID. Beim Scan wird der Status gewechselt.</p>'+b;if(t==='admin')a.innerHTML='<h3>Admin</h3><p>Mit dem ⚙️ Button oben öffnest du den Admin-Modus. Dort können Chips und Benutzer verwaltet werden.</p>'+b;if(t==='profile')a.innerHTML='<h3>Profil</h3><p>Unter „Profil bearbeiten“ kannst du Namen und Profilbild ändern. Das Bild wird auch beim belegten Chip angezeigt.</p>'+b};$("helpSearch").oninput=()=>{const q=$("helpSearch").value.toLowerCase();if(q.includes("profil")||q.includes("bild")||q.includes("foto"))help("profile");else if(q.includes("nfc")||q.includes("scan"))help("nfc");else if(q.includes("admin"))help("admin");else if(q.includes("chip")||q.includes("ordner"))help("chip")};
+
+function showPage(page){if(page==="dashboard"){closeSettings();window.scrollTo({top:0,behavior:"smooth"})}else if(page==="settings"){openSettings()}}
+function toggleSide(btn){const sec=btn.closest('.sideSection');sec.classList.toggle('open')}
+function goTo(id){const el=$(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+function showCategory(name){$('categoryTitle').innerText=(name==='Anwälte'?'⚖️ ':'📁 ')+name;$('categoryContent').innerHTML=`<div class="category"><b>${esc(name)}</b><span>Diese Kategorie ist ausgewählt.</span></div><div class="category"><b>Ordner</b><span>Die zugehörigen Ordner werden hier angezeigt.</span></div>`}
 </script>
 </body></html>
