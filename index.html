@@ -22,9 +22,9 @@
         }
 
         .box {
-            width: 90%;
-            max-width: 450px;
-            background: rgba(20, 25, 35, 0.95);
+            width: 92%;
+            max-width: 500px;
+            background: rgba(20, 25, 35, 0.96);
             padding: 30px;
             border-radius: 20px;
             text-align: center;
@@ -52,10 +52,19 @@
             background: #2563eb;
             color: white;
             font-size: 16px;
+            cursor: pointer;
         }
 
         button:hover {
             background: #1d4ed8;
+        }
+
+        .plus {
+            font-size: 30px;
+            width: 60px;
+            height: 60px;
+            padding: 0;
+            border-radius: 50%;
         }
 
         #fehler {
@@ -64,6 +73,24 @@
 
         #admin {
             display: none;
+        }
+
+        #formular {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .person {
+            background: #1f2937;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .status {
+            color: #22c55e;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -83,13 +110,31 @@
     </div>
 
 
-    <!-- ADMIN-BEREICH -->
+    <!-- ADMIN -->
     <div class="box" id="admin">
-        <h1>⚙️ Admin-Menü</h1>
 
-        <p>Du bist erfolgreich angemeldet.</p>
+        <h1>⚙️ OrdnerSystem</h1>
+
+        <h2>Personen & NFC-Chips</h2>
+
+        <button class="plus" onclick="formularAnzeigen()">+</button>
+
+        <div id="formular">
+
+            <input id="name" type="text" placeholder="Name der Person">
+
+            <input id="chip" type="text" placeholder="NFC-Chip-ID">
+
+            <button onclick="personHinzufuegen()">
+                Person hinzufügen
+            </button>
+
+        </div>
+
+        <div id="personen"></div>
 
         <button onclick="abmelden()">ABMELDEN</button>
+
     </div>
 
 
@@ -146,13 +191,61 @@
 
                 fehler.textContent =
                     "E-Mail oder Passwort falsch.";
-
             }
         };
 
 
         window.abmelden = async function () {
             await signOut(auth);
+        };
+
+
+        window.formularAnzeigen = function () {
+
+            const formular =
+                document.getElementById("formular");
+
+            if (formular.style.display === "block") {
+                formular.style.display = "none";
+            } else {
+                formular.style.display = "block";
+            }
+        };
+
+
+        window.personHinzufuegen = function () {
+
+            const name =
+                document.getElementById("name").value;
+
+            const chip =
+                document.getElementById("chip").value;
+
+            if (name === "" || chip === "") {
+                alert("Bitte Name und Chip-ID eingeben.");
+                return;
+            }
+
+            const personen =
+                document.getElementById("personen");
+
+            const neuePerson =
+                document.createElement("div");
+
+            neuePerson.className = "person";
+
+            neuePerson.innerHTML = `
+                <strong>${name}</strong><br>
+                Chip: ${chip}<br>
+                Status: <span class="status">● Frei</span>
+            `;
+
+            personen.appendChild(neuePerson);
+
+            document.getElementById("name").value = "";
+            document.getElementById("chip").value = "";
+
+            document.getElementById("formular").style.display = "none";
         };
 
 
