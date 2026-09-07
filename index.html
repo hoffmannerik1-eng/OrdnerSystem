@@ -29,7 +29,7 @@ body {
     color: var(--text);
 }
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 
 #login {
     min-height: 100vh;
@@ -105,12 +105,14 @@ button:hover {
     min-height: 20px;
 }
 
-/* APP */
+/* ================= APP ================= */
 
 #app {
     display: none;
     min-height: 100vh;
 }
+
+/* ================= SIDEBAR ================= */
 
 .sidebar {
     position: fixed;
@@ -142,6 +144,13 @@ button:hover {
     border-radius: 10px;
     margin: 5px 0;
     color: #cbd5e1;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nav-item:hover {
+    background: #1f2937;
+    color: white;
 }
 
 .nav-item.active {
@@ -157,7 +166,7 @@ button:hover {
     background: #374151;
 }
 
-/* MAIN */
+/* ================= MAIN ================= */
 
 .main {
     margin-left: 250px;
@@ -184,7 +193,17 @@ button:hover {
     border: 1px solid var(--border);
 }
 
-/* DASHBOARD */
+/* ================= VIEWS ================= */
+
+.view {
+    display: none;
+}
+
+.view.active-view {
+    display: block;
+}
+
+/* ================= DASHBOARD ================= */
 
 .stats {
     display: grid;
@@ -211,13 +230,14 @@ button:hover {
     margin-top: 8px;
 }
 
-/* CONTENT */
+/* ================= PANELS ================= */
 
 .panel {
     background: white;
     border: 1px solid var(--border);
     border-radius: 18px;
     padding: 25px;
+    margin-bottom: 20px;
 }
 
 .panel-header {
@@ -237,9 +257,10 @@ button:hover {
     margin: 0;
 }
 
-/* PERSONEN */
+/* ================= PERSONEN ================= */
 
-#personen {
+#personen,
+#nfcListe {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
@@ -328,7 +349,7 @@ button:hover {
     background: #7c3aed;
 }
 
-/* ADMIN FORM */
+/* ================= ADMIN FORM ================= */
 
 #formular {
     display: none;
@@ -348,7 +369,7 @@ button:hover {
     flex: 1;
 }
 
-/* SCAN */
+/* ================= SCAN ================= */
 
 .scan-box {
     display: none;
@@ -359,7 +380,59 @@ button:hover {
     margin-bottom: 20px;
 }
 
-/* MOBILE */
+.scan-large {
+    padding: 25px;
+    border-radius: 15px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    margin-top: 15px;
+}
+
+.scan-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.scan-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.scan-details {
+    margin-top: 10px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+/* ================= INFO BOX ================= */
+
+.info-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.info-box h3 {
+    margin-top: 0;
+}
+
+.info-box p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* ================= EMPTY ================= */
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ================= MOBILE ================= */
 
 @media (max-width: 800px) {
 
@@ -374,9 +447,12 @@ button:hover {
         margin-bottom: 10px;
     }
 
-    .nav-title,
-    .nav-item {
+    .nav-title {
         display: none;
+    }
+
+    .nav-item {
+        display: block;
     }
 
     .logout {
@@ -394,7 +470,8 @@ button:hover {
         grid-template-columns: 1fr;
     }
 
-    #personen {
+    #personen,
+    #nfcListe {
         grid-template-columns: 1fr;
     }
 
@@ -406,14 +483,13 @@ button:hover {
     .search {
         max-width: none;
     }
-
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- ================= LOGIN ================= -->
 
 <div id="login">
 
@@ -451,7 +527,7 @@ button:hover {
 </div>
 
 
-<!-- APP -->
+<!-- ================= APP ================= -->
 
 <div id="app">
 
@@ -467,19 +543,35 @@ button:hover {
             Menü
         </div>
 
-        <div class="nav-item active">
+        <div
+            class="nav-item active"
+            data-view="uebersicht"
+            onclick="seiteOeffnen('uebersicht', this)"
+        >
             📊 Übersicht
         </div>
 
-        <div class="nav-item">
+        <div
+            class="nav-item"
+            data-view="ordner"
+            onclick="seiteOeffnen('ordner', this)"
+        >
             📁 Ordner
         </div>
 
-        <div class="nav-item">
+        <div
+            class="nav-item"
+            data-view="nfc"
+            onclick="seiteOeffnen('nfc', this)"
+        >
             🏷️ NFC-Chips
         </div>
 
-        <div class="nav-item">
+        <div
+            class="nav-item"
+            data-view="aktivitaet"
+            onclick="seiteOeffnen('aktivitaet', this)"
+        >
             📋 Aktivität
         </div>
 
@@ -500,8 +592,13 @@ button:hover {
         <div class="topbar">
 
             <div>
-                <h1>Übersicht</h1>
+
+                <h1 id="seitenTitel">
+                    Übersicht
+                </h1>
+
                 <div id="rolle"></div>
+
             </div>
 
             <div
@@ -512,133 +609,236 @@ button:hover {
         </div>
 
 
-        <!-- STATISTIK -->
+        <!-- ================= ÜBERSICHT ================= -->
 
-        <section class="stats">
+        <section
+            id="uebersicht"
+            class="view active-view"
+        >
 
-            <div class="stat">
+            <section class="stats">
 
-                <div class="stat-label">
-                    Alle Chips
+                <div class="stat">
+
+                    <div class="stat-label">
+                        Alle Chips
+                    </div>
+
+                    <div
+                        class="stat-number"
+                        id="gesamt"
+                    >
+                        0
+                    </div>
+
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="gesamt"
-                >
-                    0
+
+                <div class="stat">
+
+                    <div class="stat-label">
+                        Freie Chips
+                    </div>
+
+                    <div
+                        class="stat-number"
+                        id="freie"
+                    >
+                        0
+                    </div>
+
                 </div>
 
-            </div>
 
+                <div class="stat">
 
-            <div class="stat">
+                    <div class="stat-label">
+                        Vergebene Chips
+                    </div>
 
-                <div class="stat-label">
-                    Freie Chips
+                    <div
+                        class="stat-number"
+                        id="vergebene"
+                    >
+                        0
+                    </div>
+
                 </div>
 
-                <div
-                    class="stat-number"
-                    id="freie"
-                >
-                    0
+            </section>
+
+
+            <div
+                class="scan-box"
+                id="scanInfo"
+            ></div>
+
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        Schnellübersicht
+                    </h2>
+
                 </div>
 
-            </div>
+                <p>
+                    Willkommen im OrdnerSystem.
+                    Über das Menü links kannst du zwischen
+                    Übersicht, Ordnern, NFC-Chips und Aktivität wechseln.
+                </p>
 
-
-            <div class="stat">
-
-                <div class="stat-label">
-                    Vergebene Chips
-                </div>
-
-                <div
-                    class="stat-number"
-                    id="vergebene"
-                >
-                    0
-                </div>
-
-            </div>
+            </section>
 
         </section>
 
 
-        <!-- SCAN -->
+        <!-- ================= ORDNER ================= -->
 
-        <div
-            class="scan-box"
-            id="scanInfo"
-        ></div>
+        <section
+            id="ordner"
+            class="view"
+        >
 
+            <section class="panel">
 
-        <!-- CHIPS -->
+                <div class="panel-header">
 
-        <section class="panel">
-
-            <div class="panel-header">
-
-                <h2>Ordner & Chips</h2>
-
-                <input
-                    class="search"
-                    id="suche"
-                    placeholder="🔍 Suchen..."
-                    oninput="anzeigen()"
-                >
-
-            </div>
-
-
-            <!-- ADMIN FORM -->
-
-            <div id="adminBereich">
-
-                <button
-                    id="plusButton"
-                    onclick="formularAnzeigen()"
-                >
-                    + Ordner hinzufügen
-                </button>
-
-
-                <div id="formular">
+                    <h2>
+                        📁 Ordner
+                    </h2>
 
                     <input
-                        id="name"
-                        placeholder="Name / Ordner"
+                        class="search"
+                        id="sucheOrdner"
+                        placeholder="🔍 Suchen..."
+                        oninput="anzeigenOrdner()"
                     >
 
-                    <input
-                        id="chip"
-                        placeholder="NFC-Chip-ID"
+                </div>
+
+
+                <!-- ADMIN -->
+
+                <div id="adminBereich">
+
+                    <button
+                        onclick="formularAnzeigen()"
                     >
+                        + Ordner hinzufügen
+                    </button>
 
-                    <div class="form-buttons">
 
-                        <button
-                            onclick="personSpeichern()"
-                            id="speichernButton"
+                    <div id="formular">
+
+                        <input
+                            id="name"
+                            placeholder="Name / Ordner"
                         >
-                            Speichern
-                        </button>
 
-                        <button
-                            onclick="formularSchliessen()"
+                        <input
+                            id="chip"
+                            placeholder="NFC-Chip-ID"
                         >
-                            Abbrechen
-                        </button>
+
+                        <div class="form-buttons">
+
+                            <button
+                                onclick="personSpeichern()"
+                                id="speichernButton"
+                            >
+                                Speichern
+                            </button>
+
+                            <button
+                                onclick="formularSchliessen()"
+                            >
+                                Abbrechen
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+
+                <div id="personen"></div>
+
+            </section>
+
+        </section>
 
 
-            <div id="personen"></div>
+        <!-- ================= NFC ================= -->
+
+        <section
+            id="nfc"
+            class="view"
+        >
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        🏷️ NFC-Chips
+                    </h2>
+
+                    <input
+                        class="search"
+                        id="sucheNFC"
+                        placeholder="🔍 Chip suchen..."
+                        oninput="anzeigenNFC()"
+                    >
+
+                </div>
+
+
+                <div id="nfcListe"></div>
+
+            </section>
+
+        </section>
+
+
+        <!-- ================= AKTIVITÄT ================= -->
+
+        <section
+            id="aktivitaet"
+            class="view"
+        >
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <h2>
+                        📋 Aktivität
+                    </h2>
+
+                </div>
+
+
+                <div id="aktivitaetInhalt">
+
+                    <div class="info-box">
+
+                        <h3>
+                            📡 NFC-Scan
+                        </h3>
+
+                        <p>
+                            Noch wurde kein NFC-Chip gescannt.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </section>
 
@@ -649,11 +849,14 @@ button:hover {
 
 <script type="module">
 
+/* ================= FIREBASE ================= */
+
 import {
     initializeApp
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
 
 import {
     getAuth,
@@ -663,6 +866,7 @@ import {
 }
 from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -724,15 +928,116 @@ let aktuellerScan = null;
 let bearbeitetePerson = null;
 
 
-/* LOGIN */
+/* ================= NAVIGATION ================= */
+
+window.seiteOeffnen = function(
+    seite,
+    element
+) {
+
+    /* Alle Seiten verstecken */
+
+    document
+        .querySelectorAll(".view")
+        .forEach(view => {
+
+            view.classList.remove(
+                "active-view"
+            );
+
+        });
+
+
+    /* Gewählte Seite anzeigen */
+
+    document
+        .getElementById(seite)
+        .classList.add(
+            "active-view"
+        );
+
+
+    /* Menü zurücksetzen */
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(item => {
+
+            item.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    /* Aktiven Menüpunkt markieren */
+
+    element.classList.add("active");
+
+
+    /* Überschrift */
+
+    const titel = {
+
+        uebersicht:
+            "Übersicht",
+
+        ordner:
+            "Ordner",
+
+        nfc:
+            "NFC-Chips",
+
+        aktivitaet:
+            "Aktivität"
+
+    };
+
+
+    document.getElementById(
+        "seitenTitel"
+    ).textContent =
+        titel[seite];
+
+
+    /* Daten aktualisieren */
+
+    if (seite === "ordner") {
+
+        anzeigenOrdner();
+
+    }
+
+    if (seite === "nfc") {
+
+        anzeigenNFC();
+
+    }
+
+    if (seite === "aktivitaet") {
+
+        anzeigenAktivitaet();
+
+    }
+
+};
+
+
+/* ================= LOGIN ================= */
 
 window.anmelden = async function() {
 
     const email =
-        document.getElementById("email").value.trim();
+        document
+            .getElementById("email")
+            .value
+            .trim();
 
     const passwort =
-        document.getElementById("passwort").value;
+        document
+            .getElementById("passwort")
+            .value;
+
 
     try {
 
@@ -742,12 +1047,16 @@ window.anmelden = async function() {
             passwort
         );
 
-        document.getElementById("fehler")
+
+        document
+            .getElementById("fehler")
             .textContent = "";
+
 
     } catch {
 
-        document.getElementById("fehler")
+        document
+            .getElementById("fehler")
             .textContent =
             "E-Mail oder Passwort falsch.";
 
@@ -756,7 +1065,7 @@ window.anmelden = async function() {
 };
 
 
-/* LOGOUT */
+/* ================= LOGOUT ================= */
 
 window.abmelden = async function() {
 
@@ -765,11 +1074,12 @@ window.abmelden = async function() {
 };
 
 
-/* FORMULAR */
+/* ================= FORMULAR ================= */
 
 window.formularAnzeigen = function() {
 
-    document.getElementById("formular")
+    document
+        .getElementById("formular")
         .style.display = "block";
 
 };
@@ -777,36 +1087,53 @@ window.formularAnzeigen = function() {
 
 window.formularSchliessen = function() {
 
-    document.getElementById("formular")
+    document
+        .getElementById("formular")
         .style.display = "none";
+
 
     bearbeitetePerson = null;
 
-    document.getElementById("name").value = "";
 
-    document.getElementById("chip").value = "";
+    document
+        .getElementById("name")
+        .value = "";
 
-    document.getElementById("speichernButton")
+
+    document
+        .getElementById("chip")
+        .value = "";
+
+
+    document
+        .getElementById("speichernButton")
         .textContent = "Speichern";
 
 };
 
 
-/* SPEICHERN */
+/* ================= SPEICHERN ================= */
 
 window.personSpeichern = async function() {
 
     const name =
-        document.getElementById("name")
-        .value.trim();
+        document
+            .getElementById("name")
+            .value
+            .trim();
 
     const chip =
-        document.getElementById("chip")
-        .value.trim();
+        document
+            .getElementById("chip")
+            .value
+            .trim();
+
 
     if (!name || !chip) {
 
-        alert("Bitte alles ausfüllen.");
+        alert(
+            "Bitte alles ausfüllen."
+        );
 
         return;
 
@@ -836,7 +1163,10 @@ window.personSpeichern = async function() {
 
             await addDoc(
 
-                collection(db, "chips"),
+                collection(
+                    db,
+                    "chips"
+                ),
 
                 {
                     name,
@@ -849,7 +1179,9 @@ window.personSpeichern = async function() {
 
         }
 
+
         formularSchliessen();
+
 
     } catch (error) {
 
@@ -864,43 +1196,62 @@ window.personSpeichern = async function() {
 };
 
 
-/* BEARBEITEN */
+/* ================= BEARBEITEN ================= */
 
 window.personBearbeiten =
 function(id, name, chip) {
 
     bearbeitetePerson = id;
 
-    document.getElementById("name")
+
+    document
+        .getElementById("name")
         .value = name;
 
-    document.getElementById("chip")
+
+    document
+        .getElementById("chip")
         .value = chip;
 
-    document.getElementById("formular")
+
+    document
+        .getElementById("formular")
         .style.display = "block";
 
-    document.getElementById("speichernButton")
+
+    document
+        .getElementById("speichernButton")
         .textContent =
         "Änderungen speichern";
 
 };
 
 
-/* LÖSCHEN */
+/* ================= LÖSCHEN ================= */
 
 window.personLoeschen =
 async function(id, name) {
 
     if (!confirm(
-        "„" + name + "“ wirklich löschen?"
-    )) return;
+        "„" + name +
+        "“ wirklich löschen?"
+    )) {
+
+        return;
+
+    }
+
 
     try {
 
         await deleteDoc(
-            doc(db, "chips", id)
+            doc(
+                db,
+                "chips",
+                id
+            )
         );
+
 
     } catch {
 
@@ -913,14 +1264,17 @@ async function(id, name) {
 };
 
 
-/* CHIP ÜBERNEHMEN */
+/* ================= CHIP ÜBERNEHMEN ================= */
 
 window.chipUebernehmen =
 async function(id) {
 
-    const user = auth.currentUser;
+    const user =
+        auth.currentUser;
+
 
     if (!user) return;
+
 
     try {
 
@@ -933,12 +1287,15 @@ async function(id) {
             ),
 
             {
-                assignedTo: user.uid,
+                assignedTo:
+                    user.uid,
+
                 assignedEmail:
                     user.email || ""
             }
 
         );
+
 
     } catch {
 
@@ -951,14 +1308,17 @@ async function(id) {
 };
 
 
-/* CHIP FREIGEBEN */
+/* ================= CHIP FREIGEBEN ================= */
 
 window.chipFreigeben =
 async function(id) {
 
-    const user = auth.currentUser;
+    const user =
+        auth.currentUser;
+
 
     if (!user) return;
+
 
     try {
 
@@ -977,6 +1337,7 @@ async function(id) {
 
         );
 
+
     } catch {
 
         alert(
@@ -988,40 +1349,67 @@ async function(id) {
 };
 
 
-/* ANZEIGE */
+/* ================= ORDNER ANZEIGEN ================= */
 
-window.anzeigen = function() {
+window.anzeigenOrdner =
+function() {
 
     const container =
-        document.getElementById("personen");
+        document.getElementById(
+            "personen"
+        );
+
 
     const suche =
-        document.getElementById("suche")
-        .value
-        .toLowerCase();
+        document
+            .getElementById(
+                "sucheOrdner"
+            )
+            .value
+            .toLowerCase();
 
 
     container.innerHTML = "";
 
 
-    let gefiltert =
+    const gefiltert =
         daten.filter(person => {
 
             return (
-                person.name
-                .toLowerCase()
-                .includes(suche)
+
+                (person.name || "")
+                    .toLowerCase()
+                    .includes(suche)
+
                 ||
-                person.chipId
-                .toLowerCase()
-                .includes(suche)
+
+                (person.chipId || "")
+                    .toLowerCase()
+                    .includes(suche)
+
                 ||
+
                 (person.assignedEmail || "")
-                .toLowerCase()
-                .includes(suche)
+                    .toLowerCase()
+                    .includes(suche)
+
             );
 
         });
+
+
+    if (gefiltert.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty">
+                📁 Keine Ordner gefunden.
+            </div>`;
+
+        statistikenAktualisieren();
+
+        return;
+
+    }
 
 
     gefiltert.forEach(person => {
@@ -1029,8 +1417,10 @@ window.anzeigen = function() {
         const element =
             document.createElement("div");
 
+
         const vergeben =
             person.assignedTo != null;
+
 
         const eigenerChip =
             person.assignedTo ===
@@ -1039,7 +1429,11 @@ window.anzeigen = function() {
 
         element.className =
             "person " +
-            (vergeben ? "vergeben" : "frei");
+            (
+                vergeben
+                    ? "vergeben"
+                    : "frei"
+            );
 
 
         const top =
@@ -1056,7 +1450,7 @@ window.anzeigen = function() {
             "person-name";
 
         name.textContent =
-            person.name;
+            person.name || "Unbenannt";
 
 
         const badge =
@@ -1064,9 +1458,12 @@ window.anzeigen = function() {
 
         badge.className =
             "badge " +
-            (vergeben
-                ? "badge-rot"
-                : "badge-frei");
+            (
+                vergeben
+                    ? "badge-rot"
+                    : "badge-frei"
+            );
+
 
         badge.textContent =
             vergeben
@@ -1075,6 +1472,7 @@ window.anzeigen = function() {
 
 
         top.appendChild(name);
+
         top.appendChild(badge);
 
 
@@ -1083,9 +1481,12 @@ window.anzeigen = function() {
 
         info.className = "info";
 
+
         info.innerHTML =
             "🏷️ Chip: " +
-            escapeHTML(person.chipId);
+            escapeHTML(
+                person.chipId || "-"
+            );
 
 
         if (person.assignedEmail) {
@@ -1106,22 +1507,28 @@ window.anzeigen = function() {
             "actions";
 
 
-        /* BENUTZER */
+        /* Benutzer */
 
         if (!vergeben) {
 
             const button =
                 document.createElement("button");
 
-            button.className = "take";
+            button.className =
+                "take";
 
             button.textContent =
                 "✓ Chip übernehmen";
 
             button.onclick = () =>
-                chipUebernehmen(person.id);
+                chipUebernehmen(
+                    person.id
+                );
 
-            actions.appendChild(button);
+
+            actions.appendChild(
+                button
+            );
 
         }
 
@@ -1131,20 +1538,26 @@ window.anzeigen = function() {
             const button =
                 document.createElement("button");
 
-            button.className = "release";
+            button.className =
+                "release";
 
             button.textContent =
                 "↗ Chip freigeben";
 
             button.onclick = () =>
-                chipFreigeben(person.id);
+                chipFreigeben(
+                    person.id
+                );
 
-            actions.appendChild(button);
+
+            actions.appendChild(
+                button
+            );
 
         }
 
 
-        /* ADMIN */
+        /* Admin */
 
         if (
             auth.currentUser?.uid ===
@@ -1154,9 +1567,12 @@ window.anzeigen = function() {
             const edit =
                 document.createElement("button");
 
-            edit.className = "edit";
+            edit.className =
+                "edit";
 
-            edit.textContent = "✏️";
+            edit.textContent =
+                "✏️";
+
 
             edit.onclick = () =>
                 personBearbeiten(
@@ -1169,9 +1585,12 @@ window.anzeigen = function() {
             const del =
                 document.createElement("button");
 
-            del.className = "delete";
+            del.className =
+                "delete";
 
-            del.textContent = "🗑️";
+            del.textContent =
+                "🗑️";
+
 
             del.onclick = () =>
                 personLoeschen(
@@ -1180,14 +1599,21 @@ window.anzeigen = function() {
                 );
 
 
-            actions.appendChild(edit);
-            actions.appendChild(del);
+            actions.appendChild(
+                edit
+            );
+
+            actions.appendChild(
+                del
+            );
 
         }
 
 
         element.appendChild(top);
+
         element.appendChild(info);
+
         element.appendChild(actions);
 
         container.appendChild(element);
@@ -1200,80 +1626,361 @@ window.anzeigen = function() {
 };
 
 
-/* HTML SICHER MACHEN */
+/* ================= NFC ANZEIGEN ================= */
+
+window.anzeigenNFC =
+function() {
+
+    const container =
+        document.getElementById(
+            "nfcListe"
+        );
+
+
+    const suche =
+        document
+            .getElementById(
+                "sucheNFC"
+            )
+            .value
+            .toLowerCase();
+
+
+    container.innerHTML = "";
+
+
+    const gefiltert =
+        daten.filter(person => {
+
+            return (
+
+                (person.chipId || "")
+                    .toLowerCase()
+                    .includes(suche)
+
+                ||
+
+                (person.name || "")
+                    .toLowerCase()
+                    .includes(suche)
+
+            );
+
+        });
+
+
+    if (gefiltert.length === 0) {
+
+        container.innerHTML =
+            `<div class="empty">
+                🏷️ Keine NFC-Chips gefunden.
+            </div>`;
+
+        return;
+
+    }
+
+
+    gefiltert.forEach(person => {
+
+        const element =
+            document.createElement("div");
+
+
+        const vergeben =
+            person.assignedTo != null;
+
+
+        element.className =
+            "person " +
+            (
+                vergeben
+                    ? "vergeben"
+                    : "frei"
+            );
+
+
+        element.innerHTML = `
+
+            <div class="person-top">
+
+                <div class="person-name">
+                    🏷️ ${escapeHTML(
+                        person.chipId || "-"
+                    )}
+                </div>
+
+                <span class="badge ${
+                    vergeben
+                        ? "badge-rot"
+                        : "badge-frei"
+                }">
+
+                    ${
+                        vergeben
+                            ? "🔴 Vergeben"
+                            : "🟢 Frei"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="info">
+
+                📁 Ordner:
+                ${escapeHTML(
+                    person.name || "-"
+                )}
+
+                ${
+                    person.assignedEmail
+                    ?
+                    `<br>
+                    👤 Besitzer:
+                    ${escapeHTML(
+                        person.assignedEmail
+                    )}`
+                    :
+                    ""
+                }
+
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            element
+        );
+
+    });
+
+};
+
+
+/* ================= AKTIVITÄT ================= */
+
+window.anzeigenAktivitaet =
+function() {
+
+    const container =
+        document.getElementById(
+            "aktivitaetInhalt"
+        );
+
+
+    if (!aktuellerScan) {
+
+        container.innerHTML = `
+
+            <div class="info-box">
+
+                <h3>
+                    📡 NFC-Scan
+                </h3>
+
+                <p>
+                    Noch wurde kein NFC-Chip gescannt.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const passendePerson =
+        daten.find(
+            person =>
+                person.chipId ===
+                aktuellerScan.chipId
+        );
+
+
+    container.innerHTML = `
+
+        <div class="scan-large">
+
+            <div class="scan-icon">
+                📡
+            </div>
+
+            <div class="scan-title">
+                Letzter NFC-Scan
+            </div>
+
+            <div class="scan-details">
+
+                🏷️ Chip:
+                <strong>
+                    ${escapeHTML(
+                        aktuellerScan.chipId
+                    )}
+                </strong>
+
+                <br>
+
+                ${
+                    passendePerson
+                    ?
+                    `
+                    📁 Ordner:
+                    <strong>
+                        ${escapeHTML(
+                            passendePerson.name
+                        )}
+                    </strong>
+
+                    <br>
+                    `
+                    :
+                    ""
+                }
+
+                👤 Gescannt von:
+                <strong>
+                    ${escapeHTML(
+                        aktuellerScan.scannedEmail
+                        || "Unbekannt"
+                    )}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+};
+
+
+/* ================= HTML SICHER ================= */
 
 function escapeHTML(text) {
 
     const div =
         document.createElement("div");
 
-    div.textContent = text;
+    div.textContent =
+        text == null
+            ? ""
+            : String(text);
 
     return div.innerHTML;
 
 }
 
 
-/* STATISTIK */
+/* ================= STATISTIK ================= */
 
 function statistikenAktualisieren() {
 
     const gesamt =
         daten.length;
 
+
     const vergeben =
         daten.filter(
             x => x.assignedTo != null
         ).length;
 
+
     const frei =
         gesamt - vergeben;
 
 
-    document.getElementById("gesamt")
-        .textContent = gesamt;
+    document
+        .getElementById("gesamt")
+        .textContent =
+        gesamt;
 
-    document.getElementById("freie")
-        .textContent = frei;
 
-    document.getElementById("vergebene")
-        .textContent = vergeben;
+    document
+        .getElementById("freie")
+        .textContent =
+        frei;
+
+
+    document
+        .getElementById("vergebene")
+        .textContent =
+        vergeben;
 
 }
 
 
-/* FIRESTORE CHIPS */
+/* ================= FIRESTORE ================= */
 
 function chipsLaden() {
 
     const q =
         query(
-            collection(db, "chips"),
+
+            collection(
+                db,
+                "chips"
+            ),
+
             orderBy("name")
+
         );
 
 
-    onSnapshot(q, snapshot => {
+    onSnapshot(
 
-        daten = [];
+        q,
 
-        snapshot.forEach(dokument => {
+        snapshot => {
 
-            daten.push({
-                id: dokument.id,
-                ...dokument.data()
-            });
+            daten = [];
 
-        });
 
-        anzeigen();
+            snapshot.forEach(
+                dokument => {
 
-    });
+                    daten.push({
+
+                        id:
+                            dokument.id,
+
+                        ...dokument.data()
+
+                    });
+
+                }
+            );
+
+
+            anzeigenOrdner();
+
+            anzeigenNFC();
+
+            anzeigenAktivitaet();
+
+            statistikenAktualisieren();
+
+        },
+
+        error => {
+
+            console.error(
+                "Firestore Fehler:",
+                error
+            );
+
+        }
+
+    );
 
 }
 
 
-/* SCANSTATUS */
+/* ================= SCANSTATUS ================= */
 
 function scanStatusLaden() {
 
@@ -1285,40 +1992,64 @@ function scanStatusLaden() {
         );
 
 
-    onSnapshot(ref, snapshot => {
+    onSnapshot(
 
-        if (snapshot.exists()) {
+        ref,
 
-            aktuellerScan =
-                snapshot.data();
+        snapshot => {
 
-            const info =
-                document.getElementById(
-                    "scanInfo"
-                );
+            if (
+                snapshot.exists()
+            ) {
 
-            info.style.display = "block";
+                aktuellerScan =
+                    snapshot.data();
 
-            info.textContent =
-                "📡 Letzter NFC-Scan: Chip " +
-                aktuellerScan.chipId +
-                (
-                    aktuellerScan.scannedEmail
-                    ?
-                    " · " +
-                    aktuellerScan.scannedEmail
-                    :
-                    ""
-                );
+
+                const info =
+                    document.getElementById(
+                        "scanInfo"
+                    );
+
+
+                info.style.display =
+                    "block";
+
+
+                info.textContent =
+                    "📡 Letzter NFC-Scan: Chip " +
+                    aktuellerScan.chipId +
+                    (
+                        aktuellerScan.scannedEmail
+                        ?
+                        " · " +
+                        aktuellerScan.scannedEmail
+                        :
+                        ""
+                    );
+
+
+                anzeigenAktivitaet();
+
+            }
+
+        },
+
+        error => {
+
+            console.error(
+                "Scan-Fehler:",
+                error
+            );
 
         }
 
-    });
+    );
 
 }
 
 
-/* NFC URL */
+/* ================= NFC URL ================= */
 
 async function nfcPruefen(user) {
 
@@ -1327,8 +2058,11 @@ async function nfcPruefen(user) {
             window.location.href
         );
 
+
     const chip =
-        url.searchParams.get("chip");
+        url.searchParams.get(
+            "chip"
+        );
 
 
     if (!chip || !user) return;
@@ -1345,86 +2079,122 @@ async function nfcPruefen(user) {
             ),
 
             {
-                chipId: chip,
-                scannedBy: user.uid,
+
+                chipId:
+                    chip,
+
+                scannedBy:
+                    user.uid,
+
                 scannedEmail:
                     user.email || "",
-                scannedAt: new Date()
+
+                scannedAt:
+                    new Date()
+
             }
 
         );
 
 
         window.history.replaceState(
+
             {},
+
             document.title,
+
             window.location.pathname
+
         );
+
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
     }
 
 }
 
 
-/* AUTH */
+/* ================= AUTH ================= */
 
 onAuthStateChanged(
+
     auth,
+
     async user => {
 
         if (user) {
 
-            document.getElementById("login")
-                .style.display = "none";
+            document
+                .getElementById("login")
+                .style.display =
+                "none";
 
-            document.getElementById("app")
-                .style.display = "block";
+
+            document
+                .getElementById("app")
+                .style.display =
+                "block";
 
 
-            document.getElementById("userEmail")
+            document
+                .getElementById("userEmail")
                 .textContent =
                 user.email || "";
 
 
             const admin =
-                user.uid === ADMIN_UID;
+                user.uid ===
+                ADMIN_UID;
 
 
-            document.getElementById("rolle")
+            document
+                .getElementById("rolle")
                 .textContent =
                 admin
                     ? "👑 Administrator"
                     : "👤 Benutzer";
 
 
-            document.getElementById("adminBereich")
+            document
+                .getElementById("adminBereich")
                 .style.display =
-                admin ? "block" : "none";
+                admin
+                    ? "block"
+                    : "none";
 
 
             chipsLaden();
 
             scanStatusLaden();
 
-            await nfcPruefen(user);
+            await nfcPruefen(
+                user
+            );
 
         }
 
         else {
 
-            document.getElementById("login")
-                .style.display = "flex";
+            document
+                .getElementById("login")
+                .style.display =
+                "flex";
 
-            document.getElementById("app")
-                .style.display = "none";
+
+            document
+                .getElementById("app")
+                .style.display =
+                "none";
 
         }
 
     }
+
 );
 
 </script>
