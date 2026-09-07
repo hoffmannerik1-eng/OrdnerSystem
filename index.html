@@ -6,972 +6,4748 @@
 <title>OrdnerSystem</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+html,body{
+    margin:0;
+    min-height:100%;
+    font-family:Arial,sans-serif;
+    background:#f5f6f8;
+    color:#222
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* LOGIN */
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px
+}
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    border:1px solid #ddd;
+    border-radius:16px;
+    padding:35px;
+    box-shadow:0 15px 50px rgba(0,0,0,.08)
+}
+.login-logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold
+}
+.login-subtitle{
+    text-align:center;
+    color:#888;
+    margin:8px 0 30px
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f6f8;
-    color: #222;
+/* HEADER */
+header{
+    height:65px;
+    background:white;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:sticky;
+    top:0;
+    z-index:20
+}
+.logo{
+    font-size:22px;
+    font-weight:bold
+}
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px
+}
+.profile-info{text-align:right}
+.profile-name{font-weight:bold}
+.profile-role{
+    font-size:12px;
+    color:#888
+}
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#e8e8e8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    font-weight:bold
+}
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover
+}
+.logout-button{
+    border:none;
+    background:#f0f1f3;
+    padding:9px 13px;
+    border-radius:8px;
+    margin-left:10px
 }
 
-header {
-    height: 65px;
-    background: white;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 25px;
+/* LAYOUT */
+.layout{
+    display:flex;
+    min-height:calc(100vh - 65px)
+}
+.sidebar{
+    width:240px;
+    flex-shrink:0;
+    background:white;
+    border-right:1px solid #ddd;
+    padding:20px 12px
+}
+.sidebar h3{
+    font-size:12px;
+    color:#888;
+    margin:18px 10px 8px;
+    text-transform:uppercase
+}
+.nav-button{
+    width:100%;
+    border:none;
+    background:transparent;
+    text-align:left;
+    padding:12px;
+    border-radius:8px;
+    font-size:15px;
+    margin-bottom:2px
+}
+.nav-button:hover{background:#f0f1f3}
+.nav-button.active{
+    background:#e9eefc;
+    color:#3157d5;
+    font-weight:bold
+}
+main{
+    flex:1;
+    padding:30px;
+    overflow:auto;
+    min-width:0
+}
+.page{display:none}
+.page.active{display:block}
+
+/* PAGE HEADER */
+.page-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px
+}
+.page-header h1{
+    margin:0;
+    font-size:28px
+}
+.page-header p{
+    color:#888;
+    margin:7px 0 0
 }
 
-.logo {
-    font-size: 22px;
-    font-weight: bold;
+/* BUTTONS */
+.primary{
+    border:none;
+    background:#3157d5;
+    color:white;
+    padding:11px 17px;
+    border-radius:8px
+}
+.primary:hover{background:#2447bc}
+.gray{
+    border:1px solid #ccc;
+    background:white;
+    color:#222;
+    padding:10px 15px;
+    border-radius:8px
+}
+.danger{
+    border:none;
+    background:#d9363e;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px
+}
+.success{
+    border:none;
+    background:#238636;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px
 }
 
-.profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+/* SEARCH */
+.search{
+    width:100%;
+    max-width:500px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    margin-bottom:20px;
+    background:white
 }
 
-.avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: #e8e8e8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* FOLDER */
+.folder-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    gap:18px
+}
+.folder{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:20px;
+    cursor:pointer;
+    transition:.15s
+}
+.folder:hover{
+    transform:translateY(-2px);
+    box-shadow:0 5px 20px rgba(0,0,0,.08)
+}
+.folder-icon{
+    font-size:40px;
+    margin-bottom:12px
+}
+.folder h3{
+    margin:0 0 5px;
+    word-break:break-word
+}
+.folder p{
+    margin:0;
+    color:#888;
+    font-size:14px
+}
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:14px;
+    font-size:13px;
+    font-weight:bold
+}
+.status.free{color:#16843d}
+.status.busy{color:#d9363e}
+.last-user{
+    margin-top:8px;
+    color:#777;
+    font-size:12px
 }
 
-.layout {
-    display: flex;
-    min-height: calc(100vh - 65px);
+/* CARDS */
+.card{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:22px;
+    margin-bottom:20px
+}
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:15px
+}
+.badge{
+    background:#e9eefc;
+    color:#3157d5;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold
+}
+.admin-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px
 }
 
-.sidebar {
-    width: 240px;
-    background: white;
-    border-right: 1px solid #ddd;
-    padding: 20px 12px;
+/* TABLE */
+.table-wrap{
+    width:100%;
+    overflow-x:auto
+}
+table{
+    width:100%;
+    border-collapse:collapse
+}
+th,td{
+    padding:12px;
+    text-align:left;
+    border-bottom:1px solid #ddd
+}
+th{
+    color:#777;
+    font-size:13px
 }
 
-.sidebar h3 {
-    font-size: 12px;
-    color: #888;
-    margin: 18px 10px 8px;
-    text-transform: uppercase;
-}
-
-.nav-button {
-    width: 100%;
-    border: none;
-    background: transparent;
-    text-align: left;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.nav-button:hover {
-    background: #f0f1f3;
-}
-
-.nav-button.active {
-    background: #e9eefc;
-    color: #3157d5;
-    font-weight: bold;
-}
-
-main {
-    flex: 1;
-    padding: 30px;
-    overflow: auto;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.page-header h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-button.primary {
-    border: none;
-    background: #3157d5;
-    color: white;
-    padding: 11px 17px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button.primary:hover {
-    background: #2447bc;
-}
-
-.search {
-    width: 100%;
-    max-width: 500px;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.folder-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 18px;
-}
-
-.folder {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 20px;
-    cursor: pointer;
-    transition: 0.15s;
-}
-
-.folder:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(0,0,0,.08);
-}
-
-.folder-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-}
-
-.folder h3 {
-    margin: 0 0 5px;
-}
-
-.folder p {
-    margin: 0;
-    color: #888;
-    font-size: 14px;
-}
-
-.empty {
-    background: white;
-    border: 1px dashed #ccc;
-    border-radius: 12px;
-    padding: 40px;
-    text-align: center;
-    color: #888;
+/* EMPTY */
+.empty{
+    background:white;
+    border:1px dashed #ccc;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    color:#888
 }
 
 /* MODAL */
-
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    z-index: 100;
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100
+}
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:540px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.2)
+}
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center
+}
+.modal-header h2{margin:0}
+.close{
+    border:none;
+    background:transparent;
+    font-size:28px;
+    color:#666
+}
+.form-group{margin-top:18px}
+.form-group label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    background:white
+}
+.form-group textarea{
+    min-height:90px;
+    resize:vertical
+}
+.modal-buttons{
+    display:flex;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:25px
+}
+.cancel{
+    border:1px solid #ccc;
+    background:white;
+    padding:10px 16px;
+    border-radius:8px
 }
 
-.modal.hidden {
-    display: none;
+/* PROFILE */
+.profile-large{
+    display:flex;
+    align-items:center;
+    gap:20px
+}
+.profile-large-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:#e8e8e8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    font-size:32px;
+    font-weight:bold
+}
+.profile-large-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover
 }
 
-.modal-box {
-    background: white;
-    width: 100%;
-    max-width: 500px;
-    border-radius: 14px;
-    padding: 25px;
-    box-shadow: 0 20px 50px rgba(0,0,0,.2);
+/* SCAN */
+.scan-box{
+    background:white;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:25px;
+    max-width:650px
+}
+.scan-user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-top:20px
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* TOAST */
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#222;
+    color:white;
+    padding:13px 18px;
+    border-radius:9px;
+    z-index:300;
+    opacity:0;
+    transform:translateY(10px);
+    pointer-events:none;
+    transition:.2s
 }
-
-.modal-header h2 {
-    margin: 0;
-}
-
-.close {
-    border: none;
-    background: transparent;
-    font-size: 28px;
-    cursor: pointer;
-    color: #666;
-}
-
-.form-group {
-    margin-top: 18px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 11px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 25px;
-}
-
-.cancel {
-    border: 1px solid #ccc;
-    background: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
+#toast.show{
+    opacity:1;
+    transform:translateY(0)
 }
 
 /* DARK MODE */
-
-body.dark {
-    background: #18191c;
-    color: white;
+body.dark{
+    background:#18191c;
+    color:white
 }
-
+body.dark #loginScreen{background:#18191c}
+body.dark .login-box,
 body.dark header,
 body.dark .sidebar,
 body.dark .folder,
 body.dark .empty,
-body.dark .modal-box {
-    background: #24262a;
-    border-color: #3a3d42;
+body.dark .card,
+body.dark .scan-box,
+body.dark .modal-box,
+body.dark .search{
+    background:#24262a;
+    border-color:#3a3d42
 }
-
-body.dark header {
-    border-bottom-color: #3a3d42;
+body.dark header{border-bottom-color:#3a3d42}
+body.dark .sidebar{border-right-color:#3a3d42}
+body.dark .nav-button{color:white}
+body.dark .nav-button:hover{background:#303338}
+body.dark .nav-button.active{
+    background:#303d68;
+    color:#8fa8ff
 }
-
-body.dark .sidebar {
-    border-right-color: #3a3d42;
+body.dark .form-group input,
+body.dark .form-group select,
+body.dark .form-group textarea{
+    background:#18191c;
+    color:white;
+    border-color:#444
 }
-
-body.dark .nav-button {
-    color: white;
+body.dark .cancel,
+body.dark .gray,
+body.dark .logout-button{
+    background:#24262a;
+    color:white;
+    border-color:#555
 }
-
-body.dark .nav-button:hover {
-    background: #303338;
-}
-
-body.dark .nav-button.active {
-    background: #303d68;
-    color: #8fa8ff;
-}
-
-body.dark .folder:hover {
-    box-shadow: 0 5px 20px rgba(0,0,0,.3);
-}
-
-body.dark .form-group input {
-    background: #18191c;
-    color: white;
-    border-color: #444;
-}
-
-body.dark .cancel {
-    background: #24262a;
-    color: white;
-    border-color: #555;
-}
+body.dark th,
+body.dark td{border-color:#3a3d42}
 
 /* MOBILE */
-
-@media (max-width: 700px) {
-
-    .layout {
-        display: block;
+@media(max-width:700px){
+    header{
+        min-height:65px;
+        height:auto;
+        padding:10px 15px
     }
-
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ddd;
-        padding: 8px;
+    .profile-info{display:none}
+    .layout{display:block}
+    .sidebar{
+        width:100%;
+        border-right:none;
+        border-bottom:1px solid #ddd;
+        padding:8px;
+        overflow-x:auto;
+        white-space:nowrap
     }
-
-    .sidebar h3 {
-        display: none;
+    .sidebar h3{display:none}
+    .nav-button{
+        width:auto;
+        display:inline-block
     }
-
-    .nav-button {
-        width: auto;
-        display: inline-block;
-        margin: 2px;
-    }
-
-    main {
-        padding: 18px;
-    }
-
-    .page-header {
-        display: block;
-    }
-
-    .page-header button {
-        margin-top: 15px;
-    }
-
-    .folder-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    main{padding:18px}
+    .page-header{display:block}
+    .page-header button{margin-top:15px}
+    .folder-grid{grid-template-columns:1fr 1fr}
 }
-
-@media (max-width: 430px) {
-
-    .folder-grid {
-        grid-template-columns: 1fr;
-    }
-
-    header {
-        padding: 0 15px;
-    }
-
-    main {
-        padding: 14px;
-    }
+@media(max-width:430px){
+    .folder-grid{grid-template-columns:1fr}
+    .logo{font-size:18px}
+    main{padding:14px}
+    .login-box{padding:25px 20px}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="logo">📁 OrdnerSystem</div>
+<!-- LOGIN -->
 
-    <div class="profile">
-        <span>Erik</span>
-        <div class="avatar">E</div>
-    </div>
+<div id="loginScreen">
+
+<div class="login-box">
+
+<div class="login-logo">
+📁 OrdnerSystem
+</div>
+
+<div class="login-subtitle">
+Sicheres Ordner- und NFC-System
+</div>
+
+<div class="form-group">
+<label>E-Mail</label>
+<input id="loginEmail" type="email" placeholder="E-Mail eingeben">
+</div>
+
+<div class="form-group">
+<label>Passwort</label>
+<input id="loginPassword" type="password" placeholder="Passwort eingeben">
+</div>
+
+<div style="margin-top:22px">
+<button id="loginButton" class="primary" style="width:100%">
+Anmelden
+</button>
+</div>
+
+<div id="loginError"
+style="display:none;background:#ffe7e7;color:#b00020;padding:10px;border-radius:8px;margin-top:15px">
+</div>
+
+</div>
+</div>
+
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+<header>
+
+<div class="logo">
+📁 OrdnerSystem
+</div>
+
+<div class="profile">
+
+<div class="profile-info">
+<div id="headerName" class="profile-name">
+Benutzer
+</div>
+<div id="headerRole" class="profile-role">
+Benutzer
+</div>
+</div>
+
+<div id="headerAvatar" class="avatar">
+B
+</div>
+
+<button id="logoutButton" class="logout-button">
+Abmelden
+</button>
+
+</div>
+
 </header>
+
 
 <div class="layout">
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <h3>Ordner</h3>
+<h3>Ordner</h3>
 
-        <button class="nav-button active" onclick="showPage('alleOrdner', this)">
-            📁 Alle Ordner
-        </button>
+<button class="nav-button active"
+onclick="showPage('alleOrdner',this)">
+📁 Alle Ordner
+</button>
 
-        <button class="nav-button" onclick="showPage('letzterScan', this)">
-            📱 Letzter Scan
-        </button>
-
-        <h3>Kategorien</h3>
-
-        <button class="nav-button" onclick="showCategory('Anwälte')">
-            ⚖️ Anwälte
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Verträge')">
-            📄 Verträge
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Mandanten')">
-            👥 Mandanten
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Rechnungen')">
-            🧾 Rechnungen
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Finanzen')">
-            💰 Finanzen
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Steuern')">
-            📊 Steuern
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Personal')">
-            👤 Personal
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Sonstiges')">
-            📦 Sonstiges
-        </button>
-
-        <button class="nav-button" onclick="showCategory('Archiv')">
-            🗄️ Archiv
-        </button>
-
-        <h3>System</h3>
-
-        <button class="nav-button" onclick="openSettings()">
-            ⚙️ Einstellungen
-        </button>
-
-    </aside>
-
-    <main>
-
-        <!-- ALLE ORDNER -->
-
-        <section id="alleOrdner" class="page active">
-
-            <div class="page-header">
-                <div>
-                    <h1>Alle Ordner</h1>
-                    <p>Alle Ordner des OrdnerSystems</p>
-                </div>
-
-                <button class="primary" onclick="openAddFolder()">
-                    + Ordner hinzufügen
-                </button>
-            </div>
-
-            <input
-                class="search"
-                id="search"
-                placeholder="🔎 Ordner suchen..."
-                oninput="searchFolders()"
-            >
-
-            <div id="folderGrid" class="folder-grid"></div>
-
-        </section>
+<button class="nav-button"
+onclick="showPage('letzterScan',this)">
+📱 Letzter Scan
+</button>
 
 
-        <!-- LETZTER SCAN -->
+<h3>Kategorien</h3>
 
-        <section id="letzterScan" class="page">
+<button class="nav-button" onclick="showCategory('Anwälte')">
+⚖️ Anwälte
+</button>
 
-            <div class="page-header">
-                <div>
-                    <h1>Letzter Scan</h1>
-                    <p>Der zuletzt geöffnete NFC-Ordner</p>
-                </div>
-            </div>
+<button class="nav-button" onclick="showCategory('Verträge')">
+📄 Verträge
+</button>
 
-            <div class="empty">
-                📱<br><br>
-                Noch kein NFC-Scan vorhanden.
-            </div>
+<button class="nav-button" onclick="showCategory('Mandanten')">
+👥 Mandanten
+</button>
 
-        </section>
+<button class="nav-button" onclick="showCategory('Rechnungen')">
+🧾 Rechnungen
+</button>
 
+<button class="nav-button" onclick="showCategory('Finanzen')">
+💰 Finanzen
+</button>
 
-        <!-- KATEGORIE -->
+<button class="nav-button" onclick="showCategory('Steuern')">
+📊 Steuern
+</button>
 
-        <section id="categoryPage" class="page">
+<button class="nav-button" onclick="showCategory('Personal')">
+👤 Personal
+</button>
 
-            <div class="page-header">
+<button class="nav-button" onclick="showCategory('Sonstiges')">
+📦 Sonstiges
+</button>
 
-                <div>
-                    <h1 id="categoryTitle">Kategorie</h1>
-                    <p id="categoryDescription">
-                        Ordner dieser Kategorie
-                    </p>
-                </div>
-
-                <button class="primary" onclick="openAddFolder()">
-                    + Ordner hinzufügen
-                </button>
-
-            </div>
-
-            <div id="categoryGrid" class="folder-grid"></div>
-
-        </section>
+<button class="nav-button" onclick="showCategory('Archiv')">
+🗄️ Archiv
+</button>
 
 
-        <!-- EINSTELLUNGEN -->
+<h3>System</h3>
 
-        <section id="settings" class="page">
+<button class="nav-button" onclick="openProfilePage()">
+👤 Mein Profil
+</button>
 
-            <div class="page-header">
-                <div>
-                    <h1>Einstellungen</h1>
-                    <p>OrdnerSystem Einstellungen</p>
-                </div>
-            </div>
+<button class="nav-button" onclick="openSettings()">
+⚙️ Einstellungen
+</button>
 
-            <div class="folder">
+<button class="nav-button" onclick="openHelp()">
+❓ Hilfe
+</button>
 
-                <h3>Darstellung</h3>
+</aside>
 
-                <br>
 
-                <button class="primary" onclick="toggleTheme()">
-                    ☀️ / 🌙 Hellmodus / Dunkelmodus
-                </button>
+<main>
 
-            </div>
+<!-- ALLE ORDNER -->
 
-        </section>
+<section id="alleOrdner" class="page active">
 
-    </main>
+<div class="page-header">
+
+<div>
+<h1>Alle Ordner</h1>
+<p>Alle Ordner des OrdnerSystems</p>
+</div>
+
+<button
+id="addFolderButton"
+class="primary hidden"
+onclick="openAddFolder()">
++ Ordner hinzufügen
+</button>
+
+</div>
+
+<input
+class="search"
+id="search"
+placeholder="🔎 Ordner suchen..."
+oninput="searchFolders()">
+
+<div id="folderGrid" class="folder-grid"></div>
+
+</section>
+
+
+<!-- LETZTER SCAN -->
+
+<section id="letzterScan" class="page">
+
+<div class="page-header">
+
+<div>
+<h1>Letzter Scan</h1>
+<p>Der zuletzt geöffnete NFC-Ordner</p>
+</div>
+
+</div>
+
+<div id="lastScanContent" class="scan-box"></div>
+
+</section>
+
+
+<!-- KATEGORIE -->
+
+<section id="categoryPage" class="page">
+
+<div class="page-header">
+
+<div>
+<h1 id="categoryTitle">Kategorie</h1>
+<p id="categoryDescription">
+Ordner dieser Kategorie
+</p>
+</div>
+
+<button
+id="categoryAddButton"
+class="primary hidden"
+onclick="openAddFolder()">
++ Ordner hinzufügen
+</button>
+
+</div>
+
+<div id="categoryGrid" class="folder-grid"></div>
+
+</section>
+
+
+<!-- PROFIL -->
+
+<section id="profilePage" class="page">
+
+<div class="page-header">
+
+<div>
+<h1>Mein Profil</h1>
+<p>Deine persönlichen Daten</p>
+</div>
+
+<button class="primary"
+onclick="openProfileModal()">
+✏️ Profil bearbeiten
+</button>
+
+</div>
+
+<div id="profileContent" class="card"></div>
+
+</section>
+
+
+<!-- EINSTELLUNGEN -->
+
+<section id="settings" class="page">
+
+<div class="page-header">
+
+<div>
+<h1>Einstellungen</h1>
+<p>OrdnerSystem Einstellungen</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Profil</h2>
+
+<p>
+Verwalte deinen Namen und dein Profilbild.
+</p>
+
+<button class="primary"
+onclick="openProfileModal()">
+✏️ Profil bearbeiten
+</button>
 
 </div>
 
 
-<!-- ORDNER HINZUFÜGEN -->
+<div id="adminSettingsCard" class="card hidden">
+
+<h2>Administration</h2>
+
+<p>
+Erweiterte Funktionen für Administratoren.
+</p>
+
+<button class="primary"
+onclick="openAdminMode()">
+⚙️ Admin-Modus
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>Darstellung</h2>
+
+<p>
+Wähle zwischen Hell- und Dunkelmodus.
+</p>
+
+<button class="primary"
+onclick="toggleTheme()">
+☀️ Hellmodus / 🌙 Dunkelmodus
+</button>
+
+</div>
+
+</section>
+
+
+<!-- HILFE -->
+
+<section id="helpPage" class="page">
+
+<div class="page-header">
+
+<div>
+<h1>Hilfe</h1>
+<p>Hilfe für das OrdnerSystem</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>📁 OrdnerSystem</h2>
+
+<p>
+Das OrdnerSystem verwaltet Ordner, NFC-Chips,
+Kategorien und Benutzer.
+</p>
+
+<h3>📱 NFC</h3>
+
+<p>
+Wird ein programmierter NFC-Chip mit dem Handy
+gescannt, öffnet sich das OrdnerSystem automatisch
+mit dem entsprechenden Ordner.
+</p>
+
+<h3>🟢 Freier Chip</h3>
+
+<p>
+Ein grüner Chip ist frei und kann übernommen werden.
+</p>
+
+<h3>🔴 Belegter Chip</h3>
+
+<p>
+Ein roter Chip ist bereits einem Benutzer zugeordnet.
+</p>
+
+<h3>⚙️ Admin</h3>
+
+<p>
+Nur Administratoren können Ordner und Benutzer verwalten.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section id="adminPage" class="page">
+
+<div class="page-header">
+
+<div>
+<h1>Administration</h1>
+<p>Verwaltung des OrdnerSystems</p>
+</div>
+
+<span class="badge">
+Administrator
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="section-title">
+
+<h2>Aktionen</h2>
+
+<button class="gray"
+onclick="closeAdminMode()">
+Admin-Modus schließen
+</button>
+
+</div>
+
+
+<div class="admin-actions">
+
+<button class="primary"
+onclick="openAddFolder()">
+＋ Ordner hinzufügen
+</button>
+
+<button class="primary"
+onclick="openUserModal()">
+＋ Benutzer erstellen
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Benutzer</h2>
+
+<div id="usersTable" class="table-wrap"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Alle Chips</h2>
+
+<div id="adminChipsTable" class="table-wrap"></div>
+
+</div>
+
+</section>
+
+</main>
+</div>
+</div>
+
+
+<!-- ORDNER MODAL -->
 
 <div id="folderModal" class="modal hidden">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div class="modal-header">
+<div class="modal-header">
 
-            <h2>Ordner hinzufügen</h2>
+<h2 id="folderModalTitle">
+Ordner hinzufügen
+</h2>
 
-            <button class="close" onclick="closeModal('folderModal')">
-                ×
-            </button>
-
-        </div>
-
-        <div class="form-group">
-
-            <label>Ordnername</label>
-
-            <input
-                id="folderName"
-                type="text"
-                placeholder="z. B. Müller GmbH"
-            >
-
-        </div>
-
-        <div class="form-group">
-
-            <label>Kategorie</label>
-
-            <input
-                id="folderCategory"
-                type="text"
-                placeholder="z. B. Mandanten"
-            >
-
-        </div>
-
-        <div class="modal-buttons">
-
-            <button
-                class="cancel"
-                onclick="closeModal('folderModal')"
-            >
-                Abbrechen
-            </button>
-
-            <button
-                class="primary"
-                onclick="addFolder()"
-            >
-                Hinzufügen
-            </button>
-
-        </div>
-
-    </div>
+<button class="close"
+onclick="closeModal('folderModal')">
+×
+</button>
 
 </div>
 
 
-<script>
+<div class="form-group">
 
-let folders = [
-    {
-        name: "Mandanten",
-        category: "Mandanten"
-    },
-    {
-        name: "Verträge",
-        category: "Verträge"
-    },
-    {
-        name: "Rechnungen",
-        category: "Rechnungen"
-    },
-    {
-        name: "Finanzen",
-        category: "Finanzen"
-    },
-    {
-        name: "Steuern",
-        category: "Steuern"
-    },
-    {
-        name: "Personal",
-        category: "Personal"
-    }
+<label>Ordnername</label>
+
+<input
+id="folderName"
+type="text"
+placeholder="z. B. Müller GmbH">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Chip-ID</label>
+
+<input
+id="folderChipId"
+type="text"
+placeholder="z. B. 001">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Kategorie</label>
+
+<select id="folderCategory">
+
+<option value="Anwälte">⚖️ Anwälte</option>
+<option value="Verträge">📄 Verträge</option>
+<option value="Mandanten">👥 Mandanten</option>
+<option value="Rechnungen">🧾 Rechnungen</option>
+<option value="Finanzen">💰 Finanzen</option>
+<option value="Steuern">📊 Steuern</option>
+<option value="Personal">👤 Personal</option>
+<option value="Sonstiges">📦 Sonstiges</option>
+<option value="Archiv">🗄️ Archiv</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Beschreibung</label>
+
+<textarea
+id="folderDescription"
+placeholder="Optionale Beschreibung"></textarea>
+
+</div>
+
+
+<div id="nfcPreview" class="card">
+NFC-Adresse wird hier angezeigt.
+</div>
+
+
+<div class="modal-buttons">
+
+<button class="cancel"
+onclick="closeModal('folderModal')">
+Abbrechen
+</button>
+
+<button class="primary"
+onclick="saveFolder()">
+Speichern
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- PROFIL MODAL -->
+
+<div id="profileModal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2>Profil bearbeiten</h2>
+
+<button class="close"
+onclick="closeModal('profileModal')">
+×
+</button>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Name</label>
+
+<input
+id="profileNameInput"
+type="text"
+placeholder="Dein Name">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Profilbild</label>
+
+<input
+id="profileImageInput"
+type="file"
+accept="image/*">
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button class="cancel"
+onclick="closeModal('profileModal')">
+Abbrechen
+</button>
+
+<button class="primary"
+onclick="saveProfile()">
+Speichern
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- USER MODAL -->
+
+<div id="userModal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2>Benutzer erstellen</h2>
+
+<button class="close"
+onclick="closeModal('userModal')">
+×
+</button>
+
+</div>
+
+
+<div class="form-group">
+
+<label>Name</label>
+
+<input
+id="newUserName"
+type="text"
+placeholder="Max Mustermann">
+
+</div>
+
+
+<div class="form-group">
+
+<label>E-Mail</label>
+
+<input
+id="newUserEmail"
+type="email"
+placeholder="max@example.de">
+
+</div>
+
+
+<div class="form-group">
+
+<label>Passwort</label>
+
+<input
+id="newUserPassword"
+type="password"
+placeholder="Mindestens 6 Zeichen">
+
+</div>
+
+
+<div class="modal-buttons">
+
+<button class="cancel"
+onclick="closeModal('userModal')">
+Abbrechen
+</button>
+
+<button class="primary"
+onclick="createNewUser()">
+Benutzer erstellen
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- CHIP MODAL -->
+
+<div id="chipModal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2>Ordner</h2>
+
+<button class="close"
+onclick="closeModal('chipModal')">
+×
+</button>
+
+</div>
+
+<div id="chipDetails"></div>
+
+<div id="chipActions" class="modal-buttons"></div>
+
+</div>
+</div>
+
+
+<div id="toast"></div>
+
+
+<script type="module">
+
+import {
+    initializeApp,
+    getApps
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    doc,
+    addDoc,
+    setDoc,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    serverTimestamp,
+    runTransaction,
+    query,
+    where,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+
+    authDomain:
+        "ordnersystem-1352a.firebaseapp.com",
+
+    projectId:
+        "ordnersystem-1352a",
+
+    storageBucket:
+        "ordnersystem-1352a.firebasestorage.app",
+
+    messagingSenderId:
+        "39473536985",
+
+    appId:
+        "1:39473536985:web:7dae48028c28dabc6a03c8"
+};
+
+
+const app =
+    getApps().length
+    ? getApps()[0]
+    : initializeApp(firebaseConfig);
+
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+/* ==========================================
+   ADMIN-UIDs
+========================================== */
+
+const ADMIN1 =
+    "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
+
+
+/*
+   HIER später die UID des zweiten Admins
+   eintragen.
+
+   Beispiel:
+   const ADMIN2 =
+   "abc123...";
+*/
+
+const ADMIN2 =
+    "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+
+
+const categories = [
+
+    "Anwälte",
+    "Verträge",
+    "Mandanten",
+    "Rechnungen",
+    "Finanzen",
+    "Steuern",
+    "Personal",
+    "Sonstiges",
+    "Archiv"
+
 ];
 
+
+let currentUser = null;
+let currentUserData = null;
+let folders = [];
+let users = [];
 let currentCategory = null;
+let editingFolderId = null;
+let unsubscribeChips = null;
+let unsubscribeUsers = null;
+let toastTimer = null;
 
 
-/* SEITEN WECHSELN */
+const $ = id =>
+    document.getElementById(id);
 
-function showPage(id, button) {
 
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
+/* ==========================================
+   ADMIN PRÜFUNG
+========================================== */
 
-    const page = document.getElementById(id);
+function isAdmin(){
 
-    if (page) {
-        page.classList.add("active");
+    if(!currentUser){
+
+        return false;
+
     }
 
-    document.querySelectorAll(".nav-button").forEach(btn => {
-        btn.classList.remove("active");
-    });
 
-    if (button) {
-        button.classList.add("active");
+    /*
+       ADMIN ÜBER UID
+    */
+
+    if(
+        currentUser.uid === ADMIN1 ||
+        currentUser.uid === ADMIN2
+    ){
+
+        return true;
+
     }
 
-    if (id === "alleOrdner") {
-        renderFolders();
+
+    /*
+       ADMIN ÜBER FIRESTORE-ROLLE
+    */
+
+    if(
+        currentUserData &&
+        currentUserData.role === "admin"
+    ){
+
+        return true;
+
     }
+
+
+    return false;
+
 }
 
 
-/* KATEGORIE ÖFFNEN */
+/* ==========================================
+   ADMIN BUTTONS
+========================================== */
 
-function showCategory(category) {
+function updateAdminButtons(){
 
-    currentCategory = category;
+    const buttons = [
 
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
+        $("addFolderButton"),
+        $("categoryAddButton")
+
+    ];
+
+
+    buttons.forEach(button => {
+
+        if(!button)return;
+
+
+        if(isAdmin()){
+
+            button.classList.remove("hidden");
+
+        }else{
+
+            button.classList.add("hidden");
+
+        }
+
     });
 
-    document.getElementById("categoryPage").classList.add("active");
 
-    document.getElementById("categoryTitle").textContent =
+    const adminSettings =
+        $("adminSettingsCard");
+
+
+    if(adminSettings){
+
+        if(isAdmin()){
+
+            adminSettings.classList.remove("hidden");
+
+        }else{
+
+            adminSettings.classList.add("hidden");
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function toast(message){
+
+    const element =
+        $("toast");
+
+
+    element.textContent =
+        message;
+
+
+    element.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(() => {
+
+            element.classList.remove("show");
+
+        },3000);
+
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
+
+$("loginButton").addEventListener(
+    "click",
+    login
+);
+
+
+$("loginPassword").addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Enter"){
+
+            login();
+
+        }
+
+    }
+);
+
+
+async function login(){
+
+    const email =
+        $("loginEmail")
+        .value
+        .trim();
+
+
+    const password =
+        $("loginPassword")
+        .value;
+
+
+    if(!email || !password){
+
+        showLoginError(
+            "Bitte E-Mail und Passwort eingeben."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+
+        $("loginError").style.display =
+            "none";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        showLoginError(
+            "Anmeldung fehlgeschlagen. E-Mail oder Passwort prüfen."
+        );
+
+    }
+
+}
+
+
+function showLoginError(message){
+
+    const element =
+        $("loginError");
+
+
+    element.textContent =
+        message;
+
+
+    element.style.display =
+        "block";
+
+}
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+$("logoutButton").addEventListener(
+    "click",
+    async () => {
+
+        await signOut(auth);
+
+    }
+);
+
+
+/* ==========================================
+   AUTH
+========================================== */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        currentUser =
+            user;
+
+
+        if(!user){
+
+            $("app")
+                .classList
+                .add("hidden");
+
+
+            $("loginScreen")
+                .classList
+                .remove("hidden");
+
+
+            return;
+
+        }
+
+
+        $("loginScreen")
+            .classList
+            .add("hidden");
+
+
+        $("app")
+            .classList
+            .remove("hidden");
+
+
+        await loadOwnUser();
+
+
+        /*
+           WICHTIG:
+           Admin-Rolle automatisch setzen,
+           wenn UID Admin1/Admin2 ist.
+        */
+
+        if(
+            currentUser.uid === ADMIN1 ||
+            currentUser.uid === ADMIN2
+        ){
+
+            currentUserData.role =
+                "admin";
+
+        }
+
+
+        updateAdminButtons();
+
+
+        startChipListener();
+
+
+        if(isAdmin()){
+
+            $("adminSettingsCard")
+                .classList
+                .remove("hidden");
+
+
+        }else{
+
+            $("adminSettingsCard")
+                .classList
+                .add("hidden");
+
+        }
+
+
+        renderProfile();
+
+
+        checkNFCScan();
+
+    }
+);
+
+
+/* ==========================================
+   EIGENEN USER LADEN
+========================================== */
+
+async function loadOwnUser(){
+
+    const userRef =
+        doc(
+            db,
+            "users",
+            currentUser.uid
+        );
+
+
+    const snapshot =
+        await getDoc(userRef);
+
+
+    if(snapshot.exists()){
+
+        currentUserData =
+            snapshot.data();
+
+
+    }else{
+
+        const fallbackName =
+            currentUser.email
+            ? currentUser.email.split("@")[0]
+            : "Benutzer";
+
+
+        currentUserData = {
+
+            name:
+                fallbackName,
+
+            nameKey:
+                fallbackName.toLowerCase(),
+
+            email:
+                currentUser.email || "",
+
+            role:
+                (
+                    currentUser.uid === ADMIN1 ||
+                    currentUser.uid === ADMIN2
+                )
+                ? "admin"
+                : "user",
+
+            profileImageData:
+                ""
+
+        };
+
+
+        await setDoc(
+            userRef,
+            currentUserData,
+            {merge:true}
+        );
+
+    }
+
+
+    /*
+       Admin UID bekommt IMMER Admin-Rolle.
+    */
+
+    if(
+        currentUser.uid === ADMIN1 ||
+        currentUser.uid === ADMIN2
+    ){
+
+        currentUserData.role =
+            "admin";
+
+    }
+
+
+    updateHeader();
+
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+function updateHeader(){
+
+    const name =
+        currentUserData?.name ||
+        "Benutzer";
+
+
+    $("headerName").textContent =
+        name;
+
+
+    $("headerRole").textContent =
+        isAdmin()
+        ? "Administrator"
+        : "Benutzer";
+
+
+    const avatar =
+        $("headerAvatar");
+
+
+    if(
+        currentUserData?.profileImageData
+    ){
+
+        avatar.innerHTML =
+
+            `<img src="${currentUserData.profileImageData}" alt="Profilbild">`;
+
+    }else{
+
+        avatar.textContent =
+            name
+            .charAt(0)
+            .toUpperCase();
+
+    }
+
+}
+
+
+/* ==========================================
+   CHIPS / ORDNER LISTENER
+========================================== */
+
+function startChipListener(){
+
+    if(unsubscribeChips){
+
+        unsubscribeChips();
+
+    }
+
+
+    unsubscribeChips =
+
+        onSnapshot(
+
+            collection(db,"chips"),
+
+            snapshot => {
+
+                folders =
+                    snapshot.docs.map(
+                        item => ({
+
+                            id:item.id,
+
+                            ...item.data()
+
+                        })
+                    );
+
+
+                folders.sort(
+                    (a,b) =>
+
+                        (a.name || "")
+                        .localeCompare(
+                            b.name || "",
+                            "de"
+                        )
+                );
+
+
+                renderFolders();
+
+
+                if(currentCategory){
+
+                    renderCategory();
+
+                }
+
+
+                renderLastScan();
+
+
+                if(isAdmin()){
+
+                    renderAdminChips();
+
+                }
+
+            },
+
+            error => {
+
+                console.error(error);
+
+
+                toast(
+                    "Ordner konnten nicht geladen werden."
+                );
+
+            }
+
+        );
+
+}
+
+
+/* ==========================================
+   USER LISTENER
+========================================== */
+
+function startUserListener(){
+
+    if(!isAdmin()){
+
+        return;
+
+    }
+
+
+    if(unsubscribeUsers){
+
+        unsubscribeUsers();
+
+    }
+
+
+    unsubscribeUsers =
+
+        onSnapshot(
+
+            collection(db,"users"),
+
+            snapshot => {
+
+                users =
+                    snapshot.docs.map(
+                        item => ({
+
+                            id:item.id,
+
+                            ...item.data()
+
+                        })
+                    );
+
+
+                users.sort(
+                    (a,b) =>
+
+                        (a.name || "")
+                        .localeCompare(
+                            b.name || "",
+                            "de"
+                        )
+                );
+
+
+                renderUsers();
+
+            },
+
+            error => {
+
+                console.error(error);
+
+            }
+
+        );
+
+}
+
+
+/* ==========================================
+   SEITE
+========================================== */
+
+function showPage(id,button){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
+
+    const page =
+        $(id);
+
+
+    if(page){
+
+        page.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+
+    if(id === "alleOrdner"){
+
+        renderFolders();
+
+    }
+
+
+    if(id === "letzterScan"){
+
+        renderLastScan();
+
+    }
+
+
+    if(id === "profilePage"){
+
+        renderProfile();
+
+    }
+
+}
+
+
+/* ==========================================
+   KATEGORIE
+========================================== */
+
+function showCategory(category){
+
+    currentCategory =
+        category;
+
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
+
+            page.classList.remove("active");
+
+        });
+
+
+    $("categoryPage")
+        .classList
+        .add("active");
+
+
+    $("categoryTitle").textContent =
         "📁 " + category;
 
-    document.getElementById("categoryDescription").textContent =
-        "Ordner in der Kategorie " + category;
+
+    $("categoryDescription").textContent =
+        "Ordner in der Kategorie " +
+        category;
+
+
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+
+    updateAdminButtons();
+
 
     renderCategory();
 
-    document.querySelectorAll(".nav-button").forEach(btn => {
-        btn.classList.remove("active");
-    });
 }
 
 
-/* ORDNER ANZEIGEN */
+/* ==========================================
+   ORDNER RENDERN
+========================================== */
 
-function renderFolders() {
+function renderFolders(){
 
-    const grid = document.getElementById("folderGrid");
+    const grid =
+        $("folderGrid");
+
+
+    if(!grid)return;
+
+
+    const search =
+        (
+            $("search").value || ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        folders.filter(folder => {
+
+            const name =
+                (folder.name || "")
+                .toLowerCase();
+
+
+            const category =
+                (folder.category || "")
+                .toLowerCase();
+
+
+            return(
+                name.includes(search) ||
+                category.includes(search)
+            );
+
+        });
+
 
     grid.innerHTML = "";
 
-    if (folders.length === 0) {
+
+    if(!filtered.length){
 
         grid.innerHTML = `
+
             <div class="empty">
-                Noch keine Ordner vorhanden.
-            </div>
-        `;
 
-        return;
-    }
-
-    folders.forEach((folder, index) => {
-
-        grid.innerHTML += createFolderHTML(folder, index);
-
-    });
-}
-
-
-/* KATEGORIE ANZEIGEN */
-
-function renderCategory() {
-
-    const grid = document.getElementById("categoryGrid");
-
-    grid.innerHTML = "";
-
-    const filtered = folders.filter(folder =>
-        folder.category.toLowerCase() === currentCategory.toLowerCase()
-    );
-
-    if (filtered.length === 0) {
-
-        grid.innerHTML = `
-            <div class="empty">
                 📁<br><br>
-                Noch keine Ordner in dieser Kategorie.
+
+                Noch keine passenden Ordner vorhanden.
+
             </div>
+
         `;
 
         return;
+
     }
 
-    filtered.forEach((folder, index) => {
 
-        grid.innerHTML += createFolderHTML(folder, index);
+    filtered.forEach(folder => {
+
+        grid.insertAdjacentHTML(
+            "beforeend",
+            createFolderHTML(folder)
+        );
 
     });
+
 }
 
 
-/* ORDNER HTML */
+/* ==========================================
+   KATEGORIE RENDERN
+========================================== */
 
-function createFolderHTML(folder, index) {
+function renderCategory(){
+
+    const grid =
+        $("categoryGrid");
+
+
+    if(!grid)return;
+
+
+    const filtered =
+        folders.filter(folder =>
+
+            (folder.category || "")
+            .toLowerCase() ===
+            currentCategory.toLowerCase()
+
+        );
+
+
+    grid.innerHTML = "";
+
+
+    if(!filtered.length){
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                📁<br><br>
+
+                Noch keine Ordner in dieser Kategorie.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(folder => {
+
+        grid.insertAdjacentHTML(
+            "beforeend",
+            createFolderHTML(folder)
+        );
+
+    });
+
+}
+
+
+/* ==========================================
+   ORDNER HTML
+========================================== */
+
+function createFolderHTML(folder){
+
+    const busy =
+        !!folder.claimedBy;
+
 
     return `
+
         <div
             class="folder"
-            onclick="openFolder('${escapeHTML(folder.name)}')"
+            onclick="openFolder('${escapeJS(folder.id)}')"
         >
 
             <div class="folder-icon">
                 📁
             </div>
 
-            <h3>${escapeHTML(folder.name)}</h3>
+            <h3>
+                ${escapeHTML(folder.name || "Ohne Namen")}
+            </h3>
 
-            <p>${escapeHTML(folder.category)}</p>
+            <p>
+                ${escapeHTML(folder.category || "Sonstiges")}
+            </p>
+
+            <div class="status ${busy ? "busy" : "free"}">
+
+                ${busy ? "🔴 Belegt" : "🟢 Frei"}
+
+            </div>
+
+            ${
+                folder.lastScanName
+                ?
+                `
+
+                    <div class="last-user">
+
+                        Letzter Scan:
+                        ${escapeHTML(folder.lastScanName)}
+
+                    </div>
+
+                `
+                :
+                ""
+            }
 
         </div>
+
     `;
+
 }
 
 
-/* ORDNER ÖFFNEN */
+/* ==========================================
+   ORDNER ÖFFNEN
+========================================== */
 
-function openFolder(name) {
+function openFolder(id){
 
-    alert(
-        "Ordner „" +
-        name +
-        "“ wurde geöffnet."
-    );
-}
-
-
-/* ORDNER HINZUFÜGEN */
-
-function openAddFolder() {
-
-    document.getElementById("folderName").value = "";
-
-    document.getElementById("folderCategory").value =
-        currentCategory || "";
-
-    document
-        .getElementById("folderModal")
-        .classList.remove("hidden");
-}
+    const folder =
+        folders.find(
+            item => item.id === id
+        );
 
 
-/* ORDNER SPEICHERN */
+    if(!folder)return;
 
-function addFolder() {
 
-    const name =
-        document.getElementById("folderName").value.trim();
+    $("chipDetails").innerHTML = `
 
-    const category =
-        document.getElementById("folderCategory").value.trim();
+        <div class="profile-large">
 
-    if (!name) {
+            <div style="font-size:55px">
+                📁
+            </div>
 
-        alert("Bitte einen Ordnernamen eingeben.");
+            <div>
 
-        return;
+                <h2 style="margin:0">
+                    ${escapeHTML(folder.name || "")}
+                </h2>
+
+                <p>
+                    ${escapeHTML(folder.category || "")}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <strong>Chip-ID:</strong><br>
+
+            ${escapeHTML(folder.chipId || "Keine Chip-ID")}
+
+            <br><br>
+
+            <strong>Status:</strong><br>
+
+            ${folder.claimedBy
+                ? "🔴 Belegt"
+                : "🟢 Frei"
+            }
+
+            <br><br>
+
+            <strong>Beschreibung:</strong><br>
+
+            ${escapeHTML(
+                folder.description ||
+                "Keine Beschreibung"
+            )}
+
+            ${
+                folder.claimedByName
+                ?
+                `
+
+                    <br><br>
+
+                    <strong>Übernommen von:</strong><br>
+
+                    ${escapeHTML(
+                        folder.claimedByName
+                    )}
+
+                `
+                :
+                ""
+            }
+
+        </div>
+
+    `;
+
+
+    let actions = "";
+
+
+    /* CHIP FREI */
+
+    if(!folder.claimedBy){
+
+        actions += `
+
+            <button
+                class="success"
+                onclick="claimFolder('${escapeJS(folder.id)}')"
+            >
+                Chip übernehmen
+            </button>
+
+        `;
+
     }
 
-    if (!category) {
 
-        alert("Bitte eine Kategorie eingeben.");
+    /* CHIP BELEGT */
 
-        return;
-    }
+    else{
 
-    folders.push({
-        name: name,
-        category: category
-    });
+        if(
+            folder.claimedBy === currentUser?.uid ||
+            isAdmin()
+        ){
 
-    closeModal("folderModal");
+            actions += `
 
-    if (currentCategory) {
+                <button
+                    class="gray"
+                    onclick="releaseFolder('${escapeJS(folder.id)}')"
+                >
+                    Freigeben
+                </button>
 
-        renderCategory();
-
-    } else {
-
-        renderFolders();
-
-    }
-}
-
-
-/* SUCHE */
-
-function searchFolders() {
-
-    const search =
-        document
-            .getElementById("search")
-            .value
-            .toLowerCase();
-
-    const grid =
-        document.getElementById("folderGrid");
-
-    grid.innerHTML = "";
-
-    folders
-        .filter(folder =>
-            folder.name.toLowerCase().includes(search) ||
-            folder.category.toLowerCase().includes(search)
-        )
-        .forEach((folder, index) => {
-
-            grid.innerHTML += createFolderHTML(folder, index);
-
-        });
-}
-
-
-/* MODAL SCHLIESSEN */
-
-function closeModal(id) {
-
-    const modal = document.getElementById(id);
-
-    if (modal) {
-        modal.classList.add("hidden");
-    }
-}
-
-
-/* EINSTELLUNGEN */
-
-function openSettings() {
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document
-        .getElementById("settings")
-        .classList.add("active");
-
-    document.querySelectorAll(".nav-button").forEach(btn => {
-        btn.classList.remove("active");
-    });
-}
-
-
-/* DARK MODE */
-
-function toggleTheme() {
-
-    document.body.classList.toggle("dark");
-
-    localStorage.setItem(
-        "darkMode",
-        document.body.classList.contains("dark")
-    );
-}
-
-
-/* ESC = FENSTER SCHLIESSEN */
-
-document.addEventListener("keydown", function(event) {
-
-    if (event.key !== "Escape") {
-        return;
-    }
-
-    document
-        .querySelectorAll(".modal")
-        .forEach(modal => {
-
-            modal.classList.add("hidden");
-
-        });
-
-});
-
-
-/* KLICK AUF HINTERGRUND = SCHLIESSEN */
-
-document.querySelectorAll(".modal").forEach(modal => {
-
-    modal.addEventListener("click", function(event) {
-
-        if (event.target === modal) {
-
-            modal.classList.add("hidden");
+            `;
 
         }
 
+    }
+
+
+    /* ADMIN AKTIONEN */
+
+    if(isAdmin()){
+
+        actions += `
+
+            <button
+                class="primary"
+                onclick="editFolder('${escapeJS(folder.id)}')"
+            >
+                ✏️ Bearbeiten
+            </button>
+
+            <button
+                class="danger"
+                onclick="deleteFolder('${escapeJS(folder.id)}')"
+            >
+                🗑️ Löschen
+            </button>
+
+        `;
+
+    }
+
+
+    $("chipActions").innerHTML =
+        actions;
+
+
+    $("chipModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* ==========================================
+   CHIP ÜBERNEHMEN
+========================================== */
+
+async function claimFolder(id){
+
+    if(!currentUser)return;
+
+
+    const ref =
+        doc(
+            db,
+            "chips",
+            id
+        );
+
+
+    try{
+
+        await runTransaction(
+            db,
+            async transaction => {
+
+                const snapshot =
+                    await transaction.get(ref);
+
+
+                if(!snapshot.exists()){
+
+                    throw new Error(
+                        "NOT_FOUND"
+                    );
+
+                }
+
+
+                const data =
+                    snapshot.data();
+
+
+                if(
+                    data.claimedBy &&
+                    data.claimedBy !== currentUser.uid
+                ){
+
+                    throw new Error(
+                        "ALREADY_CLAIMED"
+                    );
+
+                }
+
+
+                transaction.update(
+                    ref,
+                    {
+
+                        claimedBy:
+                            currentUser.uid,
+
+                        claimedByName:
+                            currentUserData?.name ||
+                            currentUser.email ||
+                            "Benutzer",
+
+                        claimedAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+            }
+        );
+
+
+        closeModal("chipModal");
+
+
+        toast(
+            "Chip wurde übernommen."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        if(
+            error.message ===
+            "ALREADY_CLAIMED"
+        ){
+
+            toast(
+                "Dieser Chip ist bereits belegt."
+            );
+
+        }else{
+
+            toast(
+                "Chip konnte nicht übernommen werden."
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================
+   FREIGEBEN
+========================================== */
+
+async function releaseFolder(id){
+
+    const folder =
+        folders.find(
+            item => item.id === id
+        );
+
+
+    if(!folder)return;
+
+
+    if(
+        folder.claimedBy &&
+        folder.claimedBy !== currentUser?.uid &&
+        !isAdmin()
+    ){
+
+        toast(
+            "Du kannst diesen Chip nicht freigeben."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "chips",
+                id
+            ),
+            {
+
+                claimedBy:null,
+
+                claimedByName:null,
+
+                claimedAt:null
+
+            }
+        );
+
+
+        closeModal("chipModal");
+
+
+        toast(
+            "Chip wurde freigegeben."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        toast(
+            "Chip konnte nicht freigegeben werden."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   ORDNER HINZUFÜGEN
+========================================== */
+
+function openAddFolder(){
+
+    /*
+       GANZ WICHTIG:
+       Nur Admins dürfen das Fenster öffnen.
+    */
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren können Ordner hinzufügen."
+        );
+
+        return;
+
+    }
+
+
+    editingFolderId =
+        null;
+
+
+    $("folderModalTitle")
+        .textContent =
+        "Ordner hinzufügen";
+
+
+    $("folderName").value =
+        "";
+
+
+    $("folderChipId").value =
+        "";
+
+
+    $("folderCategory").value =
+        currentCategory ||
+        "Mandanten";
+
+
+    $("folderDescription").value =
+        "";
+
+
+    updateNFCPreview();
+
+
+    $("folderModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* ==========================================
+   NFC PREVIEW
+========================================== */
+
+$("folderChipId")
+    .addEventListener(
+        "input",
+        updateNFCPreview
+    );
+
+
+function updateNFCPreview(){
+
+    const chip =
+        $("folderChipId")
+        .value
+        .trim();
+
+
+    const base =
+        window.location.origin +
+        window.location.pathname;
+
+
+    $("nfcPreview").innerHTML =
+
+        chip
+
+        ?
+
+        `
+
+            <strong>📱 NFC-Adresse</strong>
+
+            <br><br>
+
+            <span style="word-break:break-all">
+
+                ${escapeHTML(
+                    base + "?chip=" + chip
+                )}
+
+            </span>
+
+        `
+
+        :
+
+        `
+
+            <strong>📱 NFC-Adresse</strong>
+
+            <br><br>
+
+            Chip-ID eingeben.
+
+        `;
+
+}
+
+
+/* ==========================================
+   ORDNER SPEICHERN
+========================================== */
+
+async function saveFolder(){
+
+    console.log(
+        "========== ORDNER SPEICHERN =========="
+    );
+
+
+    console.log(
+        "UID:",
+        currentUser?.uid
+    );
+
+
+    console.log(
+        "Admin:",
+        isAdmin()
+    );
+
+
+    console.log(
+        "User:",
+        currentUserData
+    );
+
+
+    /*
+       SICHERHEIT:
+       Nur Admin.
+    */
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren können Ordner erstellen oder ändern."
+        );
+
+        return;
+
+    }
+
+
+    const name =
+        $("folderName")
+        .value
+        .trim();
+
+
+    const chipId =
+        $("folderChipId")
+        .value
+        .trim();
+
+
+    const category =
+        $("folderCategory")
+        .value;
+
+
+    const description =
+        $("folderDescription")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        toast(
+            "Bitte einen Ordnernamen eingeben."
+        );
+
+        return;
+
+    }
+
+
+    if(!chipId){
+
+        toast(
+            "Bitte eine Chip-ID eingeben."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        /*
+           Prüfen, ob Chip-ID bereits existiert.
+        */
+
+        const duplicateQuery =
+            query(
+                collection(db,"chips"),
+                where(
+                    "chipId",
+                    "==",
+                    chipId
+                )
+            );
+
+
+        const duplicateSnapshot =
+            await getDocs(
+                duplicateQuery
+            );
+
+
+        const duplicate =
+            duplicateSnapshot.docs.find(
+                item =>
+                    item.id !==
+                    editingFolderId
+            );
+
+
+        if(duplicate){
+
+            toast(
+                "Diese Chip-ID existiert bereits."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           BEARBEITEN
+        */
+
+        if(editingFolderId){
+
+            await updateDoc(
+
+                doc(
+                    db,
+                    "chips",
+                    editingFolderId
+                ),
+
+                {
+
+                    name:name,
+
+                    chipId:chipId,
+
+                    category:category,
+
+                    description:description,
+
+                    updatedAt:
+                        serverTimestamp(),
+
+                    updatedBy:
+                        currentUser.uid
+
+                }
+
+            );
+
+
+            toast(
+                "✅ Ordner wurde geändert."
+            );
+
+        }
+
+
+        /*
+           NEU ERSTELLEN
+        */
+
+        else{
+
+            const newFolder = {
+
+                name:name,
+
+                chipId:chipId,
+
+                category:category,
+
+                description:description,
+
+                claimedBy:null,
+
+                claimedByName:null,
+
+                claimedAt:null,
+
+                lastScanBy:null,
+
+                lastScanName:null,
+
+                lastScanImage:"",
+
+                lastScanAt:null,
+
+                createdAt:
+                    serverTimestamp(),
+
+                createdBy:
+                    currentUser.uid,
+
+                createdByName:
+                    currentUserData?.name ||
+                    currentUser.email ||
+                    "Administrator"
+
+            };
+
+
+            console.log(
+                "Neuer Ordner:",
+                newFolder
+            );
+
+
+            const result =
+                await addDoc(
+                    collection(db,"chips"),
+                    newFolder
+                );
+
+
+            console.log(
+                "Ordner erstellt:",
+                result.id
+            );
+
+
+            toast(
+                "✅ Ordner wurde hinzugefügt."
+            );
+
+        }
+
+
+        closeModal(
+            "folderModal"
+        );
+
+
+        editingFolderId =
+            null;
+
+
+    }catch(error){
+
+        console.error(
+            "FIREBASE FEHLER:",
+            error
+        );
+
+
+        if(
+            error.code ===
+            "permission-denied"
+        ){
+
+            toast(
+                "❌ Firebase verweigert das Speichern."
+            );
+
+
+            alert(
+
+                "Firebase verweigert das Erstellen des Ordners.\n\n" +
+
+                "Der Code erkennt dich als Admin, " +
+
+                "aber die Firestore-Regeln erlauben " +
+
+                "das Speichern nicht."
+
+            );
+
+
+            return;
+
+        }
+
+
+        toast(
+
+            "❌ Fehler: " +
+            (
+                error.message ||
+                "Unbekannter Fehler"
+            )
+
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   BEARBEITEN
+========================================== */
+
+function editFolder(id){
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren dürfen Ordner bearbeiten."
+        );
+
+        return;
+
+    }
+
+
+    const folder =
+        folders.find(
+            item => item.id === id
+        );
+
+
+    if(!folder)return;
+
+
+    editingFolderId =
+        id;
+
+
+    $("folderModalTitle")
+        .textContent =
+        "Ordner bearbeiten";
+
+
+    $("folderName").value =
+        folder.name || "";
+
+
+    $("folderChipId").value =
+        folder.chipId || "";
+
+
+    $("folderCategory").value =
+        categories.includes(
+            folder.category
+        )
+        ? folder.category
+        : "Sonstiges";
+
+
+    $("folderDescription").value =
+        folder.description || "";
+
+
+    updateNFCPreview();
+
+
+    closeModal(
+        "chipModal"
+    );
+
+
+    $("folderModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* ==========================================
+   LÖSCHEN
+========================================== */
+
+async function deleteFolder(id){
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren dürfen Ordner löschen."
+        );
+
+        return;
+
+    }
+
+
+    const folder =
+        folders.find(
+            item => item.id === id
+        );
+
+
+    if(!folder)return;
+
+
+    if(
+        !confirm(
+            `Ordner „${folder.name}“ wirklich löschen?`
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "chips",
+                id
+            )
+        );
+
+
+        closeModal(
+            "chipModal"
+        );
+
+
+        toast(
+            "Ordner wurde gelöscht."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        toast(
+            "Ordner konnte nicht gelöscht werden."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   SUCHE
+========================================== */
+
+function searchFolders(){
+
+    renderFolders();
+
+}
+
+
+/* ==========================================
+   PROFIL
+========================================== */
+
+function openProfilePage(){
+
+    showPage(
+        "profilePage"
+    );
+
+
+    renderProfile();
+
+}
+
+
+function renderProfile(){
+
+    if(!currentUserData)return;
+
+
+    const name =
+        currentUserData.name ||
+        "Benutzer";
+
+
+    $("profileContent").innerHTML = `
+
+        <div class="profile-large">
+
+            <div class="profile-large-avatar">
+
+                ${
+                    currentUserData.profileImageData
+
+                    ?
+
+                    `
+
+                        <img
+                            src="${currentUserData.profileImageData}"
+                            alt="Profilbild"
+                        >
+
+                    `
+
+                    :
+
+                    escapeHTML(
+                        name
+                        .charAt(0)
+                        .toUpperCase()
+                    )
+
+                }
+
+            </div>
+
+
+            <div>
+
+                <h2 style="margin:0">
+
+                    ${escapeHTML(name)}
+
+                </h2>
+
+
+                <p>
+
+                    ${escapeHTML(
+                        currentUserData.email ||
+                        currentUser?.email ||
+                        ""
+                    )}
+
+                </p>
+
+
+                <span class="badge">
+
+                    ${
+                        isAdmin()
+                        ? "Administrator"
+                        : "Benutzer"
+                    }
+
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================
+   PROFIL MODAL
+========================================== */
+
+function openProfileModal(){
+
+    $("profileNameInput").value =
+        currentUserData?.name || "";
+
+
+    $("profileImageInput").value =
+        "";
+
+
+    $("profileModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* ==========================================
+   PROFIL SPEICHERN
+========================================== */
+
+async function saveProfile(){
+
+    const name =
+        $("profileNameInput")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        toast(
+            "Bitte einen Namen eingeben."
+        );
+
+        return;
+
+    }
+
+
+    const nameKey =
+        name.toLowerCase();
+
+
+    try{
+
+        const nameQuery =
+            query(
+                collection(db,"users"),
+                where(
+                    "nameKey",
+                    "==",
+                    nameKey
+                )
+            );
+
+
+        const nameSnapshot =
+            await getDocs(
+                nameQuery
+            );
+
+
+        const duplicate =
+            nameSnapshot.docs.find(
+                item =>
+                    item.id !==
+                    currentUser.uid
+            );
+
+
+        if(duplicate){
+
+            toast(
+                "Dieser Name wird bereits verwendet."
+            );
+
+            return;
+
+        }
+
+
+        let image =
+            currentUserData?.profileImageData ||
+            "";
+
+
+        const file =
+            $("profileImageInput")
+            .files[0];
+
+
+        if(file){
+
+            image =
+                await compressImage(file);
+
+        }
+
+
+        await setDoc(
+
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            ),
+
+            {
+
+                name:name,
+
+                nameKey:nameKey,
+
+                email:
+                    currentUser.email || "",
+
+                role:
+                    isAdmin()
+                    ? "admin"
+                    : "user",
+
+                profileImageData:
+                    image
+
+            },
+
+            {
+                merge:true
+            }
+
+        );
+
+
+        currentUserData = {
+
+            ...currentUserData,
+
+            name:name,
+
+            nameKey:nameKey,
+
+            profileImageData:image
+
+        };
+
+
+        updateHeader();
+
+        renderProfile();
+
+
+        closeModal(
+            "profileModal"
+        );
+
+
+        toast(
+            "Profil wurde gespeichert."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        toast(
+            "Profil konnte nicht gespeichert werden."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   BILD KOMPRIMIEREN
+========================================== */
+
+function compressImage(file){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                event => {
+
+                    const image =
+                        new Image();
+
+
+                    image.onload =
+                        () => {
+
+                            const max =
+                                500;
+
+
+                            let width =
+                                image.width;
+
+
+                            let height =
+                                image.height;
+
+
+                            if(width > max){
+
+                                height =
+                                    height *
+                                    max /
+                                    width;
+
+                                width =
+                                    max;
+
+                            }
+
+
+                            if(height > max){
+
+                                width =
+                                    width *
+                                    max /
+                                    height;
+
+                                height =
+                                    max;
+
+                            }
+
+
+                            const canvas =
+                                document.createElement(
+                                    "canvas"
+                                );
+
+
+                            canvas.width =
+                                Math.round(width);
+
+
+                            canvas.height =
+                                Math.round(height);
+
+
+                            const ctx =
+                                canvas.getContext(
+                                    "2d"
+                                );
+
+
+                            ctx.drawImage(
+
+                                image,
+
+                                0,
+
+                                0,
+
+                                canvas.width,
+
+                                canvas.height
+
+                            );
+
+
+                            resolve(
+
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    .75
+                                )
+
+                            );
+
+                        };
+
+
+                    image.onerror =
+                        reject;
+
+
+                    image.src =
+                        event.target.result;
+
+                };
+
+
+            reader.onerror =
+                reject;
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================
+   SETTINGS
+========================================== */
+
+function openSettings(){
+
+    showPage(
+        "settings"
+    );
+
+}
+
+
+/* ==========================================
+   HELP
+========================================== */
+
+function openHelp(){
+
+    showPage(
+        "helpPage"
+    );
+
+}
+
+
+/* ==========================================
+   ADMIN
+========================================== */
+
+function openAdminMode(){
+
+    if(!isAdmin()){
+
+        toast(
+            "Keine Administratorrechte."
+        );
+
+        return;
+
+    }
+
+
+    showPage(
+        "adminPage"
+    );
+
+
+    startUserListener();
+
+
+    renderUsers();
+
+    renderAdminChips();
+
+}
+
+
+/* ==========================================
+   ADMIN SCHLIESSEN
+========================================== */
+
+function closeAdminMode(){
+
+    showPage(
+        "alleOrdner"
+    );
+
+}
+
+
+/* ==========================================
+   USER MODAL
+========================================== */
+
+function openUserModal(){
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren können Benutzer erstellen."
+        );
+
+        return;
+
+    }
+
+
+    $("newUserName").value =
+        "";
+
+
+    $("newUserEmail").value =
+        "";
+
+
+    $("newUserPassword").value =
+        "";
+
+
+    $("userModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* ==========================================
+   USER ERSTELLEN
+========================================== */
+
+async function createNewUser(){
+
+    if(!isAdmin()){
+
+        toast(
+            "Nur Administratoren können Benutzer erstellen."
+        );
+
+        return;
+
+    }
+
+
+    const name =
+        $("newUserName")
+        .value
+        .trim();
+
+
+    const email =
+        $("newUserEmail")
+        .value
+        .trim();
+
+
+    const password =
+        $("newUserPassword")
+        .value;
+
+
+    if(!name || !email || !password){
+
+        toast(
+            "Bitte alle Felder ausfüllen."
+        );
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        toast(
+            "Das Passwort muss mindestens 6 Zeichen haben."
+        );
+
+        return;
+
+    }
+
+
+    const nameKey =
+        name.toLowerCase();
+
+
+    try{
+
+        const nameQuery =
+            query(
+                collection(db,"users"),
+                where(
+                    "nameKey",
+                    "==",
+                    nameKey
+                )
+            );
+
+
+        const nameSnapshot =
+            await getDocs(
+                nameQuery
+            );
+
+
+        if(!nameSnapshot.empty){
+
+            toast(
+                "Dieser Name wird bereits verwendet."
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Zweite Firebase-App,
+           damit der Admin eingeloggt bleibt.
+        */
+
+        const appName =
+            "UserCreationApp";
+
+
+        let secondaryApp =
+            getApps().find(
+                item =>
+                    item.name ===
+                    appName
+            );
+
+
+        if(!secondaryApp){
+
+            secondaryApp =
+                initializeApp(
+                    firebaseConfig,
+                    appName
+                );
+
+        }
+
+
+        const secondaryAuth =
+            getAuth(
+                secondaryApp
+            );
+
+
+        const result =
+            await createUserWithEmailAndPassword(
+
+                secondaryAuth,
+
+                email,
+
+                password
+
+            );
+
+
+        const newUid =
+            result.user.uid;
+
+
+        await setDoc(
+
+            doc(
+                db,
+                "users",
+                newUid
+            ),
+
+            {
+
+                name:name,
+
+                nameKey:nameKey,
+
+                email:email,
+
+                role:"user",
+
+                profileImageData:"",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+
+        );
+
+
+        await signOut(
+            secondaryAuth
+        );
+
+
+        closeModal(
+            "userModal"
+        );
+
+
+        toast(
+            "Benutzer wurde erstellt."
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        let message =
+            "Benutzer konnte nicht erstellt werden.";
+
+
+        if(
+            error.code ===
+            "auth/email-already-in-use"
+        ){
+
+            message =
+                "Diese E-Mail-Adresse existiert bereits.";
+
+        }
+
+
+        if(
+            error.code ===
+            "auth/invalid-email"
+        ){
+
+            message =
+                "Die E-Mail-Adresse ist ungültig.";
+
+        }
+
+
+        toast(
+            message
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   USER TABELLE
+========================================== */
+
+function renderUsers(){
+
+    const container =
+        $("usersTable");
+
+
+    if(!container)return;
+
+
+    if(!users.length){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                Noch keine Benutzer vorhanden.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>E-Mail</th>
+
+                    <th>Rolle</th>
+
+                    <th>UID</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${
+                    users.map(user => `
+
+                        <tr>
+
+                            <td>
+                                ${escapeHTML(
+                                    user.name || ""
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHTML(
+                                    user.email || ""
+                                )}
+                            </td>
+
+                            <td>
+
+                                ${
+                                    user.role === "admin"
+                                    ? "Administrator"
+                                    : "Benutzer"
+                                }
+
+                            </td>
+
+                            <td>
+
+                                <small>
+
+                                    ${escapeHTML(
+                                        user.id
+                                    )}
+
+                                </small>
+
+                            </td>
+
+                        </tr>
+
+                    `).join("")
+                }
+
+            </tbody>
+
+        </table>
+
+    `;
+
+}
+
+
+/* ==========================================
+   ADMIN CHIP TABELLE
+========================================== */
+
+function renderAdminChips(){
+
+    const container =
+        $("adminChipsTable");
+
+
+    if(!container)return;
+
+
+    if(!folders.length){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                Noch keine Chips vorhanden.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Ordner</th>
+
+                    <th>Chip-ID</th>
+
+                    <th>Kategorie</th>
+
+                    <th>Status</th>
+
+                    <th>Aktion</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${
+                    folders.map(folder => `
+
+                        <tr>
+
+                            <td>
+
+                                ${escapeHTML(
+                                    folder.name || ""
+                                )}
+
+                            </td>
+
+                            <td>
+
+                                ${escapeHTML(
+                                    folder.chipId || ""
+                                )}
+
+                            </td>
+
+                            <td>
+
+                                ${escapeHTML(
+                                    folder.category || ""
+                                )}
+
+                            </td>
+
+                            <td>
+
+                                ${
+                                    folder.claimedBy
+                                    ? "🔴 Belegt"
+                                    : "🟢 Frei"
+                                }
+
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="gray"
+                                    onclick="openFolder('${escapeJS(folder.id)}')"
+                                >
+
+                                    Öffnen
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+                    `).join("")
+                }
+
+            </tbody>
+
+        </table>
+
+    `;
+
+}
+
+
+/* ==========================================
+   LETZTER SCAN
+========================================== */
+
+function renderLastScan(){
+
+    const container =
+        $("lastScanContent");
+
+
+    if(!container)return;
+
+
+    const scanned =
+        folders
+
+        .filter(
+            folder =>
+                folder.lastScanAt
+        )
+
+        .sort(
+            (a,b) =>
+                timestampValue(
+                    b.lastScanAt
+                )
+                -
+                timestampValue(
+                    a.lastScanAt
+                )
+        )[0];
+
+
+    if(!scanned){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                📱<br><br>
+
+                Noch kein NFC-Scan vorhanden.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = `
+
+        <h2>
+
+            📁
+            ${escapeHTML(
+                scanned.name || ""
+            )}
+
+        </h2>
+
+
+        <p>
+
+            Kategorie:
+
+            <strong>
+
+                ${escapeHTML(
+                    scanned.category || ""
+                )}
+
+            </strong>
+
+        </p>
+
+
+        <p>
+
+            Chip-ID:
+
+            <strong>
+
+                ${escapeHTML(
+                    scanned.chipId || ""
+                )}
+
+            </strong>
+
+        </p>
+
+
+        ${
+            scanned.lastScanName
+            ?
+
+            `
+
+                <div class="scan-user">
+
+                    <div class="avatar">
+
+                        ${
+                            scanned.lastScanImage
+
+                            ?
+
+                            `
+
+                                <img
+                                    src="${scanned.lastScanImage}"
+                                    alt=""
+                                >
+
+                            `
+
+                            :
+
+                            escapeHTML(
+                                scanned.lastScanName
+                                .charAt(0)
+                                .toUpperCase()
+                            )
+
+                        }
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+
+                            ${escapeHTML(
+                                scanned.lastScanName
+                            )}
+
+                        </strong>
+
+
+                        <div style="color:#888">
+
+                            Zuletzt gescannt
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `
+
+            :
+
+            ""
+
+        }
+
+
+        <br>
+
+
+        <button
+            class="primary"
+            onclick="openFolder('${escapeJS(scanned.id)}')"
+        >
+
+            Ordner öffnen
+
+        </button>
+
+    `;
+
+}
+
+
+/* ==========================================
+   TIMESTAMP
+========================================== */
+
+function timestampValue(timestamp){
+
+    if(!timestamp)return 0;
+
+
+    if(
+        typeof timestamp.toMillis ===
+        "function"
+    ){
+
+        return timestamp.toMillis();
+
+    }
+
+
+    if(
+        timestamp.seconds !==
+        undefined
+    ){
+
+        return timestamp.seconds * 1000;
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================
+   NFC
+========================================== */
+
+async function checkNFCScan(){
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const chipId =
+        params.get("chip");
+
+
+    if(!chipId)return;
+
+
+    const cleaned =
+        chipId.trim();
+
+
+    if(!cleaned)return;
+
+
+    try{
+
+        const chipQuery =
+            query(
+                collection(db,"chips"),
+                where(
+                    "chipId",
+                    "==",
+                    cleaned
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                chipQuery
+            );
+
+
+        if(snapshot.empty){
+
+            toast(
+                "Dieser NFC-Chip ist nicht registriert."
+            );
+
+            return;
+
+        }
+
+
+        const chipDocument =
+            snapshot.docs[0];
+
+
+        const chipRef =
+            chipDocument.ref;
+
+
+        await runTransaction(
+
+            db,
+
+            async transaction => {
+
+                const chipSnapshot =
+                    await transaction.get(
+                        chipRef
+                    );
+
+
+                if(
+                    !chipSnapshot.exists()
+                ){
+
+                    throw new Error(
+                        "CHIP_NOT_FOUND"
+                    );
+
+                }
+
+
+                transaction.update(
+
+                    chipRef,
+
+                    {
+
+                        lastScanBy:
+                            currentUser.uid,
+
+                        lastScanName:
+                            currentUserData?.name ||
+                            currentUser.email ||
+                            "Benutzer",
+
+                        lastScanImage:
+                            currentUserData?.profileImageData ||
+                            "",
+
+                        lastScanAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+            }
+
+        );
+
+
+        setTimeout(
+            () => {
+
+                openFolder(
+                    chipDocument.id
+                );
+
+            },
+            400
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        toast(
+            "NFC-Scan konnte nicht verarbeitet werden."
+        );
+
+    }
+
+}
+
+
+/* ==========================================
+   THEME
+========================================== */
+
+function toggleTheme(){
+
+    document.body
+        .classList
+        .toggle("dark");
+
+
+    localStorage.setItem(
+
+        "darkMode",
+
+        document.body.classList.contains("dark")
+        ? "true"
+        : "false"
+
+    );
+
+}
+
+
+/* ==========================================
+   MODAL SCHLIESSEN
+========================================== */
+
+function closeModal(id){
+
+    const modal =
+        $(id);
+
+
+    if(modal){
+
+        modal.classList.add(
+            "hidden"
+        );
+
+    }
+
+}
+
+
+/*
+   WICHTIG:
+   Funktionen für onclick global machen.
+*/
+
+window.closeModal =
+    closeModal;
+
+
+/* ==========================================
+   ESC
+========================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(
+            event.key !==
+            "Escape"
+        ){
+
+            return;
+
+        }
+
+
+        document
+            .querySelectorAll(
+                ".modal:not(.hidden)"
+            )
+            .forEach(modal => {
+
+                modal.classList.add(
+                    "hidden"
+                );
+
+            });
+
+    }
+);
+
+
+/* ==========================================
+   MODAL HINTERGRUND
+========================================== */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal => {
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if(
+                    event.target ===
+                    modal
+                ){
+
+                    modal.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+            }
+        );
+
     });
 
-});
 
+/* ==========================================
+   HTML SICHER
+========================================== */
 
-/* HTML SICHER MACHEN */
+function escapeHTML(text){
 
-function escapeHTML(text) {
+    return String(text ?? "")
 
-    return text
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
 
-/* THEME LADEN */
+/* ==========================================
+   JAVASCRIPT SICHER
+========================================== */
 
-if (localStorage.getItem("darkMode") === "true") {
+function escapeJS(text){
 
-    document.body.classList.add("dark");
+    return String(text ?? "")
+
+        .replaceAll(
+            "\\",
+            "\\\\"
+        )
+
+        .replaceAll(
+            "'",
+            "\\'"
+        )
+
+        .replaceAll(
+            "\n",
+            "\\n"
+        )
+
+        .replaceAll(
+            "\r",
+            "\\r"
+        );
 
 }
 
 
-/* START */
+/* ==========================================
+   THEME LADEN
+========================================== */
+
+if(
+    localStorage.getItem(
+        "darkMode"
+    ) === "true"
+){
+
+    document.body
+        .classList
+        .add("dark");
+
+}
+
+
+/* ==========================================
+   GLOBALE FUNKTIONEN
+========================================== */
+
+window.showPage =
+    showPage;
+
+window.showCategory =
+    showCategory;
+
+window.searchFolders =
+    searchFolders;
+
+window.openFolder =
+    openFolder;
+
+window.openAddFolder =
+    openAddFolder;
+
+window.saveFolder =
+    saveFolder;
+
+window.editFolder =
+    editFolder;
+
+window.deleteFolder =
+    deleteFolder;
+
+window.claimFolder =
+    claimFolder;
+
+window.releaseFolder =
+    releaseFolder;
+
+window.openProfilePage =
+    openProfilePage;
+
+window.openProfileModal =
+    openProfileModal;
+
+window.saveProfile =
+    saveProfile;
+
+window.openSettings =
+    openSettings;
+
+window.openHelp =
+    openHelp;
+
+window.openAdminMode =
+    openAdminMode;
+
+window.closeAdminMode =
+    closeAdminMode;
+
+window.openUserModal =
+    openUserModal;
+
+window.createNewUser =
+    createNewUser;
+
+window.toggleTheme =
+    toggleTheme;
+
+
+/* ==========================================
+   START
+========================================== */
 
 renderFolders();
 
