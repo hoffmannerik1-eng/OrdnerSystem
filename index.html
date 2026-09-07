@@ -14,8 +14,67 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f1f5f9;
+    background: #eef2f7;
     color: #111827;
+}
+
+/* LOGIN */
+
+#loginScreen {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px #0002;
+}
+
+.login-box h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-button {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    margin-top: 10px;
+}
+
+.message {
+    margin-top: 10px;
+    color: #dc2626;
+}
+
+/* APP */
+
+#app {
+    display: none;
 }
 
 header {
@@ -25,139 +84,133 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
 }
 
 header h1 {
     margin: 0;
 }
 
-button {
-    border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.login-box {
-    max-width: 400px;
-    margin: 100px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 25px #0002;
-}
-
-.login-box h2 {
-    margin-top: 0;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 7px 0;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-}
-
-.login-btn {
-    width: 100%;
-    background: #2563eb;
+.logout-button {
+    background: #dc2626;
     color: white;
-    margin-top: 10px;
-}
-
-#app {
-    display: none;
 }
 
 .container {
     max-width: 1100px;
-    margin: 25px auto;
-    padding: 0 15px;
+    margin: auto;
+    padding: 20px;
 }
+
+/* STATS */
 
 .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .stat {
     background: white;
     padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px #0001;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px #0001;
+}
+
+.stat-title {
+    color: #64748b;
 }
 
 .stat-number {
-    font-size: 30px;
+    font-size: 32px;
     font-weight: bold;
+    margin-top: 5px;
 }
+
+/* SECTIONS */
 
 .section {
     background: white;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 14px;
     margin-bottom: 20px;
-    box-shadow: 0 3px 10px #0001;
+    box-shadow: 0 3px 12px #0001;
 }
 
-.person {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    color: white;
+.section h2 {
+    margin-top: 0;
 }
 
-.green {
-    background: #16a34a;
-}
+/* BUTTONS */
 
-.red {
-    background: #dc2626;
-}
-
-.gray {
-    background: #64748b;
-}
-
-.person-info {
-    font-size: 17px;
-}
-
-.person-small {
-    font-size: 13px;
-    opacity: 0.9;
-}
-
-.actions button {
-    margin-left: 5px;
-}
-
-.admin-btn {
+.blue {
     background: #2563eb;
     color: white;
 }
 
-.delete-btn {
-    background: #991b1b;
+.green-button {
+    background: #16a34a;
     color: white;
 }
 
-.free-btn {
+.orange {
     background: #f59e0b;
     color: white;
 }
 
-.take-btn {
-    background: white;
-    color: #111827;
+.red-button {
+    background: #dc2626;
+    color: white;
 }
+
+.gray-button {
+    background: #64748b;
+    color: white;
+}
+
+/* CHIPS */
+
+.chip {
+    color: white;
+    padding: 16px;
+    margin: 10px 0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.chip-green {
+    background: #16a34a;
+}
+
+.chip-red {
+    background: #dc2626;
+}
+
+.chip-info {
+    line-height: 1.5;
+}
+
+.chip-name {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.chip-small {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.chip-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* MODAL */
 
 .modal {
     display: none;
@@ -166,98 +219,120 @@ input {
     background: #0008;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    padding: 20px;
+    z-index: 1000;
 }
 
 .modal-content {
     background: white;
-    width: 95%;
+    width: 100%;
     max-width: 450px;
     padding: 25px;
-    border-radius: 15px;
+    border-radius: 16px;
 }
 
 .modal-content h2 {
     margin-top: 0;
 }
 
-.close-btn {
-    background: #64748b;
-    color: white;
+.modal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
 }
 
-.save-btn {
-    background: #16a34a;
-    color: white;
-}
-
-.scan-box {
-    padding: 15px;
-    background: #e2e8f0;
-    border-radius: 10px;
+.modal-buttons button {
+    flex: 1;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.scan-box {
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.user-row {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 0;
 }
 
 @media(max-width:700px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .stats {
         grid-template-columns: 1fr;
     }
 
-    .person {
+    .chip {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
     }
 
-    .actions button {
-        margin: 3px;
+    .chip-buttons {
+        width: 100%;
     }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div id="loginScreen">
 
     <div class="login-box">
 
-        <h2>OrdnerSystem</h2>
+        <h1>OrdnerSystem</h1>
 
-        <p>Bitte anmelden</p>
+        <p>Anmelden</p>
 
         <input
             id="loginEmail"
             type="email"
+            autocomplete="email"
             placeholder="E-Mail"
         >
 
         <input
             id="loginPassword"
             type="password"
+            autocomplete="current-password"
             placeholder="Passwort"
         >
 
         <button
-            class="login-btn"
-            onclick="login()"
+            class="login-button"
+            id="loginButton"
         >
             Anmelden
         </button>
 
-        <p id="loginMessage"></p>
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
 
     </div>
 
 </div>
 
 
-<!-- APP -->
+<!-- =========================
+     APP
+========================= -->
 
 <div id="app">
 
@@ -270,8 +345,8 @@ input {
         <span id="userEmail"></span>
 
         <button
-            onclick="logout()"
-            style="margin-left:10px;background:#dc2626;color:white;"
+            class="logout-button"
+            id="logoutButton"
         >
             Abmelden
         </button>
@@ -290,7 +365,9 @@ input {
 
     <div class="stat">
 
-        <div>Alle Chips</div>
+        <div class="stat-title">
+            Alle Chips
+        </div>
 
         <div
             id="totalCount"
@@ -304,7 +381,9 @@ input {
 
     <div class="stat">
 
-        <div>Grün</div>
+        <div class="stat-title">
+            Grün
+        </div>
 
         <div
             id="greenCount"
@@ -318,7 +397,9 @@ input {
 
     <div class="stat">
 
-        <div>Rot</div>
+        <div class="stat-title">
+            Rot
+        </div>
 
         <div
             id="redCount"
@@ -342,15 +423,15 @@ input {
     <h2>Administrator</h2>
 
     <button
-        class="admin-btn"
-        onclick="chipModalOeffnen()"
+        class="blue"
+        id="addChipButton"
     >
         + Chip hinzufügen
     </button>
 
     <button
-        class="admin-btn"
-        onclick="userModalOeffnen()"
+        class="blue"
+        id="addUserButton"
     >
         + Benutzer erstellen
     </button>
@@ -374,13 +455,13 @@ input {
 </div>
 
 
-<!-- ORDNER -->
+<!-- CHIPS -->
 
 <div class="section">
 
     <h2>Ordner / Chips</h2>
 
-    <div id="ordnerListe">
+    <div id="chipList">
         Laden...
     </div>
 
@@ -394,9 +475,9 @@ input {
     class="section hidden"
 >
 
-    <h2>Benutzer</h2>
+    <h2>Benutzerverwaltung</h2>
 
-    <div id="usersListe">
+    <div id="usersList">
         Laden...
     </div>
 
@@ -408,7 +489,9 @@ input {
 </div>
 
 
-<!-- CHIP MODAL -->
+<!-- =========================
+     CHIP MODAL
+========================= -->
 
 <div
     id="chipModal"
@@ -431,26 +514,32 @@ input {
         placeholder="Chip-ID, z.B. 001"
     >
 
-    <button
-        class="save-btn"
-        onclick="chipSpeichern()"
-    >
-        Speichern
-    </button>
+    <div class="modal-buttons">
 
-    <button
-        class="close-btn"
-        onclick="modalSchliessen('chipModal')"
-    >
-        Abbrechen
-    </button>
+        <button
+            class="green-button"
+            id="saveChipButton"
+        >
+            Speichern
+        </button>
+
+        <button
+            class="gray-button"
+            id="closeChipButton"
+        >
+            Abbrechen
+        </button>
+
+    </div>
 
 </div>
 
 </div>
 
 
-<!-- USER MODAL -->
+<!-- =========================
+     USER MODAL
+========================= -->
 
 <div
     id="userModal"
@@ -478,28 +567,37 @@ input {
         placeholder="Passwort"
     >
 
-    <button
-        class="save-btn"
-        onclick="benutzerErstellen()"
-    >
-        Benutzer erstellen
-    </button>
+    <div class="modal-buttons">
 
-    <button
-        class="close-btn"
-        onclick="modalSchliessen('userModal')"
-    >
-        Abbrechen
-    </button>
+        <button
+            class="green-button"
+            id="createUserButton"
+        >
+            Erstellen
+        </button>
 
-    <p id="userMessage"></p>
+        <button
+            class="gray-button"
+            id="closeUserButton"
+        >
+            Abbrechen
+        </button>
+
+    </div>
+
+    <div
+        id="userMessage"
+        class="message"
+    ></div>
 
 </div>
 
 </div>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
@@ -512,22 +610,20 @@ import {
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    getIdToken
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
-    addDoc,
     doc,
+    addDoc,
     setDoc,
     updateDoc,
     deleteDoc,
     onSnapshot,
-    getDocs,
-    serverTimestamp,
-    query,
-    orderBy
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
@@ -537,7 +633,8 @@ import {
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+    apiKey:
+        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
 
     authDomain:
         "ordnersystem-1352a.firebaseapp.com",
@@ -558,32 +655,25 @@ const firebaseConfig = {
 
 
 /* =========================
-   APP
+   FIREBASE APP
 ========================= */
 
-const app = initializeApp(firebaseConfig);
+const firebaseApp =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+    getAuth(firebaseApp);
 
-const db = getFirestore(app);
+const db =
+    getFirestore(firebaseApp);
 
 
 /* =========================
-   ADMIN UID
+   ADMIN IDS
 ========================= */
-
-/*
-   Dein erster Admin
-*/
 
 const ADMIN_UID_1 =
     "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-
-
-/*
-   HIER später die UID
-   des zweiten Admins eintragen.
-*/
 
 const ADMIN_UID_2 =
     "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
@@ -593,26 +683,27 @@ const ADMIN_UID_2 =
    VARIABLEN
 ========================= */
 
-let aktuellerBenutzer = null;
+let currentUser = null;
 
-let daten = [];
+let chips = [];
 
-let bearbeitungsId = null;
+let editChipId = null;
 
 
 /* =========================
-   ADMIN PRÜFEN
+   ADMIN
 ========================= */
 
-function istAdmin() {
+function isAdmin() {
 
-    if (!aktuellerBenutzer)
+    if (!currentUser)
         return false;
 
     return (
-        aktuellerBenutzer.uid === ADMIN_UID_1 ||
-        aktuellerBenutzer.uid === ADMIN_UID_2
+        currentUser.uid === ADMIN_UID_1 ||
+        currentUser.uid === ADMIN_UID_2
     );
+
 }
 
 
@@ -620,18 +711,32 @@ function istAdmin() {
    LOGIN
 ========================= */
 
-window.login = async function() {
+document
+    .getElementById("loginButton")
+    .addEventListener(
+        "click",
+        login
+    );
+
+
+async function login() {
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+            .getElementById("loginPassword")
+            .value;
 
 
     if (!email || !password) {
 
-        document.getElementById("loginMessage")
+        document
+            .getElementById("loginMessage")
             .innerText =
             "Bitte E-Mail und Passwort eingeben.";
 
@@ -647,136 +752,186 @@ window.login = async function() {
             password
         );
 
+
+        // Passwort direkt wieder löschen
+        document
+            .getElementById("loginPassword")
+            .value = "";
+
     }
 
     catch(error) {
 
         console.error(error);
 
-        document.getElementById("loginMessage")
+        document
+            .getElementById("loginMessage")
             .innerText =
-            "Login fehlgeschlagen.";
+            "E-Mail oder Passwort falsch.";
 
     }
 
-};
+}
 
 
 /* =========================
    LOGOUT
 ========================= */
 
-window.logout = async function() {
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        logout
+    );
+
+
+async function logout() {
 
     await signOut(auth);
 
-};
+
+    // ALLE Login-Felder löschen
+
+    document
+        .getElementById("loginEmail")
+        .value = "";
+
+    document
+        .getElementById("loginPassword")
+        .value = "";
+
+    document
+        .getElementById("loginMessage")
+        .innerText = "";
+
+}
 
 
 /* =========================
    AUTH STATUS
 ========================= */
 
-onAuthStateChanged(auth, async user => {
+onAuthStateChanged(
+    auth,
+    user => {
 
-    aktuellerBenutzer = user;
+        currentUser = user;
 
 
-    if (!user) {
+        if (!user) {
 
-        document.getElementById("loginScreen")
-            .style.display = "block";
+            document
+                .getElementById("loginScreen")
+                .style.display = "flex";
 
-        document.getElementById("app")
+            document
+                .getElementById("app")
+                .style.display = "none";
+
+            return;
+
+        }
+
+
+        document
+            .getElementById("loginScreen")
             .style.display = "none";
 
-        return;
+        document
+            .getElementById("app")
+            .style.display = "block";
+
+
+        document
+            .getElementById("userEmail")
+            .innerText =
+            user.email;
+
+
+        if (isAdmin()) {
+
+            document
+                .getElementById("adminPanel")
+                .classList
+                .remove("hidden");
+
+            document
+                .getElementById("usersSection")
+                .classList
+                .remove("hidden");
+
+            loadUsers();
+
+        }
+
+        else {
+
+            document
+                .getElementById("adminPanel")
+                .classList
+                .add("hidden");
+
+            document
+                .getElementById("usersSection")
+                .classList
+                .add("hidden");
+
+        }
+
+
+        loadChips();
+
+        loadLastScan();
+
+
+        setTimeout(
+            checkNFC,
+            1200
+        );
 
     }
-
-
-    document.getElementById("loginScreen")
-        .style.display = "none";
-
-    document.getElementById("app")
-        .style.display = "block";
-
-
-    document.getElementById("userEmail")
-        .innerText = user.email;
-
-
-    if (istAdmin()) {
-
-        document.getElementById("adminPanel")
-            .classList.remove("hidden");
-
-        document.getElementById("usersSection")
-            .classList.remove("hidden");
-
-        benutzerLaden();
-
-    }
-
-
-    chipsLaden();
-
-    scanLaden();
-
-
-    /*
-       NFC-Scan etwas später prüfen,
-       damit die Chips geladen sind.
-    */
-
-    setTimeout(() => {
-
-        nfcPruefen();
-
-    }, 1000);
-
-});
+);
 
 
 /* =========================
    CHIPS LADEN
 ========================= */
 
-function chipsLaden() {
-
-    const chipsRef =
-        collection(db, "chips");
-
+function loadChips() {
 
     onSnapshot(
-        chipsRef,
+        collection(db, "chips"),
         snapshot => {
 
-            daten = [];
-
-            snapshot.forEach(docSnap => {
-
-                daten.push({
-
-                    firestoreId: docSnap.id,
-
-                    ...docSnap.data()
-
-                });
-
-            });
+            chips = [];
 
 
-            anzeigenOrdner();
+            snapshot.forEach(
+                chipDoc => {
 
-            statistik();
+                    chips.push({
+
+                        firestoreId:
+                            chipDoc.id,
+
+                        ...chipDoc.data()
+
+                    });
+
+                }
+            );
+
+
+            showChips();
+
+            updateStats();
 
         },
-
         error => {
 
             console.error(
-                "Fehler beim Laden:",
+                "Chip-Ladefehler:",
                 error
             );
 
@@ -787,18 +942,20 @@ function chipsLaden() {
 
 
 /* =========================
-   ORDNER ANZEIGEN
+   CHIPS ANZEIGEN
 ========================= */
 
-function anzeigenOrdner() {
+function showChips() {
 
-    const liste =
-        document.getElementById("ordnerListe");
+    const list =
+        document.getElementById(
+            "chipList"
+        );
 
 
-    if (daten.length === 0) {
+    if (chips.length === 0) {
 
-        liste.innerHTML =
+        list.innerHTML =
             "<p>Noch keine Chips vorhanden.</p>";
 
         return;
@@ -806,162 +963,174 @@ function anzeigenOrdner() {
     }
 
 
-    liste.innerHTML = "";
+    list.innerHTML = "";
 
 
-    daten.forEach(person => {
+    chips.forEach(
+        chip => {
 
-        const rot =
-            person.scanActive === true;
-
-
-        const div =
-            document.createElement("div");
+            const active =
+                chip.scanActive === true;
 
 
-        div.className =
-            "person " +
-            (rot ? "red" : "green");
+            const div =
+                document.createElement("div");
 
 
-        let statusText =
-            rot ? "🔴 ROT" : "🟢 GRÜN";
+            div.className =
+                "chip " +
+                (
+                    active
+                    ? "chip-red"
+                    : "chip-green"
+                );
 
 
-        let besitzer = "";
+            let owner =
+                chip.assignedEmail
+                ? "Besitzer: " +
+                  chip.assignedEmail
+                : "Noch frei";
 
 
-        if (person.assignedEmail) {
-
-            besitzer =
-                `<div class="person-small">
-                    Besitzer: ${person.assignedEmail}
-                 </div>`;
-
-        }
-        else {
-
-            besitzer =
-                `<div class="person-small">
-                    Noch frei
-                 </div>`;
-
-        }
+            let lastScan =
+                chip.lastScannedEmail
+                ? "Letzter Scan: " +
+                  chip.lastScannedEmail
+                : "Noch kein Scan";
 
 
-        let scanInfo = "";
+            let buttons = "";
 
 
-        if (person.lastScannedEmail) {
+            /*
+               NORMALER BENUTZER
+            */
 
-            scanInfo =
-                `<div class="person-small">
-                    Letzter Scan: ${person.lastScannedEmail}
-                 </div>`;
+            if (!isAdmin()) {
 
-        }
+                if (!chip.assignedTo) {
+
+                    buttons += `
+                        <button
+                            class="green-button"
+                            onclick="takeChip('${chip.firestoreId}')"
+                        >
+                            Chip übernehmen
+                        </button>
+                    `;
+
+                }
 
 
-        let buttons = "";
+                if (
+                    chip.assignedTo ===
+                    currentUser.uid
+                ) {
+
+                    buttons += `
+                        <button
+                            class="orange"
+                            onclick="releaseChip('${chip.firestoreId}')"
+                        >
+                            Chip freigeben
+                        </button>
+                    `;
+
+                }
+
+            }
 
 
-        /*
-           NORMALE BENUTZER
-        */
+            /*
+               ADMIN
+            */
 
-        if (!istAdmin()) {
+            if (isAdmin()) {
 
-            if (!person.assignedTo) {
-
-                buttons +=
-                    `<button
-                        class="take-btn"
-                        onclick="chipUebernehmen('${person.firestoreId}')"
+                buttons += `
+                    <button
+                        onclick="editChip('${chip.firestoreId}')"
                     >
-                        Chip übernehmen
-                    </button>`;
+                        Bearbeiten
+                    </button>
+                `;
+
+
+                buttons += `
+                    <button
+                        class="red-button"
+                        onclick="deleteChip('${chip.firestoreId}')"
+                    >
+                        Löschen
+                    </button>
+                `;
 
             }
 
 
-            if (
-                person.assignedTo ===
-                aktuellerBenutzer.uid
-            ) {
+            div.innerHTML = `
 
-                buttons +=
-                    `<button
-                        class="free-btn"
-                        onclick="chipFreigeben('${person.firestoreId}')"
-                    >
-                        Chip freigeben
-                    </button>`;
+                <div class="chip-info">
 
-            }
+                    <div class="chip-name">
+                        ${escapeHTML(
+                            chip.name || "Unbekannt"
+                        )}
+                    </div>
 
-        }
+                    <div>
+                        Chip-ID:
+                        ${escapeHTML(
+                            String(chip.chipId || "")
+                        )}
+                    </div>
 
+                    <div>
+                        ${
+                            active
+                            ? "🔴 ROT"
+                            : "🟢 GRÜN"
+                        }
+                    </div>
 
-        /*
-           ADMIN
-        */
+                    <div class="chip-small">
+                        ${escapeHTML(owner)}
+                    </div>
 
-        if (istAdmin()) {
+                    <div class="chip-small">
+                        ${escapeHTML(lastScan)}
+                    </div>
 
-            buttons +=
-                `<button
-                    onclick="chipBearbeiten('${person.firestoreId}')"
-                >
-                    Bearbeiten
-                </button>`;
-
-
-            buttons +=
-                `<button
-                    class="delete-btn"
-                    onclick="chipLoeschen('${person.firestoreId}')"
-                >
-                    Löschen
-                </button>`;
-
-        }
-
-
-        div.innerHTML = `
-
-            <div class="person-info">
-
-                <strong>
-                    ${person.name || "Unbekannt"}
-                </strong>
-
-                <div>
-                    Chip: ${person.chipId}
                 </div>
 
-                <div>
-                    ${statusText}
+                <div class="chip-buttons">
+                    ${buttons}
                 </div>
 
-                ${besitzer}
-
-                ${scanInfo}
-
-            </div>
+            `;
 
 
-            <div class="actions">
+            list.appendChild(div);
 
-                ${buttons}
+        }
+    );
 
-            </div>
-
-        `;
+}
 
 
-        liste.appendChild(div);
+/* =========================
+   HTML SICHER MACHEN
+========================= */
 
-    });
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
 }
 
@@ -970,30 +1139,42 @@ function anzeigenOrdner() {
    STATISTIK
 ========================= */
 
-function statistik() {
+function updateStats() {
 
-    let rot = 0;
-
-
-    daten.forEach(chip => {
-
-        if (chip.scanActive === true)
-            rot++;
-
-    });
+    let red = 0;
 
 
-    document.getElementById("totalCount")
-        .innerText = daten.length;
+    chips.forEach(
+        chip => {
+
+            if (
+                chip.scanActive === true
+            ) {
+
+                red++;
+
+            }
+
+        }
+    );
 
 
-    document.getElementById("redCount")
-        .innerText = rot;
-
-
-    document.getElementById("greenCount")
+    document
+        .getElementById("totalCount")
         .innerText =
-        daten.length - rot;
+        chips.length;
+
+
+    document
+        .getElementById("redCount")
+        .innerText =
+        red;
+
+
+    document
+        .getElementById("greenCount")
+        .innerText =
+        chips.length - red;
 
 }
 
@@ -1002,14 +1183,17 @@ function statistik() {
    CHIP ÜBERNEHMEN
 ========================= */
 
-window.chipUebernehmen = async function(id) {
+window.takeChip =
+async function(id) {
 
-    if (!aktuellerBenutzer)
+    if (!currentUser)
         return;
 
 
     const chip =
-        daten.find(x => x.firestoreId === id);
+        chips.find(
+            x => x.firestoreId === id
+        );
 
 
     if (!chip)
@@ -1028,14 +1212,18 @@ window.chipUebernehmen = async function(id) {
 
 
     await updateDoc(
-        doc(db, "chips", id),
+        doc(
+            db,
+            "chips",
+            id
+        ),
         {
 
             assignedTo:
-                aktuellerBenutzer.uid,
+                currentUser.uid,
 
             assignedEmail:
-                aktuellerBenutzer.email
+                currentUser.email
 
         }
     );
@@ -1047,10 +1235,17 @@ window.chipUebernehmen = async function(id) {
    CHIP FREIGEBEN
 ========================= */
 
-window.chipFreigeben = async function(id) {
+window.releaseChip =
+async function(id) {
+
+    if (!currentUser)
+        return;
+
 
     const chip =
-        daten.find(x => x.firestoreId === id);
+        chips.find(
+            x => x.firestoreId === id
+        );
 
 
     if (!chip)
@@ -1059,7 +1254,7 @@ window.chipFreigeben = async function(id) {
 
     if (
         chip.assignedTo !==
-        aktuellerBenutzer.uid
+        currentUser.uid
     ) {
 
         alert(
@@ -1072,7 +1267,11 @@ window.chipFreigeben = async function(id) {
 
 
     await updateDoc(
-        doc(db, "chips", id),
+        doc(
+            db,
+            "chips",
+            id
+        ),
         {
 
             assignedTo: null,
@@ -1086,55 +1285,80 @@ window.chipFreigeben = async function(id) {
 
 
 /* =========================
-   CHIP MODAL
+   CHIP HINZUFÜGEN
 ========================= */
 
-window.chipModalOeffnen = function() {
+document
+    .getElementById("addChipButton")
+    .addEventListener(
+        "click",
+        openChipModal
+    );
 
-    bearbeitungsId = null;
 
-    document.getElementById("chipModalTitle")
+function openChipModal() {
+
+    if (!isAdmin())
+        return;
+
+
+    editChipId = null;
+
+
+    document
+        .getElementById("chipModalTitle")
         .innerText =
         "Chip hinzufügen";
 
 
-    document.getElementById("chipName")
+    document
+        .getElementById("chipName")
         .value = "";
 
 
-    document.getElementById("chipId")
+    document
+        .getElementById("chipId")
         .value = "";
 
 
-    document.getElementById("chipModal")
-        .style.display = "flex";
+    document
+        .getElementById("chipModal")
+        .style.display =
+        "flex";
 
-};
+}
 
 
 /* =========================
    CHIP SPEICHERN
 ========================= */
 
-window.chipSpeichern = async function() {
+document
+    .getElementById("saveChipButton")
+    .addEventListener(
+        "click",
+        saveChip
+    );
 
-    if (!istAdmin()) {
 
-        alert("Keine Berechtigung.");
+async function saveChip() {
 
+    if (!isAdmin())
         return;
-
-    }
 
 
     const name =
-        document.getElementById("chipName")
-            .value.trim();
+        document
+            .getElementById("chipName")
+            .value
+            .trim();
 
 
     const chipId =
-        document.getElementById("chipId")
-            .value.trim();
+        document
+            .getElementById("chipId")
+            .value
+            .trim();
 
 
     if (!name || !chipId) {
@@ -1148,10 +1372,41 @@ window.chipSpeichern = async function() {
     }
 
 
-    if (bearbeitungsId) {
+    /*
+       Prüfen, ob Chip-ID
+       bereits existiert.
+    */
+
+    const exists =
+        chips.some(
+            chip =>
+                String(chip.chipId) ===
+                String(chipId)
+                &&
+                chip.firestoreId !==
+                editChipId
+        );
+
+
+    if (exists) {
+
+        alert(
+            "Diese Chip-ID gibt es bereits."
+        );
+
+        return;
+
+    }
+
+
+    if (editChipId) {
 
         await updateDoc(
-            doc(db, "chips", bearbeitungsId),
+            doc(
+                db,
+                "chips",
+                editChipId
+            ),
             {
 
                 name: name,
@@ -1183,7 +1438,13 @@ window.chipSpeichern = async function() {
 
                 lastScannedEmail: "",
 
-                lastScannedAt: null
+                lastScannedAt: null,
+
+                createdAt:
+                    serverTimestamp(),
+
+                createdBy:
+                    currentUser.uid
 
             }
         );
@@ -1191,49 +1452,59 @@ window.chipSpeichern = async function() {
     }
 
 
-    modalSchliessen("chipModal");
+    closeModal(
+        "chipModal"
+    );
 
-};
+}
 
 
 /* =========================
    CHIP BEARBEITEN
 ========================= */
 
-window.chipBearbeiten = function(id) {
+window.editChip =
+function(id) {
 
-    if (!istAdmin())
+    if (!isAdmin())
         return;
 
 
     const chip =
-        daten.find(x => x.firestoreId === id);
+        chips.find(
+            x => x.firestoreId === id
+        );
 
 
     if (!chip)
         return;
 
 
-    bearbeitungsId = id;
+    editChipId = id;
 
 
-    document.getElementById("chipModalTitle")
+    document
+        .getElementById("chipModalTitle")
         .innerText =
         "Chip bearbeiten";
 
 
-    document.getElementById("chipName")
+    document
+        .getElementById("chipName")
         .value =
         chip.name || "";
 
 
-    document.getElementById("chipId")
+    document
+        .getElementById("chipId")
         .value =
         chip.chipId || "";
 
 
-    document.getElementById("chipModal")
-        .style.display = "flex";
+    document
+        .getElementById("chipModal")
+        .style.display =
+        "flex";
 
 };
 
@@ -1242,106 +1513,131 @@ window.chipBearbeiten = function(id) {
    CHIP LÖSCHEN
 ========================= */
 
-window.chipLoeschen = async function(id) {
+window.deleteChip =
+async function(id) {
 
-    if (!istAdmin())
+    if (!isAdmin())
         return;
 
 
     const chip =
-        daten.find(x => x.firestoreId === id);
+        chips.find(
+            x => x.firestoreId === id
+        );
 
 
     if (!chip)
         return;
 
 
-    if (
-        !confirm(
-            `Chip "${chip.name}" wirklich löschen?`
-        )
-    )
+    const yes =
+        confirm(
+            "Diesen Chip wirklich löschen?"
+        );
+
+
+    if (!yes)
         return;
 
 
     await deleteDoc(
-        doc(db, "chips", id)
+        doc(
+            db,
+            "chips",
+            id
+        )
     );
 
 };
 
 
 /* =========================
-   MODAL SCHLIESSEN
+   USER MODAL
 ========================= */
 
-window.modalSchliessen = function(id) {
+document
+    .getElementById("addUserButton")
+    .addEventListener(
+        "click",
+        openUserModal
+    );
 
-    document.getElementById(id)
-        .style.display = "none";
 
-};
+function openUserModal() {
 
-
-/* =========================
-   BENUTZER MODAL
-========================= */
-
-window.userModalOeffnen = function() {
-
-    if (!istAdmin())
+    if (!isAdmin())
         return;
 
 
-    document.getElementById("newUserName")
+    document
+        .getElementById("newUserName")
         .value = "";
 
-    document.getElementById("newUserEmail")
+    document
+        .getElementById("newUserEmail")
         .value = "";
 
-    document.getElementById("newUserPassword")
+    document
+        .getElementById("newUserPassword")
         .value = "";
 
-    document.getElementById("userMessage")
+    document
+        .getElementById("userMessage")
         .innerText = "";
 
 
-    document.getElementById("userModal")
-        .style.display = "flex";
+    document
+        .getElementById("userModal")
+        .style.display =
+        "flex";
 
-};
+}
 
 
 /* =========================
-   BENUTZER ERSTELLEN
+   USER ERSTELLEN
 ========================= */
 
-window.benutzerErstellen = async function() {
+document
+    .getElementById("createUserButton")
+    .addEventListener(
+        "click",
+        createUser
+    );
 
-    if (!istAdmin())
+
+async function createUser() {
+
+    if (!isAdmin())
         return;
 
 
     const name =
-        document.getElementById("newUserName")
-            .value.trim();
+        document
+            .getElementById("newUserName")
+            .value
+            .trim();
 
 
     const email =
-        document.getElementById("newUserEmail")
-            .value.trim();
+        document
+            .getElementById("newUserEmail")
+            .value
+            .trim();
 
 
     const password =
-        document.getElementById("newUserPassword")
+        document
+            .getElementById("newUserPassword")
             .value;
 
 
     if (!name || !email || !password) {
 
-        document.getElementById("userMessage")
+        document
+            .getElementById("userMessage")
             .innerText =
-            "Bitte alle Felder ausfüllen.";
+            "Bitte alles ausfüllen.";
 
         return;
 
@@ -1350,7 +1646,8 @@ window.benutzerErstellen = async function() {
 
     if (password.length < 6) {
 
-        document.getElementById("userMessage")
+        document
+            .getElementById("userMessage")
             .innerText =
             "Das Passwort muss mindestens 6 Zeichen haben.";
 
@@ -1359,26 +1656,52 @@ window.benutzerErstellen = async function() {
     }
 
 
+    /*
+       WICHTIG:
+
+       Eine normale Firebase-Webseite darf
+       keinen Admin-Service-Key enthalten.
+
+       Deshalb wird hier die sekundäre
+       Firebase-App verwendet.
+
+       Dadurch wird der aktuelle Admin
+       nicht ausgeloggt.
+    */
+
     try {
 
-        /*
-           Zweite Auth-Instanz wäre für echte
-           Admin-Erstellung ideal.
+        const secondaryApp =
+            initializeApp(
+                firebaseConfig,
+                "UserCreationApp"
+            );
 
-           Diese einfache Variante erstellt
-           den Benutzer über Firebase Auth.
-        */
+
+        const secondaryAuth =
+            getAuth(
+                secondaryApp
+            );
+
 
         const result =
             await createUserWithEmailAndPassword(
-                auth,
+                secondaryAuth,
                 email,
                 password
             );
 
 
+        /*
+           Benutzerprofil speichern
+        */
+
         await setDoc(
-            doc(db, "users", result.user.uid),
+            doc(
+                db,
+                "users",
+                result.user.uid
+            ),
             {
 
                 name: name,
@@ -1388,22 +1711,34 @@ window.benutzerErstellen = async function() {
                 role: "user",
 
                 createdAt:
-                    serverTimestamp()
+                    serverTimestamp(),
+
+                createdBy:
+                    currentUser.uid
 
             }
         );
 
 
-        document.getElementById("userMessage")
+        /*
+           Sekundären Benutzer wieder ausloggen
+        */
+
+        await signOut(
+            secondaryAuth
+        );
+
+
+        document
+            .getElementById("userMessage")
             .innerText =
             "Benutzer erfolgreich erstellt.";
 
 
-        /*
-           Hinweis:
-           Firebase meldet danach den neuen
-           Benutzer an.
-        */
+        document
+            .getElementById("newUserPassword")
+            .value = "";
+
 
     }
 
@@ -1411,75 +1746,122 @@ window.benutzerErstellen = async function() {
 
         console.error(error);
 
-        document.getElementById("userMessage")
+        let text =
+            "Benutzer konnte nicht erstellt werden.";
+
+
+        if (
+            error.code ===
+            "auth/email-already-in-use"
+        ) {
+
+            text =
+                "Diese E-Mail gibt es bereits.";
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/invalid-email"
+        ) {
+
+            text =
+                "Die E-Mail-Adresse ist ungültig.";
+
+        }
+
+
+        document
+            .getElementById("userMessage")
             .innerText =
-            "Fehler: " + error.message;
+            text;
 
     }
 
-};
+}
 
 
 /* =========================
    BENUTZER LADEN
 ========================= */
 
-function benutzerLaden() {
-
-    const usersRef =
-        collection(db, "users");
-
+function loadUsers() {
 
     onSnapshot(
-        usersRef,
+        collection(db, "users"),
         snapshot => {
 
-            const liste =
-                document.getElementById("usersListe");
+            const list =
+                document
+                    .getElementById(
+                        "usersList"
+                    );
 
 
-            liste.innerHTML = "";
+            list.innerHTML = "";
 
 
-            snapshot.forEach(userDoc => {
+            if (snapshot.empty) {
 
-                const user =
-                    userDoc.data();
+                list.innerHTML =
+                    "<p>Keine Benutzer vorhanden.</p>";
 
+                return;
 
-                const div =
-                    document.createElement("div");
-
-
-                div.style.padding = "10px";
-
-                div.style.borderBottom =
-                    "1px solid #ddd";
+            }
 
 
-                div.innerHTML = `
+            snapshot.forEach(
+                userDoc => {
 
-                    <strong>
-                        ${user.name || "Unbekannt"}
-                    </strong>
-
-                    <br>
-
-                    ${user.email || ""}
-
-                    <br>
-
-                    <small>
-                        Rolle:
-                        ${user.role || "user"}
-                    </small>
-
-                `;
+                    const user =
+                        userDoc.data();
 
 
-                liste.appendChild(div);
+                    const div =
+                        document
+                            .createElement(
+                                "div"
+                            );
 
-            });
+
+                    div.className =
+                        "user-row";
+
+
+                    div.innerHTML = `
+
+                        <strong>
+                            ${escapeHTML(
+                                user.name ||
+                                "Unbekannt"
+                            )}
+                        </strong>
+
+                        <br>
+
+                        ${escapeHTML(
+                            user.email || ""
+                        )}
+
+                        <br>
+
+                        <small>
+                            Rolle:
+                            ${escapeHTML(
+                                user.role ||
+                                "user"
+                            )}
+                        </small>
+
+                    `;
+
+
+                    list.appendChild(div);
+
+                }
+            );
 
         }
     );
@@ -1488,27 +1870,29 @@ function benutzerLaden() {
 
 
 /* =========================
-   SCAN LADEN
+   LETZTEN SCAN LADEN
 ========================= */
 
-function scanLaden() {
+function loadLastScan() {
 
-    const scanRef =
+    onSnapshot(
         doc(
             db,
             "system",
             "currentScan"
-        );
-
-
-    onSnapshot(
-        scanRef,
+        ),
         snapshot => {
+
+            const box =
+                document
+                    .getElementById(
+                        "lastScan"
+                    );
+
 
             if (!snapshot.exists()) {
 
-                document.getElementById("lastScan")
-                    .innerText =
+                box.innerText =
                     "Noch kein Scan.";
 
                 return;
@@ -1520,29 +1904,34 @@ function scanLaden() {
                 snapshot.data();
 
 
-            document.getElementById("lastScan")
-                .innerHTML = `
+            box.innerHTML = `
 
-                    <strong>
-                        Chip:
-                        ${scan.chipId || "-"}
-                    </strong>
+                <strong>
+                    Chip:
+                    ${escapeHTML(
+                        String(
+                            scan.chipId || ""
+                        )
+                    )}
+                </strong>
 
-                    <br>
+                <br>
 
-                    Gescannt von:
-                    ${scan.scannedEmail || "-"}
+                Gescannt von:
+                ${escapeHTML(
+                    scan.scannedEmail || ""
+                )}
 
-                    <br>
+                <br>
 
-                    Status:
-                    ${
-                        scan.active
-                        ? "🔴 ROT"
-                        : "🟢 GRÜN"
-                    }
+                Status:
+                ${
+                    scan.active
+                    ? "🔴 ROT"
+                    : "🟢 GRÜN"
+                }
 
-                `;
+            `;
 
         }
     );
@@ -1554,14 +1943,10 @@ function scanLaden() {
    NFC
 ========================= */
 
-async function nfcPruefen() {
+async function checkNFC() {
 
-    if (!aktuellerBenutzer)
+    if (!currentUser)
         return;
-
-
-    const url =
-        window.location.href;
 
 
     const params =
@@ -1579,9 +1964,10 @@ async function nfcPruefen() {
 
 
     const chip =
-        daten.find(
-            x => String(x.chipId) ===
-                 String(chipId)
+        chips.find(
+            x =>
+                String(x.chipId) ===
+                String(chipId)
         );
 
 
@@ -1598,10 +1984,13 @@ async function nfcPruefen() {
 
 
     /*
-       ROT <-> GRÜN
+       1. Scan = ROT
+       2. Scan = GRÜN
+       3. Scan = ROT
+       usw.
     */
 
-    const neuerStatus =
+    const newStatus =
         chip.scanActive !== true;
 
 
@@ -1614,13 +2003,13 @@ async function nfcPruefen() {
         {
 
             scanActive:
-                neuerStatus,
+                newStatus,
 
             lastScannedBy:
-                aktuellerBenutzer.uid,
+                currentUser.uid,
 
             lastScannedEmail:
-                aktuellerBenutzer.email,
+                currentUser.email,
 
             lastScannedAt:
                 serverTimestamp()
@@ -1641,13 +2030,13 @@ async function nfcPruefen() {
                 chip.chipId,
 
             scannedBy:
-                aktuellerBenutzer.uid,
+                currentUser.uid,
 
             scannedEmail:
-                aktuellerBenutzer.email,
+                currentUser.email,
 
             active:
-                neuerStatus,
+                newStatus,
 
             scannedAt:
                 serverTimestamp()
@@ -1657,7 +2046,9 @@ async function nfcPruefen() {
 
 
     /*
-       ?chip=001 aus URL entfernen
+       Chip aus URL entfernen,
+       damit ein Neuladen nicht
+       automatisch erneut scannt.
     */
 
     window.history.replaceState(
@@ -1667,6 +2058,58 @@ async function nfcPruefen() {
     );
 
 }
+
+
+/* =========================
+   MODALS SCHLIESSEN
+========================= */
+
+document
+    .getElementById("closeChipButton")
+    .addEventListener(
+        "click",
+        () => closeModal("chipModal")
+    );
+
+
+document
+    .getElementById("closeUserButton")
+    .addEventListener(
+        "click",
+        () => closeModal("userModal")
+    );
+
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================
+   ENTER-TASTE LOGIN
+========================= */
+
+document
+    .getElementById("loginPassword")
+    .addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                login();
+
+            }
+
+        }
+    );
 
 </script>
 
