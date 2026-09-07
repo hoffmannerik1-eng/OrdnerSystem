@@ -2,1915 +2,494 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<meta name="description" content="OrdnerSystem – digitale Ordner- und NFC-Verwaltung">
 <title>OrdnerSystem</title>
-
 <style>
+/* ============================================================
+   ORDNER SYSTEM – KOMPLETTE RESPONSIVE WEBAPP
+   ============================================================ */
 :root{
-  --bg:#f5f7fa;
-  --surface:#fff;
+  --bg:#f4f7fb;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
   --text:#172033;
   --muted:#718096;
-  --line:#e6eaf0;
+  --border:#e2e8f0;
   --blue:#2563eb;
   --blue2:#1d4ed8;
   --green:#16a34a;
+  --greenBg:#ecfdf3;
   --red:#dc2626;
-  --orange:#d97706;
-  --shadow:0 8px 28px rgba(15,23,42,.07);
-}
-
-*{
-  box-sizing:border-box
-}
-
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,
-  BlinkMacSystemFont,"Segoe UI",Arial,sans-serif
-}
-
-button,
-input{
-  font:inherit
-}
-
-button{
-  border:0;
-  border-radius:8px;
-  padding:10px 14px;
-  cursor:pointer;
-  font-weight:650;
-  transition:.15s
-}
-
-button:hover{
-  transform:translateY(-1px);
-  filter:brightness(.98)
-}
-
-.blue{
-  background:var(--blue);
-  color:#fff
-}
-
-.green{
-  background:var(--green);
-  color:#fff
-}
-
-.orange{
-  background:var(--orange);
-  color:#fff
-}
-
-.red{
-  background:var(--red);
-  color:#fff
-}
-
-.gray{
-  background:#eef1f5;
-  color:#334155
-}
-
-.hidden{
-  display:none!important
-}
-
-
-/* LOGIN */
-
-#loginScreen{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-  background:linear-gradient(135deg,#eef4ff,#f8fafc)
-}
-
-.login{
-  width:100%;
-  max-width:410px;
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:34px;
-  box-shadow:var(--shadow)
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:28px
-}
-
-.brandMark{
-  width:42px;
-  height:42px;
-  border-radius:10px;
-  background:var(--blue);
-  color:#fff;
-  display:grid;
-  place-items:center;
-  font-weight:800
-}
-
-.brand h1{
-  font-size:22px;
-  margin:0
-}
-
-.login h2{
-  margin:0 0 7px;
-  font-size:25px
-}
-
-.login p{
-  color:var(--muted);
-  margin:0 0 18px
-}
-
-.login input,
-.modalBox input{
-  width:100%;
-  padding:12px 13px;
-  margin:6px 0;
-  border:1px solid #d7dce5;
-  border-radius:8px;
-  outline:none;
-  background:#fff
-}
-
-.login input:focus,
-.modalBox input:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px #2563eb18
-}
-
-.login button{
-  width:100%;
-  margin-top:10px
-}
-
-.error{
-  color:var(--red);
-  font-size:14px;
-  margin-top:10px
-}
-
-
-/* HEADER */
-
-header{
-  height:70px;
-  background:#fff;
-  border-bottom:1px solid var(--line);
-  padding:0 28px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:18px;
-  position:sticky;
-  top:0;
-  z-index:10
-}
-
-.headerBrand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:800;
-  font-size:19px
-}
-
-.headerMark{
-  width:34px;
-  height:34px;
-  border-radius:8px;
-  background:var(--blue);
-  color:#fff;
-  display:grid;
-  place-items:center;
-  font-size:14px
-}
-
-.head{
-  display:flex;
-  align-items:center;
-  gap:8px
-}
-
-.headUser{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding-right:6px
-}
-
-.headText{
-  text-align:right
-}
-
-.headName{
-  font-weight:700
-}
-
-.role{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:2px
-}
-
-.avatar{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#e8efff;
-  color:var(--blue);
-  display:grid;
-  place-items:center;
-  font-weight:800
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-
-/* ADMIN BAR */
-
-.adminbar{
-  background:#172554;
-  color:#fff;
-  padding:9px 28px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center
-}
-
-
-/* LAYOUT */
-
-.workspace{
-  max-width:1440px;
-  margin:0 auto;
-  padding:22px 24px;
-  display:grid;
-  grid-template-columns:240px minmax(0,1fr) 270px;
-  gap:20px;
-  align-items:start
-}
-
-.container{
-  max-width:none;
-  margin:0;
-  padding:0;
-  min-width:0
-}
-
-.pageTitle{
-  margin:0 0 5px;
-  font-size:28px
-}
-
-.pageSub{
-  margin:0 0 24px;
-  color:var(--muted)
-}
-
-.card{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:var(--shadow)
-}
-
-.sectionTitle{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  margin-bottom:15px
-}
-
-.sectionTitle h2{
-  margin:0;
-  font-size:18px
-}
-
-
-/* PROFILE */
-
-.profile{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:18px
-}
-
-.profileLeft{
-  display:flex;
-  align-items:center;
-  gap:14px
-}
-
-.profileAvatar{
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#e8efff;
-  color:var(--blue);
-  display:grid;
-  place-items:center;
-  font-size:22px;
-  font-weight:800
-}
-
-.profileAvatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-.bigName{
-  font-size:20px;
-  font-weight:750
-}
-
-.muted{
-  color:var(--muted)
-}
-
-
-/* STATS */
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  margin-bottom:18px
-}
-
-.stat{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:18px 20px;
-  box-shadow:var(--shadow)
-}
-
-.statLabel{
-  color:var(--muted);
-  font-size:13px
-}
-
-.num{
-  font-size:30px;
-  font-weight:800;
-  margin-top:4px
-}
-
-.num.greenText{
-  color:var(--green)
-}
-
-.num.redText{
-  color:var(--red)
-}
-
-
-/* CHIPS */
-
-.chip{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:12px;
-  padding:16px;
-  margin:10px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px
-}
-
-.chipStatus{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  display:inline-block;
-  margin-right:7px
-}
-
-.chipStatus.greenDot{
-  background:var(--green)
-}
-
-.chipStatus.redDot{
-  background:var(--red)
-}
-
-.chipMain{
-  display:flex;
-  align-items:flex-start;
-  gap:12px
-}
-
-.chipStripe{
-  width:4px;
-  border-radius:5px;
-  align-self:stretch;
-  background:var(--green)
-}
-
-.chipStripe.redStripe{
-  background:var(--red)
-}
-
-.chipName{
-  font-size:17px;
-  font-weight:750
-}
-
-.chipMeta{
-  font-size:13px;
-  color:var(--muted);
-  margin-top:4px
-}
-
-.chipBtns{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  justify-content:flex-end
-}
-
-.person{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:10px;
-  font-size:14px
-}
-
-.mini{
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#e8efff;
-  color:var(--blue);
-  display:grid;
-  place-items:center;
-  font-weight:800;
-  flex:none
-}
-
-.mini img{
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-
-/* SCAN */
-
-.scan{
-  background:#f8fafc;
-  border:1px solid var(--line);
-  padding:14px;
-  border-radius:10px
-}
-
-
-/* USERS */
-
-.user{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:12px 0;
-  border-bottom:1px solid var(--line)
-}
-
-
-/* MODALS */
-
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(15,23,42,.48);
-  z-index:50;
-  align-items:center;
-  justify-content:center;
-  padding:20px
-}
-
-.modalBox{
-  background:#fff;
-  width:100%;
-  max-width:500px;
-  max-height:90vh;
-  overflow:auto;
-  padding:26px;
-  border-radius:15px;
-  box-shadow:0 20px 60px #0003
-}
-
-.modalBox h2{
-  margin:0 0 18px
-}
-
-.modalBtns{
-  display:flex;
-  gap:8px;
-  margin-top:14px
-}
-
-.modalBtns button{
-  flex:1
-}
-
-
-/* PROFILE IMAGE */
-
-.editPhoto{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:10px;
-  margin-bottom:16px
-}
-
-.editAvatar{
-  width:112px;
-  height:112px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#e8efff;
-  color:var(--blue);
-  display:grid;
-  place-items:center;
-  font-size:42px;
-  font-weight:800
-}
-
-.editAvatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover
-}
-
-.fileBtn{
-  background:var(--blue);
-  color:#fff;
-  padding:10px 14px;
-  border-radius:8px;
-  font-weight:650;
-  cursor:pointer
-}
-
-.fileBtn input{
-  display:none
-}
-
-
-/* HELP */
-
-.help{
-  line-height:1.6
-}
-
-.help button{
-  margin:4px
-}
-
-.helpAnswer{
-  background:#f8fafc;
-  border:1px solid var(--line);
-  padding:15px;
-  border-radius:10px;
-  margin-top:10px
-}
-
-
-/* EMPTY / ADMIN */
-
-.empty{
-  padding:25px;
-  text-align:center;
-  color:var(--muted);
-  border:1px dashed #cbd5e1;
-  border-radius:10px
-}
-
-.adminActions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap
-}
-
-.smallNote{
-  font-size:13px;
-  color:var(--muted)
-}
-
-
-/* SIDEBAR */
-
-.sidebar,
-.rightPanel{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  position:sticky;
-  top:92px;
-  overflow:hidden
-}
-
-.sidebarHead{
-  padding:18px;
-  border-bottom:1px solid var(--line);
-  font-weight:800
-}
-
-.sidebarHead small{
-  display:block;
-  color:var(--muted);
-  font-weight:500;
-  margin-top:3px
-}
-
-.sideSection{
-  border-bottom:1px solid var(--line)
-}
-
-.sideToggle{
-  width:100%;
-  background:#fff;
-  color:var(--text);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  text-align:left;
-  border-radius:0;
-  padding:13px 15px
-}
-
-.sideToggle:hover{
-  background:#f8fafc;
-  transform:none
-}
-
-.chev{
-  transition:.2s
-}
-
-.sideSection.open .chev{
-  transform:rotate(180deg)
-}
-
-.sideLinks{
-  display:none;
-  padding:0 9px 9px
-}
-
-.sideSection.open .sideLinks{
-  display:block
-}
-
-.sideLink{
-  display:block;
-  width:100%;
-  text-align:left;
-  background:transparent;
-  color:#475569;
-  padding:9px 10px;
-  border-radius:7px;
-  font-weight:550
-}
-
-.sideLink:hover{
-  background:#eef4ff;
-  color:var(--blue);
-  transform:none
-}
-
-
-/* RIGHT PANEL */
-
-.rightPanel{
-  padding:18px
-}
-
-.rightTitle{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:14px
-}
-
-.rightTitle h2{
-  font-size:18px;
-  margin:0
-}
-
-.category{
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  margin-bottom:9px;
-  background:#f8fafc
-}
-
-.category b{
-  display:block
-}
-
-.category span{
-  font-size:12px;
-  color:var(--muted)
-}
-
-
-/* SETTINGS */
-
-.settingsHeader{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:15px;
-  margin-bottom:18px
-}
-
-.settingsProfileCard{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px
-}
-
-.settingsActions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap
-}
-
-.settingsOption{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  margin:8px 0;
-  cursor:pointer;
-  background:var(--surface)
-}
-
-.settingsOption:hover{
-  border-color:var(--blue)
-}
-
-.settingsOption input{
-  width:auto;
-  margin:0
-}
-
-
-/* SETTINGS MODE */
-
-.workspace.settingsMode{
-  grid-template-columns:1fr
-}
-
-.workspace.settingsMode .sidebar,
-.workspace.settingsMode .rightPanel{
-  display:none
-}
-
-
-/* DARK MODE */
-
-body.dark{
-  --bg:#0f172a;
-  --surface:#111827;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-  --line:#263244;
-  --shadow:0 8px 28px rgba(0,0,0,.25)
-}
-
-body.dark header,
-body.dark .sidebar,
-body.dark .rightPanel,
-body.dark .card,
-body.dark .stat,
-body.dark .chip,
-body.dark .modalBox,
-body.dark .category,
-body.dark .login{
-  background:#111827;
-  color:var(--text);
-  border-color:var(--line)
-}
-
-body.dark .sideToggle,
-body.dark .sideLink{
-  background:#111827;
-  color:var(--text)
-}
-
-body.dark .sideLink:hover,
-body.dark .sideToggle:hover{
-  background:#1e293b
-}
-
-body.dark .sideSection,
-body.dark .sidebarHead{
-  border-color:var(--line)
-}
-
-body.dark .category,
-body.dark .scan,
-body.dark .helpAnswer{
-  background:#172033;
-  border-color:var(--line)
-}
-
-body.dark #loginScreen{
-  background:linear-gradient(135deg,#0f172a,#111827)
-}
-
-body.dark input{
-  background:#0f172a;
-  color:#e5e7eb;
-  border-color:#334155
-}
-
-body.dark .settingsOption{
-  background:#1e293b;
-  border-color:#334155
-}
-
-
-/* RESPONSIVE */
-
-@media(max-width:1050px){
-  .workspace{
-    grid-template-columns:210px minmax(0,1fr)
-  }
-
-  .rightPanel{
-    display:none
-  }
-}
-
+  --redBg:#fef2f2;
+  --shadow:0 10px 30px rgba(15,23,42,.07);
+  --radius:16px;
+  --header:72px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
+body{overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button{border:0;cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+input,select,textarea{outline:none}
+.hidden{display:none!important}
+.noScroll{overflow:hidden}
+
+/* Header */
+header{height:var(--header);position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border)}
+.headerBrand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;white-space:nowrap}
+.headerMark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;box-shadow:0 6px 15px rgba(37,99,235,.22)}
+.head{display:flex;align-items:center;gap:12px}
+.headUser{display:flex;align-items:center;gap:10px}
+.headText{text-align:right}
+.headName{font-weight:800;line-height:1.1}
+.role{font-size:12px;color:var(--muted);margin-top:3px}
+.avatar,.mini,.profileAvatar,.editAvatar{border-radius:50%;overflow:hidden;background:#e8eef8;display:grid;place-items:center;font-weight:850;color:#31517e;flex:none}
+.avatar{width:42px;height:42px}
+.avatar img,.mini img,.profileAvatar img,.editAvatar img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* Buttons */
+.gray,.blue,.danger,.outline{min-height:40px;padding:9px 13px;border-radius:10px;font-weight:750;transition:.15s ease}
+.gray{background:#edf1f6;color:#334155}
+.gray:hover{background:#e2e8f0}
+.blue{background:var(--blue);color:#fff}
+.blue:hover{background:var(--blue2);transform:translateY(-1px)}
+.danger{background:#fee2e2;color:#b91c1c}
+.danger:hover{background:#fecaca}
+.outline{background:transparent;color:var(--blue);border:1px solid #bfdbfe}
+
+/* Layout */
+.workspace{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:calc(100vh - var(--header))}
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:18px 12px;position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow:auto}
+.sidebarHead{font-weight:850;padding:12px 14px 18px;font-size:17px}
+.sidebarHead small{display:block;color:#94a3b8;font-size:11px;font-weight:650;margin-top:4px}
+.sideSection{margin-bottom:8px}
+.sideToggle{width:100%;background:transparent;padding:11px 12px;text-align:left;font-weight:850;color:#475569;display:flex;justify-content:space-between;align-items:center;border-radius:10px}
+.sideToggle:hover,.sideLink:hover{background:#f1f5f9}
+.chev{transition:.2s ease}
+.sideLinks{display:none;padding:2px 0}
+.sideSection.open .sideLinks{display:block}
+.sideSection.open .chev{transform:rotate(180deg)}
+.sideLink{width:100%;background:transparent;text-align:left;padding:10px 15px;border-radius:9px;color:#475569;margin:1px 0}
+.sideLink.active{background:#eff6ff;color:#1d4ed8;font-weight:800}
+.mainContent{padding:30px;min-width:0;width:100%;max-width:1500px;margin:0 auto}
+.pageTitle{font-size:31px;line-height:1.15;margin:0 0 6px;font-weight:850}
+.pageSub{color:var(--muted);margin:0 0 22px;line-height:1.5}
+
+/* Cards / stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}
+.stat,.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 5px rgba(15,23,42,.02)}
+.stat{padding:20px}
+.statLabel{font-size:11px;font-weight:850;color:#94a3b8;letter-spacing:.04em}
+.num{font-size:31px;font-weight:900;margin-top:7px}
+.greenText{color:var(--green)}
+.redText{color:var(--red)}
+.card{padding:20px;margin-bottom:18px}
+.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.sectionTitle h2{font-size:18px;margin:0;font-weight:850}
+.adminActions{display:flex;gap:9px;flex-wrap:wrap}
+
+/* Search */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
+.searchWrap{flex:1;min-width:220px;position:relative}
+.searchWrap input{width:100%;height:42px;padding:0 13px 0 40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
+.searchIcon{position:absolute;left:13px;top:10px;color:#94a3b8}
+.filterSelect{height:42px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
+
+/* Chips */
+.chip{border:1px solid var(--border);border-radius:14px;padding:15px;margin:10px 0;background:var(--surface);transition:.15s ease}
+.chip:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+.chipMain{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.chipInfo{display:flex;gap:12px;min-width:0;flex:1}
+.chipStripe{width:5px;border-radius:8px;background:#22c55e;min-height:100px;flex:none}
+.chipStripe.redStripe{background:#ef4444}
+.chipText{min-width:0}
+.chipName{font-weight:850;font-size:17px;overflow-wrap:anywhere}
+.chipMeta{color:#64748b;font-size:13px;margin-top:5px;line-height:1.45}
+.chipStatus{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.greenDot{background:#22c55e}.redDot{background:#ef4444}
+.person{display:flex;align-items:center;gap:9px;margin-top:11px;color:#64748b;font-size:13px;flex-wrap:wrap}
+.mini{width:31px;height:31px;font-size:12px}
+.chipButtons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:420px}
+.chipButtons button{padding:8px 10px;border-radius:8px}
+.empty{padding:32px 20px;text-align:center;color:#94a3b8;border:1px dashed var(--border);border-radius:12px}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;background:#f1f5f9;color:#475569}
+.badge.green{background:var(--greenBg);color:#15803d}.badge.red{background:var(--redBg);color:#b91c1c}
+
+/* Settings */
+.settingsMode{grid-template-columns:1fr!important}
+.settingsMode .sidebar{display:none}
+.settingsPage{max-width:1000px}
+.settingsProfileCard{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.profileRow{display:flex;align-items:center;gap:15px;min-width:0}
+.profileAvatar,.editAvatar{width:72px;height:72px;font-size:24px}
+.settingsActions{display:flex;gap:8px;flex-wrap:wrap}
+.settingsOption{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--border);border-radius:11px;margin:8px 0;cursor:pointer}
+.settingsOption input{width:18px;height:18px}
+.smallNote{font-size:12px;color:#94a3b8}
+
+/* Modals */
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(3px)}
+.modalBox{background:var(--surface);color:var(--text);border-radius:16px;width:min(600px,100%);max-height:92vh;overflow:auto;padding:24px;box-shadow:0 25px 70px rgba(15,23,42,.2)}
+.modalHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.modalHead h2{margin:0;font-size:21px}
+.closeBtn{background:#edf1f6;color:#334155;border-radius:9px;width:36px;height:36px;font-size:20px}
+.field{margin:14px 0}
+.field label{display:block;font-weight:750;font-size:13px;margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #d8dee8;border-radius:10px;background:var(--surface);color:var(--text)}
+.field textarea{min-height:100px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.formMessage{min-height:20px;color:var(--red);font-size:13px;line-height:1.4}
+
+/* Login */
+.loginPage{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#eef4ff,#f7f9fc);padding:20px}
+.loginBox{width:min(440px,100%);background:var(--surface);padding:32px;border-radius:20px;border:1px solid var(--border);box-shadow:0 18px 55px rgba(15,23,42,.1)}
+.loginBox h1{margin:26px 0 5px;font-size:29px}.loginBox p{color:var(--muted);line-height:1.5}.loginBox .blue{width:100%;margin-top:8px;height:46px}
+.loginError{color:var(--red);font-size:13px;min-height:19px}
+
+/* Last scan */
+.scanBox{display:flex;align-items:center;gap:15px;padding:17px;border:1px solid var(--border);border-radius:13px;background:var(--surface2)}
+.scanIcon{width:52px;height:52px;border-radius:14px;background:#eff6ff;color:#2563eb;display:grid;place-items:center;font-size:23px;flex:none}
+
+/* Toast */
+#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:200;background:#172033;color:white;padding:11px 15px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);transition:.2s ease;font-size:14px;max-width:calc(100vw - 30px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* Dark mode */
+body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--muted:#9ca3af;--border:#334155}
+.dark header,.dark .sidebar,.dark .card,.dark .stat,.dark .chip,.dark .modalBox,.dark .loginBox{background:var(--surface);border-color:var(--border)}
+.dark .sideToggle,.dark .sideLink{color:#d1d5db}
+.dark .sideToggle:hover,.dark .sideLink:hover{background:#334155}
+.dark .sideLink.active{background:#1e3a8a;color:#bfdbfe}
+.dark .gray{background:#334155;color:#e5e7eb}.dark .outline{border-color:#475569;color:#bfdbfe}
+.dark .field input,.dark .field select,.dark .field textarea,.dark .searchWrap input,.dark .filterSelect{background:#111827;color:#fff;border-color:#475569}
+.dark .settingsOption,.dark .scanBox{border-color:#334155}
+.dark .scanBox{background:#111827}.dark .modal{background:rgba(0,0,0,.7)}
+.dark .closeBtn{background:#334155;color:#e5e7eb}
+
+/* Tablet */
+@media(max-width:1000px){
+  :root{--header:68px}
+  header{padding:0 16px}
+  .workspace{grid-template-columns:220px minmax(0,1fr)}
+  .mainContent{padding:24px}
+  .chipMain{flex-direction:column}
+  .chipButtons{max-width:none;justify-content:flex-start}
+}
+
+/* Mobile */
 @media(max-width:720px){
-  header{
-    padding:0 14px
-  }
-
-  .headerBrand span{
-    display:none
-  }
-
-  .headText{
-    display:none
-  }
-
-  .workspace{
-    display:block;
-    padding:14px
-  }
-
-  .sidebar{
-    position:static;
-    margin-bottom:14px
-  }
-
-  .sidebar .sideSection:not(:first-of-type){
-    display:none
-  }
-
-  .sidebarHead{
-    padding:14px
-  }
-
-  .container{
-    padding:0
-  }
-
-  .stats{
-    grid-template-columns:1fr
-  }
-
-  .profile{
-    align-items:flex-start;
-    flex-direction:column
-  }
-
-  .chip{
-    align-items:flex-start;
-    flex-direction:column
-  }
-
-  .chipBtns{
-    justify-content:flex-start;
-    width:100%
-  }
-
-  .adminbar{
-    padding:9px 14px;
-    gap:10px;
-    flex-direction:column;
-    align-items:flex-start
-  }
-
-  .settingsHeader{
-    flex-direction:column
-  }
-
-  .settingsProfileCard{
-    align-items:flex-start;
-    flex-direction:column
-  }
+  :root{--header:64px}
+  header{height:auto;min-height:64px;padding:9px 12px}
+  .headerBrand{font-size:16px}
+  .headerMark{width:35px;height:35px;border-radius:10px}
+  .head{gap:8px}.headText{display:none}.avatar{width:37px;height:37px}
+  .gray,.blue,.danger,.outline{min-height:42px;padding:10px 12px}
+  .workspace{display:block;min-height:calc(100vh - 64px)}
+  .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px}
+  .sidebarHead{padding:8px 10px 11px;font-size:15px}
+  .sideToggle{padding:11px 10px;font-size:14px}
+  .sideLinks{padding:2px 0 5px;display:none;grid-template-columns:1fr 1fr;gap:5px}
+  .sideSection.open .sideLinks{display:grid}
+  .sideLink{padding:11px 10px;font-size:13px;min-height:42px;margin:0}
+  .mainContent{padding:17px 12px}
+  .pageTitle{font-size:25px}.pageSub{font-size:14px;margin-bottom:17px}
+  .stats{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
+  .stats .stat:last-child{grid-column:1/-1}
+  .stat{padding:14px}.num{font-size:25px}.statLabel{font-size:10px}
+  .card{padding:14px;border-radius:12px;margin-bottom:12px}
+  .sectionTitle{align-items:flex-start}.sectionTitle h2{font-size:16px}
+  .adminActions{display:grid;grid-template-columns:1fr;gap:7px}
+  .toolbar{display:grid;grid-template-columns:1fr;gap:8px}.searchWrap{min-width:0}.filterSelect{width:100%}
+  .chip{padding:12px;margin:8px 0}.chipStripe{width:100%;height:5px;min-height:5px;margin-bottom:10px}.chipInfo{gap:9px}.chipName{font-size:16px}
+  .chipMeta{font-size:12px}.person{font-size:12px}.chipButtons{display:grid;grid-template-columns:1fr 1fr;width:100%}.chipButtons button{width:100%;min-height:40px}
+  .settingsProfileCard{flex-direction:column;align-items:stretch}.settingsActions{display:grid;grid-template-columns:1fr}.settingsActions button{width:100%}
+  .modal{padding:10px}.modalBox{width:100%;max-height:94vh;padding:17px;border-radius:13px}.modalActions{display:grid;grid-template-columns:1fr 1fr}.modalActions button{min-height:44px}
+  .profileAvatar,.editAvatar{width:60px;height:60px;font-size:20px}
+  .loginPage{padding:13px}.loginBox{padding:23px 18px;border-radius:16px}
 }
+@media(max-width:390px){
+  .headerBrand span{display:none}.stats{grid-template-columns:1fr}.stats .stat:last-child{grid-column:auto}
+  .sideLinks{grid-template-columns:1fr}.chipButtons{grid-template-columns:1fr}.modalActions{grid-template-columns:1fr}
+  .pageTitle{font-size:23px}
+}
+@media(max-width:720px) and (orientation:landscape){
+  .sidebar{max-height:46vh;overflow-y:auto}.mainContent{padding:17px}
+}
+@media(pointer:coarse){
+  button,input,select,textarea{touch-action:manipulation}.sideLink,.sideToggle,button{min-height:42px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="loginScreen">
-  <div class="login">
-
-    <div class="brand">
-      <div class="brandMark">OS</div>
-
-      <div>
-        <h1>OrdnerSystem</h1>
-        <div class="smallNote">
-          Digitale Ordnerverwaltung
-        </div>
-      </div>
+<!-- ============================================================ LOGIN ============================================================ -->
+<div id="loginPage" class="loginPage">
+  <div class="loginBox">
+    <div class="headerBrand">
+      <div class="headerMark">OS</div>
+      <span>OrdnerSystem</span>
     </div>
-
-    <h2>Anmelden</h2>
-
-    <p>
-      Melde dich mit deinem Konto an.
-    </p>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="E-Mail"
-      autocomplete="email"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Passwort"
-      autocomplete="current-password"
-    >
-
-    <button
-      class="blue"
-      id="login"
-    >
-      Anmelden
-    </button>
-
-    <div
-      id="loginError"
-      class="error"
-    ></div>
-
+    <h1>Anmelden</h1>
+    <p>Melde dich mit deinem OrdnerSystem-Konto an.</p>
+    <div class="field">
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" autocomplete="username" placeholder="name@example.com">
+    </div>
+    <div class="field">
+      <label for="password">Passwort</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="Passwort">
+    </div>
+    <div id="loginError" class="loginError"></div>
+    <button id="login" class="blue">Anmelden</button>
   </div>
 </div>
 
-
-<!-- APP -->
+<!-- ============================================================ APP ============================================================ -->
 <div id="app" class="hidden">
-
-  <!-- HEADER -->
   <header>
-
     <div class="headerBrand">
-
-      <div class="headerMark">
-        OS
-      </div>
-
-      <span>
-        OrdnerSystem
-      </span>
-
+      <div class="headerMark">OS</div>
+      <span>OrdnerSystem</span>
     </div>
-
-
     <div class="head">
-
       <div class="headUser">
-
         <div class="headText">
-
-          <div
-            id="headName"
-            class="headName"
-          >
-            Benutzer
-          </div>
-
-          <div
-            id="headRole"
-            class="role"
-          >
-            Benutzer
-          </div>
-
+          <div id="headName" class="headName">Benutzer</div>
+          <div id="headRole" class="role">Benutzer</div>
         </div>
-
-        <div
-          id="headAvatar"
-          class="avatar"
-        >
-          ?
-        </div>
-
+        <div id="headAvatar" class="avatar">?</div>
       </div>
-
-
-      <!-- KEINE PROFIL-/ADMIN-/HILFE-ICONS MEHR OBEN -->
-
-      <button
-        id="logout"
-        class="gray"
-      >
-        Abmelden
-      </button>
-
+      <button id="logout" class="gray">Abmelden</button>
     </div>
-
   </header>
 
-
-  <!-- ADMIN BAR -->
-  <div
-    id="adminBar"
-    class="adminbar hidden"
-  >
-
-    <b>
-      Administrationsbereich aktiv
-    </b>
-
-    <button
-      id="closeAdmin"
-      class="gray"
-    >
-      Schließen
-    </button>
-
-  </div>
-
-
-  <!-- WORKSPACE -->
-  <div class="workspace">
-
-
-    <!-- SIDEBAR -->
+  <div id="workspace" class="workspace">
+    <!-- ======================================================== SIDEBAR ======================================================== -->
     <aside class="sidebar">
-
       <div class="sidebarHead">
-
         📁 OrdnerSystem
-
-        <small>
-          Navigation
-        </small>
-
+        <small>Navigation</small>
       </div>
 
-
-      <!-- ÜBERSICHT -->
       <div class="sideSection open">
-
-        <button
-          class="sideToggle"
-          onclick="toggleSide(this)"
-        >
-
-          Übersicht
-
-          <span class="chev">
-            ⌄
-          </span>
-
-        </button>
-
-
+        <button class="sideToggle" onclick="toggleSide(this)">Ordner <span class="chev">⌄</span></button>
         <div class="sideLinks">
-
-          <button
-            class="sideLink"
-            id="settingsOpen"
-          >
-            ⚙️ Einstellungen
-          </button>
-
-
-          <button
-            class="sideLink"
-            onclick="goTo('chips')"
-          >
-            📁 Alle Ordner
-          </button>
-
-
-          <button
-            class="sideLink"
-            onclick="goTo('lastScan')"
-          >
-            📡 Letzter Scan
-          </button>
-
+          <button class="sideLink" data-page="pageFolders" onclick="showPage('pageFolders')">📁 Alle Ordner</button>
+          <button class="sideLink" data-page="pageLastScan" onclick="showPage('pageLastScan')">📡 Letzter Scan</button>
         </div>
-
       </div>
 
+      <div class="sideSection">
+        <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
+        <div class="sideLinks">
+          <button class="sideLink" data-page="pageAnwaelte" onclick="showCategoryPage('Anwälte')">⚖️ Anwälte</button>
+          <button class="sideLink" data-page="pageVertraege" onclick="showCategoryPage('Verträge')">📄 Verträge</button>
+          <button class="sideLink" data-page="pageMandanten" onclick="showCategoryPage('Mandanten')">👤 Mandanten</button>
+        </div>
+      </div>
+
+      <div class="sideSection">
+        <button class="sideToggle" onclick="toggleSide(this)">System <span class="chev">⌄</span></button>
+        <div class="sideLinks">
+          <button class="sideLink" onclick="openProfile()">👤 Mein Profil</button>
+          <button class="sideLink" onclick="openSettings()">⚙️ Einstellungen</button>
+          <button class="sideLink" onclick="openHelp()">❓ Hilfe</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================== MAIN ======================================================== -->
+    <main id="mainContent" class="mainContent">
+
+      <!-- ALLE ORDNER -->
+      <section id="pageFolders" class="page">
+        <h1 class="pageTitle">Alle Ordner</h1>
+        <p class="pageSub">Alle Ordner und NFC-Chips im OrdnerSystem.</p>
+
+        <section class="stats">
+          <div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div>
+          <div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div>
+          <div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div>
+        </section>
+
+        <section id="adminPanel" class="card hidden">
+          <div class="sectionTitle">
+            <h2>Administration</h2>
+            <span class="badge">Administrator</span>
+          </div>
+          <div class="adminActions">
+            <button id="newChip" class="blue">＋ Chip hinzufügen</button>
+            <button id="newUser" class="blue">＋ Benutzer erstellen</button>
+            <button id="showUsers" class="gray">👥 Benutzer</button>
+            <button id="closeAdmin" class="gray">Admin-Modus schließen</button>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="sectionTitle">
+            <h2>Ordner & Chips</h2>
+            <span id="folderCountLabel" class="muted">0 Einträge</span>
+          </div>
+          <div class="toolbar">
+            <div class="searchWrap">
+              <span class="searchIcon">⌕</span>
+              <input id="chipSearch" type="search" placeholder="Ordner oder Chip-ID suchen...">
+            </div>
+            <select id="chipFilter" class="filterSelect">
+              <option value="all">Alle Kategorien</option>
+              <option value="Anwälte">⚖️ Anwälte</option>
+              <option value="Verträge">📄 Verträge</option>
+              <option value="Mandanten">👤 Mandanten</option>
+            </select>
+            <select id="statusFilter" class="filterSelect">
+              <option value="all">Alle Status</option>
+              <option value="free">Nur freie</option>
+              <option value="active">Nur aktive</option>
+            </select>
+          </div>
+          <div id="chips">Laden...</div>
+        </section>
+      </section>
+
+      <!-- LETZTER SCAN -->
+      <section id="pageLastScan" class="page hidden">
+        <h1 class="pageTitle">Letzter Scan</h1>
+        <p class="pageSub">Hier siehst du den zuletzt erkannten NFC-Chip.</p>
+        <section class="card">
+          <div class="sectionTitle"><h2>📡 Letzter NFC-Scan</h2></div>
+          <div id="lastScan"><div class="empty">Noch kein Scan.</div></div>
+        </section>
+      </section>
 
       <!-- KATEGORIEN -->
-      <div class="sideSection">
-
-        <button
-          class="sideToggle"
-          onclick="toggleSide(this)"
-        >
-
-          Kategorien
-
-          <span class="chev">
-            ⌄
-          </span>
-
-        </button>
-
-
-        <div class="sideLinks">
-
-          <button
-            class="sideLink"
-            onclick="showCategory('Anwälte')"
-          >
-            ⚖️ Anwälte
-          </button>
-
-
-          <button
-            class="sideLink"
-            onclick="showCategory('Verträge')"
-          >
-            📄 Verträge
-          </button>
-
-
-          <button
-            class="sideLink"
-            onclick="showCategory('Mandanten')"
-          >
-            👤 Mandanten
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- SYSTEM -->
-      <div class="sideSection">
-
-        <button
-          class="sideToggle"
-          onclick="toggleSide(this)"
-        >
-
-          System
-
-          <span class="chev">
-            ⌄
-          </span>
-
-        </button>
-
-
-        <div class="sideLinks">
-
-          <button
-            class="sideLink"
-            onclick="openProfile()"
-          >
-            👤 Mein Profil
-          </button>
-
-
-          <button
-            class="sideLink"
-            onclick="openHelp()"
-          >
-            ❓ Hilfe
-          </button>
-
-        </div>
-
-      </div>
-
-    </aside>
-
-
-    <!-- MAIN DASHBOARD -->
-    <main
-      class="container"
-      id="dashboardPage"
-    >
-
-      <h1 class="pageTitle">
-        Übersicht
-      </h1>
-
-      <p class="pageSub">
-        Verwalte Ordner, Chips und Benutzer zentral.
-      </p>
-
-
-      <!-- PROFILE -->
-      <section class="card profile">
-
-        <div class="profileLeft">
-
-          <div
-            id="profileAvatar"
-            class="profileAvatar"
-          >
-            ?
-          </div>
-
-
-          <div>
-
-            <div
-              id="profileName"
-              class="bigName"
-            >
-              Benutzer
-            </div>
-
-            <div
-              id="profileEmail"
-              class="muted"
-            ></div>
-
-          </div>
-
-        </div>
-
-
-        <button
-          id="profileEdit2"
-          class="blue"
-        >
-          Profil bearbeiten
-        </button>
-
+      <section id="pageAnwaelte" class="page hidden">
+        <h1 class="pageTitle">⚖️ Anwälte</h1>
+        <p class="pageSub">Ordner und NFC-Chips der Kategorie Anwälte.</p>
+        <section class="card"><div id="categoryAnwaelte"></div></section>
       </section>
 
-
-      <!-- STATS -->
-      <section class="stats">
-
-        <div class="stat">
-
-          <div class="statLabel">
-            ALLE CHIPS
-          </div>
-
-          <div
-            id="total"
-            class="num"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat">
-
-          <div class="statLabel">
-            FREI
-          </div>
-
-          <div
-            id="greenCount"
-            class="num greenText"
-          >
-            0
-          </div>
-
-        </div>
-
-
-        <div class="stat">
-
-          <div class="statLabel">
-            AKTIV
-          </div>
-
-          <div
-            id="redCount"
-            class="num redText"
-          >
-            0
-          </div>
-
-        </div>
-
+      <section id="pageVertraege" class="page hidden">
+        <h1 class="pageTitle">📄 Verträge</h1>
+        <p class="pageSub">Ordner und NFC-Chips der Kategorie Verträge.</p>
+        <section class="card"><div id="categoryVertraege"></div></section>
       </section>
 
-
-      <!-- ADMIN -->
-      <section
-        id="adminPanel"
-        class="card hidden"
-      >
-
-        <div class="sectionTitle">
-
-          <h2>
-            Administration
-          </h2>
-
-        </div>
-
-
-        <div class="adminActions">
-
-          <button
-            id="newChip"
-            class="blue"
-          >
-            + Chip hinzufügen
-          </button>
-
-
-          <button
-            id="newUser"
-            class="blue"
-          >
-            + Benutzer erstellen
-          </button>
-
-        </div>
-
+      <section id="pageMandanten" class="page hidden">
+        <h1 class="pageTitle">👤 Mandanten</h1>
+        <p class="pageSub">Ordner und NFC-Chips der Kategorie Mandanten.</p>
+        <section class="card"><div id="categoryMandanten"></div></section>
       </section>
 
-
-      <!-- LAST SCAN -->
-      <section class="card">
-
-        <div class="sectionTitle">
-
-          <h2>
-            Letzter NFC-Scan
-          </h2>
-
-        </div>
-
-
-        <div
-          id="lastScan"
-          class="scan"
-        >
-          Noch kein Scan.
-        </div>
-
+      <!-- BENUTZER -->
+      <section id="pageUsers" class="page hidden">
+        <h1 class="pageTitle">Benutzer</h1>
+        <p class="pageSub">Benutzerverwaltung – nur im Admin-Modus.</p>
+        <section class="card">
+          <div class="sectionTitle">
+            <h2>Benutzerkonten</h2>
+            <button class="gray" onclick="showPage('pageFolders')">← Alle Ordner</button>
+          </div>
+          <div id="users">Laden...</div>
+        </section>
       </section>
-
-
-      <!-- CHIPS -->
-      <section class="card">
-
-        <div class="sectionTitle">
-
-          <h2>
-            Ordner & Chips
-          </h2>
-
-        </div>
-
-
-        <div id="chips">
-          Laden...
-        </div>
-
-      </section>
-
-
-      <!-- USERS -->
-      <section
-        id="usersSection"
-        class="card hidden"
-      >
-
-        <div class="sectionTitle">
-
-          <h2>
-            Benutzer
-          </h2>
-
-        </div>
-
-
-        <div id="users">
-          Laden...
-        </div>
-
-      </section>
-
     </main>
 
+    <!-- ======================================================== SETTINGS ======================================================== -->
+    <section id="settingsPage" class="mainContent settingsPage hidden">
+      <h1 class="pageTitle">Einstellungen</h1>
+      <p class="pageSub">Profil, Admin-Modus und Darstellung.</p>
 
-    <!-- SETTINGS -->
-    <section
-      id="settingsPage"
-      class="container hidden"
-    >
-
-      <div class="settingsHeader">
-
-        <div>
-
-          <h1 class="pageTitle">
-            Einstellungen
-          </h1>
-
-          <p class="pageSub">
-            Verwalte dein Profil und die Einstellungen von OrdnerSystem.
-          </p>
-
-        </div>
-
-
-        <button
-          id="settingsBack"
-          class="gray"
-        >
-          ← Übersicht
-        </button>
-
-      </div>
-
-
-      <!-- PROFILE SETTINGS -->
       <section class="card settingsProfileCard">
-
-        <div class="profileLeft">
-
-          <div
-            id="settingsAvatar"
-            class="profileAvatar"
-          >
-            ?
-          </div>
-
-
+        <div class="profileRow">
+          <div id="settingsAvatar" class="profileAvatar">?</div>
           <div>
-
-            <div
-              id="settingsName"
-              class="bigName"
-            >
-              Benutzer
-            </div>
-
-            <div
-              id="settingsEmail"
-              class="muted"
-            ></div>
-
+            <div id="settingsName" style="font-size:20px;font-weight:850">Benutzer</div>
+            <div id="settingsEmail" class="muted"></div>
           </div>
-
         </div>
-
-
         <div class="settingsActions">
-
-          <!-- NORMAL USER -->
-          <button
-            id="settingsProfileBtn"
-            class="blue"
-          >
-            ✏️ Profil bearbeiten
-          </button>
-
-
-          <!-- ADMIN ONLY -->
-          <button
-            id="settingsAdminBtn"
-            class="blue hidden"
-          >
-            ⚙️ Admin-Modus
-          </button>
-
+          <button id="settingsProfileBtn" class="blue">✏️ Profil bearbeiten</button>
+          <button id="settingsAdminBtn" class="blue hidden">⚙️ Admin-Modus</button>
         </div>
-
       </section>
 
-
-      <!-- THEME -->
       <section class="card">
-
-        <div class="sectionTitle">
-
-          <h2>
-            Darstellung
-          </h2>
-
-        </div>
-
-
-        <p class="muted">
-          Wähle aus, wie OrdnerSystem aussehen soll.
-        </p>
-
-
+        <div class="sectionTitle"><h2>Darstellung</h2></div>
+        <p class="muted">Die Auswahl wird auf diesem Gerät gespeichert.</p>
         <label class="settingsOption">
-
-          <input
-            type="radio"
-            name="theme2"
-            id="themeLight2"
-            value="light"
-          >
-
-          <span>
-
-            <b>
-              ☀️ Hellmodus
-            </b>
-
-            <br>
-
-            <span class="smallNote">
-              Heller und übersichtlich
-            </span>
-
-          </span>
-
+          <input type="radio" name="theme2" id="themeLight2" value="light">
+          <span><b>☀️ Hellmodus</b><br><span class="smallNote">Helle Darstellung</span></span>
         </label>
-
-
         <label class="settingsOption">
-
-          <input
-            type="radio"
-            name="theme2"
-            id="themeDark2"
-            value="dark"
-          >
-
-          <span>
-
-            <b>
-              🌙 Dunkelmodus
-            </b>
-
-            <br>
-
-            <span class="smallNote">
-              Dunkle Darstellung
-            </span>
-
-          </span>
-
+          <input type="radio" name="theme2" id="themeDark2" value="dark">
+          <span><b>🌙 Dunkelmodus</b><br><span class="smallNote">Dunkle Darstellung</span></span>
         </label>
-
       </section>
 
+      <button id="settingsBack" class="gray">← Alle Ordner</button>
     </section>
-
-
-    <!-- RIGHT CATEGORY PANEL -->
-    <aside class="rightPanel">
-
-      <div class="rightTitle">
-
-        <h2 id="categoryTitle">
-          ⚖️ Anwälte
-        </h2>
-
-      </div>
-
-
-      <div id="categoryContent">
-
-        <div class="category">
-
-          <b>
-            Anwälte
-          </b>
-
-          <span>
-            Rechtsanwälte und Kanzleien
-          </span>
-
-        </div>
-
-
-        <div class="category">
-
-          <b>
-            Ordner
-          </b>
-
-          <span>
-            Dokumente dieser Kategorie
-          </span>
-
-        </div>
-
-      </div>
-
-    </aside>
-
   </div>
-
 </div>
 
-
-<!-- CHIP MODAL -->
-<div
-  id="chipModal"
-  class="modal"
->
-
+<!-- ============================================================ PROFILE MODAL ============================================================ -->
+<div id="profileModal" class="modal hidden">
   <div class="modalBox">
-
-    <h2 id="chipTitle">
-      Chip hinzufügen
-    </h2>
-
-
-    <input
-      id="chipName"
-      placeholder="Ordnername"
-    >
-
-
-    <input
-      id="chipId"
-      placeholder="Chip-ID, z. B. 001"
-    >
-
-
-    <div class="modalBtns">
-
-      <button
-        id="saveChip"
-        class="green"
-      >
-        Speichern
-      </button>
-
-
-      <button
-        data-close="chipModal"
-        class="gray"
-      >
-        Abbrechen
-      </button>
-
+    <div class="modalHead"><h2>Mein Profil</h2><button class="closeBtn" onclick="close('profileModal')">×</button></div>
+    <div class="profileRow">
+      <div id="editAvatar" class="editAvatar">?</div>
+      <div class="muted">Profilbild ist optional.</div>
     </div>
-
+    <div class="field"><label for="nameEdit">Name</label><input id="nameEdit" type="text" maxlength="40" placeholder="Dein Name"></div>
+    <div class="field"><label for="photo">Profilbild</label><input id="photo" type="file" accept="image/*"></div>
+    <button id="removePhoto" class="gray">Profilbild entfernen</button>
+    <div id="profileMsg" class="formMessage"></div>
+    <div class="modalActions"><button class="gray" onclick="close('profileModal')">Abbrechen</button><button id="saveProfile" class="blue">Speichern</button></div>
   </div>
-
 </div>
 
-
-<!-- USER MODAL -->
-<div
-  id="userModal"
-  class="modal"
->
-
+<!-- ============================================================ CHIP MODAL ============================================================ -->
+<div id="chipModal" class="modal hidden">
   <div class="modalBox">
-
-    <h2>
-      Benutzer erstellen
-    </h2>
-
-
-    <input
-      id="newName"
-      placeholder="Name"
-    >
-
-
-    <input
-      id="newEmail"
-      type="email"
-      placeholder="E-Mail"
-    >
-
-
-    <input
-      id="newPassword"
-      type="password"
-      placeholder="Passwort"
-    >
-
-
-    <div class="modalBtns">
-
-      <button
-        id="saveUser"
-        class="green"
-      >
-        Erstellen
-      </button>
-
-
-      <button
-        data-close="userModal"
-        class="gray"
-      >
-        Abbrechen
-      </button>
-
-    </div>
-
-
-    <div
-      id="userError"
-      class="error"
-    ></div>
-
+    <div class="modalHead"><h2 id="chipTitle">Chip hinzufügen</h2><button class="closeBtn" onclick="close('chipModal')">×</button></div>
+    <div class="field"><label for="chipName">Ordnername</label><input id="chipName" type="text" maxlength="80" placeholder="z. B. Mandant Müller"></div>
+    <div class="field"><label for="chipId">Chip-ID</label><input id="chipId" type="text" maxlength="80" placeholder="z. B. 001"></div>
+    <div class="field"><label for="chipCategory">Kategorie</label><select id="chipCategory"><option value="Anwälte">⚖️ Anwälte</option><option value="Verträge">📄 Verträge</option><option value="Mandanten">👤 Mandanten</option></select></div>
+    <div class="modalActions"><button class="gray" onclick="close('chipModal')">Abbrechen</button><button id="saveChip" class="blue">Speichern</button></div>
   </div>
-
 </div>
 
-
-<!-- PROFILE MODAL -->
-<div
-  id="profileModal"
-  class="modal"
->
-
+<!-- ============================================================ USER MODAL ============================================================ -->
+<div id="userModal" class="modal hidden">
   <div class="modalBox">
-
-    <h2>
-      Mein Profil
-    </h2>
-
-
-    <div class="editPhoto">
-
-      <div
-        id="editAvatar"
-        class="editAvatar"
-      >
-        ?
-      </div>
-
-
-      <label class="fileBtn">
-
-        📷 Bild auswählen
-
-        <input
-          id="photo"
-          type="file"
-          accept="image/*"
-        >
-
-      </label>
-
-
-      <button
-        id="removePhoto"
-        class="gray"
-      >
-        Bild entfernen
-      </button>
-
-    </div>
-
-
-    <input
-      id="nameEdit"
-      placeholder="Name"
-    >
-
-
-    <p class="smallNote">
-      Die E-Mail-Adresse ist deine Login-Adresse.
-    </p>
-
-
-    <div class="modalBtns">
-
-      <button
-        id="saveProfile"
-        class="green"
-      >
-        Speichern
-      </button>
-
-
-      <button
-        data-close="profileModal"
-        class="gray"
-      >
-        Abbrechen
-      </button>
-
-    </div>
-
-
-    <div
-      id="profileMsg"
-      class="error"
-    ></div>
-
+    <div class="modalHead"><h2>Benutzer erstellen</h2><button class="closeBtn" onclick="close('userModal')">×</button></div>
+    <div class="field"><label for="userName">Name</label><input id="userName" type="text" maxlength="40" placeholder="Max Mustermann"></div>
+    <div class="field"><label for="userEmail">E-Mail</label><input id="userEmail" type="email" placeholder="max@example.com"></div>
+    <div class="field"><label for="userPassword">Passwort</label><input id="userPassword" type="password" minlength="6" placeholder="Mindestens 6 Zeichen"></div>
+    <div id="userMsg" class="formMessage"></div>
+    <div class="modalActions"><button class="gray" onclick="close('userModal')">Abbrechen</button><button id="saveUser" class="blue">Benutzer erstellen</button></div>
   </div>
-
 </div>
 
-
-<!-- HELP MODAL -->
-<div
-  id="helpModal"
-  class="modal"
->
-
-  <div class="modalBox help">
-
-    <h2>
-      Hilfe
-    </h2>
-
-
-    <input
-      id="helpSearch"
-      placeholder="Frage zu OrdnerSystem eingeben..."
-    >
-
-
+<!-- ============================================================ HELP MODAL ============================================================ -->
+<div id="helpModal" class="modal hidden">
+  <div class="modalBox">
+    <div class="modalHead"><h2>Hilfe</h2><button class="closeBtn" onclick="close('helpModal')">×</button></div>
+    <div class="field"><label for="helpSearch">OrdnerSystem-Hilfe</label><input id="helpSearch" placeholder="z. B. NFC, Chip, Profil..."></div>
     <div id="helpAnswer"></div>
-
-
-    <div class="modalBtns">
-
-      <button
-        data-close="helpModal"
-        class="gray"
-      >
-        Schließen
-      </button>
-
-    </div>
-
   </div>
-
 </div>
 
+<div id="toast"></div>
 
+<!-- ============================================================ FIREBASE + APPLICATION CODE ============================================================ -->
 <script type="module">
-
-/* =========================================================
-   FIREBASE
-========================================================= */
-
-import {
-  initializeApp,
-  getApps,
-  getApp
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-
+import { initializeApp, getApps, getApp, deleteApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -1919,7 +498,6 @@ import {
   createUserWithEmailAndPassword,
   deleteUser
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
 import {
   getFirestore,
   collection,
@@ -1931,2844 +509,1035 @@ import {
   deleteDoc,
   onSnapshot,
   serverTimestamp,
-  runTransaction
+  runTransaction,
+  query,
+  where,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
-
-const config = {
-  apiKey:"AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-  authDomain:"ordnersystem-1352a.firebaseapp.com",
-  projectId:"ordnersystem-1352a",
-  storageBucket:"ordnersystem-1352a.firebasestorage.app",
-  messagingSenderId:"39473536985",
-  appId:"1:39473536985:web:7dae48028c28dabc6a03c8"
+/* ============================================================
+   FIREBASE KONFIGURATION
+   ============================================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+  authDomain: "ordnersystem-1352a.firebaseapp.com",
+  projectId: "ordnersystem-1352a",
+  storageBucket: "ordnersystem-1352a.firebasestorage.app",
+  messagingSenderId: "39473536985",
+  appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
 };
 
-
-const app = initializeApp(config);
-
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
+/* ============================================================
+   ADMIN IDS
+   ============================================================ */
+const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
+const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
 
-/* =========================================================
-   ADMINS
-========================================================= */
-
-const ADMIN1 =
-  "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-
-const ADMIN2 =
-  "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
-
-
-/* =========================================================
+/* ============================================================
    STATE
-========================================================= */
-
+   ============================================================ */
 let user = null;
-
 let profile = {};
-
 let chips = [];
-
 let editId = null;
-
 let admin = false;
-
 let selectedFile = null;
-
 let removeImage = false;
-
 let unsub = [];
+let nfcHandled = false;
+let toastTimer = null;
 
-let authLoading = false;
-
-
-/* =========================================================
+/* ============================================================
    HELPERS
-========================================================= */
+   ============================================================ */
+const $ = id => document.getElementById(id);
 
-const $ = id =>
-  document.getElementById(id);
+const esc = value => String(value ?? "")
+  .replaceAll("&", "&amp;")
+  .replaceAll("<", "&lt;")
+  .replaceAll(">", "&gt;")
+  .replaceAll('"', "&quot;")
+  .replaceAll("'", "&#039;");
 
+const isAdmin = () => !!user && (user.uid === ADMIN1 || user.uid === ADMIN2);
+const nameKey = name => String(name || "").trim().toLowerCase();
+const nameOf = () => profile.name || user?.email?.split("@")[0] || "Benutzer";
+const open = id => $(id)?.classList.remove("hidden");
+const close = id => $(id)?.classList.add("hidden");
 
-const esc = x =>
-  String(x ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-
-const isAdmin = () =>
-  !!user &&
-  (
-    user.uid === ADMIN1 ||
-    user.uid === ADMIN2
-  );
-
-
-const close = id => {
-  const el = $(id);
-  if(el) el.style.display = "none";
-};
-
-
-const open = id => {
-  const el = $(id);
-  if(el) el.style.display = "flex";
-};
-
-
-function nameOf(){
-
-  return (
-    profile.name ||
-    user?.email?.split("@")[0] ||
-    "Benutzer"
-  );
-
-}
-
-
-function nameKey(name){
-
-  return name
-    .trim()
-    .toLowerCase();
-
-}
-
-
-function avatar(id,url,name){
-
-  const el = $(id);
-
+function toast(message){
+  const el = $("toast");
   if(!el) return;
-
-  if(url){
-
-    el.innerHTML =
-      `<img
-        src="${esc(url)}"
-        alt="Profilbild"
-      >`;
-
-  }else{
-
-    el.innerText =
-      (name || "?")[0].toUpperCase();
-
-  }
-
+  el.textContent = message;
+  el.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
 }
 
+function avatar(id, url, name){
+  const el = $(id);
+  if(!el) return;
+  el.innerHTML = url
+    ? `<img src="${esc(url)}" alt="Profilbild">`
+    : esc((name || "?")[0].toUpperCase());
+}
 
-/* =========================================================
-   IMAGE COMPRESSION
-========================================================= */
-
-function compressImage(file){
-
-  return new Promise((resolve,reject)=>{
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload = event => {
-
-      const img =
-        new Image();
-
-
-      img.onload = () => {
-
-        const max = 320;
-
-        const scale =
-          Math.min(
-            max / img.width,
-            max / img.height,
-            1
-          );
-
-
-        const canvas =
-          document.createElement("canvas");
-
-
-        canvas.width =
-          Math.round(img.width * scale);
-
-        canvas.height =
-          Math.round(img.height * scale);
-
-
-        const ctx =
-          canvas.getContext("2d");
-
-
-        ctx.fillStyle = "#fff";
-
-        ctx.fillRect(
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-
-
-        ctx.drawImage(
-          img,
-          0,
-          0,
-          canvas.width,
-          canvas.height
-        );
-
-
-        resolve(
-          canvas.toDataURL(
-            "image/jpeg",
-            .72
-          )
-        );
-
-      };
-
-
-      img.onerror = reject;
-
-      img.src = event.target.result;
-
-    };
-
-
-    reader.onerror = reject;
-
-    reader.readAsDataURL(file);
-
+function clearListeners(){
+  unsub.forEach(fn => {
+    try{ if(typeof fn === "function") fn(); }catch(e){ console.warn(e); }
   });
-
+  unsub = [];
 }
 
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-$("login").onclick = async () => {
-
-  const email =
-    $("email").value.trim();
-
-  const password =
-    $("password").value;
-
-
-  if(!email || !password){
-
-    $("loginError").innerText =
-      "Bitte E-Mail und Passwort eingeben.";
-
-    return;
-
-  }
-
-
-  try{
-
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    $("loginError").innerText = "";
-
-  }catch(error){
-
-    console.error(error);
-
-    $("loginError").innerText =
-      "E-Mail oder Passwort falsch.";
-
-  }
-
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+window.toggleSide = element => {
+  element?.parentElement?.classList.toggle("open");
 };
 
+function hideAllPages(){
+  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
+  document.querySelectorAll(".sideLink[data-page]").forEach(link => link.classList.remove("active"));
+}
+
+function markActive(pageId){
+  document.querySelectorAll(".sideLink[data-page]").forEach(link => {
+    link.classList.toggle("active", link.dataset.page === pageId);
+  });
+}
+
+window.showPage = pageId => {
+  if(pageId === "pageUsers" && !isAdmin()) return;
+  hideAllPages();
+  $(pageId)?.classList.remove("hidden");
+  $("mainContent")?.classList.remove("hidden");
+  $("settingsPage")?.classList.add("hidden");
+  $("workspace")?.classList.remove("settingsMode");
+  markActive(pageId);
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(pageId === "pageAnwaelte") renderCategory("Anwälte");
+  if(pageId === "pageVertraege") renderCategory("Verträge");
+  if(pageId === "pageMandanten") renderCategory("Mandanten");
+};
+
+window.showCategoryPage = category => {
+  const map = {
+    "Anwälte":"pageAnwaelte",
+    "Verträge":"pageVertraege",
+    "Mandanten":"pageMandanten"
+  };
+  const pageId = map[category];
+  if(!pageId) return;
+  window.showPage(pageId);
+  renderCategory(category);
+};
+
+window.openSettings = () => {
+  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
+  $("mainContent")?.classList.add("hidden");
+  $("settingsPage")?.classList.remove("hidden");
+  $("workspace")?.classList.add("settingsMode");
+  refreshSettings();
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+
+window.closeSettings = () => {
+  $("settingsPage")?.classList.add("hidden");
+  $("mainContent")?.classList.remove("hidden");
+  $("workspace")?.classList.remove("settingsMode");
+  window.showPage("pageFolders");
+};
+
+window.enterAdminMode = () => {
+  if(!isAdmin()) return toast("Du bist kein Administrator.");
+  admin = true;
+  $("adminPanel")?.classList.remove("hidden");
+  $("settingsPage")?.classList.add("hidden");
+  $("mainContent")?.classList.remove("hidden");
+  $("workspace")?.classList.remove("settingsMode");
+  loadUsers();
+  window.showPage("pageFolders");
+  toast("Admin-Modus aktiviert");
+};
+
+window.exitAdminMode = () => {
+  admin = false;
+  $("adminPanel")?.classList.add("hidden");
+  $("pageUsers")?.classList.add("hidden");
+  window.showPage("pageFolders");
+  toast("Admin-Modus geschlossen");
+};
+
+/* ============================================================
+   THEME
+   ============================================================ */
+function applyTheme(theme){
+  const dark = theme === "dark";
+  document.body.classList.toggle("dark", dark);
+  localStorage.setItem("ordnersystem-theme", dark ? "dark" : "light");
+  if($("themeLight2")) $("themeLight2").checked = !dark;
+  if($("themeDark2")) $("themeDark2").checked = dark;
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+$("login").onclick = async () => {
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  $("loginError").textContent = "";
+  if(!email || !password){
+    $("loginError").textContent = "Bitte E-Mail und Passwort eingeben.";
+    return;
+  }
+  try{
+    $("login").disabled = true;
+    await signInWithEmailAndPassword(auth, email, password);
+  }catch(error){
+    console.error(error);
+    $("loginError").textContent = "E-Mail oder Passwort falsch.";
+  }finally{
+    $("login").disabled = false;
+  }
+};
 
 $("password").onkeydown = event => {
-
-  if(event.key === "Enter"){
-
-    $("login").click();
-
-  }
-
+  if(event.key === "Enter") $("login").click();
 };
-
 
 $("logout").onclick = async () => {
-
-  try{
-
-    await signOut(auth);
-
-  }catch(error){
-
-    console.error(error);
-
-  }
-
+  await signOut(auth);
 };
 
-
-/* =========================================================
-   ADMIN MODE
-========================================================= */
-
-function enterAdminMode(){
-
-  if(!isAdmin()) return;
-
-
-  admin = true;
-
-
-  $("adminBar")
-    .classList.remove("hidden");
-
-
-  $("adminPanel")
-    .classList.remove("hidden");
-
-
-  $("usersSection")
-    .classList.remove("hidden");
-
-
-  loadUsers();
-
-  closeSettings();
-
-}
-
-
-$("closeAdmin").onclick = () => {
-
-  admin = false;
-
-
-  $("adminBar")
-    .classList.add("hidden");
-
-
-  $("adminPanel")
-    .classList.add("hidden");
-
-
-  $("usersSection")
-    .classList.add("hidden");
-
-};
-
-
-/* =========================================================
-   PROFILE BUTTONS
-========================================================= */
-
-$("profileEdit2").onclick =
-  () => openProfile();
-
-
-$("settingsProfileBtn").onclick =
-  () => openProfile();
-
-
-$("settingsAdminBtn").onclick =
-  () => enterAdminMode();
-
-
-/* =========================================================
-   MODAL CLOSE
-========================================================= */
-
-document
-  .querySelectorAll("[data-close]")
-  .forEach(button => {
-
-    button.onclick = () =>
-      close(button.dataset.close);
-
-  });
-
-
-document
-  .querySelectorAll(".modal")
-  .forEach(modal => {
-
-    modal.onclick = event => {
-
-      if(event.target === modal){
-
-        modal.style.display = "none";
-
-      }
-
-    };
-
-  });
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-onAuthStateChanged(
-  auth,
-  async currentUser => {
-
-    user = currentUser;
-
-
-    if(!currentUser){
-
-      admin = false;
-
-
-      $("loginScreen")
-        .style.display = "flex";
-
-
-      $("app")
-        .classList.add("hidden");
-
-
-      $("adminBar")
-        .classList.add("hidden");
-
-
-      $("adminPanel")
-        .classList.add("hidden");
-
-
-      $("usersSection")
-        .classList.add("hidden");
-
-
-      closeSettings();
-
-
-      return;
-
-    }
-
-
-    $("loginScreen")
-      .style.display = "none";
-
-
-    $("app")
-      .classList.remove("hidden");
-
-
-    $("settingsAdminBtn")
-      .classList.toggle(
-        "hidden",
-        !isAdmin()
-      );
-
-
-    try{
-
-      await ensureProfile();
-
-      loadProfile();
-
-      loadChips();
-
-      loadScan();
-
-
-      setTimeout(
-        scanNFC,
-        1000
-      );
-
-    }catch(error){
-
-      console.error(
-        "Initialisierung fehlgeschlagen:",
-        error
-      );
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   PROFILE CREATION
-========================================================= */
-
+/* ============================================================
+   PROFILE
+   ============================================================ */
 async function ensureProfile(){
+  const userRef = doc(db,"users",user.uid);
+  const snap = await getDoc(userRef);
+  if(snap.exists()) return;
 
-  const userRef =
-    doc(
-      db,
-      "users",
-      user.uid
-    );
+  const defaultName = user.email?.split("@")[0] || "Benutzer";
+  const key = nameKey(defaultName);
 
+  await runTransaction(db, async tx => {
+    const nameRef = doc(db,"userNames",key);
+    const nameSnap = await tx.get(nameRef);
 
-  const snapshot =
-    await getDoc(userRef);
-
-
-  if(snapshot.exists()){
-
-    return;
-
-  }
-
-
-  const defaultName =
-    user.email?.split("@")[0] ||
-    "Benutzer";
-
-
-  const key =
-    nameKey(defaultName);
-
-
-  await runTransaction(
-    db,
-    async transaction => {
-
-      const nameRef =
-        doc(
-          db,
-          "userNames",
-          key
-        );
-
-
-      const nameSnapshot =
-        await transaction.get(
-          nameRef
-        );
-
-
-      if(
-        nameSnapshot.exists() &&
-        nameSnapshot.data().uid !== user.uid
-      ){
-
-        throw new Error(
-          "NAME_ALREADY_USED"
-        );
-
-      }
-
-
-      transaction.set(
-        userRef,
-        {
-          name:defaultName,
-          nameKey:key,
-          email:user.email || "",
-          role:isAdmin()
-            ? "admin"
-            : "user",
-          profileImageData:"",
-          createdAt:
-            serverTimestamp()
-        }
-      );
-
-
-      transaction.set(
-        nameRef,
-        {
-          uid:user.uid,
-          name:defaultName
-        }
-      );
-
+    if(nameSnap.exists() && nameSnap.data().uid !== user.uid){
+      throw new Error("NAME_ALREADY_USED");
     }
-  );
 
+    tx.set(userRef,{
+      name: defaultName,
+      nameKey: key,
+      email: user.email || "",
+      role: isAdmin() ? "admin" : "user",
+      profileImageData: "",
+      createdAt: serverTimestamp()
+    });
+
+    tx.set(nameRef,{uid:user.uid,name:defaultName});
+  });
 }
-
-
-/* =========================================================
-   LOAD PROFILE
-========================================================= */
 
 function loadProfile(){
+  unsub.push(onSnapshot(doc(db,"users",user.uid), snap => {
+    profile = snap.exists() ? snap.data() : {};
+    const n = nameOf();
+    const image = profile.profileImageData || "";
 
-  unsub.push(
+    $("headName").textContent = n;
+    $("headRole").textContent = isAdmin() ? "Administrator" : "Benutzer";
+    avatar("headAvatar", image, n);
+    avatar("settingsAvatar", image, n);
+    $("settingsName").textContent = n;
+    $("settingsEmail").textContent = user.email || "";
+    $("settingsAdminBtn")?.classList.toggle("hidden", !isAdmin());
 
-    onSnapshot(
-      doc(
-        db,
-        "users",
-        user.uid
-      ),
-      snapshot => {
-
-        profile =
-          snapshot.exists()
-            ? snapshot.data()
-            : {};
-
-
-        const name =
-          nameOf();
-
-
-        const image =
-          profile.profileImageData || "";
-
-
-        $("profileName").innerText =
-          name;
-
-
-        $("headName").innerText =
-          name;
-
-
-        $("profileEmail").innerText =
-          user.email || "";
-
-
-        $("headRole").innerText =
-          isAdmin()
-            ? "Administrator"
-            : "Benutzer";
-
-
-        avatar(
-          "profileAvatar",
-          image,
-          name
-        );
-
-
-        avatar(
-          "headAvatar",
-          image,
-          name
-        );
-
-
-        if(
-          $("settingsName")
-        ){
-
-          $("settingsName").innerText =
-            name;
-
-          $("settingsEmail").innerText =
-            user.email || "";
-
-          avatar(
-            "settingsAvatar",
-            image,
-            name
-          );
-
-        }
-
-      }
-    )
-
-  );
-
+    if(!admin) $("adminPanel")?.classList.add("hidden");
+    renderChips();
+    renderAllCategories();
+  }, error => {
+    console.error("Profil Listener:",error);
+  }));
 }
 
-
-/* =========================================================
-   LOAD CHIPS
-========================================================= */
-
-function loadChips(){
-
-  unsub.push(
-
-    onSnapshot(
-      collection(db,"chips"),
-      snapshot => {
-
-        chips = [];
-
-
-        snapshot.forEach(
-          item => {
-
-            chips.push({
-
-              firestoreId:item.id,
-
-              ...item.data()
-
-            });
-
-          }
-        );
-
-
-        renderChips();
-
-      }
-    )
-
-  );
-
-}
-
-
-/* =========================================================
-   RENDER CHIPS
-========================================================= */
-
-function renderChips(){
-
-  let red = 0;
-
-
-  const container =
-    $("chips");
-
-
-  container.innerHTML = "";
-
-
-  if(!chips.length){
-
-    container.innerHTML =
-      '<div class="empty">Noch keine Chips vorhanden.</div>';
-
-
-    $("total").innerText = "0";
-
-    $("redCount").innerText = "0";
-
-    $("greenCount").innerText = "0";
-
-    return;
-
-  }
-
-
-  chips.forEach(chip => {
-
-    const active =
-      chip.assignedTo != null ||
-      chip.scanActive === true;
-
-
-    if(active){
-
-      red++;
-
-    }
-
-
-    const personName =
-      chip.assignedName ||
-      chip.assignedEmail ||
-      "Niemand";
-
-
-    const image =
-      chip.assignedProfileImageData ||
-      "";
-
-
-    let buttons = "";
-
-
-    /* NORMAL USER */
-
-    if(!isAdmin()){
-
-      if(!chip.assignedTo){
-
-        buttons += `
-          <button
-            class="green"
-            onclick="take('${esc(chip.firestoreId)}')"
-          >
-            Übernehmen
-          </button>
-        `;
-
-      }
-
-
-      if(
-        chip.assignedTo === user.uid
-      ){
-
-        buttons += `
-          <button
-            class="orange"
-            onclick="release('${esc(chip.firestoreId)}')"
-          >
-            Freigeben
-          </button>
-        `;
-
-      }
-
-    }
-
-
-    /* ADMIN */
-
-    if(isAdmin()){
-
-      if(
-        chip.assignedTo !== user.uid
-      ){
-
-        buttons += `
-          <button
-            class="green"
-            onclick="take('${esc(chip.firestoreId)}')"
-          >
-            Übernehmen
-          </button>
-        `;
-
-      }
-
-
-      if(chip.assignedTo){
-
-        buttons += `
-          <button
-            class="orange"
-            onclick="release('${esc(chip.firestoreId)}')"
-          >
-            Freigeben
-          </button>
-        `;
-
-      }
-
-
-      if(admin){
-
-        buttons += `
-          <button
-            class="gray"
-            onclick="editChip('${esc(chip.firestoreId)}')"
-          >
-            ✏️
-          </button>
-        `;
-
-
-        buttons += `
-          <button
-            class="red"
-            onclick="removeChip('${esc(chip.firestoreId)}')"
-          >
-            🗑️
-          </button>
-        `;
-
-      }
-
-    }
-
-
-    container.innerHTML += `
-
-      <div class="chip">
-
-        <div class="chipMain">
-
-          <div
-            class="chipStripe ${
-              active
-                ? "redStripe"
-                : ""
-            }"
-          ></div>
-
-
-          <div>
-
-            <div class="chipName">
-
-              ${esc(chip.name)}
-
-            </div>
-
-
-            <div class="chipMeta">
-
-              <span
-                class="chipStatus ${
-                  active
-                    ? "redDot"
-                    : "greenDot"
-                }"
-              ></span>
-
-              ${
-                active
-                  ? "Aktiv"
-                  : "Frei"
-              }
-
-              · Chip-ID
-
-              ${esc(chip.chipId)}
-
-            </div>
-
-
-            <div class="person">
-
-              <div class="mini">
-
-                ${
-                  image
-                    ? `<img
-                        src="${esc(image)}"
-                        alt=""
-                      >`
-                    : esc(
-                        personName[0]
-                          ?.toUpperCase() || "?"
-                      )
-                }
-
-              </div>
-
-
-              <span>
-
-                Gerade bei:
-
-                <b>
-                  ${esc(personName)}
-                </b>
-
-              </span>
-
-            </div>
-
-
-            ${
-              chip.lastScannedEmail
-                ? `
-                  <div class="chipMeta">
-
-                    Letzter Scan:
-
-                    ${esc(
-                      chip.lastScannedName ||
-                      chip.lastScannedEmail
-                    )}
-
-                  </div>
-                `
-                : ""
-            }
-
-          </div>
-
-        </div>
-
-
-        <div class="chipBtns">
-
-          ${buttons}
-
-        </div>
-
-      </div>
-
-    `;
-
+window.openProfile = () => {
+  selectedFile = null;
+  removeImage = false;
+  $("nameEdit").value = nameOf();
+  $("photo").value = "";
+  $("profileMsg").textContent = "";
+  avatar("editAvatar",profile.profileImageData || "",nameOf());
+  open("profileModal");
+};
+
+function compressImage(file){
+  return new Promise((resolve,reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 360;
+        const scale = Math.min(1,max / Math.max(img.width,img.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1,Math.round(img.width * scale));
+        canvas.height = Math.max(1,Math.round(img.height * scale));
+        const context = canvas.getContext("2d");
+        context.drawImage(img,0,0,canvas.width,canvas.height);
+        resolve(canvas.toDataURL("image/jpeg",0.76));
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
-
-
-  $("total").innerText =
-    chips.length;
-
-
-  $("redCount").innerText =
-    red;
-
-
-  $("greenCount").innerText =
-    chips.length - red;
-
 }
 
+$("photo").onchange = async event => {
+  const file = event.target.files?.[0];
+  if(!file) return;
+  try{
+    selectedFile = await compressImage(file);
+    removeImage = false;
+    avatar("editAvatar",selectedFile,nameOf());
+  }catch(error){
+    console.error(error);
+    $("profileMsg").textContent = "Das Bild konnte nicht verarbeitet werden.";
+  }
+};
 
-/* =========================================================
-   CLAIM CHIP
-========================================================= */
+$("removePhoto").onclick = () => {
+  selectedFile = null;
+  removeImage = true;
+  avatar("editAvatar","",nameOf());
+};
 
-window.take = async id => {
-
-  const chip =
-    chips.find(
-      item =>
-        item.firestoreId === id
-    );
-
-
-  if(!chip) return;
-
-
-  if(
-    chip.assignedTo &&
-    !isAdmin()
-  ){
-
-    alert(
-      "Dieser Chip ist bereits vergeben."
-    );
-
+$("saveProfile").onclick = async () => {
+  const newName = $("nameEdit").value.trim();
+  if(!newName){
+    $("profileMsg").textContent = "Bitte einen Namen eingeben.";
     return;
-
   }
 
+  const newKey = nameKey(newName);
+  const oldKey = profile.nameKey || nameKey(nameOf());
+  const image = removeImage ? "" : (selectedFile ?? profile.profileImageData ?? "");
 
   try{
+    $("saveProfile").disabled = true;
 
-    await updateDoc(
-      doc(db,"chips",id),
-      {
+    await runTransaction(db, async tx => {
+      const userRef = doc(db,"users",user.uid);
+      const newNameRef = doc(db,"userNames",newKey);
+      const oldNameRef = doc(db,"userNames",oldKey);
+
+      const newNameSnap = await tx.get(newNameRef);
+      const oldNameSnap = newKey !== oldKey ? await tx.get(oldNameRef) : null;
+
+      if(newKey !== oldKey && newNameSnap.exists() && newNameSnap.data().uid !== user.uid){
+        throw new Error("NAME_ALREADY_USED");
+      }
+
+      if(newKey !== oldKey){
+        tx.set(newNameRef,{uid:user.uid,name:newName});
+        if(oldNameSnap?.exists() && oldNameSnap.data().uid === user.uid){
+          tx.delete(oldNameRef);
+        }
+      }
+
+      tx.update(userRef,{
+        name:newName,
+        nameKey:newKey,
+        profileImageData:image
+      });
+    });
+
+    for(const chip of chips.filter(c => c.assignedTo === user.uid)){
+      try{
+        await updateDoc(doc(db,"chips",chip.firestoreId),{
+          assignedName:newName,
+          assignedProfileImageData:image
+        });
+      }catch(error){
+        console.warn("Chip-Profil konnte nicht aktualisiert werden",error);
+      }
+    }
+
+    close("profileModal");
+    toast("Profil gespeichert");
+  }catch(error){
+    console.error(error);
+    $("profileMsg").textContent = error.message === "NAME_ALREADY_USED"
+      ? "Dieser Name ist bereits vergeben."
+      : "Fehler: " + error.message;
+  }finally{
+    $("saveProfile").disabled = false;
+  }
+};
+
+function refreshSettings(){
+  const n = nameOf();
+  const image = profile.profileImageData || "";
+  $("settingsName").textContent = n;
+  $("settingsEmail").textContent = user?.email || "";
+  avatar("settingsAvatar",image,n);
+  $("settingsAdminBtn")?.classList.toggle("hidden",!isAdmin());
+  applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
+}
+
+/* ============================================================
+   CHIP LISTENER / RENDER
+   ============================================================ */
+function loadChips(){
+  unsub.push(onSnapshot(collection(db,"chips"), snap => {
+    chips = snap.docs.map(item => ({firestoreId:item.id,...item.data()}));
+    chips.sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
+    renderChips();
+    renderAllCategories();
+    updateStats();
+  }, error => {
+    console.error("Chip Listener:",error);
+    $("chips").innerHTML = `<div class="empty">Chips konnten nicht geladen werden.<br><small>${esc(error.message)}</small></div>`;
+  }));
+}
+
+function chipActive(chip){
+  return chip.assignedTo != null || chip.scanActive === true;
+}
+
+function chipPerson(chip){
+  const image = chip.assignedProfileImageData || "";
+  const name = chip.assignedName || chip.assignedEmail || "Niemand";
+  return `
+    <div class="person">
+      <div class="mini">${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}</div>
+      <span>Gerade bei: <b>${esc(name)}</b></span>
+    </div>`;
+}
+
+function chipHtml(chip, adminControls = admin){
+  const active = chipActive(chip);
+  const owner = chip.assignedTo === user?.uid;
+  const category = chip.category || "Keine Kategorie";
+  let buttons = "";
+
+  if(adminControls && isAdmin()){
+    buttons += `<button class="gray" onclick="editChip('${esc(chip.firestoreId)}')">Bearbeiten</button>`;
+    buttons += `<button class="danger" onclick="removeChip('${esc(chip.firestoreId)}')">Löschen</button>`;
+  }
+
+  if(!active){
+    buttons += `<button class="blue" onclick="take('${esc(chip.firestoreId)}')">Übernehmen</button>`;
+  }else if(owner || isAdmin()){
+    buttons += `<button class="gray" onclick="release('${esc(chip.firestoreId)}')">Freigeben</button>`;
+  }
+
+  buttons += `<button class="gray" onclick="copyNfcLink('${esc(chip.chipId || "")}')">NFC-Link</button>`;
+
+  return `
+    <article class="chip">
+      <div class="chipMain">
+        <div class="chipInfo">
+          <div class="chipStripe ${active ? "redStripe" : ""}"></div>
+          <div class="chipText">
+            <div class="chipName">${esc(chip.name || "Unbenannter Ordner")}</div>
+            <div class="chipMeta">
+              <span class="chipStatus ${active ? "redDot" : "greenDot"}"></span>
+              ${active ? "Aktiv" : "Frei"} · Chip-ID ${esc(chip.chipId || "")}
+            </div>
+            <div class="chipMeta">Kategorie: <b>${esc(category)}</b></div>
+            ${chip.lastScannedName ? `<div class="chipMeta">Letzter Scan: ${esc(chip.lastScannedName)}</div>` : ""}
+            ${chipPerson(chip)}
+          </div>
+        </div>
+        <div class="chipButtons">${buttons}</div>
+      </div>
+    </article>`;
+}
+
+function getFilteredChips(){
+  const search = ($( "chipSearch" )?.value || "").trim().toLowerCase();
+  const category = $("chipFilter")?.value || "all";
+  const status = $("statusFilter")?.value || "all";
+
+  return chips.filter(chip => {
+    const active = chipActive(chip);
+    const searchable = `${chip.name || ""} ${chip.chipId || ""} ${chip.category || ""}`.toLowerCase();
+    if(search && !searchable.includes(search)) return false;
+    if(category !== "all" && (chip.category || "") !== category) return false;
+    if(status === "free" && active) return false;
+    if(status === "active" && !active) return false;
+    return true;
+  });
+}
+
+function renderChips(){
+  if(!$("chips")) return;
+  const list = getFilteredChips();
+  $("folderCountLabel").textContent = `${list.length} Einträge`;
+
+  if(!chips.length){
+    $("chips").innerHTML = `<div class="empty">Noch keine Chips vorhanden.</div>`;
+    updateStats();
+    return;
+  }
+
+  if(!list.length){
+    $("chips").innerHTML = `<div class="empty">Keine passenden Ordner gefunden.</div>`;
+    updateStats();
+    return;
+  }
+
+  $("chips").innerHTML = list.map(chip => chipHtml(chip)).join("");
+  updateStats();
+}
+
+function updateStats(){
+  const total = chips.length;
+  const active = chips.filter(chipActive).length;
+  $("total").textContent = total;
+  $("redCount").textContent = active;
+  $("greenCount").textContent = Math.max(0,total-active);
+}
+
+/* ============================================================
+   CLAIM / RELEASE
+   ============================================================ */
+window.take = async firestoreId => {
+  const chip = chips.find(item => item.firestoreId === firestoreId);
+  if(!chip || !user) return;
+
+  if(chip.assignedTo && !isAdmin()){
+    toast("Dieser Chip ist bereits vergeben.");
+    return;
+  }
+
+  try{
+    await runTransaction(db,async tx => {
+      const ref = doc(db,"chips",firestoreId);
+      const snap = await tx.get(ref);
+      if(!snap.exists()) throw new Error("CHIP_NOT_FOUND");
+      const current = snap.data();
+      if(current.assignedTo && !isAdmin()) throw new Error("ALREADY_ASSIGNED");
+      tx.update(ref,{
         assignedTo:user.uid,
         assignedEmail:user.email || "",
         assignedName:nameOf(),
-        assignedProfileImageData:
-          profile.profileImageData || "",
+        assignedProfileImageData:profile.profileImageData || "",
         scanActive:false
-      }
-    );
-
+      });
+    });
+    toast("Chip übernommen");
   }catch(error){
-
     console.error(error);
-
-    alert(
-      "Chip konnte nicht übernommen werden."
-    );
-
+    toast(error.message === "ALREADY_ASSIGNED" ? "Chip wurde gerade von jemand anderem übernommen." : "Chip konnte nicht übernommen werden.");
   }
-
 };
 
-
-/* =========================================================
-   RELEASE CHIP
-========================================================= */
-
-window.release = async id => {
-
-  const chip =
-    chips.find(
-      item =>
-        item.firestoreId === id
-    );
-
-
+window.release = async firestoreId => {
+  const chip = chips.find(item => item.firestoreId === firestoreId);
   if(!chip) return;
-
-
-  if(
-    !isAdmin() &&
-    chip.assignedTo !== user.uid
-  ){
-
-    alert(
-      "Du darfst diesen Chip nicht freigeben."
-    );
-
+  if(!isAdmin() && chip.assignedTo !== user?.uid){
+    toast("Du darfst diesen Chip nicht freigeben.");
     return;
-
   }
 
+  try{
+    await updateDoc(doc(db,"chips",firestoreId),{
+      assignedTo:null,
+      assignedEmail:"",
+      assignedName:"",
+      assignedProfileImageData:"",
+      scanActive:false
+    });
+    toast("Chip freigegeben");
+  }catch(error){
+    console.error(error);
+    alert("Fehler beim Freigeben: " + error.message);
+  }
+};
+
+/* ============================================================
+   CHIP ADMIN CRUD
+   ============================================================ */
+$("newChip").onclick = () => {
+  if(!isAdmin() || !admin) return;
+  editId = null;
+  $("chipTitle").textContent = "Chip hinzufügen";
+  $("chipName").value = "";
+  $("chipId").value = "";
+  $("chipCategory").value = "Anwälte";
+  open("chipModal");
+};
+
+$("saveChip").onclick = async () => {
+  if(!isAdmin() || !admin) return;
+
+  const chipName = $("chipName").value.trim();
+  const chipId = $("chipId").value.trim();
+  const category = $("chipCategory").value;
+
+  if(!chipName || !chipId){
+    alert("Bitte Ordnername und Chip-ID ausfüllen.");
+    return;
+  }
+
+  const duplicate = chips.some(chip => String(chip.chipId) === chipId && chip.firestoreId !== editId);
+  if(duplicate){
+    alert("Diese Chip-ID gibt es bereits.");
+    return;
+  }
 
   try{
+    $("saveChip").disabled = true;
 
-    await updateDoc(
-      doc(db,"chips",id),
-      {
+    if(editId){
+      await updateDoc(doc(db,"chips",editId),{
+        name:chipName,
+        chipId,
+        category
+      });
+      toast("Chip geändert");
+    }else{
+      await addDoc(collection(db,"chips"),{
+        name:chipName,
+        chipId,
+        category,
         assignedTo:null,
         assignedEmail:"",
         assignedName:"",
         assignedProfileImageData:"",
-        scanActive:false
-      }
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    alert(
-      "Chip konnte nicht freigegeben werden."
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   NEW CHIP
-========================================================= */
-
-$("newChip").onclick = () => {
-
-  if(!admin) return;
-
-
-  editId = null;
-
-
-  $("chipTitle").innerText =
-    "Chip hinzufügen";
-
-
-  $("chipName").value = "";
-
-  $("chipId").value = "";
-
-
-  open("chipModal");
-
-};
-
-
-/* =========================================================
-   SAVE CHIP
-========================================================= */
-
-$("saveChip").onclick = async () => {
-
-  if(!admin) return;
-
-
-  const name =
-    $("chipName")
-      .value
-      .trim();
-
-
-  const id =
-    $("chipId")
-      .value
-      .trim();
-
-
-  if(!name || !id){
-
-    alert(
-      "Bitte alles ausfüllen."
-    );
-
-    return;
-
-  }
-
-
-  if(
-    chips.some(
-      chip =>
-        String(chip.chipId) === id &&
-        chip.firestoreId !== editId
-    )
-  ){
-
-    alert(
-      "Diese Chip-ID gibt es bereits."
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    if(editId){
-
-      await updateDoc(
-        doc(
-          db,
-          "chips",
-          editId
-        ),
-        {
-          name,
-          chipId:id
-        }
-      );
-
-    }else{
-
-      await addDoc(
-        collection(db,"chips"),
-        {
-          name,
-          chipId:id,
-
-          assignedTo:null,
-          assignedEmail:"",
-          assignedName:"",
-          assignedProfileImageData:"",
-
-          scanActive:false,
-
-          lastScannedBy:"",
-          lastScannedEmail:"",
-          lastScannedName:"",
-          lastScannedProfileImageData:"",
-
-          createdAt:
-            serverTimestamp(),
-
-          createdBy:
-            user.uid
-        }
-      );
-
+        scanActive:false,
+        lastScannedBy:"",
+        lastScannedEmail:"",
+        lastScannedName:"",
+        lastScannedProfileImageData:"",
+        createdAt:serverTimestamp(),
+        createdBy:user.uid
+      });
+      toast("Chip erstellt");
     }
-
-
     close("chipModal");
-
   }catch(error){
-
     console.error(error);
-
-    alert(
-      "Chip konnte nicht gespeichert werden."
-    );
-
+    alert("Fehler: " + error.message);
+  }finally{
+    $("saveChip").disabled = false;
   }
-
 };
 
-
-/* =========================================================
-   EDIT CHIP
-========================================================= */
-
-window.editChip = id => {
-
-  if(!admin) return;
-
-
-  const chip =
-    chips.find(
-      item =>
-        item.firestoreId === id
-    );
-
-
+window.editChip = firestoreId => {
+  if(!isAdmin() || !admin) return;
+  const chip = chips.find(item => item.firestoreId === firestoreId);
   if(!chip) return;
 
-
-  editId = id;
-
-
-  $("chipTitle").innerText =
-    "Chip bearbeiten";
-
-
-  $("chipName").value =
-    chip.name || "";
-
-
-  $("chipId").value =
-    chip.chipId || "";
-
-
+  editId = firestoreId;
+  $("chipTitle").textContent = "Chip bearbeiten";
+  $("chipName").value = chip.name || "";
+  $("chipId").value = chip.chipId || "";
+  $("chipCategory").value = chip.category || "Anwälte";
   open("chipModal");
-
 };
 
-
-/* =========================================================
-   DELETE CHIP
-========================================================= */
-
-window.removeChip = async id => {
-
-  if(!admin) return;
-
-
-  const confirmed =
-    confirm(
-      "Chip wirklich löschen?"
-    );
-
-
-  if(!confirmed) return;
-
+window.removeChip = async firestoreId => {
+  if(!isAdmin() || !admin) return;
+  if(!confirm("Diesen Chip wirklich löschen?")) return;
 
   try{
-
-    await deleteDoc(
-      doc(
-        db,
-        "chips",
-        id
-      )
-    );
-
+    await deleteDoc(doc(db,"chips",firestoreId));
+    toast("Chip gelöscht");
   }catch(error){
-
     console.error(error);
-
-    alert(
-      "Chip konnte nicht gelöscht werden."
-    );
-
+    alert("Fehler beim Löschen: " + error.message);
   }
-
 };
 
+window.copyNfcLink = async chipId => {
+  const url = `${location.origin}${location.pathname}?chip=${encodeURIComponent(chipId)}`;
+  try{
+    await navigator.clipboard.writeText(url);
+    toast("NFC-Link kopiert");
+  }catch(error){
+    prompt("NFC-Link kopieren:",url);
+  }
+};
 
-/* =========================================================
+/* ============================================================
+   CATEGORY RENDERING
+   ============================================================ */
+function renderCategory(category){
+  const targets = {
+    "Anwälte":"categoryAnwaelte",
+    "Verträge":"categoryVertraege",
+    "Mandanten":"categoryMandanten"
+  };
+  const target = $(targets[category]);
+  if(!target) return;
+
+  const list = chips.filter(chip => (chip.category || "").toLowerCase() === category.toLowerCase());
+
+  if(!list.length){
+    target.innerHTML = `<div class="empty">Keine Ordner in der Kategorie <b>${esc(category)}</b>.</div>`;
+    return;
+  }
+
+  target.innerHTML = list.map(chip => chipHtml(chip,false)).join("");
+}
+
+function renderAllCategories(){
+  renderCategory("Anwälte");
+  renderCategory("Verträge");
+  renderCategory("Mandanten");
+}
+
+/* ============================================================
    LAST SCAN
-========================================================= */
-
+   ============================================================ */
 function loadScan(){
+  unsub.push(onSnapshot(doc(db,"system","currentScan"),snap => {
+    if(!snap.exists()){
+      $("lastScan").innerHTML = `<div class="empty">Noch kein Scan.</div>`;
+      return;
+    }
 
-  unsub.push(
+    const data = snap.data();
+    const name = data.scannedName || data.scannedEmail || "Unbekannt";
+    const image = data.scannedProfileImageData || "";
 
-    onSnapshot(
-      doc(
-        db,
-        "system",
-        "currentScan"
-      ),
-      snapshot => {
-
-        const container =
-          $("lastScan");
-
-
-        if(!snapshot.exists()){
-
-          container.innerText =
-            "Noch kein Scan.";
-
-          return;
-
-        }
-
-
-        const data =
-          snapshot.data();
-
-
-        const name =
-          data.scannedName ||
-          data.scannedEmail ||
-          "Unbekannt";
-
-
-        const image =
-          data.scannedProfileImageData ||
-          "";
-
-
-        container.innerHTML = `
-
-          <div class="person">
-
-            <div class="mini">
-
-              ${
-                image
-                  ? `<img
-                      src="${esc(image)}"
-                      alt=""
-                    >`
-                  : esc(
-                      name[0]
-                        ?.toUpperCase() || "?"
-                    )
-              }
-
-            </div>
-
-
-            <div>
-
-              <b>
-                Chip ${esc(data.chipId)}
-              </b>
-
-              <br>
-
-              Gescannt von:
-
-              ${esc(name)}
-
-              <br>
-
-              Status:
-
-              ${
-                data.active
-                  ? "🔴 Aktiv"
-                  : "🟢 Frei"
-              }
-
-            </div>
-
-          </div>
-
-        `;
-
-      }
-    )
-
-  );
-
+    $("lastScan").innerHTML = `
+      <div class="scanBox">
+        <div class="scanIcon">📡</div>
+        <div class="mini" style="width:52px;height:52px;font-size:18px">
+          ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
+        </div>
+        <div style="min-width:0">
+          <b>Chip ${esc(data.chipId || "unbekannt")}</b>
+          <div class="muted" style="margin-top:3px">Gescannt von ${esc(name)}</div>
+          <div class="muted" style="margin-top:3px">Status: ${data.active ? "Aktiv" : "Frei"}</div>
+        </div>
+      </div>`;
+  },error => console.error("Scan Listener:",error)));
 }
 
-
-/* =========================================================
-   NFC SCAN
-========================================================= */
-
-async function scanNFC(){
-
-  if(!user) return;
-
-
-  const params =
-    new URLSearchParams(
-      location.search
-    );
-
-
-  const chipId =
-    params.get("chip");
-
-
-  if(!chipId) return;
-
-
-  const chip =
-    chips.find(
-      item =>
-        String(item.chipId) ===
-        String(chipId)
-    );
-
-
-  if(!chip){
-
-    alert(
-      "Unbekannter NFC-Chip: " +
-      chipId
-    );
-
-    return;
-
-  }
-
-
-  try{
-
-    const active =
-      !chip.scanActive;
-
-
-    const name =
-      nameOf();
-
-
-    const image =
-      profile.profileImageData ||
-      "";
-
-
-    await updateDoc(
-      doc(
-        db,
-        "chips",
-        chip.firestoreId
-      ),
-      {
-        scanActive:active,
-
-        lastScannedBy:user.uid,
-
-        lastScannedEmail:
-          user.email || "",
-
-        lastScannedName:name,
-
-        lastScannedProfileImageData:
-          image,
-
-        lastScannedAt:
-          serverTimestamp()
-      }
-    );
-
-
-    await setDoc(
-      doc(
-        db,
-        "system",
-        "currentScan"
-      ),
-      {
-        chipId:chip.chipId,
-
-        scannedBy:user.uid,
-
-        scannedEmail:
-          user.email || "",
-
-        scannedName:name,
-
-        scannedProfileImageData:
-          image,
-
-        active,
-
-        scannedAt:
-          serverTimestamp()
-      }
-    );
-
-
-    history.replaceState(
-      {},
-      document.title,
-      location.pathname
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "NFC-Scan Fehler:",
-      error
-    );
-
-    alert(
-      "Der NFC-Scan konnte nicht gespeichert werden."
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-function openProfile(){
-
-  selectedFile = null;
-
-  removeImage = false;
-
-
-  $("nameEdit").value =
-    nameOf();
-
-
-  $("photo").value = "";
-
-
-  $("profileMsg").innerText = "";
-
-
-  $("profileMsg").style.color =
-    "#dc2626";
-
-
-  avatar(
-    "editAvatar",
-    profile.profileImageData || "",
-    nameOf()
-  );
-
-
-  open("profileModal");
-
-}
-
-
-/* =========================================================
-   PHOTO SELECT
-========================================================= */
-
-$("photo").onchange = event => {
-
-  const file =
-    event.target.files[0];
-
-
-  if(!file) return;
-
-
-  if(
-    file.size >
-    5 * 1024 * 1024
-  ){
-
-    alert(
-      "Das Bild darf maximal 5 MB groß sein."
-    );
-
-    event.target.value = "";
-
-    return;
-
-  }
-
-
-  selectedFile = file;
-
-  removeImage = false;
-
-
-  avatar(
-    "editAvatar",
-    URL.createObjectURL(file),
-    nameOf()
-  );
-
-};
-
-
-/* =========================================================
-   REMOVE PHOTO
-========================================================= */
-
-$("removePhoto").onclick = () => {
-
-  selectedFile = null;
-
-  removeImage = true;
-
-
-  $("photo").value = "";
-
-
-  avatar(
-    "editAvatar",
-    "",
-    $("nameEdit").value ||
-    nameOf()
-  );
-
-};
-
-
-/* =========================================================
-   SAVE PROFILE
-========================================================= */
-
-$("saveProfile").onclick = async () => {
-
-  const newName =
-    $("nameEdit")
-      .value
-      .trim();
-
-
-  if(!newName){
-
-    $("profileMsg").innerText =
-      "Bitte einen Namen eingeben.";
-
-    return;
-
-  }
-
-
-  try{
-
-    const oldName =
-      nameOf();
-
-
-    const oldKey =
-      nameKey(oldName);
-
-
-    const newKey =
-      nameKey(newName);
-
-
-    let image =
-      profile.profileImageData || "";
-
-
-    if(removeImage){
-
-      image = "";
-
-    }
-
-
-    if(selectedFile){
-
-      image =
-        await compressImage(
-          selectedFile
-        );
-
-    }
-
-
-    await runTransaction(
-      db,
-      async transaction => {
-
-        const userRef =
-          doc(
-            db,
-            "users",
-            user.uid
-          );
-
-
-        const newNameRef =
-          doc(
-            db,
-            "userNames",
-            newKey
-          );
-
-
-        const oldNameRef =
-          doc(
-            db,
-            "userNames",
-            oldKey
-          );
-
-
-        /*
-          WICHTIG:
-          ALLE READS VOR DEN WRITES
-        */
-
-        const newNameSnapshot =
-          await transaction.get(
-            newNameRef
-          );
-
-
-        const oldNameSnapshot =
-          newKey !== oldKey
-            ? await transaction.get(
-                oldNameRef
-              )
-            : null;
-
-
-        if(
-          newKey !== oldKey &&
-          newNameSnapshot.exists() &&
-          newNameSnapshot.data().uid !== user.uid
-        ){
-
-          throw new Error(
-            "NAME_ALREADY_USED"
-          );
-
-        }
-
-
-        if(newKey !== oldKey){
-
-          transaction.set(
-            newNameRef,
-            {
-              uid:user.uid,
-              name:newName
-            }
-          );
-
-
-          if(
-            oldNameSnapshot &&
-            oldNameSnapshot.exists() &&
-            oldNameSnapshot.data().uid === user.uid
-          ){
-
-            transaction.delete(
-              oldNameRef
-            );
-
-          }
-
-        }
-
-
-        transaction.update(
-          userRef,
-          {
-            name:newName,
-            nameKey:newKey,
-            profileImageData:image
-          }
-        );
-
-      }
-    );
-
-
-    /*
-      Profilinformationen auf
-      belegten Chips aktualisieren
-    */
-
-    for(
-      const chip of chips.filter(
-        item =>
-          item.assignedTo === user.uid
-      )
-    ){
-
-      await updateDoc(
-        doc(
-          db,
-          "chips",
-          chip.firestoreId
-        ),
-        {
-          assignedName:newName,
-          assignedProfileImageData:image
-        }
-      );
-
-    }
-
-
-    selectedFile = null;
-
-    removeImage = false;
-
-
-    $("profileMsg").style.color =
-      "#16a34a";
-
-
-    $("profileMsg").innerText =
-      "Profil gespeichert.";
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    $("profileMsg").style.color =
-      "#dc2626";
-
-
-    if(
-      error.message ===
-      "NAME_ALREADY_USED"
-    ){
-
-      $("profileMsg").innerText =
-        "❌ Dieser Name ist bereits vergeben.";
-
-    }else{
-
-      $("profileMsg").innerText =
-        "Fehler: " +
-        error.message;
-
-    }
-
-  }
-
-};
-
-
-/* =========================================================
-   CREATE USER
-========================================================= */
-
+/* ============================================================
+   USER MANAGEMENT
+   ============================================================ */
 $("newUser").onclick = () => {
-
-  if(!admin) return;
-
-
-  $("newName").value = "";
-
-  $("newEmail").value = "";
-
-  $("newPassword").value = "";
-
-
-  $("userError").innerText = "";
-
-  $("userError").style.color =
-    "#dc2626";
-
-
+  if(!isAdmin() || !admin) return;
+  $("userName").value = "";
+  $("userEmail").value = "";
+  $("userPassword").value = "";
+  $("userMsg").textContent = "";
   open("userModal");
-
 };
-
-
-/* =========================================================
-   SAVE USER
-========================================================= */
 
 $("saveUser").onclick = async () => {
+  if(!isAdmin() || !admin) return;
 
-  if(!admin) return;
+  const newName = $("userName").value.trim();
+  const email = $("userEmail").value.trim();
+  const password = $("userPassword").value;
 
+  $("userMsg").textContent = "";
 
+  if(!newName || !email || password.length < 6){
+    $("userMsg").textContent = "Name, E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.";
+    return;
+  }
+
+  let secondaryApp = null;
   let createdUser = null;
 
-  let secondaryAuth = null;
-
-
   try{
+    $("saveUser").disabled = true;
 
-    const name =
-      $("newName")
-        .value
-        .trim();
+    const appName = "UserCreationApp";
+    secondaryApp = getApps().find(item => item.name === appName);
+    if(!secondaryApp) secondaryApp = initializeApp(firebaseConfig,appName);
 
+    const secondaryAuth = getAuth(secondaryApp);
+    const result = await createUserWithEmailAndPassword(secondaryAuth,email,password);
+    createdUser = result.user;
 
-    const email =
-      $("newEmail")
-        .value
-        .trim();
+    const key = nameKey(newName);
+    const nameRef = doc(db,"userNames",key);
+    const userRef = doc(db,"users",createdUser.uid);
 
+    await runTransaction(db,async tx => {
+      const nameSnap = await tx.get(nameRef);
+      if(nameSnap.exists()) throw new Error("NAME_ALREADY_USED");
 
-    const password =
-      $("newPassword")
-        .value;
-
-
-    if(
-      !name ||
-      !email ||
-      !password
-    ){
-
-      $("userError").innerText =
-        "Bitte alles ausfüllen.";
-
-      return;
-
-    }
-
-
-    if(password.length < 6){
-
-      $("userError").innerText =
-        "Das Passwort muss mindestens 6 Zeichen haben.";
-
-      return;
-
-    }
-
-
-    const key =
-      nameKey(name);
-
-
-    /*
-      Zuerst prüfen wir,
-      ob der Name bereits existiert.
-    */
-
-    const existingName =
-      await getDoc(
-        doc(
-          db,
-          "userNames",
-          key
-        )
-      );
-
-
-    if(existingName.exists()){
-
-      $("userError").innerText =
-        "❌ Dieser Name ist bereits vergeben.";
-
-      return;
-
-    }
-
-
-    /*
-      Zweite Firebase-App,
-      damit der Admin eingeloggt bleibt.
-    */
-
-    const appName =
-      "UserCreationApp";
-
-
-    const secondaryApp =
-      getApps().find(
-        item =>
-          item.name === appName
-      ) ||
-      initializeApp(
-        config,
-        appName
-      );
-
-
-    secondaryAuth =
-      getAuth(
-        secondaryApp
-      );
-
-
-    const result =
-      await createUserWithEmailAndPassword(
-        secondaryAuth,
+      tx.set(nameRef,{uid:createdUser.uid,name:newName});
+      tx.set(userRef,{
+        name:newName,
+        nameKey:key,
         email,
-        password
-      );
-
-
-    createdUser =
-      result.user;
-
-
-    /*
-      Benutzer + Name atomar speichern.
-    */
-
-    await runTransaction(
-      db,
-      async transaction => {
-
-        const nameRef =
-          doc(
-            db,
-            "userNames",
-            key
-          );
-
-
-        const userRef =
-          doc(
-            db,
-            "users",
-            createdUser.uid
-          );
-
-
-        const nameSnapshot =
-          await transaction.get(
-            nameRef
-          );
-
-
-        if(nameSnapshot.exists()){
-
-          throw new Error(
-            "NAME_ALREADY_USED"
-          );
-
-        }
-
-
-        transaction.set(
-          nameRef,
-          {
-            uid:createdUser.uid,
-            name
-          }
-        );
-
-
-        transaction.set(
-          userRef,
-          {
-            name,
-            nameKey:key,
-            email,
-            role:"user",
-            profileImageData:"",
-            createdAt:
-              serverTimestamp(),
-            createdBy:
-              user.uid
-          }
-        );
-
-      }
-    );
-
-
-    await signOut(
-      secondaryAuth
-    );
-
-
-    createdUser = null;
-
-
-    $("newName").value = "";
-
-    $("newEmail").value = "";
-
-    $("newPassword").value = "";
-
-
-    $("userError").style.color =
-      "#16a34a";
-
-
-    $("userError").innerText =
-      "✅ Benutzer erfolgreich erstellt.";
-
-
-  }catch(error){
-
-    console.error(error);
-
-
-    if(
-      createdUser &&
-      secondaryAuth
-    ){
-
-      try{
-
-        await deleteUser(
-          createdUser
-        );
-
-      }catch(cleanupError){
-
-        console.error(
-          "Cleanup fehlgeschlagen:",
-          cleanupError
-        );
-
-      }
-
-    }
-
-
-    $("userError").style.color =
-      "#dc2626";
-
-
-    if(
-      error.message ===
-      "NAME_ALREADY_USED"
-    ){
-
-      $("userError").innerText =
-        "❌ Dieser Name ist bereits vergeben.";
-
-    }else{
-
-      $("userError").innerText =
-        error.message ||
-        "Benutzer konnte nicht erstellt werden.";
-
-    }
-
-  }
-
-};
-
-
-/* =========================================================
-   LOAD USERS
-========================================================= */
-
-function loadUsers(){
-
-  if(!isAdmin()) return;
-
-
-  unsub.push(
-
-    onSnapshot(
-      collection(db,"users"),
-      snapshot => {
-
-        const container =
-          $("users");
-
-
-        container.innerHTML = "";
-
-
-        if(snapshot.empty){
-
-          container.innerHTML =
-            '<div class="empty">Noch keine Benutzer.</div>';
-
-          return;
-
-        }
-
-
-        snapshot.forEach(
-          item => {
-
-            const data =
-              item.data();
-
-
-            const name =
-              data.name ||
-              data.email ||
-              "Unbekannt";
-
-
-            const image =
-              data.profileImageData ||
-              "";
-
-
-            container.innerHTML += `
-
-              <div class="user">
-
-                <div class="mini">
-
-                  ${
-                    image
-                      ? `<img
-                          src="${esc(image)}"
-                          alt=""
-                        >`
-                      : esc(
-                          name[0]
-                            ?.toUpperCase() || "?"
-                        )
-                  }
-
-                </div>
-
-
-                <div>
-
-                  <b>
-                    ${esc(name)}
-                  </b>
-
-                  <br>
-
-                  <span class="muted">
-                    ${esc(data.email || "")}
-                  </span>
-
-                  <br>
-
-                  <small>
-                    ${esc(data.role || "user")}
-                  </small>
-
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        );
-
-      }
-    )
-
-  );
-
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-function applyTheme(theme){
-
-  document.body.classList.toggle(
-    "dark",
-    theme === "dark"
-  );
-
-
-  localStorage.setItem(
-    "ordnersystem-theme",
-    theme
-  );
-
-
-  if($("themeLight2")){
-
-    $("themeLight2").checked =
-      theme !== "dark";
-
-  }
-
-
-  if($("themeDark2")){
-
-    $("themeDark2").checked =
-      theme === "dark";
-
-  }
-
-}
-
-
-function openSettings(){
-
-  $("dashboardPage")
-    .classList.add("hidden");
-
-
-  $("settingsPage")
-    .classList.remove("hidden");
-
-
-  document
-    .querySelector(".workspace")
-    ?.classList.add(
-      "settingsMode"
-    );
-
-
-  const name =
-    nameOf();
-
-
-  const image =
-    profile.profileImageData ||
-    "";
-
-
-  $("settingsName").innerText =
-    name;
-
-
-  $("settingsEmail").innerText =
-    user?.email || "";
-
-
-  avatar(
-    "settingsAvatar",
-    image,
-    name
-  );
-
-
-  $("settingsAdminBtn")
-    .classList.toggle(
-      "hidden",
-      !isAdmin()
-    );
-
-
-  applyTheme(
-    localStorage.getItem(
-      "ordnersystem-theme"
-    ) || "light"
-  );
-
-}
-
-
-function closeSettings(){
-
-  $("settingsPage")
-    .classList.add("hidden");
-
-
-  $("dashboardPage")
-    .classList.remove("hidden");
-
-
-  document
-    .querySelector(".workspace")
-    ?.classList.remove(
-      "settingsMode"
-    );
-
-}
-
-
-/* SETTINGS EVENTS */
-
-$("settingsOpen").onclick =
-  () => openSettings();
-
-
-$("settingsBack").onclick =
-  () => closeSettings();
-
-
-$("themeLight2").onchange =
-  () => applyTheme("light");
-
-
-$("themeDark2").onchange =
-  () => applyTheme("dark");
-
-
-/*
-  Theme direkt beim Start anwenden
-*/
-
-applyTheme(
-  localStorage.getItem(
-    "ordnersystem-theme"
-  ) || "light"
-);
-
-
-/* =========================================================
-   HELP
-========================================================= */
-
-function openHelp(){
-
-  open("helpModal");
-
-  helpStart();
-
-}
-
-
-function helpStart(){
-
-  $("helpAnswer").innerHTML = `
-
-    <b>
-      Wobei brauchst du Hilfe?
-    </b>
-
-    <br>
-
-    <button
-      class="blue"
-      onclick="help('chip')"
-    >
-      Chips
-    </button>
-
-    <button
-      class="blue"
-      onclick="help('nfc')"
-    >
-      NFC
-    </button>
-
-    <button
-      class="blue"
-      onclick="help('admin')"
-    >
-      Admin
-    </button>
-
-    <button
-      class="blue"
-      onclick="help('profile')"
-    >
-      Profil
-    </button>
-
-  `;
-
-}
-
-
-window.help = type => {
-
-  const answer =
-    $("helpAnswer");
-
-
-  const back =
-    `
-      <br>
-      <button
-        class="gray"
-        onclick="helpStart()"
-      >
-        ← Zurück
-      </button>
-    `;
-
-
-  if(type === "chip"){
-
-    answer.innerHTML = `
-
-      <h3>
-        Chips
-      </h3>
-
-      <p>
-        🟢 Grün bedeutet frei.
-        🔴 Rot bedeutet aktiv oder vergeben.
-      </p>
-
-      <p>
-        Ein freier Chip kann von einem
-        Benutzer übernommen werden.
-      </p>
-
-      ${back}
-
-    `;
-
-  }
-
-
-  if(type === "nfc"){
-
-    answer.innerHTML = `
-
-      <h3>
-        NFC
-      </h3>
-
-      <p>
-        Der NFC-Link enthält die Chip-ID.
-      </p>
-
-      <p>
-        Beim Öffnen des NFC-Links erkennt
-        OrdnerSystem den Chip automatisch
-        und speichert den Scan in Firebase.
-      </p>
-
-      ${back}
-
-    `;
-
-  }
-
-
-  if(type === "admin"){
-
-    answer.innerHTML = `
-
-      <h3>
-        Admin
-      </h3>
-
-      <p>
-        Administratoren können unter
-        <b>Einstellungen → Admin-Modus</b>
-        den Administrationsbereich öffnen.
-      </p>
-
-      <p>
-        Dort können Chips und Benutzer
-        verwaltet werden.
-      </p>
-
-      ${back}
-
-    `;
-
-  }
-
-
-  if(type === "profile"){
-
-    answer.innerHTML = `
-
-      <h3>
-        Profil
-      </h3>
-
-      <p>
-        Unter „Profil bearbeiten“ kannst du
-        deinen Namen und dein Profilbild ändern.
-      </p>
-
-      <p>
-        Das Profilbild wird bei belegten
-        Chips und beim letzten NFC-Scan
-        angezeigt.
-      </p>
-
-      ${back}
-
-    `;
-
-  }
-
-};
-
-
-/* =========================================================
-   HELP SEARCH
-========================================================= */
-
-$("helpSearch").oninput = () => {
-
-  const query =
-    $("helpSearch")
-      .value
-      .toLowerCase()
-      .trim();
-
-
-  if(!query){
-
-    helpStart();
-
-    return;
-
-  }
-
-
-  if(
-    query.includes("profil") ||
-    query.includes("bild") ||
-    query.includes("foto") ||
-    query.includes("name")
-  ){
-
-    help("profile");
-
-    return;
-
-  }
-
-
-  if(
-    query.includes("nfc") ||
-    query.includes("scan")
-  ){
-
-    help("nfc");
-
-    return;
-
-  }
-
-
-  if(
-    query.includes("admin") ||
-    query.includes("benutzer")
-  ){
-
-    help("admin");
-
-    return;
-
-  }
-
-
-  if(
-    query.includes("chip") ||
-    query.includes("ordner")
-  ){
-
-    help("chip");
-
-    return;
-
-  }
-
-
-  $("helpAnswer").innerHTML = `
-
-    <p>
-      Dazu habe ich keine passende
-      OrdnerSystem-Hilfe gefunden.
-    </p>
-
-    <p class="smallNote">
-      Frage zum Beispiel nach
-      Chips, NFC, Admin oder Profil.
-    </p>
-
-  `;
-
-};
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-window.toggleSide = button => {
-
-  const section =
-    button.closest(
-      ".sideSection"
-    );
-
-
-  if(!section) return;
-
-
-  section.classList.toggle(
-    "open"
-  );
-
-};
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-window.goTo = id => {
-
-  /*
-    Falls wir gerade in Einstellungen
-    sind, zuerst zurück.
-  */
-
-  if(
-    !$("settingsPage")
-      .classList.contains("hidden")
-  ){
-
-    closeSettings();
-
-  }
-
-
-  const element =
-    $(id);
-
-
-  if(element){
-
-    element.scrollIntoView({
-      behavior:"smooth",
-      block:"start"
+        role:"user",
+        profileImageData:"",
+        createdAt:serverTimestamp(),
+        createdBy:user.uid
+      });
     });
 
-  }
+    close("userModal");
+    toast("Benutzer erstellt");
+  }catch(error){
+    console.error(error);
 
-};
-
-
-/* =========================================================
-   CATEGORY
-========================================================= */
-
-window.showCategory = name => {
-
-  if(
-    !$("settingsPage")
-      .classList.contains("hidden")
-  ){
-
-    closeSettings();
-
-  }
-
-
-  $("categoryTitle").innerText =
-    (
-      name === "Anwälte"
-        ? "⚖️ "
-        : "📁 "
-    ) + name;
-
-
-  $("categoryContent").innerHTML = `
-
-    <div class="category">
-
-      <b>
-        ${esc(name)}
-      </b>
-
-      <span>
-        Diese Kategorie ist ausgewählt.
-      </span>
-
-    </div>
-
-
-    <div class="category">
-
-      <b>
-        Ordner
-      </b>
-
-      <span>
-        Die zugehörigen Ordner werden hier angezeigt.
-      </span>
-
-    </div>
-
-  `;
-
-};
-
-
-/* =========================================================
-   CLEANUP
-========================================================= */
-
-window.addEventListener(
-  "beforeunload",
-  () => {
-
-    unsub.forEach(
-      unsubscribe => {
-
-        try{
-
-          unsubscribe();
-
-        }catch(error){
-
-          console.error(error);
-
-        }
-
+    if(createdUser){
+      try{
+        await deleteUser(createdUser);
+      }catch(deleteError){
+        console.warn("Erstellter Auth-Benutzer konnte nicht automatisch gelöscht werden",deleteError);
       }
-    );
+    }
 
+    $("userMsg").textContent = error.message === "NAME_ALREADY_USED"
+      ? "Dieser Name ist bereits vergeben."
+      : "Fehler: " + error.message;
+  }finally{
+    $("saveUser").disabled = false;
+    if(secondaryApp){
+      try{ await deleteApp(secondaryApp); }catch(error){ console.warn(error); }
+    }
   }
-);
+};
 
+function loadUsers(){
+  if(!isAdmin()) return;
+
+  const alreadyListening = unsub.some(item => item.__usersListener === true);
+  if(alreadyListening) return;
+
+  const listener = onSnapshot(collection(db,"users"),snap => {
+    if(!$("users")) return;
+
+    const list = snap.docs
+      .map(item => ({id:item.id,...item.data()}))
+      .sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
+
+    if(!list.length){
+      $("users").innerHTML = `<div class="empty">Keine Benutzer vorhanden.</div>`;
+      return;
+    }
+
+    $("users").innerHTML = list.map(item => {
+      const name = item.name || item.email || "Unbekannt";
+      const image = item.profileImageData || "";
+      const role = item.role === "admin" ? "Administrator" : "Benutzer";
+      return `
+        <div class="chip">
+          <div class="profileRow">
+            <div class="mini" style="width:45px;height:45px;font-size:16px">
+              ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
+            </div>
+            <div style="min-width:0">
+              <b>${esc(name)}</b>
+              <div class="muted" style="overflow-wrap:anywhere">${esc(item.email || "")}</div>
+              <div style="margin-top:5px"><span class="badge">${esc(role)}</span></div>
+            </div>
+          </div>
+        </div>`;
+    }).join("");
+  },error => {
+    console.error("Users Listener:",error);
+    $("users").innerHTML = `<div class="empty">Benutzer konnten nicht geladen werden.</div>`;
+  });
+
+  const wrapped = () => listener();
+  wrapped.__usersListener = true;
+  unsub.push(wrapped);
+}
+
+/* ============================================================
+   HELP
+   ============================================================ */
+window.openHelp = () => {
+  open("helpModal");
+  helpStart();
+};
+
+function helpStart(){
+  window.help("start");
+}
+
+window.help = topic => {
+  const answers = {
+    start:`
+      <b>Wobei brauchst du Hilfe?</b>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="blue" onclick="help('chip')">Chips</button>
+        <button class="blue" onclick="help('nfc')">NFC</button>
+        <button class="blue" onclick="help('admin')">Admin</button>
+        <button class="blue" onclick="help('profile')">Profil</button>
+      </div>`,
+    chip:`<b>Chips:</b><br><br>Unter „Alle Ordner“ siehst du alle Chips. Grün bedeutet frei, Rot bedeutet aktiv. Mit „Übernehmen“ kannst du einen freien Chip dir zuweisen.`,
+    nfc:`<b>NFC:</b><br><br>Jeder Chip hat eine Chip-ID. Der NFC-Link enthält diese ID. Beim Öffnen des Links verarbeitet OrdnerSystem den Scan automatisch.`,
+    admin:`<b>Admin:</b><br><br>Admins öffnen unter „Einstellungen“ den Admin-Modus. Dort können sie Chips erstellen, bearbeiten, löschen und Benutzer erstellen.`,
+    profile:`<b>Profil:</b><br><br>Unter „Mein Profil“ kannst du deinen Namen und dein Profilbild ändern. Der Name wird im System eindeutig gehalten.`
+  };
+  $("helpAnswer").innerHTML = answers[topic] || answers.start;
+};
+
+$("helpSearch").oninput = event => {
+  const queryText = event.target.value.trim().toLowerCase();
+  if(!queryText) return helpStart();
+  if(queryText.includes("nfc")) return help("nfc");
+  if(queryText.includes("chip")) return help("chip");
+  if(queryText.includes("admin")) return help("admin");
+  if(queryText.includes("profil") || queryText.includes("bild") || queryText.includes("name")) return help("profile");
+  $("helpAnswer").innerHTML = `<div class="empty">Keine passende OrdnerSystem-Hilfe gefunden.</div>`;
+};
+
+/* ============================================================
+   SEARCH / FILTER EVENTS
+   ============================================================ */
+$("chipSearch").oninput = renderChips;
+$("chipFilter").onchange = renderChips;
+$("statusFilter").onchange = renderChips;
+
+$("settingsBack").onclick = () => window.closeSettings();
+$("settingsProfileBtn").onclick = () => window.openProfile();
+$("settingsAdminBtn").onclick = () => window.enterAdminMode();
+$("closeAdmin").onclick = () => window.exitAdminMode();
+$("showUsers").onclick = () => window.showPage("pageUsers");
+$("themeLight2").onchange = () => applyTheme("light");
+$("themeDark2").onchange = () => applyTheme("dark");
+
+/* ESC schließt Modals */
+document.addEventListener("keydown",event => {
+  if(event.key !== "Escape") return;
+  document.querySelectorAll(".modal:not(.hidden)").forEach(modal => modal.classList.add("hidden"));
+});
+
+/* Klick auf dunklen Modal-Hintergrund schließt */
+document.querySelectorAll(".modal").forEach(modal => {
+  modal.addEventListener("click",event => {
+    if(event.target === modal) modal.classList.add("hidden");
+  });
+});
+
+/* ============================================================
+   NFC SCANNEN
+   URL: https://DEINNAME.github.io/OrdnerSystem/?chip=001
+   ============================================================ */
+async function scanNFC(){
+  if(nfcHandled || !user) return;
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get("chip");
+  if(!id) return;
+
+  nfcHandled = true;
+
+  try{
+    const searchQuery = query(
+      collection(db,"chips"),
+      where("chipId","==",String(id))
+    );
+    const result = await getDocs(searchQuery);
+
+    if(result.empty){
+      alert("Unbekannter NFC-Chip: " + id);
+      nfcHandled = false;
+      return;
+    }
+
+    const chipRef = result.docs[0].ref;
+    let scanResult = null;
+
+    await runTransaction(db,async tx => {
+      const chipSnap = await tx.get(chipRef);
+      if(!chipSnap.exists()) throw new Error("CHIP_NOT_FOUND");
+
+      const chip = chipSnap.data();
+      const active = !Boolean(chip.scanActive);
+      const scannedName = nameOf();
+      const image = profile.profileImageData || "";
+
+      tx.update(chipRef,{
+        scanActive:active,
+        lastScannedBy:user.uid,
+        lastScannedEmail:user.email || "",
+        lastScannedName:scannedName,
+        lastScannedProfileImageData:image,
+        lastScannedAt:serverTimestamp()
+      });
+
+      scanResult = {
+        chipId:chip.chipId,
+        active,
+        scannedBy:user.uid,
+        scannedEmail:user.email || "",
+        scannedName,
+        scannedProfileImageData:image
+      };
+    });
+
+    await setDoc(doc(db,"system","currentScan"),{
+      ...scanResult,
+      scannedAt:serverTimestamp()
+    });
+
+    history.replaceState({},document.title,location.pathname);
+    window.showPage("pageLastScan");
+    toast("NFC-Scan verarbeitet");
+  }catch(error){
+    console.error(error);
+    alert("NFC-Scan konnte nicht verarbeitet werden: " + error.message);
+    nfcHandled = false;
+  }
+}
+
+/* ============================================================
+   AUTH STATE
+   ============================================================ */
+onAuthStateChanged(auth,async currentUser => {
+  clearListeners();
+  user = currentUser;
+  nfcHandled = false;
+
+  if(!currentUser){
+    profile = {};
+    chips = [];
+    admin = false;
+    $("app").classList.add("hidden");
+    $("loginPage").classList.remove("hidden");
+    return;
+  }
+
+  try{
+    await ensureProfile();
+
+    $("loginPage").classList.add("hidden");
+    $("app").classList.remove("hidden");
+
+    admin = false;
+    $("adminPanel")?.classList.add("hidden");
+    $("pageUsers")?.classList.add("hidden");
+    applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
+
+    loadProfile();
+    loadChips();
+    loadScan();
+
+    window.showPage("pageFolders");
+
+    setTimeout(scanNFC,700);
+  }catch(error){
+    console.error(error);
+    alert("Profil konnte nicht geladen werden: " + error.message);
+    await signOut(auth);
+  }
+});
 </script>
-
 </body>
 </html>
