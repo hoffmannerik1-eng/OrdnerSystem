@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,22 +25,30 @@ body {
     background-attachment: fixed;
 }
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 #loginScreen {
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 20px;
 }
 
 .login-box {
     width: 100%;
     max-width: 400px;
+
     background: white;
+
     padding: 30px;
+
     border-radius: 18px;
+
     box-shadow: 0 8px 30px #0005;
 }
 
@@ -50,18 +59,27 @@ body {
 
 input {
     width: 100%;
+
     padding: 13px;
+
     margin: 7px 0;
+
     border: 1px solid #cbd5e1;
+
     border-radius: 9px;
+
     font-size: 16px;
 }
 
 button {
     border: none;
+
     border-radius: 9px;
+
     padding: 11px 16px;
+
     cursor: pointer;
+
     font-weight: bold;
 }
 
@@ -71,31 +89,43 @@ button:hover {
 
 .login-button {
     width: 100%;
+
     background: #2563eb;
+
     color: white;
+
     margin-top: 10px;
 }
 
 .message {
     margin-top: 10px;
+
     color: #dc2626;
 }
 
-/* APP */
+/* =========================
+   APP
+========================= */
 
 #app {
     display: none;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
     background: #111827;
+
     color: white;
+
     padding: 18px 25px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     gap: 15px;
@@ -107,14 +137,19 @@ header h1 {
 
 .header-right {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     flex-wrap: wrap;
 }
 
 .profile-box {
     display: flex;
+
     align-items: center;
+
     gap: 8px;
 }
 
@@ -128,30 +163,41 @@ header h1 {
 
 .profile-role {
     font-size: 12px;
+
     opacity: 0.8;
 }
 
 .profile-edit {
     background: white;
+
     color: #111827;
+
     font-size: 18px;
+
     padding: 8px 10px;
 }
 
 .logout-button {
     background: #dc2626;
+
     color: white;
 }
 
-/* ADMIN MODE */
+/* =========================
+   ADMIN MODE
+========================= */
 
 .admin-mode-bar {
     display: none;
+
     background: #2563eb;
+
     color: white;
+
     padding: 12px 20px;
 
     justify-content: space-between;
+
     align-items: center;
 
     gap: 10px;
@@ -163,30 +209,43 @@ header h1 {
 
 .close-admin {
     background: white;
+
     color: #2563eb;
 }
 
-/* CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
 
 .container {
     max-width: 1100px;
+
     margin: auto;
+
     padding: 20px;
 }
 
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 .stats {
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
+
     gap: 15px;
+
     margin-bottom: 20px;
 }
 
 .stat {
     background: white;
+
     padding: 20px;
+
     border-radius: 14px;
+
     box-shadow: 0 3px 12px #0003;
 }
 
@@ -196,17 +255,25 @@ header h1 {
 
 .stat-number {
     font-size: 32px;
+
     font-weight: bold;
+
     margin-top: 5px;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 .section {
     background: white;
+
     padding: 20px;
+
     border-radius: 14px;
+
     margin-bottom: 20px;
+
     box-shadow: 0 3px 12px #0003;
 }
 
@@ -214,48 +281,63 @@ header h1 {
     margin-top: 0;
 }
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
 
 .blue {
     background: #2563eb;
+
     color: white;
 }
 
 .green-button {
     background: #16a34a;
+
     color: white;
 }
 
 .orange {
     background: #f59e0b;
+
     color: white;
 }
 
 .red-button {
     background: #dc2626;
+
     color: white;
 }
 
 .gray-button {
     background: #64748b;
+
     color: white;
 }
 
 .admin-button {
     background: #7c3aed;
+
     color: white;
 }
 
-/* CHIPS */
+/* =========================
+   CHIPS
+========================= */
 
 .chip {
     color: white;
+
     padding: 16px;
+
     margin: 10px 0;
+
     border-radius: 12px;
 
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
 
     gap: 15px;
@@ -275,40 +357,59 @@ header h1 {
 
 .chip-name {
     font-size: 19px;
+
     font-weight: bold;
 }
 
 .chip-small {
     font-size: 13px;
+
     opacity: 0.9;
 }
 
 .chip-buttons {
     display: flex;
+
     gap: 6px;
+
     flex-wrap: wrap;
 }
 
-/* MODAL */
+/* =========================
+   MODALS
+========================= */
 
 .modal {
     display: none;
+
     position: fixed;
+
     inset: 0;
+
     background: #0008;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 20px;
+
     z-index: 1000;
 }
 
 .modal-content {
     background: white;
+
     width: 100%;
-    max-width: 450px;
+
+    max-width: 500px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
     padding: 25px;
+
     border-radius: 16px;
 }
 
@@ -316,9 +417,15 @@ header h1 {
     margin-top: 0;
 }
 
+.modal-content h3 {
+    margin-bottom: 8px;
+}
+
 .modal-buttons {
     display: flex;
+
     gap: 8px;
+
     margin-top: 10px;
 }
 
@@ -330,18 +437,31 @@ header h1 {
     display: none !important;
 }
 
+/* =========================
+   SCAN
+========================= */
+
 .scan-box {
     background: #f1f5f9;
+
     padding: 15px;
+
     border-radius: 10px;
 }
 
+/* =========================
+   USER
+========================= */
+
 .user-row {
     border-bottom: 1px solid #e2e8f0;
+
     padding: 12px 0;
 }
 
-/* PROFILE */
+/* =========================
+   PROFILE
+========================= */
 
 .profile-section {
     margin-bottom: 20px;
@@ -349,48 +469,113 @@ header h1 {
 
 .profile-card {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 15px;
 }
 
 .profile-card-left {
     display: flex;
+
     align-items: center;
+
     gap: 15px;
 }
 
 .profile-avatar {
     width: 55px;
+
     height: 55px;
+
     border-radius: 50%;
+
     background: #2563eb;
+
     color: white;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     font-size: 22px;
+
     font-weight: bold;
 }
 
 .profile-card-name {
     font-size: 20px;
+
     font-weight: bold;
 }
 
 .profile-card-email {
     color: #64748b;
+
     margin-top: 3px;
 }
 
-/* MOBILE */
+/* =========================
+   HILFE
+========================= */
+
+.help-question {
+    background: #f1f5f9;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    margin: 8px 0;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.help-question:hover {
+    background: #e2e8f0;
+}
+
+.help-answer {
+    background: #f8fafc;
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-top: 15px;
+
+    line-height: 1.6;
+}
+
+.help-category {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.help-category button {
+    width: 100%;
+}
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:700px) {
 
     header {
         flex-direction: column;
+
         align-items: flex-start;
     }
 
@@ -408,6 +593,7 @@ header h1 {
 
     .chip {
         flex-direction: column;
+
         align-items: flex-start;
     }
 
@@ -415,9 +601,18 @@ header h1 {
         width: 100%;
     }
 
+    .chip-buttons button {
+        flex: 1;
+    }
+
     .admin-mode-bar {
         flex-direction: column;
+
         align-items: flex-start;
+    }
+
+    .help-category {
+        grid-template-columns: 1fr;
     }
 
 }
@@ -428,7 +623,9 @@ header h1 {
 <body>
 
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN
+========================= -->
 
 <div id="loginScreen">
 
@@ -469,9 +666,12 @@ header h1 {
 </div>
 
 
-<!-- APP -->
+<!-- =========================
+     APP
+========================= -->
 
 <div id="app">
+
 
 <header>
 
@@ -499,17 +699,31 @@ header h1 {
 
             </div>
 
-            <!-- NUR ADMIN -->
+
+            <!-- ADMIN STIFT -->
 
             <button
                 id="adminEditButton"
                 class="profile-edit hidden"
-                title="Admin bearbeiten"
+                title="Admin-Modus öffnen"
             >
                 ✏️
             </button>
 
         </div>
+
+
+        <!-- HILFE -->
+
+        <button
+            id="helpButton"
+            class="blue"
+        >
+            ❓ Hilfe
+        </button>
+
+
+        <!-- LOGOUT -->
 
         <button
             class="logout-button"
@@ -523,7 +737,9 @@ header h1 {
 </header>
 
 
-<!-- ADMIN MODE LEISTE -->
+<!-- =========================
+     ADMIN BAR
+========================= -->
 
 <div
     id="adminModeBar"
@@ -547,7 +763,9 @@ header h1 {
 <div class="container">
 
 
-<!-- PROFIL -->
+<!-- =========================
+     PROFIL
+========================= -->
 
 <div class="section profile-section">
 
@@ -582,11 +800,10 @@ header h1 {
 
         </div>
 
+
         <div>
 
-            <span
-                id="profileStatus"
-            >
+            <span id="profileStatus">
                 Normaler Benutzer
             </span>
 
@@ -597,7 +814,9 @@ header h1 {
 </div>
 
 
-<!-- STATISTIK -->
+<!-- =========================
+     STATISTIK
+========================= -->
 
 <div class="stats">
 
@@ -651,7 +870,9 @@ header h1 {
 </div>
 
 
-<!-- ADMIN -->
+<!-- =========================
+     ADMIN
+========================= -->
 
 <div
     id="adminPanel"
@@ -681,7 +902,9 @@ header h1 {
 </div>
 
 
-<!-- LETZTER SCAN -->
+<!-- =========================
+     LETZTER SCAN
+========================= -->
 
 <div class="section">
 
@@ -697,7 +920,9 @@ header h1 {
 </div>
 
 
-<!-- CHIPS -->
+<!-- =========================
+     CHIPS
+========================= -->
 
 <div class="section">
 
@@ -710,7 +935,9 @@ header h1 {
 </div>
 
 
-<!-- BENUTZER -->
+<!-- =========================
+     BENUTZER
+========================= -->
 
 <div
     id="usersSection"
@@ -731,109 +958,200 @@ header h1 {
 </div>
 
 
-<!-- CHIP MODAL -->
+<!-- =========================
+     CHIP MODAL
+========================= -->
 
 <div
     id="chipModal"
     class="modal"
 >
 
-<div class="modal-content">
+    <div class="modal-content">
 
-    <h2 id="chipModalTitle">
-        Chip hinzufügen
-    </h2>
+        <h2 id="chipModalTitle">
+            Chip hinzufügen
+        </h2>
 
-    <input
-        id="chipName"
-        placeholder="Name der Person"
-    >
-
-    <input
-        id="chipId"
-        placeholder="Chip-ID, z.B. 001"
-    >
-
-    <div class="modal-buttons">
-
-        <button
-            class="green-button"
-            id="saveChipButton"
+        <input
+            id="chipName"
+            placeholder="Name der Person"
         >
-            Speichern
-        </button>
 
-        <button
-            class="gray-button"
-            id="closeChipButton"
+        <input
+            id="chipId"
+            placeholder="Chip-ID, z.B. 001"
         >
-            Abbrechen
-        </button>
+
+        <div class="modal-buttons">
+
+            <button
+                class="green-button"
+                id="saveChipButton"
+            >
+                Speichern
+            </button>
+
+            <button
+                class="gray-button"
+                id="closeChipButton"
+            >
+                Abbrechen
+            </button>
+
+        </div>
 
     </div>
 
 </div>
 
-</div>
 
-
-<!-- USER MODAL -->
+<!-- =========================
+     USER MODAL
+========================= -->
 
 <div
     id="userModal"
     class="modal"
 >
 
-<div class="modal-content">
+    <div class="modal-content">
 
-    <h2>Benutzer erstellen</h2>
+        <h2>Benutzer erstellen</h2>
 
-    <input
-        id="newUserName"
-        placeholder="Name"
-    >
-
-    <input
-        id="newUserEmail"
-        type="email"
-        placeholder="E-Mail"
-    >
-
-    <input
-        id="newUserPassword"
-        type="password"
-        placeholder="Passwort"
-    >
-
-    <div class="modal-buttons">
-
-        <button
-            class="green-button"
-            id="createUserButton"
+        <input
+            id="newUserName"
+            placeholder="Name"
         >
-            Erstellen
-        </button>
 
-        <button
-            class="gray-button"
-            id="closeUserButton"
+        <input
+            id="newUserEmail"
+            type="email"
+            placeholder="E-Mail"
         >
-            Abbrechen
-        </button>
+
+        <input
+            id="newUserPassword"
+            type="password"
+            placeholder="Passwort"
+        >
+
+        <div class="modal-buttons">
+
+            <button
+                class="green-button"
+                id="createUserButton"
+            >
+                Erstellen
+            </button>
+
+            <button
+                class="gray-button"
+                id="closeUserButton"
+            >
+                Abbrechen
+            </button>
+
+        </div>
+
+        <div
+            id="userMessage"
+            class="message"
+        ></div>
 
     </div>
 
-    <div
-        id="userMessage"
-        class="message"
-    ></div>
-
-</div>
-
 </div>
 
 
-<!-- FIREBASE -->
+<!-- =========================
+     HILFE MODAL
+========================= -->
+
+<div
+    id="helpModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <h2>❓ OrdnerSystem-Hilfe</h2>
+
+        <p>
+            Hier findest du Antworten zur
+            <strong>OrdnerSystem-Webseite</strong>.
+        </p>
+
+
+        <input
+            id="helpSearch"
+            placeholder="Frage eingeben..."
+        >
+
+
+        <div
+            id="helpAnswer"
+            class="help-answer"
+        >
+
+            <strong>
+                Wobei brauchst du Hilfe?
+            </strong>
+
+            <div class="help-category">
+
+                <button
+                    class="blue"
+                    onclick="showHelp('chip')"
+                >
+                    🟢🔴 Chips
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('nfc')"
+                >
+                    📱 NFC
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('admin')"
+                >
+                    👑 Administrator
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('account')"
+                >
+                    👤 Konto
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-buttons">
+
+            <button
+                class="gray-button"
+                id="closeHelpButton"
+            >
+                Schließen
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
@@ -843,6 +1161,7 @@ import {
     getApp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
+
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -850,6 +1169,7 @@ import {
     onAuthStateChanged,
     createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -864,7 +1184,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-/* FIREBASE */
+/* =========================
+   FIREBASE
+========================= */
 
 const firebaseConfig = {
 
@@ -892,27 +1214,30 @@ const firebaseConfig = {
 const firebaseApp =
     initializeApp(firebaseConfig);
 
+
 const auth =
     getAuth(firebaseApp);
+
 
 const db =
     getFirestore(firebaseApp);
 
 
-/* ADMINS */
+/* =========================
+   ADMINS
+========================= */
 
 const ADMIN_UID_1 =
     "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
 
-/*
- * HIER die UID des zweiten Admins
- * eintragen.
- */
+
 const ADMIN_UID_2 =
     "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
 
 
-/* VARIABLEN */
+/* =========================
+   VARIABLEN
+========================= */
 
 let currentUser = null;
 
@@ -931,7 +1256,9 @@ let unsubscribeUsers = null;
 let unsubscribeLastScan = null;
 
 
-/* ADMIN PRÜFEN */
+/* =========================
+   ADMIN PRÜFEN
+========================= */
 
 function isAdmin() {
 
@@ -947,60 +1274,74 @@ function isAdmin() {
 }
 
 
-/* ADMIN MODUS ÖFFNEN */
+/* =========================
+   ADMIN ÖFFNEN
+========================= */
 
 function openAdminMode() {
 
-    if (!isAdmin())
+    if (!isAdmin()) {
         return;
+    }
 
     adminMode = true;
+
 
     document
         .getElementById("adminModeBar")
         .classList
         .add("active");
 
+
     document
         .getElementById("adminPanel")
         .classList
         .remove("hidden");
 
+
     document
         .getElementById("usersSection")
         .classList
         .remove("hidden");
+
 
     document
         .getElementById("profileStatus")
         .innerText =
         "👑 Administrator";
 
+
     loadUsers();
 
 }
 
 
-/* ADMIN MODUS SCHLIESSEN */
+/* =========================
+   ADMIN SCHLIESSEN
+========================= */
 
 function closeAdminMode() {
 
     adminMode = false;
+
 
     document
         .getElementById("adminModeBar")
         .classList
         .remove("active");
 
+
     document
         .getElementById("adminPanel")
         .classList
         .add("hidden");
 
+
     document
         .getElementById("usersSection")
         .classList
         .add("hidden");
+
 
     document
         .getElementById("profileStatus")
@@ -1012,7 +1353,9 @@ function closeAdminMode() {
 }
 
 
-/* STIFT */
+/* =========================
+   ADMIN BUTTON
+========================= */
 
 document
     .getElementById("adminEditButton")
@@ -1022,8 +1365,6 @@ document
     );
 
 
-/* ADMIN SCHLIESSEN */
-
 document
     .getElementById("closeAdminModeButton")
     .addEventListener(
@@ -1032,7 +1373,9 @@ document
     );
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 document
     .getElementById("loginButton")
@@ -1050,10 +1393,12 @@ async function login() {
             .value
             .trim();
 
+
     const password =
         document
             .getElementById("loginPassword")
             .value;
+
 
     if (!email || !password) {
 
@@ -1063,8 +1408,8 @@ async function login() {
             "Bitte E-Mail und Passwort eingeben.";
 
         return;
-
     }
+
 
     try {
 
@@ -1074,9 +1419,11 @@ async function login() {
             password
         );
 
+
         document
             .getElementById("loginMessage")
             .innerText = "";
+
 
         document
             .getElementById("loginPassword")
@@ -1098,7 +1445,9 @@ async function login() {
 }
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 document
     .getElementById("logoutButton")
@@ -1114,13 +1463,16 @@ async function logout() {
 
     await signOut(auth);
 
+
     document
         .getElementById("loginEmail")
         .value = "";
 
+
     document
         .getElementById("loginPassword")
         .value = "";
+
 
     document
         .getElementById("loginMessage")
@@ -1129,7 +1481,9 @@ async function logout() {
 }
 
 
-/* AUTH STATUS */
+/* =========================
+   AUTH STATUS
+========================= */
 
 onAuthStateChanged(
     auth,
@@ -1137,25 +1491,29 @@ onAuthStateChanged(
 
         currentUser = user;
 
+
         if (!user) {
 
             adminMode = false;
+
 
             document
                 .getElementById("loginScreen")
                 .style.display = "flex";
 
+
             document
                 .getElementById("app")
                 .style.display = "none";
+
 
             document
                 .getElementById("adminEditButton")
                 .classList
                 .add("hidden");
 
-            return;
 
+            return;
         }
 
 
@@ -1163,12 +1521,13 @@ onAuthStateChanged(
             .getElementById("loginScreen")
             .style.display = "none";
 
+
         document
             .getElementById("app")
             .style.display = "block";
 
 
-        /* ADMIN-STIFT */
+        /* ADMIN */
 
         if (isAdmin()) {
 
@@ -1177,10 +1536,12 @@ onAuthStateChanged(
                 .classList
                 .remove("hidden");
 
+
             document
                 .getElementById("userRole")
                 .innerText =
                 "Administrator";
+
 
             document
                 .getElementById("profileStatus")
@@ -1196,10 +1557,12 @@ onAuthStateChanged(
                 .classList
                 .add("hidden");
 
+
             document
                 .getElementById("userRole")
                 .innerText =
                 "Benutzer";
+
 
             document
                 .getElementById("profileStatus")
@@ -1221,8 +1584,6 @@ onAuthStateChanged(
             user.email || "";
 
 
-        /* PROFILNAME */
-
         const emailName =
             user.email
             ? user.email.split("@")[0]
@@ -1243,15 +1604,11 @@ onAuthStateChanged(
             .toUpperCase();
 
 
-        /*
-         * Beim Login ist der Admin-Modus
-         * IMMER geschlossen.
-         */
-
         closeAdminMode();
 
 
         loadChips();
+
         loadLastScan();
 
 
@@ -1264,7 +1621,9 @@ onAuthStateChanged(
 );
 
 
-/* CHIPS LADEN */
+/* =========================
+   CHIPS LADEN
+========================= */
 
 function loadChips() {
 
@@ -1272,12 +1631,15 @@ function loadChips() {
         unsubscribeChips();
     }
 
+
     unsubscribeChips =
         onSnapshot(
             collection(db, "chips"),
+
             snapshot => {
 
                 chips = [];
+
 
                 snapshot.forEach(
                     chipDoc => {
@@ -1296,9 +1658,11 @@ function loadChips() {
 
 
                 showChips();
+
                 updateStats();
 
             },
+
             error => {
 
                 console.error(
@@ -1312,7 +1676,9 @@ function loadChips() {
 }
 
 
-/* CHIPS ANZEIGEN */
+/* =========================
+   CHIPS ANZEIGEN
+========================= */
 
 function showChips() {
 
@@ -1328,7 +1694,6 @@ function showChips() {
             "<p>Noch keine Chips vorhanden.</p>";
 
         return;
-
     }
 
 
@@ -1337,11 +1702,6 @@ function showChips() {
 
     chips.forEach(
         chip => {
-
-            /*
-             * übernommen ODER NFC aktiv
-             * = ROT
-             */
 
             const active =
                 chip.assignedTo != null ||
@@ -1385,12 +1745,14 @@ function showChips() {
                 if (!chip.assignedTo) {
 
                     buttons += `
+
                         <button
                             class="green-button"
                             onclick="takeChip('${chip.firestoreId}')"
                         >
                             Chip übernehmen
                         </button>
+
                     `;
 
                 }
@@ -1402,12 +1764,14 @@ function showChips() {
                 ) {
 
                     buttons += `
+
                         <button
                             class="orange"
                             onclick="releaseChip('${chip.firestoreId}')"
                         >
                             Chip freigeben
                         </button>
+
                     `;
 
                 }
@@ -1419,70 +1783,63 @@ function showChips() {
 
             if (isAdmin()) {
 
-                /*
-                 * Admin darf JEDEN Chip
-                 * übernehmen.
-                 */
-
                 if (
                     chip.assignedTo !==
                     currentUser.uid
                 ) {
 
                     buttons += `
+
                         <button
                             class="green-button"
                             onclick="takeChip('${chip.firestoreId}')"
                         >
                             Chip übernehmen
                         </button>
+
                     `;
 
                 }
 
 
-                /*
-                 * Admin darf JEDEN Chip
-                 * freigeben.
-                 */
-
                 if (chip.assignedTo) {
 
                     buttons += `
+
                         <button
                             class="orange"
                             onclick="releaseChip('${chip.firestoreId}')"
                         >
                             Chip freigeben
                         </button>
+
                     `;
 
                 }
 
 
-                /*
-                 * Diese Funktionen sind nur
-                 * im Admin-Modus sichtbar.
-                 */
-
                 if (adminMode) {
 
                     buttons += `
+
                         <button
                             onclick="editChip('${chip.firestoreId}')"
                         >
                             ✏️ Bearbeiten
                         </button>
+
                     `;
 
 
                     buttons += `
+
                         <button
                             class="red-button"
                             onclick="deleteChip('${chip.firestoreId}')"
                         >
                             🗑️ Löschen
                         </button>
+
                     `;
 
                 }
@@ -1542,21 +1899,30 @@ function showChips() {
 }
 
 
-/* HTML SICHER MACHEN */
+/* =========================
+   HTML SICHER
+========================= */
 
 function escapeHTML(value) {
 
     return String(value)
+
         .replaceAll("&", "&amp;")
+
         .replaceAll("<", "&lt;")
+
         .replaceAll(">", "&gt;")
+
         .replaceAll('"', "&quot;")
+
         .replaceAll("'", "&#039;");
 
 }
 
 
-/* STATISTIK */
+/* =========================
+   STATISTIK
+========================= */
 
 function updateStats() {
 
@@ -1599,7 +1965,9 @@ function updateStats() {
 }
 
 
-/* CHIP ÜBERNEHMEN */
+/* =========================
+   CHIP ÜBERNEHMEN
+========================= */
 
 window.takeChip =
 async function(id) {
@@ -1618,15 +1986,6 @@ async function(id) {
     if (!chip)
         return;
 
-
-    /*
-     * Normale Benutzer:
-     * nur freie Chips.
-     *
-     * Admin:
-     * darf auch einen bereits
-     * vergebenen Chip übernehmen.
-     */
 
     if (
         chip.assignedTo &&
@@ -1680,7 +2039,9 @@ async function(id) {
 };
 
 
-/* CHIP FREIGEBEN */
+/* =========================
+   CHIP FREIGEBEN
+========================= */
 
 window.releaseChip =
 async function(id) {
@@ -1699,13 +2060,6 @@ async function(id) {
     if (!chip)
         return;
 
-
-    /*
-     * Admin darf jeden Chip.
-     *
-     * Normaler Benutzer nur
-     * seinen eigenen.
-     */
 
     if (
         !isAdmin() &&
@@ -1760,7 +2114,9 @@ async function(id) {
 };
 
 
-/* CHIP HINZUFÜGEN */
+/* =========================
+   CHIP HINZUFÜGEN
+========================= */
 
 document
     .getElementById("addChipButton")
@@ -1803,7 +2159,9 @@ function openChipModal() {
 }
 
 
-/* CHIP SPEICHERN */
+/* =========================
+   CHIP SPEICHERN
+========================= */
 
 document
     .getElementById("saveChipButton")
@@ -1951,7 +2309,9 @@ async function saveChip() {
 }
 
 
-/* CHIP BEARBEITEN */
+/* =========================
+   CHIP BEARBEITEN
+========================= */
 
 window.editChip =
 function(id) {
@@ -2000,7 +2360,9 @@ function(id) {
 };
 
 
-/* CHIP LÖSCHEN */
+/* =========================
+   CHIP LÖSCHEN
+========================= */
 
 window.deleteChip =
 async function(id) {
@@ -2056,7 +2418,9 @@ async function(id) {
 };
 
 
-/* USER MODAL */
+/* =========================
+   USER MODAL
+========================= */
 
 document
     .getElementById("addUserButton")
@@ -2076,13 +2440,16 @@ function openUserModal() {
         .getElementById("newUserName")
         .value = "";
 
+
     document
         .getElementById("newUserEmail")
         .value = "";
 
+
     document
         .getElementById("newUserPassword")
         .value = "";
+
 
     document
         .getElementById("userMessage")
@@ -2097,7 +2464,9 @@ function openUserModal() {
 }
 
 
-/* USER ERSTELLEN */
+/* =========================
+   USER ERSTELLEN
+========================= */
 
 document
     .getElementById("createUserButton")
@@ -2257,6 +2626,7 @@ async function createUser() {
 
         console.error(error);
 
+
         let text =
             "Benutzer konnte nicht erstellt werden.";
 
@@ -2293,7 +2663,9 @@ async function createUser() {
 }
 
 
-/* BENUTZER LADEN */
+/* =========================
+   BENUTZER LADEN
+========================= */
 
 function loadUsers() {
 
@@ -2309,6 +2681,7 @@ function loadUsers() {
     unsubscribeUsers =
         onSnapshot(
             collection(db, "users"),
+
             snapshot => {
 
                 const list =
@@ -2383,6 +2756,7 @@ function loadUsers() {
                 );
 
             },
+
             error => {
 
                 console.error(
@@ -2396,7 +2770,9 @@ function loadUsers() {
 }
 
 
-/* LETZTEN SCAN LADEN */
+/* =========================
+   LETZTEN SCAN LADEN
+========================= */
 
 function loadLastScan() {
 
@@ -2412,6 +2788,7 @@ function loadLastScan() {
                 "system",
                 "currentScan"
             ),
+
             snapshot => {
 
                 const box =
@@ -2465,6 +2842,7 @@ function loadLastScan() {
                 `;
 
             },
+
             error => {
 
                 console.error(
@@ -2478,7 +2856,9 @@ function loadLastScan() {
 }
 
 
-/* NFC */
+/* =========================
+   NFC
+========================= */
 
 async function checkNFC() {
 
@@ -2521,13 +2901,11 @@ async function checkNFC() {
 
 
     /*
-     * NFC:
-     *
-     * Scan 1 = ROT
-     * Scan 2 = GRÜN
-     * Scan 3 = ROT
-     * usw.
-     */
+       Scan 1 = ROT
+       Scan 2 = GRÜN
+       Scan 3 = ROT
+       usw.
+    */
 
     const newStatus =
         chip.scanActive !== true;
@@ -2586,10 +2964,6 @@ async function checkNFC() {
         );
 
 
-        /*
-         * NFC-Parameter aus URL entfernen.
-         */
-
         window.history.replaceState(
             {},
             document.title,
@@ -2605,6 +2979,7 @@ async function checkNFC() {
             error
         );
 
+
         alert(
             "NFC-Scan konnte nicht gespeichert werden: " +
             error.message
@@ -2615,7 +2990,446 @@ async function checkNFC() {
 }
 
 
-/* MODALS SCHLIESSEN */
+/* =========================
+   HILFE
+========================= */
+
+document
+    .getElementById("helpButton")
+    .addEventListener(
+        "click",
+        openHelp
+    );
+
+
+function openHelp() {
+
+    document
+        .getElementById("helpModal")
+        .style.display =
+        "flex";
+
+
+    document
+        .getElementById("helpSearch")
+        .value = "";
+
+
+    showHelpStart();
+
+}
+
+
+/* HILFE START */
+
+function showHelpStart() {
+
+    document
+        .getElementById("helpAnswer")
+        .innerHTML = `
+
+            <strong>
+                Wobei brauchst du Hilfe?
+            </strong>
+
+            <div class="help-category">
+
+                <button
+                    class="blue"
+                    onclick="showHelp('chip')"
+                >
+                    🟢🔴 Chips
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('nfc')"
+                >
+                    📱 NFC
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('admin')"
+                >
+                    👑 Administrator
+                </button>
+
+                <button
+                    class="blue"
+                    onclick="showHelp('account')"
+                >
+                    👤 Konto
+                </button>
+
+            </div>
+
+        `;
+
+}
+
+
+/* HILFE ANTWORTEN */
+
+window.showHelp =
+function(type) {
+
+    const answer =
+        document.getElementById(
+            "helpAnswer"
+        );
+
+
+    /* CHIPS */
+
+    if (type === "chip") {
+
+        answer.innerHTML = `
+
+            <h3>🟢🔴 Chips</h3>
+
+            <p>
+                <strong>🟢 Grün</strong>
+                bedeutet, dass der Chip frei ist.
+            </p>
+
+            <p>
+                <strong>🔴 Rot</strong>
+                bedeutet, dass der Chip aktiv oder
+                einem Benutzer zugeordnet ist.
+            </p>
+
+            <p>
+                <strong>Chip übernehmen:</strong><br>
+                Bei einem freien Chip auf
+                „Chip übernehmen“ klicken.
+            </p>
+
+            <p>
+                <strong>Chip freigeben:</strong><br>
+                Bei deinem Chip auf
+                „Chip freigeben“ klicken.
+            </p>
+
+            <button
+                class="gray-button"
+                onclick="showHelpStart()"
+            >
+                ← Zurück
+            </button>
+
+        `;
+
+        return;
+    }
+
+
+    /* NFC */
+
+    if (type === "nfc") {
+
+        answer.innerHTML = `
+
+            <h3>📱 NFC</h3>
+
+            <p>
+                Jeder NFC-Chip gehört zu einer
+                bestimmten Chip-ID.
+            </p>
+
+            <p>
+                Beispiel:
+                <strong>001</strong>
+            </p>
+
+            <p>
+                Wenn der NFC-Chip gescannt wird,
+                öffnet sich die OrdnerSystem-Webseite
+                mit der entsprechenden Chip-ID.
+            </p>
+
+            <p>
+                Der erste Scan macht den Chip
+                <strong>🔴 rot</strong>.
+            </p>
+
+            <p>
+                Der nächste Scan macht ihn wieder
+                <strong>🟢 grün</strong>.
+            </p>
+
+            <p>
+                Danach wechselt der Status bei jedem
+                weiteren Scan.
+            </p>
+
+            <button
+                class="gray-button"
+                onclick="showHelpStart()"
+            >
+                ← Zurück
+            </button>
+
+        `;
+
+        return;
+    }
+
+
+    /* ADMIN */
+
+    if (type === "admin") {
+
+        answer.innerHTML = `
+
+            <h3>👑 Administrator</h3>
+
+            <p>
+                Ein Administrator erkennt man am
+                <strong>✏️ Stift</strong> neben dem Profil.
+            </p>
+
+            <p>
+                Klicke auf den Stift, um den
+                <strong>Admin-Modus</strong> zu öffnen.
+            </p>
+
+            <p>
+                Im Admin-Modus können Administratoren:
+            </p>
+
+            <ul>
+
+                <li>Chips hinzufügen</li>
+
+                <li>Chips bearbeiten</li>
+
+                <li>Chips löschen</li>
+
+                <li>Benutzer erstellen</li>
+
+                <li>Chips übernehmen</li>
+
+                <li>Chips freigeben</li>
+
+            </ul>
+
+            <p>
+                Mit „Admin-Modus schließen“ wird wieder
+                die normale Ansicht angezeigt.
+            </p>
+
+            <button
+                class="gray-button"
+                onclick="showHelpStart()"
+            >
+                ← Zurück
+            </button>
+
+        `;
+
+        return;
+    }
+
+
+    /* KONTO */
+
+    if (type === "account") {
+
+        answer.innerHTML = `
+
+            <h3>👤 Benutzerkonto</h3>
+
+            <p>
+                Zum Anmelden brauchst du deine
+                <strong>E-Mail-Adresse</strong>
+                und dein Passwort.
+            </p>
+
+            <p>
+                Nach dem Anmelden kannst du die Chips
+                ansehen und deine eigenen Chips verwalten.
+            </p>
+
+            <p>
+                Mit <strong>Abmelden</strong> verlässt du
+                dein Benutzerkonto.
+            </p>
+
+            <button
+                class="gray-button"
+                onclick="showHelpStart()"
+            >
+                ← Zurück
+            </button>
+
+        `;
+
+        return;
+    }
+
+};
+
+
+/* =========================
+   HILFE-SUCHE
+========================= */
+
+document
+    .getElementById("helpSearch")
+    .addEventListener(
+        "input",
+        searchHelp
+    );
+
+
+function searchHelp() {
+
+    const question =
+        document
+            .getElementById("helpSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if (!question) {
+
+        showHelpStart();
+
+        return;
+    }
+
+
+    /*
+       CHIP-FRAGEN
+    */
+
+    if (
+        question.includes("chip") ||
+        question.includes("ordner")
+    ) {
+
+        showHelp("chip");
+
+        return;
+    }
+
+
+    /*
+       NFC-FRAGEN
+    */
+
+    if (
+        question.includes("nfc") ||
+        question.includes("scan") ||
+        question.includes("scannen") ||
+        question.includes("scanne")
+    ) {
+
+        showHelp("nfc");
+
+        return;
+    }
+
+
+    /*
+       ADMIN-FRAGEN
+    */
+
+    if (
+        question.includes("admin") ||
+        question.includes("administrator") ||
+        question.includes("stift") ||
+        question.includes("bearbeiten") ||
+        question.includes("löschen") ||
+        question.includes("benutzer erstellen")
+    ) {
+
+        showHelp("admin");
+
+        return;
+    }
+
+
+    /*
+       KONTO-FRAGEN
+    */
+
+    if (
+        question.includes("login") ||
+        question.includes("anmelden") ||
+        question.includes("passwort") ||
+        question.includes("konto") ||
+        question.includes("abmelden")
+    ) {
+
+        showHelp("account");
+
+        return;
+    }
+
+
+    document
+        .getElementById("helpAnswer")
+        .innerHTML = `
+
+            <h3>❓ Frage nicht gefunden</h3>
+
+            <p>
+                Ich habe dazu keine passende Antwort
+                für die OrdnerSystem-Webseite gefunden.
+            </p>
+
+            <p>
+                Versuche zum Beispiel:
+            </p>
+
+            <ul>
+
+                <li>
+                    Wie übernehme ich einen Chip?
+                </li>
+
+                <li>
+                    Was bedeutet rot?
+                </li>
+
+                <li>
+                    Wie funktioniert NFC?
+                </li>
+
+                <li>
+                    Was kann der Admin?
+                </li>
+
+                <li>
+                    Wie melde ich mich an?
+                </li>
+
+            </ul>
+
+        `;
+
+}
+
+
+/* =========================
+   HILFE SCHLIESSEN
+========================= */
+
+document
+    .getElementById("closeHelpButton")
+    .addEventListener(
+        "click",
+        () =>
+            closeModal("helpModal")
+    );
+
+
+/* =========================
+   MODALS SCHLIESSEN
+========================= */
 
 document
     .getElementById("closeChipButton")
@@ -2645,7 +3459,9 @@ function closeModal(id) {
 }
 
 
-/* ENTER-TASTE LOGIN */
+/* =========================
+   ENTER LOGIN
+========================= */
 
 document
     .getElementById("loginPassword")
@@ -2665,10 +3481,9 @@ document
     );
 
 
-/*
- * Wenn außerhalb eines Modals
- * geklickt wird, Modal schließen.
- */
+/* =========================
+   MODAL AUSSEN KLICK
+========================= */
 
 document
     .querySelectorAll(".modal")
