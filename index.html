@@ -12,34 +12,33 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
             min-height: 100vh;
-            background: url("https://images.unsplash.com/photo-1518770660439-4636190af475")
-                        center/cover fixed;
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .login-box {
+        .box {
             width: 90%;
-            max-width: 420px;
-            padding: 35px;
-            background: rgba(0, 0, 0, 0.82);
+            max-width: 450px;
+            background: rgba(20, 25, 35, 0.95);
+            padding: 30px;
             border-radius: 20px;
             text-align: center;
-            color: white;
         }
 
         h1 {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         input {
             width: 100%;
             padding: 14px;
-            margin: 8px 0;
-            border: none;
+            margin: 7px 0;
+            border: 0;
             border-radius: 10px;
             font-size: 16px;
         }
@@ -47,32 +46,35 @@
         button {
             width: 100%;
             padding: 14px;
-            margin-top: 15px;
-            border: none;
+            margin-top: 12px;
+            border: 0;
             border-radius: 10px;
-            background: #2196f3;
+            background: #2563eb;
             color: white;
-            font-size: 17px;
-            cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
-            background: #1976d2;
+            background: #1d4ed8;
         }
 
         #fehler {
             color: #ff5555;
-            margin-top: 15px;
+        }
+
+        #admin {
+            display: none;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="login-box">
+    <!-- LOGIN -->
+    <div class="box" id="login">
         <h1>🔐 OrdnerSystem</h1>
 
-        <input id="benutzer" type="text" placeholder="Benutzername">
+        <input id="email" type="email" placeholder="E-Mail">
         <input id="passwort" type="password" placeholder="Passwort">
 
         <button onclick="anmelden()">ANMELDEN</button>
@@ -80,18 +82,96 @@
         <p id="fehler"></p>
     </div>
 
-    <script>
-        function anmelden() {
-            const benutzer = document.getElementById("benutzer").value;
-            const passwort = document.getElementById("passwort").value;
 
-            if (benutzer === "admin" && passwort === "1234") {
-                alert("Anmeldung erfolgreich!");
-            } else {
-                document.getElementById("fehler").textContent =
-                    "Benutzername oder Passwort falsch.";
+    <!-- ADMIN-BEREICH -->
+    <div class="box" id="admin">
+        <h1>⚙️ Admin-Menü</h1>
+
+        <p>Du bist erfolgreich angemeldet.</p>
+
+        <button onclick="abmelden()">ABMELDEN</button>
+    </div>
+
+
+    <script type="module">
+
+        import { initializeApp } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+            authDomain: "ordnersystem-1352a.firebaseapp.com",
+            projectId: "ordnersystem-1352a",
+            storageBucket: "ordnersystem-1352a.firebasestorage.app",
+            messagingSenderId: "39473536985",
+            appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
+        };
+
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+
+        window.anmelden = async function () {
+
+            const email =
+                document.getElementById("email").value;
+
+            const passwort =
+                document.getElementById("passwort").value;
+
+            const fehler =
+                document.getElementById("fehler");
+
+            try {
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    passwort
+                );
+
+                fehler.textContent = "";
+
+            } catch (error) {
+
+                fehler.textContent =
+                    "E-Mail oder Passwort falsch.";
+
             }
-        }
+        };
+
+
+        window.abmelden = async function () {
+            await signOut(auth);
+        };
+
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                document.getElementById("login").style.display = "none";
+                document.getElementById("admin").style.display = "block";
+
+            } else {
+
+                document.getElementById("login").style.display = "block";
+                document.getElementById("admin").style.display = "none";
+
+            }
+
+        });
+
     </script>
 
 </body>
