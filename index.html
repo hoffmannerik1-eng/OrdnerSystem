@@ -50,7 +50,20 @@ $("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,$("email"
 $("adminEdit").onclick=()=>{if(!isAdmin())return;admin=true;$("adminBar").classList.remove("hidden");$("adminPanel").classList.remove("hidden");$("usersSection").classList.remove("hidden");loadUsers()};$("closeAdmin").onclick=()=>{admin=false;$("adminBar").classList.add("hidden");$("adminPanel").classList.add("hidden");$("usersSection").classList.add("hidden")};$("profileEdit").onclick=$("profileEdit2").onclick=()=>openProfile();$("help").onclick=()=>{open("helpModal");helpStart()};
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>close(b.dataset.close));document.querySelectorAll(".modal").forEach(m=>m.onclick=e=>{if(e.target===m)m.style.display="none"});
 onAuthStateChanged(auth,async u=>{user=u;if(!u){$("loginScreen").style.display="flex";$("app").classList.add("hidden");return}$("loginScreen").style.display="none";$("app").classList.remove("hidden");$("adminEdit").classList.toggle("hidden",!isAdmin());await ensureProfile();loadProfile();loadChips();loadScan();setTimeout(scanNFC,1000)});
-async function ensureProfile(){const r=doc(db,"users",user.uid),s=await getDoc(r);if(!s.exists())await setDoc(r,{name:user.email?.split("@")[0]||"Benutzer",nameKey:nameKey(user.email?.split("@")[0]||"Benutzer"),email:user.email||"",role:isAdmin()?"admin":"user",profileImageData:"",createdAt:serverTimestamp()})}
+async function ensureProfile(){
+  const userRef=doc(db,"users",user.uid);
+  const snap=await getDoc(userRef);
+  if(snap.exists()) return;
+  const defaultName=user.email?.split("@")[0]||"Benutzer";
+  const key=nameKey(defaultName);
+  await runTransaction(db,async tx=>{
+    const nameRef=doc(db,"userNames",key);
+    const nameSnap=await tx.get(nameRef);
+    if(nameSnap.exists() && nameSnap.data().uid!==user.uid) throw new Error("NAME_ALREADY_USED");
+    tx.set(userRef,{name:defaultName,nameKey:key,email:user.email||"",role:isAdmin()?"admin":"user",profileImageData:"",createdAt:serverTimestamp()});
+    tx.set(nameRef,{uid:user.uid,name:defaultName});
+  });
+}
 function loadProfile(){unsub.push(onSnapshot(doc(db,"users",user.uid),s=>{profile=s.exists()?s.data():{};const n=nameOf(),p=profile.profileImageData||"";$("profileName").innerText=n;$("headName").innerText=n;$("profileEmail").innerText=user.email||"";$("headRole").innerText=isAdmin()?"Administrator":"Benutzer";avatar("profileAvatar",p,n);avatar("headAvatar",p,n)}))}
 function loadChips(){unsub.push(onSnapshot(collection(db,"chips"),s=>{chips=[];s.forEach(x=>chips.push({firestoreId:x.id,...x.data()}));renderChips()}))}
 function renderChips(){let red=0;$("chips").innerHTML="";if(!chips.length){$("chips").innerHTML='<div class="empty">Noch keine Chips vorhanden.</div>';return}chips.forEach(c=>{const active=c.assignedTo!=null||c.scanActive===true;if(active)red++;const n=c.assignedName||c.assignedEmail||"Niemand",img=c.assignedProfileImageData||"";let buttons="";if(!isAdmin()){if(!c.assignedTo)buttons+=`<button class="green" onclick="take('${c.firestoreId}')">Übernehmen</button>`;if(c.assignedTo===user.uid)buttons+=`<button class="orange" onclick="release('${c.firestoreId}')">Freigeben</button>`}else{if(c.assignedTo!==user.uid)buttons+=`<button class="green" onclick="take('${c.firestoreId}')">Übernehmen</button>`;if(c.assignedTo)buttons+=`<button class="orange" onclick="release('${c.firestoreId}')">Freigeben</button>`;if(admin)buttons+=`<button class="gray" onclick="editChip('${c.firestoreId}')">✏️</button><button class="red" onclick="removeChip('${c.firestoreId}')">🗑️</button>`}$("chips").innerHTML+=`<div class="chip"><div class="chipMain"><div class="chipStripe ${active?'redStripe':''}"></div><div><div class="chipName">${esc(c.name)}</div><div class="chipMeta"><span class="chipStatus ${active?'redDot':'greenDot'}"></span>${active?'Aktiv':'Frei'} · Chip-ID ${esc(c.chipId)}</div><div class="person"><div class="mini">${img?`<img src="${esc(img)}" alt="">`:esc(n[0]?.toUpperCase()||"?")}</div><span>Gerade bei: <b>${esc(n)}</b></span></div>${c.lastScannedEmail?`<div class="chipMeta">Letzter Scan: ${esc(c.lastScannedName||c.lastScannedEmail)}</div>`:""}</div></div><div class="chipBtns">${buttons}</div></div>`});$("total").innerText=chips.length;$("redCount").innerText=red;$("greenCount").innerText=chips.length-red}
