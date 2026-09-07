@@ -2,1542 +2,980 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#2563eb">
-<meta name="description" content="OrdnerSystem – digitale Ordner- und NFC-Verwaltung">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OrdnerSystem</title>
+
 <style>
-/* ============================================================
-   ORDNER SYSTEM – KOMPLETTE RESPONSIVE WEBAPP
-   ============================================================ */
-:root{
-  --bg:#f4f7fb;
-  --surface:#ffffff;
-  --surface2:#f8fafc;
-  --text:#172033;
-  --muted:#718096;
-  --border:#e2e8f0;
-  --blue:#2563eb;
-  --blue2:#1d4ed8;
-  --green:#16a34a;
-  --greenBg:#ecfdf3;
-  --red:#dc2626;
-  --redBg:#fef2f2;
-  --shadow:0 10px 30px rgba(15,23,42,.07);
-  --radius:16px;
-  --header:72px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
-body{overflow-x:hidden}
-button,input,select,textarea{font:inherit}
-button{border:0;cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-input,select,textarea{outline:none}
-.hidden{display:none!important}
-.noScroll{overflow:hidden}
-
-/* Header */
-header{height:var(--header);position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border)}
-.headerBrand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;white-space:nowrap}
-.headerMark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;box-shadow:0 6px 15px rgba(37,99,235,.22)}
-.head{display:flex;align-items:center;gap:12px}
-.headUser{display:flex;align-items:center;gap:10px}
-.headText{text-align:right}
-.headName{font-weight:800;line-height:1.1}
-.role{font-size:12px;color:var(--muted);margin-top:3px}
-.avatar,.mini,.profileAvatar,.editAvatar{border-radius:50%;overflow:hidden;background:#e8eef8;display:grid;place-items:center;font-weight:850;color:#31517e;flex:none}
-.avatar{width:42px;height:42px}
-.avatar img,.mini img,.profileAvatar img,.editAvatar img{width:100%;height:100%;object-fit:cover;display:block}
-
-/* Buttons */
-.gray,.blue,.danger,.outline{min-height:40px;padding:9px 13px;border-radius:10px;font-weight:750;transition:.15s ease}
-.gray{background:#edf1f6;color:#334155}
-.gray:hover{background:#e2e8f0}
-.blue{background:var(--blue);color:#fff}
-.blue:hover{background:var(--blue2);transform:translateY(-1px)}
-.danger{background:#fee2e2;color:#b91c1c}
-.danger:hover{background:#fecaca}
-.outline{background:transparent;color:var(--blue);border:1px solid #bfdbfe}
-
-/* Layout */
-.workspace{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:calc(100vh - var(--header))}
-.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:18px 12px;position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow:auto}
-.sidebarHead{font-weight:850;padding:12px 14px 18px;font-size:17px}
-.sidebarHead small{display:block;color:#94a3b8;font-size:11px;font-weight:650;margin-top:4px}
-.sideSection{margin-bottom:8px}
-.sideToggle{width:100%;background:transparent;padding:11px 12px;text-align:left;font-weight:850;color:#475569;display:flex;justify-content:space-between;align-items:center;border-radius:10px}
-.sideToggle:hover,.sideLink:hover{background:#f1f5f9}
-.chev{transition:.2s ease}
-.sideLinks{display:none;padding:2px 0}
-.sideSection.open .sideLinks{display:block}
-.sideSection.open .chev{transform:rotate(180deg)}
-.sideLink{width:100%;background:transparent;text-align:left;padding:10px 15px;border-radius:9px;color:#475569;margin:1px 0}
-.sideLink.active{background:#eff6ff;color:#1d4ed8;font-weight:800}
-.mainContent{padding:30px;min-width:0;width:100%;max-width:1500px;margin:0 auto}
-.pageTitle{font-size:31px;line-height:1.15;margin:0 0 6px;font-weight:850}
-.pageSub{color:var(--muted);margin:0 0 22px;line-height:1.5}
-
-/* Cards / stats */
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}
-.stat,.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 5px rgba(15,23,42,.02)}
-.stat{padding:20px}
-.statLabel{font-size:11px;font-weight:850;color:#94a3b8;letter-spacing:.04em}
-.num{font-size:31px;font-weight:900;margin-top:7px}
-.greenText{color:var(--green)}
-.redText{color:var(--red)}
-.card{padding:20px;margin-bottom:18px}
-.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.sectionTitle h2{font-size:18px;margin:0;font-weight:850}
-.adminActions{display:flex;gap:9px;flex-wrap:wrap}
-
-/* Search */
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
-.searchWrap{flex:1;min-width:220px;position:relative}
-.searchWrap input{width:100%;height:42px;padding:0 13px 0 40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
-.searchIcon{position:absolute;left:13px;top:10px;color:#94a3b8}
-.filterSelect{height:42px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
-
-/* Chips */
-.chip{border:1px solid var(--border);border-radius:14px;padding:15px;margin:10px 0;background:var(--surface);transition:.15s ease}
-.chip:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
-.chipMain{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
-.chipInfo{display:flex;gap:12px;min-width:0;flex:1}
-.chipStripe{width:5px;border-radius:8px;background:#22c55e;min-height:100px;flex:none}
-.chipStripe.redStripe{background:#ef4444}
-.chipText{min-width:0}
-.chipName{font-weight:850;font-size:17px;overflow-wrap:anywhere}
-.chipMeta{color:#64748b;font-size:13px;margin-top:5px;line-height:1.45}
-.chipStatus{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.greenDot{background:#22c55e}.redDot{background:#ef4444}
-.person{display:flex;align-items:center;gap:9px;margin-top:11px;color:#64748b;font-size:13px;flex-wrap:wrap}
-.mini{width:31px;height:31px;font-size:12px}
-.chipButtons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:420px}
-.chipButtons button{padding:8px 10px;border-radius:8px}
-.empty{padding:32px 20px;text-align:center;color:#94a3b8;border:1px dashed var(--border);border-radius:12px}
-.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;background:#f1f5f9;color:#475569}
-.badge.green{background:var(--greenBg);color:#15803d}.badge.red{background:var(--redBg);color:#b91c1c}
-
-/* Settings */
-.settingsMode{grid-template-columns:1fr!important}
-.settingsMode .sidebar{display:none}
-.settingsPage{max-width:1000px}
-.settingsProfileCard{display:flex;justify-content:space-between;align-items:center;gap:20px}
-.profileRow{display:flex;align-items:center;gap:15px;min-width:0}
-.profileAvatar,.editAvatar{width:72px;height:72px;font-size:24px}
-.settingsActions{display:flex;gap:8px;flex-wrap:wrap}
-.settingsOption{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--border);border-radius:11px;margin:8px 0;cursor:pointer}
-.settingsOption input{width:18px;height:18px}
-.smallNote{font-size:12px;color:#94a3b8}
-
-/* Modals */
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(3px)}
-.modalBox{background:var(--surface);color:var(--text);border-radius:16px;width:min(600px,100%);max-height:92vh;overflow:auto;padding:24px;box-shadow:0 25px 70px rgba(15,23,42,.2)}
-.modalHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-.modalHead h2{margin:0;font-size:21px}
-.closeBtn{background:#edf1f6;color:#334155;border-radius:9px;width:36px;height:36px;font-size:20px}
-.field{margin:14px 0}
-.field label{display:block;font-weight:750;font-size:13px;margin-bottom:7px}
-.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #d8dee8;border-radius:10px;background:var(--surface);color:var(--text)}
-.field textarea{min-height:100px;resize:vertical}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
-.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
-.formMessage{min-height:20px;color:var(--red);font-size:13px;line-height:1.4}
-
-/* Login */
-.loginPage{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#eef4ff,#f7f9fc);padding:20px}
-.loginBox{width:min(440px,100%);background:var(--surface);padding:32px;border-radius:20px;border:1px solid var(--border);box-shadow:0 18px 55px rgba(15,23,42,.1)}
-.loginBox h1{margin:26px 0 5px;font-size:29px}.loginBox p{color:var(--muted);line-height:1.5}.loginBox .blue{width:100%;margin-top:8px;height:46px}
-.loginError{color:var(--red);font-size:13px;min-height:19px}
-
-/* Last scan */
-.scanBox{display:flex;align-items:center;gap:15px;padding:17px;border:1px solid var(--border);border-radius:13px;background:var(--surface2)}
-.scanIcon{width:52px;height:52px;border-radius:14px;background:#eff6ff;color:#2563eb;display:grid;place-items:center;font-size:23px;flex:none}
-
-/* Toast */
-#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:200;background:#172033;color:white;padding:11px 15px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);transition:.2s ease;font-size:14px;max-width:calc(100vw - 30px);text-align:center}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* Dark mode */
-body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--muted:#9ca3af;--border:#334155}
-.dark header,.dark .sidebar,.dark .card,.dark .stat,.dark .chip,.dark .modalBox,.dark .loginBox{background:var(--surface);border-color:var(--border)}
-.dark .sideToggle,.dark .sideLink{color:#d1d5db}
-.dark .sideToggle:hover,.dark .sideLink:hover{background:#334155}
-.dark .sideLink.active{background:#1e3a8a;color:#bfdbfe}
-.dark .gray{background:#334155;color:#e5e7eb}.dark .outline{border-color:#475569;color:#bfdbfe}
-.dark .field input,.dark .field select,.dark .field textarea,.dark .searchWrap input,.dark .filterSelect{background:#111827;color:#fff;border-color:#475569}
-.dark .settingsOption,.dark .scanBox{border-color:#334155}
-.dark .scanBox{background:#111827}.dark .modal{background:rgba(0,0,0,.7)}
-.dark .closeBtn{background:#334155;color:#e5e7eb}
-
-/* Tablet */
-@media(max-width:1000px){
-  :root{--header:68px}
-  header{padding:0 16px}
-  .workspace{grid-template-columns:220px minmax(0,1fr)}
-  .mainContent{padding:24px}
-  .chipMain{flex-direction:column}
-  .chipButtons{max-width:none;justify-content:flex-start}
+* {
+    box-sizing: border-box;
 }
 
-/* Mobile */
-@media(max-width:720px){
-  :root{--header:64px}
-  header{height:auto;min-height:64px;padding:9px 12px}
-  .headerBrand{font-size:16px}
-  .headerMark{width:35px;height:35px;border-radius:10px}
-  .head{gap:8px}.headText{display:none}.avatar{width:37px;height:37px}
-  .gray,.blue,.danger,.outline{min-height:42px;padding:10px 12px}
-  .workspace{display:block;min-height:calc(100vh - 64px)}
-  .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px}
-  .sidebarHead{padding:8px 10px 11px;font-size:15px}
-  .sideToggle{padding:11px 10px;font-size:14px}
-  .sideLinks{padding:2px 0 5px;display:none;grid-template-columns:1fr 1fr;gap:5px}
-  .sideSection.open .sideLinks{display:grid}
-  .sideLink{padding:11px 10px;font-size:13px;min-height:42px;margin:0}
-  .mainContent{padding:17px 12px}
-  .pageTitle{font-size:25px}.pageSub{font-size:14px;margin-bottom:17px}
-  .stats{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
-  .stats .stat:last-child{grid-column:1/-1}
-  .stat{padding:14px}.num{font-size:25px}.statLabel{font-size:10px}
-  .card{padding:14px;border-radius:12px;margin-bottom:12px}
-  .sectionTitle{align-items:flex-start}.sectionTitle h2{font-size:16px}
-  .adminActions{display:grid;grid-template-columns:1fr;gap:7px}
-  .toolbar{display:grid;grid-template-columns:1fr;gap:8px}.searchWrap{min-width:0}.filterSelect{width:100%}
-  .chip{padding:12px;margin:8px 0}.chipStripe{width:100%;height:5px;min-height:5px;margin-bottom:10px}.chipInfo{gap:9px}.chipName{font-size:16px}
-  .chipMeta{font-size:12px}.person{font-size:12px}.chipButtons{display:grid;grid-template-columns:1fr 1fr;width:100%}.chipButtons button{width:100%;min-height:40px}
-  .settingsProfileCard{flex-direction:column;align-items:stretch}.settingsActions{display:grid;grid-template-columns:1fr}.settingsActions button{width:100%}
-  .modal{padding:10px}.modalBox{width:100%;max-height:94vh;padding:17px;border-radius:13px}.modalActions{display:grid;grid-template-columns:1fr 1fr}.modalActions button{min-height:44px}
-  .profileAvatar,.editAvatar{width:60px;height:60px;font-size:20px}
-  .loginPage{padding:13px}.loginBox{padding:23px 18px;border-radius:16px}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6f8;
+    color: #222;
 }
-@media(max-width:390px){
-  .headerBrand span{display:none}.stats{grid-template-columns:1fr}.stats .stat:last-child{grid-column:auto}
-  .sideLinks{grid-template-columns:1fr}.chipButtons{grid-template-columns:1fr}.modalActions{grid-template-columns:1fr}
-  .pageTitle{font-size:23px}
+
+header {
+    height: 65px;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
 }
-@media(max-width:720px) and (orientation:landscape){
-  .sidebar{max-height:46vh;overflow-y:auto}.mainContent{padding:17px}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
 }
-@media(pointer:coarse){
-  button,input,select,textarea{touch-action:manipulation}.sideLink,.sideToggle,button{min-height:42px}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.layout {
+    display: flex;
+    min-height: calc(100vh - 65px);
+}
+
+.sidebar {
+    width: 240px;
+    background: white;
+    border-right: 1px solid #ddd;
+    padding: 20px 12px;
+}
+
+.sidebar h3 {
+    font-size: 12px;
+    color: #888;
+    margin: 18px 10px 8px;
+    text-transform: uppercase;
+}
+
+.nav-button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: left;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.nav-button:hover {
+    background: #f0f1f3;
+}
+
+.nav-button.active {
+    background: #e9eefc;
+    color: #3157d5;
+    font-weight: bold;
+}
+
+main {
+    flex: 1;
+    padding: 30px;
+    overflow: auto;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+button.primary {
+    border: none;
+    background: #3157d5;
+    color: white;
+    padding: 11px 17px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button.primary:hover {
+    background: #2447bc;
+}
+
+.search {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 18px;
+}
+
+.folder {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.folder:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0,0,0,.08);
+}
+
+.folder-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.folder h3 {
+    margin: 0 0 5px;
+}
+
+.folder p {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+}
+
+.empty {
+    background: white;
+    border: 1px dashed #ccc;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: #888;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-box {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+}
+
+.form-group {
+    margin-top: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel {
+    border: 1px solid #ccc;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* DARK MODE */
+
+body.dark {
+    background: #18191c;
+    color: white;
+}
+
+body.dark header,
+body.dark .sidebar,
+body.dark .folder,
+body.dark .empty,
+body.dark .modal-box {
+    background: #24262a;
+    border-color: #3a3d42;
+}
+
+body.dark header {
+    border-bottom-color: #3a3d42;
+}
+
+body.dark .sidebar {
+    border-right-color: #3a3d42;
+}
+
+body.dark .nav-button {
+    color: white;
+}
+
+body.dark .nav-button:hover {
+    background: #303338;
+}
+
+body.dark .nav-button.active {
+    background: #303d68;
+    color: #8fa8ff;
+}
+
+body.dark .folder:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,.3);
+}
+
+body.dark .form-group input {
+    background: #18191c;
+    color: white;
+    border-color: #444;
+}
+
+body.dark .cancel {
+    background: #24262a;
+    color: white;
+    border-color: #555;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .sidebar h3 {
+        display: none;
+    }
+
+    .nav-button {
+        width: auto;
+        display: inline-block;
+        margin: 2px;
+    }
+
+    main {
+        padding: 18px;
+    }
+
+    .page-header {
+        display: block;
+    }
+
+    .page-header button {
+        margin-top: 15px;
+    }
+
+    .folder-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .folder-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 0 15px;
+    }
+
+    main {
+        padding: 14px;
+    }
+}
 </style>
 </head>
+
 <body>
 
-<!-- ============================================================ LOGIN ============================================================ -->
-<div id="loginPage" class="loginPage">
-  <div class="loginBox">
-    <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
-    </div>
-    <h1>Anmelden</h1>
-    <p>Melde dich mit deinem OrdnerSystem-Konto an.</p>
-    <div class="field">
-      <label for="email">E-Mail</label>
-      <input id="email" type="email" autocomplete="username" placeholder="name@example.com">
-    </div>
-    <div class="field">
-      <label for="password">Passwort</label>
-      <input id="password" type="password" autocomplete="current-password" placeholder="Passwort">
-    </div>
-    <div id="loginError" class="loginError"></div>
-    <button id="login" class="blue">Anmelden</button>
-  </div>
-</div>
+<header>
+    <div class="logo">📁 OrdnerSystem</div>
 
-<!-- ============================================================ APP ============================================================ -->
-<div id="app" class="hidden">
-  <header>
-    <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
+    <div class="profile">
+        <span>Erik</span>
+        <div class="avatar">E</div>
     </div>
-    <div class="head">
-      <div class="headUser">
-        <div class="headText">
-          <div id="headName" class="headName">Benutzer</div>
-          <div id="headRole" class="role">Benutzer</div>
-        </div>
-        <div id="headAvatar" class="avatar">?</div>
-      </div>
-      <button id="logout" class="gray">Abmelden</button>
-    </div>
-  </header>
+</header>
 
-  <div id="workspace" class="workspace">
-    <!-- ======================================================== SIDEBAR ======================================================== -->
+<div class="layout">
+
     <aside class="sidebar">
-      <div class="sidebarHead">
-        📁 OrdnerSystem
-        <small>Navigation</small>
-      </div>
 
-      <div class="sideSection open">
-        <button class="sideToggle" onclick="toggleSide(this)">Ordner <span class="chev">⌄</span></button>
-        <div class="sideLinks">
-          <button class="sideLink" data-page="pageFolders" onclick="showPage('pageFolders')">📁 Alle Ordner</button>
-          <button class="sideLink" data-page="pageLastScan" onclick="showPage('pageLastScan')">📡 Letzter Scan</button>
-        </div>
-      </div>
+        <h3>Ordner</h3>
 
-      <div class="sideSection">
-        <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
-        <div class="sideLinks">
-          <button class="sideLink" data-page="pageAnwaelte" onclick="showCategoryPage('Anwälte')">⚖️ Anwälte</button>
-          <button class="sideLink" data-page="pageVertraege" onclick="showCategoryPage('Verträge')">📄 Verträge</button>
-          <button class="sideLink" data-page="pageMandanten" onclick="showCategoryPage('Mandanten')">👤 Mandanten</button>
-        </div>
-      </div>
+        <button class="nav-button active" onclick="showPage('alleOrdner', this)">
+            📁 Alle Ordner
+        </button>
 
-      <div class="sideSection">
-        <button class="sideToggle" onclick="toggleSide(this)">System <span class="chev">⌄</span></button>
-        <div class="sideLinks">
-          <button class="sideLink" onclick="openProfile()">👤 Mein Profil</button>
-          <button class="sideLink" onclick="openSettings()">⚙️ Einstellungen</button>
-          <button class="sideLink" onclick="openHelp()">❓ Hilfe</button>
-        </div>
-      </div>
+        <button class="nav-button" onclick="showPage('letzterScan', this)">
+            📱 Letzter Scan
+        </button>
+
+        <h3>Kategorien</h3>
+
+        <button class="nav-button" onclick="showCategory('Anwälte')">
+            ⚖️ Anwälte
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Verträge')">
+            📄 Verträge
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Mandanten')">
+            👥 Mandanten
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Rechnungen')">
+            🧾 Rechnungen
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Finanzen')">
+            💰 Finanzen
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Steuern')">
+            📊 Steuern
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Personal')">
+            👤 Personal
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Sonstiges')">
+            📦 Sonstiges
+        </button>
+
+        <button class="nav-button" onclick="showCategory('Archiv')">
+            🗄️ Archiv
+        </button>
+
+        <h3>System</h3>
+
+        <button class="nav-button" onclick="openSettings()">
+            ⚙️ Einstellungen
+        </button>
+
     </aside>
 
-    <!-- ======================================================== MAIN ======================================================== -->
-    <main id="mainContent" class="mainContent">
+    <main>
 
-      <!-- ALLE ORDNER -->
-      <section id="pageFolders" class="page">
-        <h1 class="pageTitle">Alle Ordner</h1>
-        <p class="pageSub">Alle Ordner und NFC-Chips im OrdnerSystem.</p>
+        <!-- ALLE ORDNER -->
 
-        <section class="stats">
-          <div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div>
-          <div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div>
-          <div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div>
-        </section>
+        <section id="alleOrdner" class="page active">
 
-        <section id="adminPanel" class="card hidden">
-          <div class="sectionTitle">
-            <h2>Administration</h2>
-            <span class="badge">Administrator</span>
-          </div>
-          <div class="adminActions">
-            <button id="newChip" class="blue">＋ Chip hinzufügen</button>
-            <button id="newUser" class="blue">＋ Benutzer erstellen</button>
-            <button id="showUsers" class="gray">👥 Benutzer</button>
-            <button id="closeAdmin" class="gray">Admin-Modus schließen</button>
-          </div>
-        </section>
+            <div class="page-header">
+                <div>
+                    <h1>Alle Ordner</h1>
+                    <p>Alle Ordner des OrdnerSystems</p>
+                </div>
 
-        <section class="card">
-          <div class="sectionTitle">
-            <h2>Ordner & Chips</h2>
-            <span id="folderCountLabel" class="muted">0 Einträge</span>
-          </div>
-          <div class="toolbar">
-            <div class="searchWrap">
-              <span class="searchIcon">⌕</span>
-              <input id="chipSearch" type="search" placeholder="Ordner oder Chip-ID suchen...">
+                <button class="primary" onclick="openAddFolder()">
+                    + Ordner hinzufügen
+                </button>
             </div>
-            <select id="chipFilter" class="filterSelect">
-              <option value="all">Alle Kategorien</option>
-              <option value="Anwälte">⚖️ Anwälte</option>
-              <option value="Verträge">📄 Verträge</option>
-              <option value="Mandanten">👤 Mandanten</option>
-            </select>
-            <select id="statusFilter" class="filterSelect">
-              <option value="all">Alle Status</option>
-              <option value="free">Nur freie</option>
-              <option value="active">Nur aktive</option>
-            </select>
-          </div>
-          <div id="chips">Laden...</div>
+
+            <input
+                class="search"
+                id="search"
+                placeholder="🔎 Ordner suchen..."
+                oninput="searchFolders()"
+            >
+
+            <div id="folderGrid" class="folder-grid"></div>
+
         </section>
-      </section>
 
-      <!-- LETZTER SCAN -->
-      <section id="pageLastScan" class="page hidden">
-        <h1 class="pageTitle">Letzter Scan</h1>
-        <p class="pageSub">Hier siehst du den zuletzt erkannten NFC-Chip.</p>
-        <section class="card">
-          <div class="sectionTitle"><h2>📡 Letzter NFC-Scan</h2></div>
-          <div id="lastScan"><div class="empty">Noch kein Scan.</div></div>
+
+        <!-- LETZTER SCAN -->
+
+        <section id="letzterScan" class="page">
+
+            <div class="page-header">
+                <div>
+                    <h1>Letzter Scan</h1>
+                    <p>Der zuletzt geöffnete NFC-Ordner</p>
+                </div>
+            </div>
+
+            <div class="empty">
+                📱<br><br>
+                Noch kein NFC-Scan vorhanden.
+            </div>
+
         </section>
-      </section>
 
-      <!-- KATEGORIEN -->
-      <section id="pageAnwaelte" class="page hidden">
-        <h1 class="pageTitle">⚖️ Anwälte</h1>
-        <p class="pageSub">Ordner und NFC-Chips der Kategorie Anwälte.</p>
-        <section class="card"><div id="categoryAnwaelte"></div></section>
-      </section>
 
-      <section id="pageVertraege" class="page hidden">
-        <h1 class="pageTitle">📄 Verträge</h1>
-        <p class="pageSub">Ordner und NFC-Chips der Kategorie Verträge.</p>
-        <section class="card"><div id="categoryVertraege"></div></section>
-      </section>
+        <!-- KATEGORIE -->
 
-      <section id="pageMandanten" class="page hidden">
-        <h1 class="pageTitle">👤 Mandanten</h1>
-        <p class="pageSub">Ordner und NFC-Chips der Kategorie Mandanten.</p>
-        <section class="card"><div id="categoryMandanten"></div></section>
-      </section>
+        <section id="categoryPage" class="page">
 
-      <!-- BENUTZER -->
-      <section id="pageUsers" class="page hidden">
-        <h1 class="pageTitle">Benutzer</h1>
-        <p class="pageSub">Benutzerverwaltung – nur im Admin-Modus.</p>
-        <section class="card">
-          <div class="sectionTitle">
-            <h2>Benutzerkonten</h2>
-            <button class="gray" onclick="showPage('pageFolders')">← Alle Ordner</button>
-          </div>
-          <div id="users">Laden...</div>
+            <div class="page-header">
+
+                <div>
+                    <h1 id="categoryTitle">Kategorie</h1>
+                    <p id="categoryDescription">
+                        Ordner dieser Kategorie
+                    </p>
+                </div>
+
+                <button class="primary" onclick="openAddFolder()">
+                    + Ordner hinzufügen
+                </button>
+
+            </div>
+
+            <div id="categoryGrid" class="folder-grid"></div>
+
         </section>
-      </section>
+
+
+        <!-- EINSTELLUNGEN -->
+
+        <section id="settings" class="page">
+
+            <div class="page-header">
+                <div>
+                    <h1>Einstellungen</h1>
+                    <p>OrdnerSystem Einstellungen</p>
+                </div>
+            </div>
+
+            <div class="folder">
+
+                <h3>Darstellung</h3>
+
+                <br>
+
+                <button class="primary" onclick="toggleTheme()">
+                    ☀️ / 🌙 Hellmodus / Dunkelmodus
+                </button>
+
+            </div>
+
+        </section>
+
     </main>
 
-    <!-- ======================================================== SETTINGS ======================================================== -->
-    <section id="settingsPage" class="mainContent settingsPage hidden">
-      <h1 class="pageTitle">Einstellungen</h1>
-      <p class="pageSub">Profil, Admin-Modus und Darstellung.</p>
-
-      <section class="card settingsProfileCard">
-        <div class="profileRow">
-          <div id="settingsAvatar" class="profileAvatar">?</div>
-          <div>
-            <div id="settingsName" style="font-size:20px;font-weight:850">Benutzer</div>
-            <div id="settingsEmail" class="muted"></div>
-          </div>
-        </div>
-        <div class="settingsActions">
-          <button id="settingsProfileBtn" class="blue">✏️ Profil bearbeiten</button>
-          <button id="settingsAdminBtn" class="blue hidden">⚙️ Admin-Modus</button>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="sectionTitle"><h2>Darstellung</h2></div>
-        <p class="muted">Die Auswahl wird auf diesem Gerät gespeichert.</p>
-        <label class="settingsOption">
-          <input type="radio" name="theme2" id="themeLight2" value="light">
-          <span><b>☀️ Hellmodus</b><br><span class="smallNote">Helle Darstellung</span></span>
-        </label>
-        <label class="settingsOption">
-          <input type="radio" name="theme2" id="themeDark2" value="dark">
-          <span><b>🌙 Dunkelmodus</b><br><span class="smallNote">Dunkle Darstellung</span></span>
-        </label>
-      </section>
-
-      <button id="settingsBack" class="gray">← Alle Ordner</button>
-    </section>
-  </div>
 </div>
 
-<!-- ============================================================ PROFILE MODAL ============================================================ -->
-<div id="profileModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Mein Profil</h2><button class="closeBtn" onclick="close('profileModal')">×</button></div>
-    <div class="profileRow">
-      <div id="editAvatar" class="editAvatar">?</div>
-      <div class="muted">Profilbild ist optional.</div>
+
+<!-- ORDNER HINZUFÜGEN -->
+
+<div id="folderModal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>Ordner hinzufügen</h2>
+
+            <button class="close" onclick="closeModal('folderModal')">
+                ×
+            </button>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Ordnername</label>
+
+            <input
+                id="folderName"
+                type="text"
+                placeholder="z. B. Müller GmbH"
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Kategorie</label>
+
+            <input
+                id="folderCategory"
+                type="text"
+                placeholder="z. B. Mandanten"
+            >
+
+        </div>
+
+        <div class="modal-buttons">
+
+            <button
+                class="cancel"
+                onclick="closeModal('folderModal')"
+            >
+                Abbrechen
+            </button>
+
+            <button
+                class="primary"
+                onclick="addFolder()"
+            >
+                Hinzufügen
+            </button>
+
+        </div>
+
     </div>
-    <div class="field"><label for="nameEdit">Name</label><input id="nameEdit" type="text" maxlength="40" placeholder="Dein Name"></div>
-    <div class="field"><label for="photo">Profilbild</label><input id="photo" type="file" accept="image/*"></div>
-    <button id="removePhoto" class="gray">Profilbild entfernen</button>
-    <div id="profileMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="close('profileModal')">Abbrechen</button><button id="saveProfile" class="blue">Speichern</button></div>
-  </div>
+
 </div>
 
-<!-- ============================================================ CHIP MODAL ============================================================ -->
-<div id="chipModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2 id="chipTitle">Chip hinzufügen</h2><button class="closeBtn" onclick="close('chipModal')">×</button></div>
-    <div class="field"><label for="chipName">Ordnername</label><input id="chipName" type="text" maxlength="80" placeholder="z. B. Mandant Müller"></div>
-    <div class="field"><label for="chipId">Chip-ID</label><input id="chipId" type="text" maxlength="80" placeholder="z. B. 001"></div>
-    <div class="field"><label for="chipCategory">Kategorie</label><select id="chipCategory"><option value="Anwälte">⚖️ Anwälte</option><option value="Verträge">📄 Verträge</option><option value="Mandanten">👤 Mandanten</option></select></div>
-    <div class="modalActions"><button class="gray" onclick="close('chipModal')">Abbrechen</button><button id="saveChip" class="blue">Speichern</button></div>
-  </div>
-</div>
 
-<!-- ============================================================ USER MODAL ============================================================ -->
-<div id="userModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Benutzer erstellen</h2><button class="closeBtn" onclick="close('userModal')">×</button></div>
-    <div class="field"><label for="userName">Name</label><input id="userName" type="text" maxlength="40" placeholder="Max Mustermann"></div>
-    <div class="field"><label for="userEmail">E-Mail</label><input id="userEmail" type="email" placeholder="max@example.com"></div>
-    <div class="field"><label for="userPassword">Passwort</label><input id="userPassword" type="password" minlength="6" placeholder="Mindestens 6 Zeichen"></div>
-    <div id="userMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="close('userModal')">Abbrechen</button><button id="saveUser" class="blue">Benutzer erstellen</button></div>
-  </div>
-</div>
+<script>
 
-<!-- ============================================================ HELP MODAL ============================================================ -->
-<div id="helpModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Hilfe</h2><button class="closeBtn" onclick="close('helpModal')">×</button></div>
-    <div class="field"><label for="helpSearch">OrdnerSystem-Hilfe</label><input id="helpSearch" placeholder="z. B. NFC, Chip, Profil..."></div>
-    <div id="helpAnswer"></div>
-  </div>
-</div>
-
-<div id="toast"></div>
-
-<!-- ============================================================ FIREBASE + APPLICATION CODE ============================================================ -->
-<script type="module">
-import { initializeApp, getApps, getApp, deleteApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  deleteUser
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  doc,
-  addDoc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-  onSnapshot,
-  serverTimestamp,
-  runTransaction,
-  query,
-  where,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-/* ============================================================
-   FIREBASE KONFIGURATION
-   ============================================================ */
-const firebaseConfig = {
-  apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-  authDomain: "ordnersystem-1352a.firebaseapp.com",
-  projectId: "ordnersystem-1352a",
-  storageBucket: "ordnersystem-1352a.firebasestorage.app",
-  messagingSenderId: "39473536985",
-  appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-/* ============================================================
-   ADMIN IDS
-   ============================================================ */
-const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
-
-/* ============================================================
-   STATE
-   ============================================================ */
-let user = null;
-let profile = {};
-let chips = [];
-let editId = null;
-let admin = false;
-let selectedFile = null;
-let removeImage = false;
-let unsub = [];
-let nfcHandled = false;
-let toastTimer = null;
-
-/* ============================================================
-   HELPERS
-   ============================================================ */
-const $ = id => document.getElementById(id);
-
-const esc = value => String(value ?? "")
-  .replaceAll("&", "&amp;")
-  .replaceAll("<", "&lt;")
-  .replaceAll(">", "&gt;")
-  .replaceAll('"', "&quot;")
-  .replaceAll("'", "&#039;");
-
-const isAdmin = () => !!user && (user.uid === ADMIN1 || user.uid === ADMIN2);
-const nameKey = name => String(name || "").trim().toLowerCase();
-const nameOf = () => profile.name || user?.email?.split("@")[0] || "Benutzer";
-const open = id => $(id)?.classList.remove("hidden");
-const close = id => $(id)?.classList.add("hidden");
-
-function toast(message){
-  const el = $("toast");
-  if(!el) return;
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
-}
-
-function avatar(id, url, name){
-  const el = $(id);
-  if(!el) return;
-  el.innerHTML = url
-    ? `<img src="${esc(url)}" alt="Profilbild">`
-    : esc((name || "?")[0].toUpperCase());
-}
-
-function clearListeners(){
-  unsub.forEach(fn => {
-    try{ if(typeof fn === "function") fn(); }catch(e){ console.warn(e); }
-  });
-  unsub = [];
-}
-
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-window.toggleSide = element => {
-  element?.parentElement?.classList.toggle("open");
-};
-
-function hideAllPages(){
-  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
-  document.querySelectorAll(".sideLink[data-page]").forEach(link => link.classList.remove("active"));
-}
-
-function markActive(pageId){
-  document.querySelectorAll(".sideLink[data-page]").forEach(link => {
-    link.classList.toggle("active", link.dataset.page === pageId);
-  });
-}
-
-window.showPage = pageId => {
-  if(pageId === "pageUsers" && !isAdmin()) return;
-  hideAllPages();
-  $(pageId)?.classList.remove("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("settingsPage")?.classList.add("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  markActive(pageId);
-  window.scrollTo({top:0,behavior:"smooth"});
-  if(pageId === "pageAnwaelte") renderCategory("Anwälte");
-  if(pageId === "pageVertraege") renderCategory("Verträge");
-  if(pageId === "pageMandanten") renderCategory("Mandanten");
-};
-
-window.showCategoryPage = category => {
-  const map = {
-    "Anwälte":"pageAnwaelte",
-    "Verträge":"pageVertraege",
-    "Mandanten":"pageMandanten"
-  };
-  const pageId = map[category];
-  if(!pageId) return;
-  window.showPage(pageId);
-  renderCategory(category);
-};
-
-window.openSettings = () => {
-  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
-  $("mainContent")?.classList.add("hidden");
-  $("settingsPage")?.classList.remove("hidden");
-  $("workspace")?.classList.add("settingsMode");
-  refreshSettings();
-  window.scrollTo({top:0,behavior:"smooth"});
-};
-
-window.closeSettings = () => {
-  $("settingsPage")?.classList.add("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  window.showPage("pageFolders");
-};
-
-window.enterAdminMode = () => {
-  if(!isAdmin()) return toast("Du bist kein Administrator.");
-  admin = true;
-  $("adminPanel")?.classList.remove("hidden");
-  $("settingsPage")?.classList.add("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  loadUsers();
-  window.showPage("pageFolders");
-  toast("Admin-Modus aktiviert");
-};
-
-window.exitAdminMode = () => {
-  admin = false;
-  $("adminPanel")?.classList.add("hidden");
-  $("pageUsers")?.classList.add("hidden");
-  window.showPage("pageFolders");
-  toast("Admin-Modus geschlossen");
-};
-
-/* ============================================================
-   THEME
-   ============================================================ */
-function applyTheme(theme){
-  const dark = theme === "dark";
-  document.body.classList.toggle("dark", dark);
-  localStorage.setItem("ordnersystem-theme", dark ? "dark" : "light");
-  if($("themeLight2")) $("themeLight2").checked = !dark;
-  if($("themeDark2")) $("themeDark2").checked = dark;
-}
-
-/* ============================================================
-   LOGIN
-   ============================================================ */
-$("login").onclick = async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
-  $("loginError").textContent = "";
-  if(!email || !password){
-    $("loginError").textContent = "Bitte E-Mail und Passwort eingeben.";
-    return;
-  }
-  try{
-    $("login").disabled = true;
-    await signInWithEmailAndPassword(auth, email, password);
-  }catch(error){
-    console.error(error);
-    $("loginError").textContent = "E-Mail oder Passwort falsch.";
-  }finally{
-    $("login").disabled = false;
-  }
-};
-
-$("password").onkeydown = event => {
-  if(event.key === "Enter") $("login").click();
-};
-
-$("logout").onclick = async () => {
-  await signOut(auth);
-};
-
-/* ============================================================
-   PROFILE
-   ============================================================ */
-async function ensureProfile(){
-  const userRef = doc(db,"users",user.uid);
-  const snap = await getDoc(userRef);
-  if(snap.exists()) return;
-
-  const defaultName = user.email?.split("@")[0] || "Benutzer";
-  const key = nameKey(defaultName);
-
-  await runTransaction(db, async tx => {
-    const nameRef = doc(db,"userNames",key);
-    const nameSnap = await tx.get(nameRef);
-
-    if(nameSnap.exists() && nameSnap.data().uid !== user.uid){
-      throw new Error("NAME_ALREADY_USED");
+let folders = [
+    {
+        name: "Mandanten",
+        category: "Mandanten"
+    },
+    {
+        name: "Verträge",
+        category: "Verträge"
+    },
+    {
+        name: "Rechnungen",
+        category: "Rechnungen"
+    },
+    {
+        name: "Finanzen",
+        category: "Finanzen"
+    },
+    {
+        name: "Steuern",
+        category: "Steuern"
+    },
+    {
+        name: "Personal",
+        category: "Personal"
     }
+];
 
-    tx.set(userRef,{
-      name: defaultName,
-      nameKey: key,
-      email: user.email || "",
-      role: isAdmin() ? "admin" : "user",
-      profileImageData: "",
-      createdAt: serverTimestamp()
+let currentCategory = null;
+
+
+/* SEITEN WECHSELN */
+
+function showPage(id, button) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
     });
 
-    tx.set(nameRef,{uid:user.uid,name:defaultName});
-  });
-}
+    const page = document.getElementById(id);
 
-function loadProfile(){
-  unsub.push(onSnapshot(doc(db,"users",user.uid), snap => {
-    profile = snap.exists() ? snap.data() : {};
-    const n = nameOf();
-    const image = profile.profileImageData || "";
-
-    $("headName").textContent = n;
-    $("headRole").textContent = isAdmin() ? "Administrator" : "Benutzer";
-    avatar("headAvatar", image, n);
-    avatar("settingsAvatar", image, n);
-    $("settingsName").textContent = n;
-    $("settingsEmail").textContent = user.email || "";
-    $("settingsAdminBtn")?.classList.toggle("hidden", !isAdmin());
-
-    if(!admin) $("adminPanel")?.classList.add("hidden");
-    renderChips();
-    renderAllCategories();
-  }, error => {
-    console.error("Profil Listener:",error);
-  }));
-}
-
-window.openProfile = () => {
-  selectedFile = null;
-  removeImage = false;
-  $("nameEdit").value = nameOf();
-  $("photo").value = "";
-  $("profileMsg").textContent = "";
-  avatar("editAvatar",profile.profileImageData || "",nameOf());
-  open("profileModal");
-};
-
-function compressImage(file){
-  return new Promise((resolve,reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const max = 360;
-        const scale = Math.min(1,max / Math.max(img.width,img.height));
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1,Math.round(img.width * scale));
-        canvas.height = Math.max(1,Math.round(img.height * scale));
-        const context = canvas.getContext("2d");
-        context.drawImage(img,0,0,canvas.width,canvas.height);
-        resolve(canvas.toDataURL("image/jpeg",0.76));
-      };
-      img.onerror = reject;
-      img.src = reader.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-$("photo").onchange = async event => {
-  const file = event.target.files?.[0];
-  if(!file) return;
-  try{
-    selectedFile = await compressImage(file);
-    removeImage = false;
-    avatar("editAvatar",selectedFile,nameOf());
-  }catch(error){
-    console.error(error);
-    $("profileMsg").textContent = "Das Bild konnte nicht verarbeitet werden.";
-  }
-};
-
-$("removePhoto").onclick = () => {
-  selectedFile = null;
-  removeImage = true;
-  avatar("editAvatar","",nameOf());
-};
-
-$("saveProfile").onclick = async () => {
-  const newName = $("nameEdit").value.trim();
-  if(!newName){
-    $("profileMsg").textContent = "Bitte einen Namen eingeben.";
-    return;
-  }
-
-  const newKey = nameKey(newName);
-  const oldKey = profile.nameKey || nameKey(nameOf());
-  const image = removeImage ? "" : (selectedFile ?? profile.profileImageData ?? "");
-
-  try{
-    $("saveProfile").disabled = true;
-
-    await runTransaction(db, async tx => {
-      const userRef = doc(db,"users",user.uid);
-      const newNameRef = doc(db,"userNames",newKey);
-      const oldNameRef = doc(db,"userNames",oldKey);
-
-      const newNameSnap = await tx.get(newNameRef);
-      const oldNameSnap = newKey !== oldKey ? await tx.get(oldNameRef) : null;
-
-      if(newKey !== oldKey && newNameSnap.exists() && newNameSnap.data().uid !== user.uid){
-        throw new Error("NAME_ALREADY_USED");
-      }
-
-      if(newKey !== oldKey){
-        tx.set(newNameRef,{uid:user.uid,name:newName});
-        if(oldNameSnap?.exists() && oldNameSnap.data().uid === user.uid){
-          tx.delete(oldNameRef);
-        }
-      }
-
-      tx.update(userRef,{
-        name:newName,
-        nameKey:newKey,
-        profileImageData:image
-      });
-    });
-
-    for(const chip of chips.filter(c => c.assignedTo === user.uid)){
-      try{
-        await updateDoc(doc(db,"chips",chip.firestoreId),{
-          assignedName:newName,
-          assignedProfileImageData:image
-        });
-      }catch(error){
-        console.warn("Chip-Profil konnte nicht aktualisiert werden",error);
-      }
+    if (page) {
+        page.classList.add("active");
     }
 
-    close("profileModal");
-    toast("Profil gespeichert");
-  }catch(error){
-    console.error(error);
-    $("profileMsg").textContent = error.message === "NAME_ALREADY_USED"
-      ? "Dieser Name ist bereits vergeben."
-      : "Fehler: " + error.message;
-  }finally{
-    $("saveProfile").disabled = false;
-  }
-};
+    document.querySelectorAll(".nav-button").forEach(btn => {
+        btn.classList.remove("active");
+    });
 
-function refreshSettings(){
-  const n = nameOf();
-  const image = profile.profileImageData || "";
-  $("settingsName").textContent = n;
-  $("settingsEmail").textContent = user?.email || "";
-  avatar("settingsAvatar",image,n);
-  $("settingsAdminBtn")?.classList.toggle("hidden",!isAdmin());
-  applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
+    if (button) {
+        button.classList.add("active");
+    }
+
+    if (id === "alleOrdner") {
+        renderFolders();
+    }
 }
 
-/* ============================================================
-   CHIP LISTENER / RENDER
-   ============================================================ */
-function loadChips(){
-  unsub.push(onSnapshot(collection(db,"chips"), snap => {
-    chips = snap.docs.map(item => ({firestoreId:item.id,...item.data()}));
-    chips.sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
-    renderChips();
-    renderAllCategories();
-    updateStats();
-  }, error => {
-    console.error("Chip Listener:",error);
-    $("chips").innerHTML = `<div class="empty">Chips konnten nicht geladen werden.<br><small>${esc(error.message)}</small></div>`;
-  }));
+
+/* KATEGORIE ÖFFNEN */
+
+function showCategory(category) {
+
+    currentCategory = category;
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById("categoryPage").classList.add("active");
+
+    document.getElementById("categoryTitle").textContent =
+        "📁 " + category;
+
+    document.getElementById("categoryDescription").textContent =
+        "Ordner in der Kategorie " + category;
+
+    renderCategory();
+
+    document.querySelectorAll(".nav-button").forEach(btn => {
+        btn.classList.remove("active");
+    });
 }
 
-function chipActive(chip){
-  return chip.assignedTo != null || chip.scanActive === true;
-}
 
-function chipPerson(chip){
-  const image = chip.assignedProfileImageData || "";
-  const name = chip.assignedName || chip.assignedEmail || "Niemand";
-  return `
-    <div class="person">
-      <div class="mini">${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}</div>
-      <span>Gerade bei: <b>${esc(name)}</b></span>
-    </div>`;
-}
+/* ORDNER ANZEIGEN */
 
-function chipHtml(chip, adminControls = admin){
-  const active = chipActive(chip);
-  const owner = chip.assignedTo === user?.uid;
-  const category = chip.category || "Keine Kategorie";
-  let buttons = "";
+function renderFolders() {
 
-  if(adminControls && isAdmin()){
-    buttons += `<button class="gray" onclick="editChip('${esc(chip.firestoreId)}')">Bearbeiten</button>`;
-    buttons += `<button class="danger" onclick="removeChip('${esc(chip.firestoreId)}')">Löschen</button>`;
-  }
+    const grid = document.getElementById("folderGrid");
 
-  if(!active){
-    buttons += `<button class="blue" onclick="take('${esc(chip.firestoreId)}')">Übernehmen</button>`;
-  }else if(owner || isAdmin()){
-    buttons += `<button class="gray" onclick="release('${esc(chip.firestoreId)}')">Freigeben</button>`;
-  }
+    grid.innerHTML = "";
 
-  buttons += `<button class="gray" onclick="copyNfcLink('${esc(chip.chipId || "")}')">NFC-Link</button>`;
+    if (folders.length === 0) {
 
-  return `
-    <article class="chip">
-      <div class="chipMain">
-        <div class="chipInfo">
-          <div class="chipStripe ${active ? "redStripe" : ""}"></div>
-          <div class="chipText">
-            <div class="chipName">${esc(chip.name || "Unbenannter Ordner")}</div>
-            <div class="chipMeta">
-              <span class="chipStatus ${active ? "redDot" : "greenDot"}"></span>
-              ${active ? "Aktiv" : "Frei"} · Chip-ID ${esc(chip.chipId || "")}
+        grid.innerHTML = `
+            <div class="empty">
+                Noch keine Ordner vorhanden.
             </div>
-            <div class="chipMeta">Kategorie: <b>${esc(category)}</b></div>
-            ${chip.lastScannedName ? `<div class="chipMeta">Letzter Scan: ${esc(chip.lastScannedName)}</div>` : ""}
-            ${chipPerson(chip)}
-          </div>
-        </div>
-        <div class="chipButtons">${buttons}</div>
-      </div>
-    </article>`;
-}
+        `;
 
-function getFilteredChips(){
-  const search = ($( "chipSearch" )?.value || "").trim().toLowerCase();
-  const category = $("chipFilter")?.value || "all";
-  const status = $("statusFilter")?.value || "all";
+        return;
+    }
 
-  return chips.filter(chip => {
-    const active = chipActive(chip);
-    const searchable = `${chip.name || ""} ${chip.chipId || ""} ${chip.category || ""}`.toLowerCase();
-    if(search && !searchable.includes(search)) return false;
-    if(category !== "all" && (chip.category || "") !== category) return false;
-    if(status === "free" && active) return false;
-    if(status === "active" && !active) return false;
-    return true;
-  });
-}
+    folders.forEach((folder, index) => {
 
-function renderChips(){
-  if(!$("chips")) return;
-  const list = getFilteredChips();
-  $("folderCountLabel").textContent = `${list.length} Einträge`;
+        grid.innerHTML += createFolderHTML(folder, index);
 
-  if(!chips.length){
-    $("chips").innerHTML = `<div class="empty">Noch keine Chips vorhanden.</div>`;
-    updateStats();
-    return;
-  }
-
-  if(!list.length){
-    $("chips").innerHTML = `<div class="empty">Keine passenden Ordner gefunden.</div>`;
-    updateStats();
-    return;
-  }
-
-  $("chips").innerHTML = list.map(chip => chipHtml(chip)).join("");
-  updateStats();
-}
-
-function updateStats(){
-  const total = chips.length;
-  const active = chips.filter(chipActive).length;
-  $("total").textContent = total;
-  $("redCount").textContent = active;
-  $("greenCount").textContent = Math.max(0,total-active);
-}
-
-/* ============================================================
-   CLAIM / RELEASE
-   ============================================================ */
-window.take = async firestoreId => {
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip || !user) return;
-
-  if(chip.assignedTo && !isAdmin()){
-    toast("Dieser Chip ist bereits vergeben.");
-    return;
-  }
-
-  try{
-    await runTransaction(db,async tx => {
-      const ref = doc(db,"chips",firestoreId);
-      const snap = await tx.get(ref);
-      if(!snap.exists()) throw new Error("CHIP_NOT_FOUND");
-      const current = snap.data();
-      if(current.assignedTo && !isAdmin()) throw new Error("ALREADY_ASSIGNED");
-      tx.update(ref,{
-        assignedTo:user.uid,
-        assignedEmail:user.email || "",
-        assignedName:nameOf(),
-        assignedProfileImageData:profile.profileImageData || "",
-        scanActive:false
-      });
     });
-    toast("Chip übernommen");
-  }catch(error){
-    console.error(error);
-    toast(error.message === "ALREADY_ASSIGNED" ? "Chip wurde gerade von jemand anderem übernommen." : "Chip konnte nicht übernommen werden.");
-  }
-};
-
-window.release = async firestoreId => {
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip) return;
-  if(!isAdmin() && chip.assignedTo !== user?.uid){
-    toast("Du darfst diesen Chip nicht freigeben.");
-    return;
-  }
-
-  try{
-    await updateDoc(doc(db,"chips",firestoreId),{
-      assignedTo:null,
-      assignedEmail:"",
-      assignedName:"",
-      assignedProfileImageData:"",
-      scanActive:false
-    });
-    toast("Chip freigegeben");
-  }catch(error){
-    console.error(error);
-    alert("Fehler beim Freigeben: " + error.message);
-  }
-};
-
-/* ============================================================
-   CHIP ADMIN CRUD
-   ============================================================ */
-$("newChip").onclick = () => {
-  if(!isAdmin() || !admin) return;
-  editId = null;
-  $("chipTitle").textContent = "Chip hinzufügen";
-  $("chipName").value = "";
-  $("chipId").value = "";
-  $("chipCategory").value = "Anwälte";
-  open("chipModal");
-};
-
-$("saveChip").onclick = async () => {
-  if(!isAdmin() || !admin) return;
-
-  const chipName = $("chipName").value.trim();
-  const chipId = $("chipId").value.trim();
-  const category = $("chipCategory").value;
-
-  if(!chipName || !chipId){
-    alert("Bitte Ordnername und Chip-ID ausfüllen.");
-    return;
-  }
-
-  const duplicate = chips.some(chip => String(chip.chipId) === chipId && chip.firestoreId !== editId);
-  if(duplicate){
-    alert("Diese Chip-ID gibt es bereits.");
-    return;
-  }
-
-  try{
-    $("saveChip").disabled = true;
-
-    if(editId){
-      await updateDoc(doc(db,"chips",editId),{
-        name:chipName,
-        chipId,
-        category
-      });
-      toast("Chip geändert");
-    }else{
-      await addDoc(collection(db,"chips"),{
-        name:chipName,
-        chipId,
-        category,
-        assignedTo:null,
-        assignedEmail:"",
-        assignedName:"",
-        assignedProfileImageData:"",
-        scanActive:false,
-        lastScannedBy:"",
-        lastScannedEmail:"",
-        lastScannedName:"",
-        lastScannedProfileImageData:"",
-        createdAt:serverTimestamp(),
-        createdBy:user.uid
-      });
-      toast("Chip erstellt");
-    }
-    close("chipModal");
-  }catch(error){
-    console.error(error);
-    alert("Fehler: " + error.message);
-  }finally{
-    $("saveChip").disabled = false;
-  }
-};
-
-window.editChip = firestoreId => {
-  if(!isAdmin() || !admin) return;
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip) return;
-
-  editId = firestoreId;
-  $("chipTitle").textContent = "Chip bearbeiten";
-  $("chipName").value = chip.name || "";
-  $("chipId").value = chip.chipId || "";
-  $("chipCategory").value = chip.category || "Anwälte";
-  open("chipModal");
-};
-
-window.removeChip = async firestoreId => {
-  if(!isAdmin() || !admin) return;
-  if(!confirm("Diesen Chip wirklich löschen?")) return;
-
-  try{
-    await deleteDoc(doc(db,"chips",firestoreId));
-    toast("Chip gelöscht");
-  }catch(error){
-    console.error(error);
-    alert("Fehler beim Löschen: " + error.message);
-  }
-};
-
-window.copyNfcLink = async chipId => {
-  const url = `${location.origin}${location.pathname}?chip=${encodeURIComponent(chipId)}`;
-  try{
-    await navigator.clipboard.writeText(url);
-    toast("NFC-Link kopiert");
-  }catch(error){
-    prompt("NFC-Link kopieren:",url);
-  }
-};
-
-/* ============================================================
-   CATEGORY RENDERING
-   ============================================================ */
-function renderCategory(category){
-  const targets = {
-    "Anwälte":"categoryAnwaelte",
-    "Verträge":"categoryVertraege",
-    "Mandanten":"categoryMandanten"
-  };
-  const target = $(targets[category]);
-  if(!target) return;
-
-  const list = chips.filter(chip => (chip.category || "").toLowerCase() === category.toLowerCase());
-
-  if(!list.length){
-    target.innerHTML = `<div class="empty">Keine Ordner in der Kategorie <b>${esc(category)}</b>.</div>`;
-    return;
-  }
-
-  target.innerHTML = list.map(chip => chipHtml(chip,false)).join("");
 }
 
-function renderAllCategories(){
-  renderCategory("Anwälte");
-  renderCategory("Verträge");
-  renderCategory("Mandanten");
-}
 
-/* ============================================================
-   LAST SCAN
-   ============================================================ */
-function loadScan(){
-  unsub.push(onSnapshot(doc(db,"system","currentScan"),snap => {
-    if(!snap.exists()){
-      $("lastScan").innerHTML = `<div class="empty">Noch kein Scan.</div>`;
-      return;
-    }
+/* KATEGORIE ANZEIGEN */
 
-    const data = snap.data();
-    const name = data.scannedName || data.scannedEmail || "Unbekannt";
-    const image = data.scannedProfileImageData || "";
+function renderCategory() {
 
-    $("lastScan").innerHTML = `
-      <div class="scanBox">
-        <div class="scanIcon">📡</div>
-        <div class="mini" style="width:52px;height:52px;font-size:18px">
-          ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
-        </div>
-        <div style="min-width:0">
-          <b>Chip ${esc(data.chipId || "unbekannt")}</b>
-          <div class="muted" style="margin-top:3px">Gescannt von ${esc(name)}</div>
-          <div class="muted" style="margin-top:3px">Status: ${data.active ? "Aktiv" : "Frei"}</div>
-        </div>
-      </div>`;
-  },error => console.error("Scan Listener:",error)));
-}
+    const grid = document.getElementById("categoryGrid");
 
-/* ============================================================
-   USER MANAGEMENT
-   ============================================================ */
-$("newUser").onclick = () => {
-  if(!isAdmin() || !admin) return;
-  $("userName").value = "";
-  $("userEmail").value = "";
-  $("userPassword").value = "";
-  $("userMsg").textContent = "";
-  open("userModal");
-};
+    grid.innerHTML = "";
 
-$("saveUser").onclick = async () => {
-  if(!isAdmin() || !admin) return;
-
-  const newName = $("userName").value.trim();
-  const email = $("userEmail").value.trim();
-  const password = $("userPassword").value;
-
-  $("userMsg").textContent = "";
-
-  if(!newName || !email || password.length < 6){
-    $("userMsg").textContent = "Name, E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.";
-    return;
-  }
-
-  let secondaryApp = null;
-  let createdUser = null;
-
-  try{
-    $("saveUser").disabled = true;
-
-    const appName = "UserCreationApp";
-    secondaryApp = getApps().find(item => item.name === appName);
-    if(!secondaryApp) secondaryApp = initializeApp(firebaseConfig,appName);
-
-    const secondaryAuth = getAuth(secondaryApp);
-    const result = await createUserWithEmailAndPassword(secondaryAuth,email,password);
-    createdUser = result.user;
-
-    const key = nameKey(newName);
-    const nameRef = doc(db,"userNames",key);
-    const userRef = doc(db,"users",createdUser.uid);
-
-    await runTransaction(db,async tx => {
-      const nameSnap = await tx.get(nameRef);
-      if(nameSnap.exists()) throw new Error("NAME_ALREADY_USED");
-
-      tx.set(nameRef,{uid:createdUser.uid,name:newName});
-      tx.set(userRef,{
-        name:newName,
-        nameKey:key,
-        email,
-        role:"user",
-        profileImageData:"",
-        createdAt:serverTimestamp(),
-        createdBy:user.uid
-      });
-    });
-
-    close("userModal");
-    toast("Benutzer erstellt");
-  }catch(error){
-    console.error(error);
-
-    if(createdUser){
-      try{
-        await deleteUser(createdUser);
-      }catch(deleteError){
-        console.warn("Erstellter Auth-Benutzer konnte nicht automatisch gelöscht werden",deleteError);
-      }
-    }
-
-    $("userMsg").textContent = error.message === "NAME_ALREADY_USED"
-      ? "Dieser Name ist bereits vergeben."
-      : "Fehler: " + error.message;
-  }finally{
-    $("saveUser").disabled = false;
-    if(secondaryApp){
-      try{ await deleteApp(secondaryApp); }catch(error){ console.warn(error); }
-    }
-  }
-};
-
-function loadUsers(){
-  if(!isAdmin()) return;
-
-  const alreadyListening = unsub.some(item => item.__usersListener === true);
-  if(alreadyListening) return;
-
-  const listener = onSnapshot(collection(db,"users"),snap => {
-    if(!$("users")) return;
-
-    const list = snap.docs
-      .map(item => ({id:item.id,...item.data()}))
-      .sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
-
-    if(!list.length){
-      $("users").innerHTML = `<div class="empty">Keine Benutzer vorhanden.</div>`;
-      return;
-    }
-
-    $("users").innerHTML = list.map(item => {
-      const name = item.name || item.email || "Unbekannt";
-      const image = item.profileImageData || "";
-      const role = item.role === "admin" ? "Administrator" : "Benutzer";
-      return `
-        <div class="chip">
-          <div class="profileRow">
-            <div class="mini" style="width:45px;height:45px;font-size:16px">
-              ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
-            </div>
-            <div style="min-width:0">
-              <b>${esc(name)}</b>
-              <div class="muted" style="overflow-wrap:anywhere">${esc(item.email || "")}</div>
-              <div style="margin-top:5px"><span class="badge">${esc(role)}</span></div>
-            </div>
-          </div>
-        </div>`;
-    }).join("");
-  },error => {
-    console.error("Users Listener:",error);
-    $("users").innerHTML = `<div class="empty">Benutzer konnten nicht geladen werden.</div>`;
-  });
-
-  const wrapped = () => listener();
-  wrapped.__usersListener = true;
-  unsub.push(wrapped);
-}
-
-/* ============================================================
-   HELP
-   ============================================================ */
-window.openHelp = () => {
-  open("helpModal");
-  helpStart();
-};
-
-function helpStart(){
-  window.help("start");
-}
-
-window.help = topic => {
-  const answers = {
-    start:`
-      <b>Wobei brauchst du Hilfe?</b>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="blue" onclick="help('chip')">Chips</button>
-        <button class="blue" onclick="help('nfc')">NFC</button>
-        <button class="blue" onclick="help('admin')">Admin</button>
-        <button class="blue" onclick="help('profile')">Profil</button>
-      </div>`,
-    chip:`<b>Chips:</b><br><br>Unter „Alle Ordner“ siehst du alle Chips. Grün bedeutet frei, Rot bedeutet aktiv. Mit „Übernehmen“ kannst du einen freien Chip dir zuweisen.`,
-    nfc:`<b>NFC:</b><br><br>Jeder Chip hat eine Chip-ID. Der NFC-Link enthält diese ID. Beim Öffnen des Links verarbeitet OrdnerSystem den Scan automatisch.`,
-    admin:`<b>Admin:</b><br><br>Admins öffnen unter „Einstellungen“ den Admin-Modus. Dort können sie Chips erstellen, bearbeiten, löschen und Benutzer erstellen.`,
-    profile:`<b>Profil:</b><br><br>Unter „Mein Profil“ kannst du deinen Namen und dein Profilbild ändern. Der Name wird im System eindeutig gehalten.`
-  };
-  $("helpAnswer").innerHTML = answers[topic] || answers.start;
-};
-
-$("helpSearch").oninput = event => {
-  const queryText = event.target.value.trim().toLowerCase();
-  if(!queryText) return helpStart();
-  if(queryText.includes("nfc")) return help("nfc");
-  if(queryText.includes("chip")) return help("chip");
-  if(queryText.includes("admin")) return help("admin");
-  if(queryText.includes("profil") || queryText.includes("bild") || queryText.includes("name")) return help("profile");
-  $("helpAnswer").innerHTML = `<div class="empty">Keine passende OrdnerSystem-Hilfe gefunden.</div>`;
-};
-
-/* ============================================================
-   SEARCH / FILTER EVENTS
-   ============================================================ */
-$("chipSearch").oninput = renderChips;
-$("chipFilter").onchange = renderChips;
-$("statusFilter").onchange = renderChips;
-
-$("settingsBack").onclick = () => window.closeSettings();
-$("settingsProfileBtn").onclick = () => window.openProfile();
-$("settingsAdminBtn").onclick = () => window.enterAdminMode();
-$("closeAdmin").onclick = () => window.exitAdminMode();
-$("showUsers").onclick = () => window.showPage("pageUsers");
-$("themeLight2").onchange = () => applyTheme("light");
-$("themeDark2").onchange = () => applyTheme("dark");
-
-/* ESC schließt Modals */
-document.addEventListener("keydown",event => {
-  if(event.key !== "Escape") return;
-  document.querySelectorAll(".modal:not(.hidden)").forEach(modal => modal.classList.add("hidden"));
-});
-
-/* Klick auf dunklen Modal-Hintergrund schließt */
-document.querySelectorAll(".modal").forEach(modal => {
-  modal.addEventListener("click",event => {
-    if(event.target === modal) modal.classList.add("hidden");
-  });
-});
-
-/* ============================================================
-   NFC SCANNEN
-   URL: https://DEINNAME.github.io/OrdnerSystem/?chip=001
-   ============================================================ */
-async function scanNFC(){
-  if(nfcHandled || !user) return;
-
-  const params = new URLSearchParams(location.search);
-  const id = params.get("chip");
-  if(!id) return;
-
-  nfcHandled = true;
-
-  try{
-    const searchQuery = query(
-      collection(db,"chips"),
-      where("chipId","==",String(id))
+    const filtered = folders.filter(folder =>
+        folder.category.toLowerCase() === currentCategory.toLowerCase()
     );
-    const result = await getDocs(searchQuery);
 
-    if(result.empty){
-      alert("Unbekannter NFC-Chip: " + id);
-      nfcHandled = false;
-      return;
+    if (filtered.length === 0) {
+
+        grid.innerHTML = `
+            <div class="empty">
+                📁<br><br>
+                Noch keine Ordner in dieser Kategorie.
+            </div>
+        `;
+
+        return;
     }
 
-    const chipRef = result.docs[0].ref;
-    let scanResult = null;
+    filtered.forEach((folder, index) => {
 
-    await runTransaction(db,async tx => {
-      const chipSnap = await tx.get(chipRef);
-      if(!chipSnap.exists()) throw new Error("CHIP_NOT_FOUND");
+        grid.innerHTML += createFolderHTML(folder, index);
 
-      const chip = chipSnap.data();
-      const active = !Boolean(chip.scanActive);
-      const scannedName = nameOf();
-      const image = profile.profileImageData || "";
-
-      tx.update(chipRef,{
-        scanActive:active,
-        lastScannedBy:user.uid,
-        lastScannedEmail:user.email || "",
-        lastScannedName:scannedName,
-        lastScannedProfileImageData:image,
-        lastScannedAt:serverTimestamp()
-      });
-
-      scanResult = {
-        chipId:chip.chipId,
-        active,
-        scannedBy:user.uid,
-        scannedEmail:user.email || "",
-        scannedName,
-        scannedProfileImageData:image
-      };
     });
-
-    await setDoc(doc(db,"system","currentScan"),{
-      ...scanResult,
-      scannedAt:serverTimestamp()
-    });
-
-    history.replaceState({},document.title,location.pathname);
-    window.showPage("pageLastScan");
-    toast("NFC-Scan verarbeitet");
-  }catch(error){
-    console.error(error);
-    alert("NFC-Scan konnte nicht verarbeitet werden: " + error.message);
-    nfcHandled = false;
-  }
 }
 
-/* ============================================================
-   AUTH STATE
-   ============================================================ */
-onAuthStateChanged(auth,async currentUser => {
-  clearListeners();
-  user = currentUser;
-  nfcHandled = false;
 
-  if(!currentUser){
-    profile = {};
-    chips = [];
-    admin = false;
-    $("app").classList.add("hidden");
-    $("loginPage").classList.remove("hidden");
-    return;
-  }
+/* ORDNER HTML */
 
-  try{
-    await ensureProfile();
+function createFolderHTML(folder, index) {
 
-    $("loginPage").classList.add("hidden");
-    $("app").classList.remove("hidden");
+    return `
+        <div
+            class="folder"
+            onclick="openFolder('${escapeHTML(folder.name)}')"
+        >
 
-    admin = false;
-    $("adminPanel")?.classList.add("hidden");
-    $("pageUsers")?.classList.add("hidden");
-    applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
+            <div class="folder-icon">
+                📁
+            </div>
 
-    loadProfile();
-    loadChips();
-    loadScan();
+            <h3>${escapeHTML(folder.name)}</h3>
 
-    window.showPage("pageFolders");
+            <p>${escapeHTML(folder.category)}</p>
 
-    setTimeout(scanNFC,700);
-  }catch(error){
-    console.error(error);
-    alert("Profil konnte nicht geladen werden: " + error.message);
-    await signOut(auth);
-  }
+        </div>
+    `;
+}
+
+
+/* ORDNER ÖFFNEN */
+
+function openFolder(name) {
+
+    alert(
+        "Ordner „" +
+        name +
+        "“ wurde geöffnet."
+    );
+}
+
+
+/* ORDNER HINZUFÜGEN */
+
+function openAddFolder() {
+
+    document.getElementById("folderName").value = "";
+
+    document.getElementById("folderCategory").value =
+        currentCategory || "";
+
+    document
+        .getElementById("folderModal")
+        .classList.remove("hidden");
+}
+
+
+/* ORDNER SPEICHERN */
+
+function addFolder() {
+
+    const name =
+        document.getElementById("folderName").value.trim();
+
+    const category =
+        document.getElementById("folderCategory").value.trim();
+
+    if (!name) {
+
+        alert("Bitte einen Ordnernamen eingeben.");
+
+        return;
+    }
+
+    if (!category) {
+
+        alert("Bitte eine Kategorie eingeben.");
+
+        return;
+    }
+
+    folders.push({
+        name: name,
+        category: category
+    });
+
+    closeModal("folderModal");
+
+    if (currentCategory) {
+
+        renderCategory();
+
+    } else {
+
+        renderFolders();
+
+    }
+}
+
+
+/* SUCHE */
+
+function searchFolders() {
+
+    const search =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase();
+
+    const grid =
+        document.getElementById("folderGrid");
+
+    grid.innerHTML = "";
+
+    folders
+        .filter(folder =>
+            folder.name.toLowerCase().includes(search) ||
+            folder.category.toLowerCase().includes(search)
+        )
+        .forEach((folder, index) => {
+
+            grid.innerHTML += createFolderHTML(folder, index);
+
+        });
+}
+
+
+/* MODAL SCHLIESSEN */
+
+function closeModal(id) {
+
+    const modal = document.getElementById(id);
+
+    if (modal) {
+        modal.classList.add("hidden");
+    }
+}
+
+
+/* EINSTELLUNGEN */
+
+function openSettings() {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document
+        .getElementById("settings")
+        .classList.add("active");
+
+    document.querySelectorAll(".nav-button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+}
+
+
+/* DARK MODE */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "darkMode",
+        document.body.classList.contains("dark")
+    );
+}
+
+
+/* ESC = FENSTER SCHLIESSEN */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key !== "Escape") {
+        return;
+    }
+
+    document
+        .querySelectorAll(".modal")
+        .forEach(modal => {
+
+            modal.classList.add("hidden");
+
+        });
+
 });
+
+
+/* KLICK AUF HINTERGRUND = SCHLIESSEN */
+
+document.querySelectorAll(".modal").forEach(modal => {
+
+    modal.addEventListener("click", function(event) {
+
+        if (event.target === modal) {
+
+            modal.classList.add("hidden");
+
+        }
+
+    });
+
+});
+
+
+/* HTML SICHER MACHEN */
+
+function escapeHTML(text) {
+
+    return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+
+/* THEME LADEN */
+
+if (localStorage.getItem("darkMode") === "true") {
+
+    document.body.classList.add("dark");
+
+}
+
+
+/* START */
+
+renderFolders();
+
 </script>
+
 </body>
 </html>
