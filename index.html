@@ -67,19 +67,6 @@
             border-radius: 50%;
         }
 
-        #fehler {
-            color: #ff5555;
-        }
-
-        #admin {
-            display: none;
-        }
-
-        #formular {
-            display: none;
-            margin-top: 20px;
-        }
-
         .person {
             background: #1f2937;
             padding: 15px;
@@ -91,6 +78,37 @@
         .status {
             color: #22c55e;
             font-weight: bold;
+        }
+
+        .aktionen {
+            display: flex;
+            gap: 8px;
+        }
+
+        .aktionen button {
+            margin-top: 10px;
+            padding: 10px;
+        }
+
+        .bearbeiten {
+            background: #f59e0b;
+        }
+
+        .loeschen {
+            background: #dc2626;
+        }
+
+        #fehler {
+            color: #ff5555;
+        }
+
+        #admin {
+            display: none;
+        }
+
+        #formular {
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -125,7 +143,7 @@
 
             <input id="chip" type="text" placeholder="NFC-Chip-ID">
 
-            <button onclick="personHinzufuegen()">
+            <button id="speichernButton" onclick="personHinzufuegen()">
                 Person hinzufügen
             </button>
 
@@ -151,6 +169,19 @@
         } from
         "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            onSnapshot,
+            query,
+            orderBy,
+            doc,
+            updateDoc,
+            deleteDoc
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
         const firebaseConfig = {
             apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
@@ -164,8 +195,13 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
 
+        let bearbeitetePerson = null;
+
+
+        // LOGIN
         window.anmelden = async function () {
 
             const email =
@@ -195,72 +231,280 @@
         };
 
 
+        // LOGOUT
         window.abmelden = async function () {
             await signOut(auth);
         };
 
 
+        // FORMULAR
         window.formularAnzeigen = function () {
 
             const formular =
                 document.getElementById("formular");
 
             if (formular.style.display === "block") {
+
                 formular.style.display = "none";
+
             } else {
+
                 formular.style.display = "block";
+
+                bearbeitetePerson = null;
+
+                document.getElementById("name").value = "";
+                document.getElementById("chip").value = "";
+
+                document.getElementById("speichernButton")
+                    .textContent = "Person hinzufügen";
             }
         };
 
 
-        window.personHinzufuegen = function () {
+        // PERSON HINZUFÜGEN / BEARBEITEN
+        window.personHinzufuegen = async function () {
 
             const name =
-                document.getElementById("name").value;
+                document.getElementById("name").value.trim();
 
             const chip =
-                document.getElementById("chip").value;
+                document.getElementById("chip").value.trim();
 
             if (name === "" || chip === "") {
+
                 alert("Bitte Name und Chip-ID eingeben.");
+
                 return;
             }
+
+
+            try {
+
+                // BEARBEITEN
+                if (bearbeitetePerson) {
+
+                    await updateDoc(
+                        doc(db, "chips", bearbeitetePerson),
+                        {
+                            name: name,
+                            chipId: chip
+                        }
+                    );
+
+                    bearbeitetePerson = null;
+
+                }
+
+                // NEU
+                else {
+
+                    await addDoc(
+                        collection(db, "chips"),
+                        {
+                            name: name,
+                            chipId: chip
+                        }
+                    );
+                }
+
+
+                document.getElementById("name").value = "";
+                document.getElementById("chip").value = "";
+
+                document.getElementById("formular").style.display = "none";
+
+                document.getElementById("speichernButton")
+                    .textContent = "Person hinzufügen";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert("Fehler beim Speichern.");
+            }
+        };
+
+
+        // BEARBEITEN
+        window.personBearbeiten = function (id, name, chip) {
+
+            bearbeitetePerson = id;
+
+            document.getElementById("name").value = name;
+
+            document.getElementById("chip").value = chip;
+
+            document.getElementById("formular").style.display = "block";
+
+            document.getElementById("speichernButton")
+                .textContent = "Änderungen speichern";
+        };
+
+
+        // LÖSCHEN
+        window.personLoeschen = async function (id, name) {
+
+            const sicher =
+                confirm(
+                    "Soll " + name + " wirklich gelöscht werden?"
+                );
+
+            if (!sicher) return;
+
+
+            try {
+
+                await deleteDoc(
+                    doc(db, "chips", id)
+                );
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert("Fehler beim Löschen.");
+            }
+        };
+
+
+        // PERSONEN LADEN
+        function personenLaden() {
 
             const personen =
                 document.getElementById("personen");
 
-            const neuePerson =
-                document.createElement("div");
-
-            neuePerson.className = "person";
-
-            neuePerson.innerHTML = `
-                <strong>${name}</strong><br>
-                Chip: ${chip}<br>
-                Status: <span class="status">● Frei</span>
-            `;
-
-            personen.appendChild(neuePerson);
-
-            document.getElementById("name").value = "";
-            document.getElementById("chip").value = "";
-
-            document.getElementById("formular").style.display = "none";
-        };
+            const chipsQuery =
+                query(
+                    collection(db, "chips"),
+                    orderBy("name")
+                );
 
 
+            onSnapshot(chipsQuery, (snapshot) => {
+
+                personen.innerHTML = "";
+
+
+                snapshot.forEach((chipDokument) => {
+
+                    const daten =
+                        chipDokument.data();
+
+                    const id =
+                        chipDokument.id;
+
+
+                    const neuePerson =
+                        document.createElement("div");
+
+                    neuePerson.className = "person";
+
+
+                    const name =
+                        document.createElement("strong");
+
+                    name.textContent =
+                        daten.name;
+
+
+                    const chip =
+                        document.createElement("div");
+
+                    chip.textContent =
+                        "Chip: " + daten.chipId;
+
+
+                    const status =
+                        document.createElement("div");
+
+                    status.innerHTML =
+                        'Status: <span class="status">● Frei</span>';
+
+
+                    const aktionen =
+                        document.createElement("div");
+
+                    aktionen.className = "aktionen";
+
+
+                    const bearbeiten =
+                        document.createElement("button");
+
+                    bearbeiten.textContent = "✏️ Bearbeiten";
+
+                    bearbeiten.className = "bearbeiten";
+
+                    bearbeiten.onclick = function () {
+
+                        personBearbeiten(
+                            id,
+                            daten.name,
+                            daten.chipId
+                        );
+
+                    };
+
+
+                    const loeschen =
+                        document.createElement("button");
+
+                    loeschen.textContent = "🗑️ Löschen";
+
+                    loeschen.className = "loeschen";
+
+                    loeschen.onclick = function () {
+
+                        personLoeschen(
+                            id,
+                            daten.name
+                        );
+
+                    };
+
+
+                    aktionen.appendChild(bearbeiten);
+                    aktionen.appendChild(loeschen);
+
+
+                    neuePerson.appendChild(name);
+                    neuePerson.appendChild(
+                        document.createElement("br")
+                    );
+                    neuePerson.appendChild(chip);
+                    neuePerson.appendChild(status);
+                    neuePerson.appendChild(aktionen);
+
+
+                    personen.appendChild(neuePerson);
+
+                });
+
+            });
+        }
+
+
+        // LOGIN STATUS
         onAuthStateChanged(auth, (user) => {
 
             if (user) {
 
-                document.getElementById("login").style.display = "none";
-                document.getElementById("admin").style.display = "block";
+                document.getElementById("login")
+                    .style.display = "none";
+
+                document.getElementById("admin")
+                    .style.display = "block";
+
+                personenLaden();
 
             } else {
 
-                document.getElementById("login").style.display = "block";
-                document.getElementById("admin").style.display = "none";
+                document.getElementById("login")
+                    .style.display = "block";
 
+                document.getElementById("admin")
+                    .style.display = "none";
             }
 
         });
