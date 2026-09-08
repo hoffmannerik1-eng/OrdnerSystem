@@ -67,6 +67,9 @@ header{height:var(--header);position:sticky;top:0;z-index:30;display:flex;align-
 .sidebarHead{font-weight:850;padding:12px 14px 18px;font-size:17px}
 .sidebarHead small{display:block;color:#94a3b8;font-size:11px;font-weight:650;margin-top:4px}
 .sideSection{margin-bottom:8px}
+.categoryHead{display:flex;align-items:center;gap:6px}
+.categoryHead .sideToggle{flex:1}
+.categoryPlus{width:36px;min-width:36px;height:36px;padding:0;border-radius:9px;font-size:22px;line-height:1}.categoryNavRow{display:flex;align-items:center;gap:4px}.categoryNavRow .sideLink{flex:1;min-width:0}.categoryDelete{width:32px;min-width:32px;height:32px;padding:0;border-radius:8px;font-size:15px}
 .sideToggle{width:100%;background:transparent;padding:11px 12px;text-align:left;font-weight:850;color:#475569;display:flex;justify-content:space-between;align-items:center;border-radius:10px}
 .sideToggle:hover,.sideLink:hover{background:#f1f5f9}
 .chev{transition:.2s ease}
@@ -282,11 +285,16 @@ body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--mut
         <div class="sideLinks">
           <button class="sideLink" data-page="pageFolders" onclick="showPage('pageFolders')">📁 Alle Ordner</button>
           <button class="sideLink" data-page="pageLastScan" onclick="showPage('pageLastScan')">📡 Letzter Scan</button>
+          <button class="sideLink" data-page="pageInbox" onclick="showPage('pageInbox')">📬 Postfach <span id="inboxBadge" class="badge red hidden">0</span></button>
+          <button class="sideLink" data-page="pageRequest" onclick="showPage('pageRequest')">📝 Ordner anfordern</button>
         </div>
       </div>
 
-      <div class="sideSection">
-        <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
+      <div class="sideSection" id="categorySection">
+        <div class="categoryHead">
+          <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
+          <button id="sidebarAddCategory" class="categoryPlus blue hidden" title="Kategorie hinzufügen" aria-label="Kategorie hinzufügen">+</button>
+        </div>
         <div id="categoryLinks" class="sideLinks"></div>
       </div>
 
@@ -324,6 +332,7 @@ body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--mut
             <button id="newChip" class="blue">＋ Chip hinzufügen</button>
             <button id="newUser" class="blue">＋ Benutzer erstellen</button>
             <button id="newCategory" class="blue">＋ Kategorie hinzufügen</button>
+             <button id="newPurpose" class="blue">＋ Zweck hinzufügen</button>
             <button id="showUsers" class="gray">👥 Benutzer</button>
             <button id="closeAdmin" class="gray">Admin-Modus schließen</button>
           </div>
@@ -370,6 +379,29 @@ body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--mut
           <button id="categoryManageBtn" class="blue hidden">＋ Kategorie hinzufügen</button>
         </div>
         <section class="card"><div id="categoryList"></div></section>
+      </section>
+
+      <!-- POSTFACH -->
+      <section id="pageInbox" class="page hidden">
+        <h1 class="pageTitle">Postfach</h1>
+        <p class="pageSub">Hier siehst du Benachrichtigungen zu Scans, Ordnern und Anfragen.</p>
+        <section class="card">
+          <div class="sectionTitle"><h2>📬 Nachrichten</h2><button class="gray" onclick="markAllNotificationsRead()">Alle gelesen</button></div>
+          <div id="inbox">Laden...</div>
+        </section>
+      </section>
+
+      <!-- ORDNER ANFORDERN -->
+      <section id="pageRequest" class="page hidden">
+        <h1 class="pageTitle">Ordner anfordern</h1>
+        <p class="pageSub">Sende eine Anfrage an die Administratoren.</p>
+        <section class="card">
+          <div class="field"><label for="requestTitle">Was für einen Ordner brauchst du?</label><input id="requestTitle" maxlength="80" placeholder="z. B. Projekt Müller"></div>
+          <div class="field"><label for="requestReason">Wofür brauchst du ihn?</label><textarea id="requestReason" maxlength="500" placeholder="Kurze Beschreibung..."></textarea></div>
+          <div id="requestMsg" class="formMessage"></div>
+          <button id="sendRequest" class="blue">Anfrage senden</button>
+        </section>
+        <section class="card"><div class="sectionTitle"><h2>Meine Anfragen</h2></div><div id="myRequests">Laden...</div></section>
       </section>
 
       <!-- BENUTZER -->
@@ -461,6 +493,16 @@ body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--mut
   </div>
 </div>
 
+<!-- ============================================================ PURPOSE MODAL ============================================================ -->
+<div id="purposeModal" class="modal hidden">
+  <div class="modalBox">
+    <div class="modalHead"><h2>Zweck hinzufügen</h2><button class="closeBtn" onclick="window.closeModal('purposeModal')">×</button></div>
+    <div class="field"><label for="purposeName">Zweck</label><input id="purposeName" maxlength="80" placeholder="z. B. Schule"></div>
+    <div id="purposeMsg" class="formMessage"></div>
+    <div class="modalActions"><button class="gray" onclick="window.closeModal('purposeModal')">Abbrechen</button><button id="savePurpose" class="blue">Zweck speichern</button></div>
+  </div>
+</div>
+
 <!-- ============================================================ USER MODAL ============================================================ -->
 <div id="userModal" class="modal hidden">
   <div class="modalBox">
@@ -542,18 +584,9 @@ let user = null;
 let profile = {};
 let chips = [];
 let categories = [];
+let purposes = [];
 let currentCategory = "";
-const DEFAULT_CATEGORIES = [
-  {name:"Anwälte",icon:"⚖️",key:"anwälte"},
-  {name:"Verträge",icon:"📄",key:"verträge"},
-  {name:"Mandanten",icon:"👤",key:"mandanten"},
-  {name:"Rechnungen",icon:"🧾",key:"rechnungen"},
-  {name:"Finanzen",icon:"💰",key:"finanzen"},
-  {name:"Steuern",icon:"📊",key:"steuern"},
-  {name:"Personal",icon:"👤",key:"personal"},
-  {name:"Sonstiges",icon:"📦",key:"sonstiges"},
-  {name:"Archiv",icon:"🗄️",key:"archiv"}
-];
+const DEFAULT_CATEGORIES = [];
 let editId = null;
 let admin = false;
 let selectedFile = null;
@@ -619,7 +652,8 @@ function hideAllPages(){
 
 function markActive(pageId){
   document.querySelectorAll(".sideLink[data-page]").forEach(link => {
-    link.classList.toggle("active", link.dataset.page === pageId);
+    const categoryMatch = pageId === "pageCategory" && link.dataset.category && link.dataset.category === currentCategory;
+    link.classList.toggle("active", categoryMatch || (!link.dataset.category && link.dataset.page === pageId));
   });
 }
 
@@ -631,6 +665,7 @@ window.showPage = pageId => {
   $("settingsPage")?.classList.add("hidden");
   $("workspace")?.classList.remove("settingsMode");
   markActive(pageId);
+  document.querySelectorAll(".sideSection").forEach(section => section.classList.remove("open"));
   window.scrollTo({top:0,behavior:"smooth"});
 };
 
@@ -673,6 +708,7 @@ window.enterAdminMode = () => {
   admin = true;
   $("adminPanel")?.classList.remove("hidden");
   $("categoryManageBtn")?.classList.remove("hidden");
+  $("sidebarAddCategory")?.classList.remove("hidden");
   $("settingsPage")?.classList.add("hidden");
   $("mainContent")?.classList.remove("hidden");
   $("workspace")?.classList.remove("settingsMode");
@@ -685,6 +721,7 @@ window.exitAdminMode = () => {
   admin = false;
   $("adminPanel")?.classList.add("hidden");
   $("categoryManageBtn")?.classList.add("hidden");
+  $("sidebarAddCategory")?.classList.add("hidden");
   $("pageUsers")?.classList.add("hidden");
   window.showPage("pageFolders");
   toast("Admin-Modus geschlossen");
@@ -971,7 +1008,7 @@ function chipHtml(chip, adminControls = admin){
               ${active ? "Aktiv" : "Frei"} · Chip-ID ${esc(chip.chipId || "")}
             </div>
             <div class="chipMeta">Kategorie: <b>${esc(category)}</b></div>
-            ${chip.lastScannedName ? `<div class="chipMeta">Letzter Scan: ${esc(chip.lastScannedName)}</div>` : ""}
+            ${chip.lastScannedName ? `<div class="chipMeta">Letzter Scan: ${esc(chip.lastScannedName)}${chip.lastScanPurpose ? ` · Zweck: ${esc(chip.lastScanPurpose)}` : ""}</div>` : ""}
             ${chipPerson(chip)}
           </div>
         </div>
@@ -1031,31 +1068,45 @@ function updateStats(){
 window.take = async firestoreId => {
   const chip = chips.find(item => item.firestoreId === firestoreId);
   if(!chip || !user) return;
-
-  if(chip.assignedTo && !isAdmin()){
-    toast("Dieser Chip ist bereits vergeben.");
-    return;
-  }
-
   try{
-    await runTransaction(db,async tx => {
-      const ref = doc(db,"chips",firestoreId);
-      const snap = await tx.get(ref);
-      if(!snap.exists()) throw new Error("CHIP_NOT_FOUND");
-      const current = snap.data();
-      if(current.assignedTo && !isAdmin()) throw new Error("ALREADY_ASSIGNED");
+    let oldOwner=null;
+    let newChipName='Ordner';
+    await runTransaction(db,async tx=>{
+      const ref=doc(db,'chips',firestoreId);
+      const snap=await tx.get(ref);
+      if(!snap.exists()) throw new Error('CHIP_NOT_FOUND');
+      const current=snap.data();
+      newChipName=current.name||'Ordner';
+      if(current.assignedTo===user.uid) throw new Error('ALREADY_MINE');
+      if(current.assignedTo){
+        oldOwner={uid:current.assignedTo,name:current.assignedName||'Vorheriger Benutzer'};
+      }
       tx.update(ref,{
         assignedTo:user.uid,
-        assignedEmail:user.email || "",
+        assignedEmail:user.email||'',
         assignedName:nameOf(),
-        assignedProfileImageData:profile.profileImageData || "",
+        assignedProfileImageData:profile.profileImageData||'',
         scanActive:false
       });
     });
-    toast("Chip übernommen");
+
+    if(oldOwner){
+      await addDoc(collection(db,'notifications'),{
+        recipientUid:oldOwner.uid,
+        title:'Ordner übernommen',
+        message:`${nameOf()} hat den Ordner „${newChipName}“ übernommen.`,
+        fromUid:user.uid,
+        fromName:nameOf(),
+        createdAt:serverTimestamp(),
+        read:false,
+        type:'chip_taken_over',
+        chipId:chip.chipId
+      });
+    }
+    toast(oldOwner ? 'Ordner übernommen – der vorherige Besitzer wurde informiert.' : 'Chip übernommen');
   }catch(error){
     console.error(error);
-    toast(error.message === "ALREADY_ASSIGNED" ? "Chip wurde gerade von jemand anderem übernommen." : "Chip konnte nicht übernommen werden.");
+    toast(error.message==='ALREADY_MINE' ? 'Dieser Ordner gehört bereits dir.' : 'Chip konnte nicht übernommen werden: '+error.message);
   }
 };
 
@@ -1092,7 +1143,7 @@ $("newFolder").onclick = () => {
   $("chipName").value = "";
   $("chipId").value = "";
   renderCategoryNavigation();
-  $("chipCategory").value = allCategories()[2]?.name || "Mandanten";
+  $("chipCategory").value = allCategories()[0]?.name || "";
   open("chipModal");
 };
 
@@ -1103,7 +1154,7 @@ $("newChip").onclick = () => {
   $("chipName").value = "";
   $("chipId").value = "";
   renderCategoryNavigation();
-  $("chipCategory").value = allCategories()[2]?.name || "Mandanten";
+  $("chipCategory").value = allCategories()[0]?.name || "";
   open("chipModal");
 };
 
@@ -1173,7 +1224,7 @@ window.editChip = firestoreId => {
   $("chipName").value = chip.name || "";
   $("chipId").value = chip.chipId || "";
   renderCategoryNavigation();
-  $("chipCategory").value = chip.category || allCategories()[0]?.name || "Anwälte";
+  $("chipCategory").value = chip.category || allCategories()[0]?.name || "";
   open("chipModal");
 };
 
@@ -1209,14 +1260,18 @@ function categoryIcon(name){
 }
 
 function allCategories(){
-  return [...DEFAULT_CATEGORIES, ...categories.filter(c => !DEFAULT_CATEGORIES.some(d => d.name.toLowerCase() === c.name.toLowerCase()))];
+  return [...categories];
 }
 
 function renderCategoryNavigation(){
   const list = allCategories();
   const nav = $("categoryLinks");
   if(nav){
-    nav.innerHTML = list.map(c => `<button class="sideLink" data-page="pageCategory" onclick="showCategoryPage(${JSON.stringify(c.name)})">${esc(c.icon)} ${esc(c.name)}</button>`).join("");
+    nav.innerHTML = list.map(c => {
+      const isCustom = !!c.firestoreId;
+      const deleteBtn = isCustom && isAdmin() && admin ? `<button class="categoryDelete danger" title="Kategorie löschen" aria-label="Kategorie ${esc(c.name)} löschen" onclick="deleteCategory(\'${esc(c.firestoreId)}\', ${JSON.stringify(c.name)});event.stopPropagation();">🗑️</button>` : "";
+      return `<div class="categoryNavRow"><button class="sideLink" data-page="pageCategory" data-category="${esc(c.name)}" onclick="showCategoryPage(${JSON.stringify(c.name)})">${esc(c.icon)} ${esc(c.name)}</button>${deleteBtn}</div>`;
+    }).join("");
   }
   const filter = $("chipFilter");
   if(filter){
@@ -1255,6 +1310,7 @@ function loadCategories(){
       .sort((a,b) => String(a.name).localeCompare(String(b.name),"de"));
     renderAllCategories();
     $("categoryManageBtn")?.classList.toggle("hidden", !isAdmin() || !admin);
+    $("sidebarAddCategory")?.classList.toggle("hidden", !isAdmin() || !admin);
   },error => {
     console.error("Category Listener:",error);
     categories = [];
@@ -1272,6 +1328,29 @@ window.openCategoryModal = () => {
 
 $("newCategory").onclick = window.openCategoryModal;
 $("categoryManageBtn").onclick = window.openCategoryModal;
+$("sidebarAddCategory").onclick = event => {
+  event.stopPropagation();
+  window.openCategoryModal();
+};
+
+
+window.deleteCategory = async (firestoreId, categoryName) => {
+  if(!isAdmin() || !admin) return toast("Nur Admins dürfen Kategorien löschen.");
+  const custom = categories.find(c => c.firestoreId === firestoreId);
+  if(!custom) return toast("Kategorie nicht gefunden.");
+  const used = chips.filter(chip => String(chip.category || "").toLowerCase() === String(categoryName).toLowerCase());
+  const text = used.length ? `Die Kategorie „${categoryName}“ wird von ${used.length} Ordner(n) verwendet. Die Kategorie wird gelöscht und diese Ordner erhalten keine Kategorie mehr. Fortfahren?` : `Kategorie „${categoryName}“ wirklich löschen?`;
+  if(!confirm(text)) return;
+  try{
+    for(const chip of used) await updateDoc(doc(db,"chips",chip.firestoreId), {category:""});
+    await deleteDoc(doc(db,"categories",firestoreId));
+    if(String(currentCategory).toLowerCase() === String(categoryName).toLowerCase()) window.showPage("pageFolders");
+    toast(`Kategorie „${categoryName}“ gelöscht${used.length ? ` – ${used.length} Ordner sind jetzt ohne Kategorie` : ""}`);
+  }catch(error){
+    console.error("Kategorie löschen:",error);
+    toast("Kategorie konnte nicht gelöscht werden: " + error.message);
+  }
+};
 
 $("saveCategory").onclick = async () => {
   if(!isAdmin() || !admin) return;
@@ -1318,6 +1397,7 @@ function loadScan(){
           <b>Chip ${esc(data.chipId || "unbekannt")}</b>
           <div class="muted" style="margin-top:3px">Gescannt von ${esc(name)}</div>
           <div class="muted" style="margin-top:3px">Status: ${data.active ? "Aktiv" : "Frei"}</div>
+           <div class="muted" style="margin-top:3px">Zweck: ${esc(data.purpose || data.lastScanPurpose || "Nicht angegeben")}</div>
         </div>
       </div>`;
   },error => console.error("Scan Listener:",error)));
@@ -1454,6 +1534,175 @@ function loadUsers(){
 }
 
 /* ============================================================
+   POSTFACH / BENACHRICHTIGUNGEN
+   ============================================================ */
+function notificationTime(item){
+  const ts=item?.createdAt;
+  if(ts?.toDate) return ts.toDate().getTime();
+  if(ts?.seconds) return ts.seconds*1000;
+  return 0;
+}
+
+function notificationHtml(item){
+  const unread=!item.read;
+  return `<article class="chip" style="border-left:4px solid ${unread ? 'var(--blue)' : 'var(--border)'}">
+    <div class="chipName">${esc(item.title || 'Nachricht')}</div>
+    <div class="chipMeta">${esc(item.message || '')}</div>
+    ${item.purpose ? `<div class="chipMeta"><b>Zweck:</b> ${esc(item.purpose)}</div>` : ''}
+    ${item.fromName ? `<div class="chipMeta">Von: ${esc(item.fromName)}</div>` : ''}
+    <div class="chipButtons" style="margin-top:10px">
+      ${unread ? `<button class="gray" onclick="markNotificationRead('${esc(item.firestoreId)}')">Als gelesen markieren</button>` : '<span class="muted">Gelesen</span>'}
+    </div>
+  </article>`;
+}
+
+function renderInbox(list){
+  const box=$('inbox');
+  if(!box) return;
+  const sorted=[...list].sort((a,b)=>notificationTime(b)-notificationTime(a));
+  const unread=sorted.filter(x=>!x.read).length;
+  $('inboxBadge')?.classList.toggle('hidden',unread===0);
+  if($('inboxBadge')) $('inboxBadge').textContent=String(unread);
+  box.innerHTML=sorted.length ? sorted.map(notificationHtml).join('') : `<div class="empty">Keine Nachrichten.</div>`;
+}
+
+function loadInbox(){
+  unsub.push(onSnapshot(query(collection(db,'notifications'),where('recipientUid','==',user.uid)),snap=>{
+    const list=snap.docs.map(d=>({firestoreId:d.id,...d.data()}));
+    renderInbox(list);
+  },error=>{
+    console.error('Inbox Listener:',error);
+    $('inbox').innerHTML=`<div class="empty">Postfach konnte nicht geladen werden.</div>`;
+  }));
+}
+
+window.markNotificationRead=async id=>{
+  try{ await updateDoc(doc(db,'notifications',id),{read:true}); }
+  catch(error){ console.error(error); toast('Nachricht konnte nicht geändert werden.'); }
+};
+
+window.markAllNotificationsRead=async()=>{
+  if(!user) return;
+  try{
+    const snap=await getDocs(query(collection(db,'notifications'),where('recipientUid','==',user.uid)));
+    await Promise.all(snap.docs.filter(d=>!d.data().read).map(d=>updateDoc(d.ref,{read:true})));
+    toast('Alle Nachrichten gelesen');
+  }catch(error){ console.error(error); toast('Nachrichten konnten nicht geändert werden.'); }
+};
+
+async function getAllUserIds(){
+  const snap=await getDocs(collection(db,'users'));
+  return snap.docs.map(d=>d.id).filter(Boolean);
+}
+
+async function notifyAll(title,message,extra={}){
+  const ids=await getAllUserIds();
+  await Promise.all(ids.map(uid=>addDoc(collection(db,'notifications'),{
+    recipientUid:uid,
+    title,
+    message,
+    fromUid:user?.uid || '',
+    fromName:nameOf(),
+    createdAt:serverTimestamp(),
+    read:false,
+    ...extra
+  })));
+}
+
+/* ============================================================
+   ZWECKE
+   ============================================================ */
+function loadPurposes(){
+  unsub.push(onSnapshot(collection(db,'purposes'),snap=>{
+    purposes=snap.docs.map(d=>({firestoreId:d.id,...d.data()})).filter(p=>p.name).sort((a,b)=>String(a.name).localeCompare(String(b.name),'de'));
+  },error=>{
+    console.error('Purpose Listener:',error);
+    purposes=[];
+  }));
+}
+
+$('newPurpose').onclick=()=>{
+  if(!isAdmin() || !admin) return toast('Nur Admins dürfen Zwecke hinzufügen.');
+  $('purposeName').value='';
+  $('purposeMsg').textContent='';
+  open('purposeModal');
+};
+
+$('savePurpose').onclick=async()=>{
+  if(!isAdmin() || !admin) return;
+  const name=$('purposeName').value.trim();
+  if(!name){ $('purposeMsg').textContent='Bitte einen Zweck eingeben.'; return; }
+  if(purposes.some(p=>p.name.toLowerCase()===name.toLowerCase())){
+    $('purposeMsg').textContent='Diesen Zweck gibt es bereits.'; return;
+  }
+  try{
+    $('savePurpose').disabled=true;
+    await addDoc(collection(db,'purposes'),{name,createdAt:serverTimestamp(),createdBy:user.uid});
+    close('purposeModal');
+    toast(`Zweck „${name}“ erstellt`);
+  }catch(error){
+    console.error(error);
+    $('purposeMsg').textContent='Fehler: '+error.message;
+  }finally{ $('savePurpose').disabled=false; }
+};
+
+/* ============================================================
+   ORDNERANFRAGEN
+   ============================================================ */
+$('sendRequest').onclick=async()=>{
+  if(!user) return;
+  const title=$('requestTitle').value.trim();
+  const reason=$('requestReason').value.trim();
+  $('requestMsg').textContent='';
+  if(!title){ $('requestMsg').textContent='Bitte angeben, welchen Ordner du brauchst.'; return; }
+  try{
+    $('sendRequest').disabled=true;
+    const requestRef=await addDoc(collection(db,'requests'),{
+      title,
+      reason,
+      requestedBy:user.uid,
+      requestedByName:nameOf(),
+      requestedByEmail:user.email||'',
+      status:'open',
+      createdAt:serverTimestamp()
+    });
+
+    const usersSnap=await getDocs(collection(db,'users'));
+    const admins=usersSnap.docs.filter(d=>d.data().role==='admin').map(d=>d.id);
+    await Promise.all(admins.map(uid=>addDoc(collection(db,'notifications'),{
+      recipientUid:uid,
+      title:'Neue Ordneranfrage',
+      message:`${nameOf()} möchte einen Ordner anfordern: „${title}“${reason ? ` – ${reason}` : ''}`,
+      fromUid:user.uid,
+      fromName:nameOf(),
+      requestId:requestRef.id,
+      createdAt:serverTimestamp(),
+      read:false,
+      type:'folder_request'
+    })));
+
+    await addDoc(collection(db,'notifications'),{
+      recipientUid:user.uid,
+      title:'Ordneranfrage gesendet',
+      message:`Deine Anfrage „${title}“ wurde an die Administratoren gesendet.`,
+      fromUid:user.uid,
+      fromName:nameOf(),
+      requestId:requestRef.id,
+      createdAt:serverTimestamp(),
+      read:false,
+      type:'folder_request_sent'
+    });
+
+    $('requestTitle').value='';
+    $('requestReason').value='';
+    toast('Ordneranfrage gesendet');
+  }catch(error){
+    console.error(error);
+    $('requestMsg').textContent='Fehler: '+error.message;
+  }finally{ $('sendRequest').disabled=false; }
+};
+
+/* ============================================================
    HELP
    ============================================================ */
 window.openHelp = () => {
@@ -1548,6 +1797,15 @@ async function scanNFC(){
     }
 
     const chipRef = result.docs[0].ref;
+    let purpose = "";
+    if(!purposes.length){
+      alert("Für Scans wurde noch kein Zweck von einem Administrator angelegt.");
+      nfcHandled=false; return;
+    }
+    const choice = prompt("Wofür benutzt du diesen Ordner?\n\n" + purposes.map((p,i)=>`${i+1}. ${p.name}`).join("\n") + "\n\nNummer eingeben:");
+    const idx=Number(choice)-1;
+    if(!Number.isInteger(idx)||!purposes[idx]){nfcHandled=false;return;}
+    purpose=purposes[idx].name;
     let scanResult = null;
 
     await runTransaction(db,async tx => {
@@ -1565,16 +1823,19 @@ async function scanNFC(){
         lastScannedEmail:user.email || "",
         lastScannedName:scannedName,
         lastScannedProfileImageData:image,
-        lastScannedAt:serverTimestamp()
+        lastScannedAt:serverTimestamp(),
+        lastScanPurpose:purpose
       });
 
       scanResult = {
         chipId:chip.chipId,
+        chipName:chip.name || '',
         active,
         scannedBy:user.uid,
         scannedEmail:user.email || "",
         scannedName,
-        scannedProfileImageData:image
+        scannedProfileImageData:image,
+        purpose
       };
     });
 
@@ -1582,6 +1843,7 @@ async function scanNFC(){
       ...scanResult,
       scannedAt:serverTimestamp()
     });
+    await notifyAll('NFC-Scan',`${nameOf()} hat den Ordner „${scanResult.chipName || scanResult.chipId}“ eingescannt. Zweck: ${purpose}. Status: ${scanResult.active ? 'Aktiv' : 'Frei'}.`,{type:'scan',chipId:scanResult.chipId,purpose,active:scanResult.active});
 
     history.replaceState({},document.title,location.pathname);
     window.showPage("pageLastScan");
@@ -1618,14 +1880,21 @@ onAuthStateChanged(auth,async currentUser => {
 
     admin = false;
     $("adminPanel")?.classList.add("hidden");
+    $("sidebarAddCategory")?.classList.add("hidden");
   $("categoryManageBtn")?.classList.add("hidden");
+  $("sidebarAddCategory")?.classList.add("hidden");
     $("pageUsers")?.classList.add("hidden");
     applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
 
     loadProfile();
     loadChips();
     loadCategories();
+    loadPurposes();
+    loadNotifications();
+    loadRequests();
     loadScan();
+    loadInbox();
+    loadPurposes();
 
     window.showPage("pageFolders");
 
