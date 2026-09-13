@@ -55,6 +55,11 @@ button{
     cursor:pointer;
 }
 
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
 .hidden{
     display:none!important;
 }
@@ -157,7 +162,6 @@ button{
 
 .primaryBtn:disabled{
     opacity:.55;
-    cursor:not-allowed;
 }
 
 .loginError{
@@ -564,6 +568,44 @@ button{
     font-size:11px;
 }
 
+/* CHIP */
+
+.chipBox{
+    margin-top:14px;
+    padding:12px;
+    background:#f8fafc;
+    border:1px solid var(--border);
+    border-radius:11px;
+}
+
+.chipTitle{
+    font-size:10px;
+    font-weight:bold;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    margin-bottom:7px;
+}
+
+.chipLinkText{
+    font-size:10px;
+    color:#475569;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:8px;
+    margin-bottom:8px;
+}
+
+.chipActions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
 /* SEARCH */
 
 .search{
@@ -670,19 +712,6 @@ tr:hover td{
     color:#1d4ed8;
 }
 
-.lockedRow{
-    background:#fffafa;
-}
-
-.lockedRow:hover td{
-    background:#fff7f7!important;
-}
-
-.lockedLabel{
-    color:#dc2626;
-    font-weight:bold;
-}
-
 /* EMPTY */
 
 .empty{
@@ -706,7 +735,7 @@ tr:hover td{
 
 .folderGrid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
     gap:15px;
 }
 
@@ -751,6 +780,14 @@ tr:hover td{
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:8px;
+}
+
+.folderActions{
+    margin-top:10px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
 }
 
 /* CATEGORY */
@@ -967,7 +1004,7 @@ tr:hover td{
 }
 
 .modal{
-    width:min(520px,100%);
+    width:min(560px,100%);
     max-height:90vh;
     overflow:auto;
     background:#fff;
@@ -1140,13 +1177,21 @@ tr:hover td{
     .loginBox{
         padding:25px;
     }
+
+    .folderBottom{
+        align-items:flex-start;
+        flex-direction:column;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
 <div id="loginScreen">
 
     <div class="loginBox">
@@ -1155,12 +1200,15 @@ tr:hover td{
 
         <h1>OrdnerSystem</h1>
 
-        <p>Geschäftliche Dokumenten- und Ordnerverwaltung</p>
+        <p>
+            Geschäftliche Dokumenten- und Ordnerverwaltung
+        </p>
 
         <form id="loginForm">
 
             <div class="field">
                 <label>E-Mail</label>
+
                 <input
                     id="loginEmail"
                     type="email"
@@ -1172,6 +1220,7 @@ tr:hover td{
 
             <div class="field">
                 <label>Passwort</label>
+
                 <input
                     id="loginPassword"
                     type="password"
@@ -1201,15 +1250,19 @@ tr:hover td{
 </div>
 
 
-<!-- APP -->
+<!-- =====================================================
+     APP
+===================================================== -->
+
 <div id="app" class="hidden">
 
-    <!-- SIDEBAR -->
     <aside id="sidebar" class="sidebar">
 
         <div class="brand">
 
-            <div class="brandIcon">📁</div>
+            <div class="brandIcon">
+                📁
+            </div>
 
             <div class="brandText">
                 <strong>OrdnerSystem</strong>
@@ -1220,7 +1273,9 @@ tr:hover td{
 
         <nav class="nav">
 
-            <div class="navTitle">Übersicht</div>
+            <div class="navTitle">
+                Übersicht
+            </div>
 
             <button
                 class="navBtn active"
@@ -1262,7 +1317,9 @@ tr:hover td{
                 Anfragen
             </button>
 
-            <div class="navTitle">Konto</div>
+            <div class="navTitle">
+                Konto
+            </div>
 
             <button
                 class="navBtn"
@@ -1336,7 +1393,6 @@ tr:hover td{
     </aside>
 
 
-    <!-- MAIN -->
     <main class="main">
 
         <header class="topbar">
@@ -1368,7 +1424,9 @@ tr:hover td{
 
                 <div class="search">
 
-                    <span class="searchIcon">🔍</span>
+                    <span class="searchIcon">
+                        🔍
+                    </span>
 
                     <input
                         id="globalSearch"
@@ -1403,6 +1461,7 @@ tr:hover td{
 
 
             <!-- DASHBOARD -->
+
             <section
                 id="page-dashboard"
                 class="page active"
@@ -1410,7 +1469,9 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <h2>Dashboard</h2>
+                    <h2>
+                        Dashboard
+                    </h2>
 
                     <p>
                         Willkommen im OrdnerSystem.
@@ -1418,6 +1479,7 @@ tr:hover td{
                     </p>
 
                 </div>
+
 
                 <div class="stats">
 
@@ -1533,7 +1595,9 @@ tr:hover td{
 
                         <div class="cardHeader">
 
-                            <h3>📁 Zuletzt angelegte Ordner</h3>
+                            <h3>
+                                📁 Zuletzt angelegte Ordner
+                            </h3>
 
                             <button
                                 class="btn"
@@ -1556,7 +1620,9 @@ tr:hover td{
 
                         <div class="cardHeader">
 
-                            <h3>⚡ Schnellzugriff</h3>
+                            <h3>
+                                ⚡ Schnellzugriff
+                            </h3>
 
                         </div>
 
@@ -1596,6 +1662,7 @@ tr:hover td{
 
 
             <!-- FOLDERS -->
+
             <section
                 id="page-folders"
                 class="page"
@@ -1603,11 +1670,24 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:10px;
+                    ">
 
                         <div>
-                            <h2>📁 Ordner</h2>
-                            <p>Verwalte deine digitalen Ordner.</p>
+
+                            <h2>
+                                📁 Ordner
+                            </h2>
+
+                            <p>
+                                Verwalte deine digitalen Ordner
+                                und NFC-Chip-Links.
+                            </p>
+
                         </div>
 
                         <button
@@ -1621,6 +1701,7 @@ tr:hover td{
 
                 </div>
 
+
                 <div
                     id="folderGrid"
                     class="folderGrid"
@@ -1630,6 +1711,7 @@ tr:hover td{
 
 
             <!-- CATEGORIES -->
+
             <section
                 id="page-categories"
                 class="page"
@@ -1637,14 +1719,24 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:10px;
+                    ">
 
                         <div>
-                            <h2>🗂️ Kategorien</h2>
+
+                            <h2>
+                                🗂️ Kategorien
+                            </h2>
+
                             <p>
                                 Kategorien können von Administratoren
                                 dauerhaft gesperrt werden.
                             </p>
+
                         </div>
 
                         <button
@@ -1659,6 +1751,7 @@ tr:hover td{
 
                 </div>
 
+
                 <div
                     id="categoryGrid"
                     class="categoryGrid"
@@ -1668,6 +1761,7 @@ tr:hover td{
 
 
             <!-- PURPOSES -->
+
             <section
                 id="page-purposes"
                 class="page"
@@ -1675,11 +1769,23 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:10px;
+                    ">
 
                         <div>
-                            <h2>🎯 Zwecke</h2>
-                            <p>Verwalte die verfügbaren Ordnerzwecke.</p>
+
+                            <h2>
+                                🎯 Zwecke
+                            </h2>
+
+                            <p>
+                                Verwalte die verfügbaren Ordnerzwecke.
+                            </p>
+
                         </div>
 
                         <button
@@ -1692,6 +1798,7 @@ tr:hover td{
                     </div>
 
                 </div>
+
 
                 <div class="card">
 
@@ -1709,6 +1816,7 @@ tr:hover td{
 
 
             <!-- REQUESTS -->
+
             <section
                 id="page-requests"
                 class="page"
@@ -1716,7 +1824,9 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <h2>📋 Anfragen</h2>
+                    <h2>
+                        📋 Anfragen
+                    </h2>
 
                     <p>
                         Übersicht über eingegangene Anfragen.
@@ -1737,6 +1847,7 @@ tr:hover td{
 
 
             <!-- PROFILE -->
+
             <section
                 id="page-profile"
                 class="page"
@@ -1744,13 +1855,16 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <h2>👤 Profil</h2>
+                    <h2>
+                        👤 Profil
+                    </h2>
 
                     <p>
                         Verwalte deine persönlichen Daten.
                     </p>
 
                 </div>
+
 
                 <div class="profileGrid">
 
@@ -1777,27 +1891,43 @@ tr:hover td{
                     <div class="card">
 
                         <div class="cardHeader">
-                            <h3>Profildaten</h3>
+
+                            <h3>
+                                Profildaten
+                            </h3>
+
                         </div>
 
                         <div class="cardBody">
 
                             <div class="field">
-                                <label>Name</label>
+
+                                <label>
+                                    Name
+                                </label>
+
                                 <input
                                     id="profileNameInput"
                                     type="text"
                                 >
+
                             </div>
 
+
                             <div class="field">
-                                <label>Profilbild URL</label>
+
+                                <label>
+                                    Profilbild URL
+                                </label>
+
                                 <input
                                     id="profilePhotoInput"
                                     type="url"
                                     placeholder="https://..."
                                 >
+
                             </div>
+
 
                             <button
                                 class="btn btnPrimary"
@@ -1816,6 +1946,7 @@ tr:hover td{
 
 
             <!-- NOTIFICATIONS -->
+
             <section
                 id="page-notifications"
                 class="page"
@@ -1823,7 +1954,9 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <h2>🔔 Benachrichtigungen</h2>
+                    <h2>
+                        🔔 Benachrichtigungen
+                    </h2>
 
                     <p>
                         Deine aktuellen Systemmeldungen.
@@ -1844,6 +1977,7 @@ tr:hover td{
 
 
             <!-- ADMIN -->
+
             <section
                 id="page-admin"
                 class="page"
@@ -1851,7 +1985,9 @@ tr:hover td{
 
                 <div class="sectionTitle">
 
-                    <h2>🔒 Administration</h2>
+                    <h2>
+                        🔒 Administration
+                    </h2>
 
                     <p>
                         Zentrale Verwaltung des OrdnerSystems.
@@ -1860,20 +1996,28 @@ tr:hover td{
                 </div>
 
 
-                <!-- CATEGORY LOCK ADMIN -->
-                <div class="card" style="margin-bottom:18px;">
+                <div
+                    class="card"
+                    style="margin-bottom:18px;"
+                >
 
                     <div class="cardHeader">
 
                         <div>
-                            <h3>🛡️ Kategorie-Sperren</h3>
 
-                            <div
-                                style="font-size:10px;color:var(--muted);margin-top:4px;"
-                            >
-                                Gesperrte Kategorien können nicht bearbeitet
-                                oder gelöscht werden.
+                            <h3>
+                                🛡️ Kategorie-Sperren
+                            </h3>
+
+                            <div style="
+                                font-size:10px;
+                                color:var(--muted);
+                                margin-top:4px;
+                            ">
+                                Gesperrte Kategorien können nicht
+                                bearbeitet oder gelöscht werden.
                             </div>
+
                         </div>
 
                         <span
@@ -1896,12 +2040,13 @@ tr:hover td{
                 </div>
 
 
-                <!-- USERS -->
                 <div class="card">
 
                     <div class="cardHeader">
 
-                        <h3>👥 Benutzerverwaltung</h3>
+                        <h3>
+                            👥 Benutzerverwaltung
+                        </h3>
 
                         <button
                             class="btn btnPrimary"
@@ -1928,7 +2073,9 @@ tr:hover td{
 
                             </thead>
 
-                            <tbody id="userTable"></tbody>
+                            <tbody
+                                id="userTable"
+                            ></tbody>
 
                         </table>
 
@@ -1945,7 +2092,10 @@ tr:hover td{
 </div>
 
 
-<!-- MODAL -->
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
 <div
     id="modalOverlay"
     class="modalOverlay"
@@ -2006,9 +2156,7 @@ tr:hover td{
 ========================================================= */
 
 import {
-    initializeApp,
-    getApps,
-    getApp
+    initializeApp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
@@ -2028,46 +2176,48 @@ import {
     updateDoc,
     deleteDoc,
     onSnapshot,
-    query,
-    orderBy,
     serverTimestamp,
     getDocs
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
 const firebaseConfig = {
-    apiKey:"AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-    authDomain:"ordnersystem-1352a.firebaseapp.com",
-    projectId:"ordnersystem-1352a",
-    storageBucket:"ordnersystem-1352a.firebasestorage.app",
-    messagingSenderId:"39473536985",
-    appId:"1:39473536985:web:7dae48028c28dabc6a03c8"
+
+    apiKey:
+        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+
+    authDomain:
+        "ordnersystem-1352a.firebaseapp.com",
+
+    projectId:
+        "ordnersystem-1352a",
+
+    storageBucket:
+        "ordnersystem-1352a.firebasestorage.app",
+
+    messagingSenderId:
+        "39473536985",
+
+    appId:
+        "1:39473536985:web:7dae48028c28dabc6a03c8"
 };
 
-const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+
+const ADMIN1 =
+    "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
+
+const ADMIN2 =
+    "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
 
 
-let app;
-let auth;
-let db;
+const app =
+    initializeApp(firebaseConfig);
 
-try{
+const auth =
+    getAuth(app);
 
-    app = initializeApp(firebaseConfig);
-
-    auth = getAuth(app);
-
-    db = getFirestore(app);
-
-}catch(error){
-
-    console.error(error);
-
-    document.getElementById("loginError").textContent =
-        "Firebase konnte nicht gestartet werden.";
-
-}
+const db =
+    getFirestore(app);
 
 
 /* =========================================================
@@ -2087,12 +2237,16 @@ let notifications = [];
 let editingId = null;
 let modalType = null;
 
+let listenersStarted = false;
+let chipLinkOpened = false;
+
 
 /* =========================================================
    DOM
 ========================================================= */
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+    document.getElementById(id);
 
 
 /* =========================================================
@@ -2107,6 +2261,7 @@ function escapeHTML(value){
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+
 }
 
 
@@ -2117,14 +2272,22 @@ function safeDate(value){
     try{
 
         if(typeof value.toDate === "function"){
-            return value.toDate().toLocaleDateString("de-DE");
+
+            return value
+                .toDate()
+                .toLocaleDateString("de-DE");
+
         }
 
-        return new Date(value).toLocaleDateString("de-DE");
+        return new Date(value)
+            .toLocaleDateString("de-DE");
 
     }catch{
+
         return "-";
+
     }
+
 }
 
 
@@ -2136,74 +2299,614 @@ function timestampNumber(value){
         return value.seconds;
     }
 
-    const time = new Date(value).getTime();
+    const time =
+        new Date(value).getTime();
 
-    return isNaN(time) ? 0 : time;
+    return isNaN(time)
+        ? 0
+        : time;
+
 }
 
 
 function isAdmin(){
 
-    if(!currentUser) return false;
+    if(!currentUser){
+        return false;
+    }
 
     return (
         currentUser.uid === ADMIN1 ||
         currentUser.uid === ADMIN2
     );
+
 }
 
 
 function initials(name){
 
-    if(!name) return "?";
+    if(!name){
+        return "?";
+    }
 
     return name
         .trim()
         .split(/\s+/)
         .slice(0,2)
-        .map(x => x[0])
+        .map(x=>x[0])
         .join("")
         .toUpperCase();
+
 }
 
 
-function showToast(message,type="success"){
+function showToast(
+    message,
+    type="success"
+){
 
-    const box = $("toastBox");
+    const box =
+        $("toastBox");
 
-    const toast = document.createElement("div");
+    const toast =
+        document.createElement("div");
 
-    toast.className = "toast " + type;
+    toast.className =
+        "toast " + type;
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
     box.appendChild(toast);
 
     setTimeout(()=>{
         toast.remove();
     },3500);
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(
+    title,
+    body,
+    saveText="💾 Speichern",
+    showSave=true
+){
+
+    $("modalTitle").textContent =
+        title;
+
+    $("modalBody").innerHTML =
+        body;
+
+    $("modalSave").textContent =
+        saveText;
+
+    /*
+       WICHTIG:
+       Der Speichern-Button wird bei jedem neuen
+       Modal wieder sichtbar gemacht.
+    */
+
+    $("modalSave").style.display =
+        showSave
+        ? "inline-flex"
+        : "none";
+
+    $("modalCancel").textContent =
+        showSave
+        ? "Abbrechen"
+        : "Schließen";
+
+    $("modalOverlay")
+        .classList
+        .add("show");
+
 }
 
 
 function closeModal(){
 
-    $("modalOverlay").classList.remove("show");
+    $("modalOverlay")
+        .classList
+        .remove("show");
+
+    $("modalSave").style.display =
+        "inline-flex";
+
+    $("modalCancel").textContent =
+        "Abbrechen";
 
     editingId = null;
+
     modalType = null;
 
 }
 
 
-function openModal(title,body,saveText="💾 Speichern"){
+/* =========================================================
+   CHIP LINKS
+========================================================= */
 
-    $("modalTitle").textContent = title;
 
-    $("modalBody").innerHTML = body;
+/*
+   Erstellt eine dauerhafte Chip-ID.
 
-    $("modalSave").textContent = saveText;
+   crypto.randomUUID() wird verwendet.
+   Falls ein älterer Browser das nicht unterstützt,
+   wird eine eigene zufällige ID erzeugt.
+*/
 
-    $("modalOverlay").classList.add("show");
+function createChipId(){
+
+    if(
+        window.crypto &&
+        typeof window.crypto.randomUUID === "function"
+    ){
+
+        return window.crypto.randomUUID();
+
+    }
+
+    return (
+        "chip-" +
+        Date.now().toString(36) +
+        "-" +
+        Math.random()
+            .toString(36)
+            .slice(2,12)
+    );
+
+}
+
+
+/*
+   Basis-URL der aktuellen GitHub-Seite.
+
+   Beispiel:
+
+   https://deinname.github.io/OrdnerSystem/
+
+   daraus wird:
+
+   https://deinname.github.io/OrdnerSystem/?folder=CHIP-ID
+*/
+
+function getBaseAppURL(){
+
+    const url =
+        new URL(
+            window.location.href
+        );
+
+    url.search = "";
+    url.hash = "";
+
+    return url;
+
+}
+
+
+/*
+   Erstellt den persönlichen Link
+   für einen Ordner.
+*/
+
+function getChipLink(folder){
+
+    const url =
+        getBaseAppURL();
+
+    url.searchParams.set(
+        "folder",
+        folder.chipId || folder.id
+    );
+
+    return url.toString();
+
+}
+
+
+/*
+   Kopiert den Chip-Link.
+*/
+
+async function copyChipLink(id){
+
+    const folder =
+        folders.find(
+            f=>f.id === id
+        );
+
+    if(!folder){
+
+        showToast(
+            "❌ Ordner nicht gefunden.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Falls ein alter Ordner noch keine
+       chipId besitzt, wird automatisch
+       eine erstellt und gespeichert.
+    */
+
+    let chipId =
+        folder.chipId;
+
+
+    if(!chipId){
+
+        chipId =
+            createChipId();
+
+        try{
+
+            await updateDoc(
+                doc(
+                    db,
+                    "folders",
+                    id
+                ),
+                {
+                    chipId,
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
+
+            folder.chipId =
+                chipId;
+
+        }catch(error){
+
+            console.error(error);
+
+            showToast(
+                "❌ Chip-ID konnte nicht gespeichert werden.",
+                "error"
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    const link =
+        getChipLink(folder);
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            link
+        );
+
+        showToast(
+            "🔗 Chip-Link kopiert."
+        );
+
+    }catch{
+
+        /*
+           Fallback für Browser,
+           bei denen Clipboard API blockiert ist.
+        */
+
+        const textarea =
+            document.createElement("textarea");
+
+        textarea.value =
+            link;
+
+        textarea.style.position =
+            "fixed";
+
+        textarea.style.opacity =
+            "0";
+
+        document.body.appendChild(
+            textarea
+        );
+
+        textarea.select();
+
+        try{
+
+            document.execCommand(
+                "copy"
+            );
+
+            showToast(
+                "🔗 Chip-Link kopiert."
+            );
+
+        }catch{
+
+            showToast(
+                "⚠️ Link konnte nicht automatisch kopiert werden.",
+                "warning"
+            );
+
+        }
+
+        textarea.remove();
+
+    }
+
+}
+
+
+/*
+   Öffnet das Link-Fenster.
+*/
+
+function showChipLink(id){
+
+    const folder =
+        folders.find(
+            f=>f.id === id
+        );
+
+    if(!folder){
+
+        showToast(
+            "❌ Ordner nicht gefunden.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const link =
+        getChipLink(folder);
+
+
+    editingId = null;
+    modalType = "chip";
+
+
+    openModal(
+        "🔗 NFC-Chip-Link",
+        `
+
+        <div
+            style="
+                text-align:center;
+                padding:5px 0 15px;
+            "
+        >
+
+            <div
+                style="
+                    width:70px;
+                    height:70px;
+                    margin:0 auto 14px;
+                    border-radius:18px;
+                    background:#eef4ff;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:35px;
+                "
+            >
+                📡
+            </div>
+
+            <h3
+                style="
+                    font-size:18px;
+                    margin-bottom:7px;
+                "
+            >
+                ${escapeHTML(folder.name)}
+            </h3>
+
+            <p
+                style="
+                    color:var(--muted);
+                    font-size:11px;
+                    line-height:1.5;
+                "
+            >
+                Dieser Link gehört dauerhaft zu diesem Ordner.
+                Wird er über einen NFC-Chip geöffnet,
+                kann der Ordner direkt aufgerufen werden.
+            </p>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                🔗 Chip-Link
+            </label>
+
+            <input
+                id="chipLinkInput"
+                type="text"
+                readonly
+                value="${escapeHTML(link)}"
+            >
+
+        </div>
+
+
+        <div
+            style="
+                padding:12px;
+                background:#eff6ff;
+                border:1px solid #dbeafe;
+                border-radius:10px;
+                font-size:11px;
+                line-height:1.5;
+                color:#1e40af;
+            "
+        >
+            📱 Kopiere den Link und speichere ihn mit
+            einer NFC-App auf deinem Chip.
+            Beim Öffnen des Links wird dieser Ordner
+            automatisch erkannt.
+        </div>
+
+        `,
+        "🔗 Link kopieren",
+        true
+    );
+
+}
+
+
+/*
+   Öffnet einen Ordner anhand der URL.
+
+   Unterstützt:
+
+   ?folder=CHIP-ID
+
+   und zusätzlich alte Links:
+
+   ?folder=FIRESTORE-DOCUMENT-ID
+*/
+
+function openFolderFromURL(){
+
+    if(chipLinkOpened){
+        return;
+    }
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const folderParam =
+        params.get("folder");
+
+    if(!folderParam){
+        return;
+    }
+
+
+    const folder =
+        folders.find(
+            f =>
+                f.chipId === folderParam ||
+                f.id === folderParam
+        );
+
+
+    if(!folder){
+
+        showToast(
+            "⚠️ Der Chip-Link gehört zu keinem vorhandenen Ordner.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+
+    chipLinkOpened = true;
+
+    /*
+       URL sauber machen.
+       Der Ordner bleibt trotzdem geöffnet.
+    */
+
+    try{
+
+        const cleanURL =
+            getBaseAppURL();
+
+        window.history.replaceState(
+            {},
+            document.title,
+            cleanURL.toString()
+        );
+
+    }catch(error){
+
+        console.warn(
+            "URL konnte nicht bereinigt werden.",
+            error
+        );
+
+    }
+
+
+    setTimeout(()=>{
+
+        navigate("folders");
+
+        openFolder(
+            folder.id
+        );
+
+    },250);
+
+}
+
+
+/*
+   Alte Ordner ohne chipId bekommen
+   automatisch eine.
+*/
+
+async function ensureChipId(folder){
+
+    if(folder.chipId){
+        return folder.chipId;
+    }
+
+    const newId =
+        createChipId();
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "folders",
+                folder.id
+            ),
+            {
+                chipId:newId,
+                updatedAt:
+                    serverTimestamp()
+            }
+        );
+
+        folder.chipId =
+            newId;
+
+        return newId;
+
+    }catch(error){
+
+        console.error(
+            "Chip-ID Fehler:",
+            error
+        );
+
+        return null;
+
+    }
 
 }
 
@@ -2212,86 +2915,152 @@ function openModal(title,body,saveText="💾 Speichern"){
    LOGIN
 ========================================================= */
 
-$("loginForm").addEventListener("submit",async event=>{
+$("loginForm")
+.addEventListener(
+    "submit",
+    async event=>{
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const email = $("loginEmail").value.trim();
-    const password = $("loginPassword").value;
+        const email =
+            $("loginEmail")
+                .value
+                .trim();
 
-    $("loginError").textContent = "";
+        const password =
+            $("loginPassword")
+                .value;
 
-    $("loginButton").disabled = true;
-    $("loginButton").textContent = "⏳ Anmeldung...";
+        $("loginError")
+            .textContent = "";
 
-    try{
+        $("loginButton")
+            .disabled = true;
 
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
+        $("loginButton")
+            .textContent =
+            "⏳ Anmeldung...";
 
-    }catch(error){
 
-        console.error(error);
+        try{
 
-        let message = "Anmeldung fehlgeschlagen.";
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-        if(error.code === "auth/invalid-credential"){
-            message = "E-Mail oder Passwort ist falsch.";
+        }catch(error){
+
+            console.error(error);
+
+            let message =
+                "Anmeldung fehlgeschlagen.";
+
+            if(
+                error.code ===
+                "auth/invalid-credential"
+            ){
+                message =
+                    "E-Mail oder Passwort ist falsch.";
+            }
+
+            if(
+                error.code ===
+                "auth/user-not-found"
+            ){
+                message =
+                    "Benutzer wurde nicht gefunden.";
+            }
+
+            if(
+                error.code ===
+                "auth/wrong-password"
+            ){
+                message =
+                    "Das Passwort ist falsch.";
+            }
+
+            if(
+                error.code ===
+                "auth/invalid-email"
+            ){
+                message =
+                    "Die E-Mail-Adresse ist ungültig.";
+            }
+
+            $("loginError")
+                .textContent =
+                message;
+
+        }finally{
+
+            $("loginButton")
+                .disabled = false;
+
+            $("loginButton")
+                .textContent =
+                "🔐 Anmelden";
+
         }
-
-        if(error.code === "auth/user-not-found"){
-            message = "Benutzer wurde nicht gefunden.";
-        }
-
-        if(error.code === "auth/wrong-password"){
-            message = "Das Passwort ist falsch.";
-        }
-
-        if(error.code === "auth/invalid-email"){
-            message = "Die E-Mail-Adresse ist ungültig.";
-        }
-
-        $("loginError").textContent = message;
-
-    }finally{
-
-        $("loginButton").disabled = false;
-        $("loginButton").textContent = "🔐 Anmelden";
 
     }
-
-});
+);
 
 
 /* =========================================================
-   AUTH STATE
+   AUTH
 ========================================================= */
 
-onAuthStateChanged(auth,async user=>{
+onAuthStateChanged(
+    auth,
+    async user=>{
 
-    currentUser = user;
+        currentUser =
+            user;
 
-    if(!user){
+        if(!user){
 
-        $("app").classList.add("hidden");
-        $("loginScreen").classList.remove("hidden");
+            $("app")
+                .classList
+                .add("hidden");
 
-        return;
+            $("loginScreen")
+                .classList
+                .remove("hidden");
+
+            return;
+
+        }
+
+
+        $("loginScreen")
+            .classList
+            .add("hidden");
+
+        $("app")
+            .classList
+            .remove("hidden");
+
+
+        await loadProfile();
+
+        setupListeners();
+
+        setupAdmin();
+
+        /*
+           NFC-Link erst nach dem Laden
+           der Ordner öffnen.
+        */
+
+        setTimeout(
+            openFolderFromURL,
+            500
+        );
+
     }
-
-    $("loginScreen").classList.add("hidden");
-    $("app").classList.remove("hidden");
-
-    await loadProfile();
-
-    setupListeners();
-
-    setupAdmin();
-
-});
+);
 
 
 /* =========================================================
@@ -2300,23 +3069,30 @@ onAuthStateChanged(auth,async user=>{
 
 async function loadProfile(){
 
-    if(!currentUser) return;
+    if(!currentUser){
+        return;
+    }
 
     try{
 
-        const ref = doc(
-            db,
-            "users",
-            currentUser.uid
-        );
+        const ref =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
 
-        const snap = await getDoc(ref);
+        const snap =
+            await getDoc(ref);
+
 
         if(snap.exists()){
 
             currentProfile = {
+
                 id:snap.id,
                 ...snap.data()
+
             };
 
         }else{
@@ -2330,15 +3106,21 @@ async function loadProfile(){
                     currentUser.email?.split("@")[0] ||
                     "Benutzer",
 
-                email:currentUser.email || "",
+                email:
+                    currentUser.email || "",
 
                 photo:"",
 
-                role:isAdmin() ? "admin" : "user",
+                role:
+                    isAdmin()
+                    ? "admin"
+                    : "user",
 
-                createdAt:serverTimestamp()
+                createdAt:
+                    serverTimestamp()
 
             };
+
 
             await setDoc(
                 ref,
@@ -2353,14 +3135,25 @@ async function loadProfile(){
 
         currentProfile = {
 
-            name:currentUser.email?.split("@")[0] || "Benutzer",
-            email:currentUser.email || "",
+            name:
+                currentUser.email
+                    ?.split("@")[0] ||
+                "Benutzer",
+
+            email:
+                currentUser.email || "",
+
             photo:"",
-            role:isAdmin() ? "admin" : "user"
+
+            role:
+                isAdmin()
+                ? "admin"
+                : "user"
 
         };
 
     }
+
 
     renderProfile();
 
@@ -2379,37 +3172,59 @@ function renderProfile(){
         currentUser?.email ||
         "";
 
-    $("sidebarName").textContent = name;
 
-    $("sidebarRole").textContent =
-        isAdmin() ? "Administrator" : "Benutzer";
+    $("sidebarName")
+        .textContent =
+        name;
 
-    $("profileName").textContent = name;
+    $("sidebarRole")
+        .textContent =
+        isAdmin()
+        ? "Administrator"
+        : "Benutzer";
 
-    $("profileEmail").textContent = email;
 
-    $("profileNameInput").value =
+    $("profileName")
+        .textContent =
+        name;
+
+    $("profileEmail")
+        .textContent =
+        email;
+
+
+    $("profileNameInput")
+        .value =
         currentProfile?.name || "";
 
-    $("profilePhotoInput").value =
+
+    $("profilePhotoInput")
+        .value =
         currentProfile?.photo || "";
 
-    const photo = currentProfile?.photo || "";
+
+    const photo =
+        currentProfile?.photo || "";
+
 
     if(photo){
 
-        $("profileAvatar").innerHTML =
+        $("profileAvatar")
+            .innerHTML =
             `<img src="${escapeHTML(photo)}" alt="">`;
 
-        $("sidebarAvatar").innerHTML =
+        $("sidebarAvatar")
+            .innerHTML =
             `<img src="${escapeHTML(photo)}" alt="">`;
 
     }else{
 
-        $("profileAvatar").textContent =
+        $("profileAvatar")
+            .textContent =
             initials(name);
 
-        $("sidebarAvatar").textContent =
+        $("sidebarAvatar")
+            .textContent =
             initials(name);
 
     }
@@ -2419,39 +3234,60 @@ function renderProfile(){
 
 async function saveProfile(){
 
-    if(!currentUser) return;
+    if(!currentUser){
+        return;
+    }
+
 
     const name =
-        $("profileNameInput").value.trim() ||
+        $("profileNameInput")
+            .value
+            .trim() ||
         "Benutzer";
 
+
     const photo =
-        $("profilePhotoInput").value.trim();
+        $("profilePhotoInput")
+            .value
+            .trim();
+
 
     try{
 
         await setDoc(
-            doc(db,"users",currentUser.uid),
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            ),
             {
                 name,
                 photo,
-                email:currentUser.email || "",
-                updatedAt:serverTimestamp()
+                email:
+                    currentUser.email || "",
+                updatedAt:
+                    serverTimestamp()
             },
             {
                 merge:true
             }
         );
 
+
         currentProfile = {
+
             ...currentProfile,
             name,
             photo
+
         };
+
 
         renderProfile();
 
-        showToast("✅ Profil gespeichert.");
+        showToast(
+            "✅ Profil gespeichert."
+        );
 
     }catch(error){
 
@@ -2471,11 +3307,11 @@ async function saveProfile(){
    FIRESTORE LISTENERS
 ========================================================= */
 
-let listenersStarted = false;
-
 function setupListeners(){
 
-    if(listenersStarted) return;
+    if(listenersStarted){
+        return;
+    }
 
     listenersStarted = true;
 
@@ -2483,21 +3319,67 @@ function setupListeners(){
     /* FOLDERS */
 
     onSnapshot(
-        collection(db,"folders"),
-        snap=>{
+        collection(
+            db,
+            "folders"
+        ),
+        async snap=>{
 
-            folders = snap.docs.map(d=>({
-                id:d.id,
-                ...d.data()
-            }));
+            folders =
+                snap.docs.map(
+                    d=>({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
+
+
+            /*
+               Alten Ordnern automatisch
+               eine Chip-ID geben.
+            */
+
+            for(
+                const folder of folders
+            ){
+
+                if(!folder.chipId){
+
+                    ensureChipId(
+                        folder
+                    );
+
+                }
+
+            }
+
 
             renderFolders();
+
             renderRecentFolders();
+
             updateStats();
+
+            /*
+               NFC-Link nach dem Laden
+               erneut prüfen.
+            */
+
+            openFolderFromURL();
 
         },
         error=>{
-            console.error("Folders:",error);
+
+            console.error(
+                "Folders:",
+                error
+            );
+
+            showToast(
+                "❌ Ordner konnten nicht geladen werden.",
+                "error"
+            );
+
         }
     );
 
@@ -2505,21 +3387,39 @@ function setupListeners(){
     /* CATEGORIES */
 
     onSnapshot(
-        collection(db,"categories"),
+        collection(
+            db,
+            "categories"
+        ),
         snap=>{
 
-            categories = snap.docs.map(d=>({
-                id:d.id,
-                ...d.data()
-            }));
+            categories =
+                snap.docs.map(
+                    d=>({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
             renderCategories();
+
             renderAdminCategories();
+
             updateStats();
 
         },
         error=>{
-            console.error("Categories:",error);
+
+            console.error(
+                "Categories:",
+                error
+            );
+
+            showToast(
+                "❌ Kategorien konnten nicht geladen werden.",
+                "error"
+            );
+
         }
     );
 
@@ -2527,19 +3427,28 @@ function setupListeners(){
     /* PURPOSES */
 
     onSnapshot(
-        collection(db,"purposes"),
+        collection(
+            db,
+            "purposes"
+        ),
         snap=>{
 
-            purposes = snap.docs.map(d=>({
-                id:d.id,
-                ...d.data()
-            }));
+            purposes =
+                snap.docs.map(
+                    d=>({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
             renderPurposes();
 
         },
         error=>{
-            console.error("Purposes:",error);
+            console.error(
+                "Purposes:",
+                error
+            );
         }
     );
 
@@ -2547,20 +3456,30 @@ function setupListeners(){
     /* REQUESTS */
 
     onSnapshot(
-        collection(db,"requests"),
+        collection(
+            db,
+            "requests"
+        ),
         snap=>{
 
-            requests = snap.docs.map(d=>({
-                id:d.id,
-                ...d.data()
-            }));
+            requests =
+                snap.docs.map(
+                    d=>({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
             renderRequests();
+
             updateStats();
 
         },
         error=>{
-            console.error("Requests:",error);
+            console.error(
+                "Requests:",
+                error
+            );
         }
     );
 
@@ -2568,29 +3487,45 @@ function setupListeners(){
     /* NOTIFICATIONS */
 
     onSnapshot(
-        collection(db,"notifications"),
+        collection(
+            db,
+            "notifications"
+        ),
         snap=>{
 
-            notifications = snap.docs
-                .map(d=>({
-                    id:d.id,
-                    ...d.data()
-                }))
-                .filter(n =>
-                    !n.userId ||
-                    n.userId === currentUser?.uid
-                )
-                .sort(
-                    (a,b)=>
-                        timestampNumber(b.createdAt) -
-                        timestampNumber(a.createdAt)
-                );
+            notifications =
+                snap.docs
+                    .map(
+                        d=>({
+                            id:d.id,
+                            ...d.data()
+                        })
+                    )
+                    .filter(
+                        n =>
+                            !n.userId ||
+                            n.userId ===
+                            currentUser?.uid
+                    )
+                    .sort(
+                        (a,b)=>
+                            timestampNumber(
+                                b.createdAt
+                            ) -
+                            timestampNumber(
+                                a.createdAt
+                            )
+                    );
+
 
             renderNotifications();
 
         },
         error=>{
-            console.error("Notifications:",error);
+            console.error(
+                "Notifications:",
+                error
+            );
         }
     );
 
@@ -2603,16 +3538,20 @@ function setupListeners(){
 
 function updateStats(){
 
-    $("statFolders").textContent =
+    $("statFolders")
+        .textContent =
         folders.length;
 
-    $("statCategories").textContent =
+    $("statCategories")
+        .textContent =
         categories.length;
 
-    $("statRequests").textContent =
+    $("statRequests")
+        .textContent =
         requests.length;
 
-    $("statUsers").textContent =
+    $("statUsers")
+        .textContent =
         users.length;
 
 }
@@ -2680,203 +3619,353 @@ function navigate(page){
         );
 
         return;
+
     }
 
 
-    document.querySelectorAll(".page")
-        .forEach(el=>{
-            el.classList.remove("active");
-        });
+    document
+        .querySelectorAll(".page")
+        .forEach(
+            el=>{
+                el.classList
+                    .remove("active");
+            }
+        );
 
 
     const target =
         $("page-" + page);
 
+
     if(target){
-        target.classList.add("active");
+
+        target.classList
+            .add("active");
+
     }
 
 
-    document.querySelectorAll(".navBtn")
-        .forEach(btn=>{
-            btn.classList.remove("active");
+    document
+        .querySelectorAll(".navBtn")
+        .forEach(
+            btn=>{
 
-            if(btn.dataset.page === page){
-                btn.classList.add("active");
+                btn.classList
+                    .remove("active");
+
+                if(
+                    btn.dataset.page ===
+                    page
+                ){
+
+                    btn.classList
+                        .add("active");
+
+                }
+
             }
-        });
+        );
 
 
     if(pageNames[page]){
 
-        $("pageTitle").textContent =
+        $("pageTitle")
+            .textContent =
             pageNames[page][0];
 
-        $("pageSubtitle").textContent =
+        $("pageSubtitle")
+            .textContent =
             pageNames[page][1];
 
     }
 
 
-    $("sidebar").classList.remove("mobileOpen");
+    $("sidebar")
+        .classList
+        .remove("mobileOpen");
 
 
     if(page === "admin"){
+
         loadUsers();
+
     }
 
 }
 
 
 /* =========================================================
-   NAV BUTTONS
+   PAGE NAVIGATION BUTTONS
 ========================================================= */
 
-document.addEventListener("click",event=>{
+document.addEventListener(
+    "click",
+    event=>{
 
-    const pageButton =
-        event.target.closest("[data-page]");
+        const pageButton =
+            event.target.closest(
+                "[data-page]"
+            );
 
-    if(pageButton){
+        if(!pageButton){
+            return;
+        }
 
-        navigate(pageButton.dataset.page);
+        navigate(
+            pageButton.dataset.page
+        );
 
-        return;
     }
-
-});
+);
 
 
 /* =========================================================
-   FOLDERS
+   FOLDERS RENDER
 ========================================================= */
 
 function renderFolders(){
 
-    const grid = $("folderGrid");
+    const grid =
+        $("folderGrid");
+
 
     if(!folders.length){
 
         grid.innerHTML = `
-            <div class="card" style="grid-column:1/-1;">
+
+            <div
+                class="card"
+                style="grid-column:1/-1;"
+            >
+
                 <div class="empty">
-                    <div class="emptyIcon">📁</div>
-                    <strong>Noch keine Ordner</strong>
+
+                    <div class="emptyIcon">
+                        📁
+                    </div>
+
+                    <strong>
+                        Noch keine Ordner
+                    </strong>
+
                     Erstelle deinen ersten Ordner.
+
                 </div>
+
             </div>
+
         `;
 
         return;
+
     }
 
 
     const search =
-        $("globalSearch").value
+        $("globalSearch")
+            .value
             .trim()
             .toLowerCase();
 
 
-    const list = folders.filter(folder=>{
+    const list =
+        folders.filter(
+            folder=>{
 
-        if(!search) return true;
+                if(!search){
+                    return true;
+                }
 
-        return (
-            String(folder.name || "")
-                .toLowerCase()
-                .includes(search) ||
+                return (
 
-            String(folder.description || "")
-                .toLowerCase()
-                .includes(search)
+                    String(
+                        folder.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        folder.description || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                );
+
+            }
         );
 
-    });
+
+    grid.innerHTML =
+        list.map(
+            folder=>{
+
+                const category =
+                    categories.find(
+                        c =>
+                            c.id ===
+                            folder.categoryId
+                    );
 
 
-    grid.innerHTML = list.map(folder=>{
-
-        const category =
-            categories.find(
-                c => c.id === folder.categoryId
-            );
-
-        const locked =
-            category?.locked === true;
+                const locked =
+                    category?.locked === true;
 
 
-        return `
+                const chipLink =
+                    getChipLink(
+                        folder
+                    );
 
-            <div class="folderCard">
 
-                <div class="folderIcon">
-                    ${locked ? "🔒" : "📁"}
-                </div>
+                return `
 
-                <h3>
-                    ${escapeHTML(folder.name || "Unbenannt")}
-                </h3>
+                <div class="folderCard">
 
-                <p>
-                    ${escapeHTML(
-                        folder.description ||
-                        "Keine Beschreibung"
-                    )}
-                </p>
+                    <div class="folderIcon">
+                        ${locked ? "🔒" : "📁"}
+                    </div>
 
-                <div class="folderBottom">
 
-                    <span class="badge ${
-                        locked
-                        ? "badgeRed"
-                        : "badgeBlue"
-                    }">
-                        ${
-                            locked
-                            ? "🔒 Gesperrt"
-                            : "📂 Aktiv"
-                        }
-                    </span>
+                    <h3>
+                        ${escapeHTML(
+                            folder.name ||
+                            "Unbenannt"
+                        )}
+                    </h3>
 
-                    <div class="actions">
+
+                    <p>
+                        ${escapeHTML(
+                            folder.description ||
+                            "Keine Beschreibung"
+                        )}
+                    </p>
+
+
+                    <div class="folderBottom">
+
+                        <span
+                            class="badge ${
+                                locked
+                                ? "badgeRed"
+                                : "badgeBlue"
+                            }"
+                        >
+
+                            ${
+                                locked
+                                ? "🔒 Gesperrt"
+                                : "📂 Aktiv"
+                            }
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- CHIP LINK -->
+
+                    <div class="chipBox">
+
+                        <div class="chipTitle">
+                            📡 NFC-Chip-Link
+                        </div>
+
+
+                        <div
+                            class="chipLinkText"
+                            title="${escapeHTML(chipLink)}"
+                        >
+                            ${escapeHTML(chipLink)}
+                        </div>
+
+
+                        <div class="chipActions">
+
+                            <button
+                                class="btn btnSmall btnPrimary"
+                                data-action="copy-chip-link"
+                                data-id="${encodeURIComponent(folder.id)}"
+                            >
+                                🔗 Kopieren
+                            </button>
+
+                            <button
+                                class="btn btnSmall"
+                                data-action="show-chip-link"
+                                data-id="${encodeURIComponent(folder.id)}"
+                            >
+                                📡 Anzeigen
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="folderActions">
 
                         <button
                             class="btn btnSmall"
                             data-action="open-folder"
                             data-id="${encodeURIComponent(folder.id)}"
                         >
-                            👁️
+                            👁️ Öffnen
                         </button>
+
 
                         <button
                             class="btn btnSmall"
                             data-action="edit-folder"
                             data-id="${encodeURIComponent(folder.id)}"
-                            ${locked ? "disabled title='Kategorie gesperrt'" : ""}
+                            ${
+                                locked
+                                ? "disabled title='Kategorie gesperrt'"
+                                : ""
+                            }
                         >
-                            ✏️
+                            ✏️ Bearbeiten
                         </button>
 
                     </div>
 
                 </div>
 
-            </div>
-        `;
+                `;
 
-    }).join("");
+            }
+        )
+        .join("");
 
 
     if(!list.length){
 
         grid.innerHTML = `
-            <div class="card" style="grid-column:1/-1;">
+
+            <div
+                class="card"
+                style="grid-column:1/-1;"
+            >
+
                 <div class="empty">
-                    <div class="emptyIcon">🔍</div>
-                    <strong>Nichts gefunden</strong>
+
+                    <div class="emptyIcon">
+                        🔍
+                    </div>
+
+                    <strong>
+                        Nichts gefunden
+                    </strong>
+
                     Keine passenden Ordner gefunden.
+
                 </div>
+
             </div>
+
         `;
 
     }
@@ -2884,47 +3973,74 @@ function renderFolders(){
 }
 
 
+/* =========================================================
+   RECENT FOLDERS
+========================================================= */
+
 function renderRecentFolders(){
 
-    const box = $("recentFolders");
+    const box =
+        $("recentFolders");
 
-    const recent = [...folders]
-        .sort(
-            (a,b)=>
-                timestampNumber(b.createdAt) -
-                timestampNumber(a.createdAt)
-        )
-        .slice(0,5);
+
+    const recent =
+        [...folders]
+            .sort(
+                (a,b)=>
+                    timestampNumber(
+                        b.createdAt
+                    ) -
+                    timestampNumber(
+                        a.createdAt
+                    )
+            )
+            .slice(0,5);
 
 
     if(!recent.length){
 
         box.innerHTML = `
+
             <div class="empty">
-                <div class="emptyIcon">📁</div>
-                <strong>Keine Ordner</strong>
+
+                <div class="emptyIcon">
+                    📁
+                </div>
+
+                <strong>
+                    Keine Ordner
+                </strong>
+
                 Noch wurden keine Ordner erstellt.
+
             </div>
+
         `;
 
         return;
+
     }
 
 
-    box.innerHTML = recent.map(folder=>`
+    box.innerHTML =
+        recent.map(
+            folder=>`
 
-        <div style="
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            padding:10px 0;
-            border-bottom:1px solid var(--border);
-        ">
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px solid var(--border);
+            ">
 
-            <div style="display:flex;align-items:center;gap:10px;">
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                ">
 
-                <div
-                    style="
+                    <div style="
                         width:36px;
                         height:36px;
                         border-radius:9px;
@@ -2932,45 +4048,68 @@ function renderRecentFolders(){
                         display:flex;
                         align-items:center;
                         justify-content:center;
-                    "
-                >
-                    📁
-                </div>
+                    ">
+                        📁
+                    </div>
 
-                <div>
+                    <div>
 
-                    <strong style="font-size:12px;">
-                        ${escapeHTML(folder.name || "Unbenannt")}
-                    </strong>
+                        <strong style="font-size:12px;">
+                            ${escapeHTML(
+                                folder.name ||
+                                "Unbenannt"
+                            )}
+                        </strong>
 
-                    <div style="font-size:10px;color:var(--muted);">
-                        ${safeDate(folder.createdAt)}
+                        <div style="
+                            font-size:10px;
+                            color:var(--muted);
+                        ">
+                            ${safeDate(
+                                folder.createdAt
+                            )}
+                        </div>
+
                     </div>
 
                 </div>
 
+
+                <button
+                    class="btn btnSmall"
+                    data-action="open-folder"
+                    data-id="${encodeURIComponent(folder.id)}"
+                >
+                    👁️
+                </button>
+
             </div>
 
-        </div>
-
-    `).join("");
+        `
+        )
+        .join("");
 
 }
 
 
 /* =========================================================
-   NEW / EDIT FOLDER
+   FOLDER MODAL
 ========================================================= */
 
 function openFolderModal(id=null){
 
-    editingId = id;
-    modalType = "folder";
+    editingId =
+        id;
+
+    modalType =
+        "folder";
 
 
     const folder =
         id
-        ? folders.find(f=>f.id === id)
+        ? folders.find(
+            f=>f.id === id
+        )
         : null;
 
 
@@ -2978,8 +4117,11 @@ function openFolderModal(id=null){
 
         const category =
             categories.find(
-                c => c.id === folder.categoryId
+                c =>
+                    c.id ===
+                    folder.categoryId
             );
+
 
         if(category?.locked){
 
@@ -2989,50 +4131,100 @@ function openFolderModal(id=null){
             );
 
             return;
+
         }
 
     }
 
 
-    const options = categories.map(category=>`
+    const options =
+        categories
+            .map(
+                category=>`
 
-        <option
-            value="${escapeHTML(category.id)}"
-            ${folder?.categoryId === category.id ? "selected" : ""}
-            ${category.locked ? "disabled" : ""}
-        >
-            ${category.locked ? "🔒 " : ""}
-            ${escapeHTML(category.name)}
-        </option>
+                <option
+                    value="${escapeHTML(category.id)}"
+                    ${
+                        folder?.categoryId ===
+                        category.id
+                        ? "selected"
+                        : ""
+                    }
+                    ${
+                        category.locked
+                        ? "disabled"
+                        : ""
+                    }
+                >
 
-    `).join("");
+                    ${
+                        category.locked
+                        ? "🔒 "
+                        : ""
+                    }
+
+                    ${escapeHTML(
+                        category.name
+                    )}
+
+                </option>
+
+            `
+            )
+            .join("");
 
 
     openModal(
-        folder ? "✏️ Ordner bearbeiten" : "➕ Neuer Ordner",
+
+        folder
+        ? "✏️ Ordner bearbeiten"
+        : "➕ Neuer Ordner",
+
         `
 
         <div class="field">
-            <label>Name</label>
+
+            <label>
+                Name
+            </label>
+
             <input
                 id="modalFolderName"
                 type="text"
-                value="${escapeHTML(folder?.name || "")}"
+                value="${escapeHTML(
+                    folder?.name || ""
+                )}"
                 placeholder="Ordnername"
             >
+
         </div>
 
+
         <div class="field">
-            <label>Beschreibung</label>
+
+            <label>
+                Beschreibung
+            </label>
+
             <textarea
                 id="modalFolderDescription"
                 placeholder="Beschreibung"
-            >${escapeHTML(folder?.description || "")}</textarea>
+            >${escapeHTML(
+                folder?.description || ""
+            )}</textarea>
+
         </div>
 
+
         <div class="field">
-            <label>Kategorie</label>
-            <select id="modalFolderCategory">
+
+            <label>
+                Kategorie
+            </label>
+
+            <select
+                id="modalFolderCategory"
+            >
 
                 <option value="">
                     Keine Kategorie
@@ -3041,45 +4233,98 @@ function openFolderModal(id=null){
                 ${options}
 
             </select>
+
         </div>
 
+
         <div class="field">
-            <label>Zweck</label>
-            <select id="modalFolderPurpose">
+
+            <label>
+                Zweck
+            </label>
+
+            <select
+                id="modalFolderPurpose"
+            >
 
                 <option value="">
                     Kein Zweck
                 </option>
 
                 ${
-                    purposes.map(p=>`
+                    purposes
+                        .map(
+                            p=>`
 
-                        <option
-                            value="${escapeHTML(p.id)}"
-                            ${folder?.purposeId === p.id ? "selected" : ""}
-                        >
-                            ${escapeHTML(p.name)}
-                        </option>
+                            <option
+                                value="${escapeHTML(p.id)}"
+                                ${
+                                    folder?.purposeId ===
+                                    p.id
+                                    ? "selected"
+                                    : ""
+                                }
+                            >
+                                ${escapeHTML(
+                                    p.name
+                                )}
+                            </option>
 
-                    `).join("")
+                        `
+                        )
+                        .join("")
                 }
 
             </select>
+
         </div>
 
+
+        ${
+            folder
+            ? `
+
+                <div
+                    style="
+                        padding:11px;
+                        background:#f8fafc;
+                        border:1px solid var(--border);
+                        border-radius:10px;
+                        font-size:11px;
+                    "
+                >
+
+                    📡 Dieser Ordner besitzt einen
+                    dauerhaften NFC-Chip-Link.
+
+                </div>
+
+            `
+            : ""
+        }
+
         `,
+
         folder
         ? "💾 Änderungen speichern"
         : "➕ Ordner erstellen"
+
     );
 
 }
 
 
+/* =========================================================
+   SAVE FOLDER
+========================================================= */
+
 async function saveFolder(){
 
     const name =
-        $("modalFolderName").value.trim();
+        $("modalFolderName")
+            .value
+            .trim();
+
 
     if(!name){
 
@@ -3089,22 +4334,29 @@ async function saveFolder(){
         );
 
         return;
+
     }
 
 
     const categoryId =
-        $("modalFolderCategory").value;
+        $("modalFolderCategory")
+            .value;
+
 
     const purposeId =
-        $("modalFolderPurpose").value;
+        $("modalFolderPurpose")
+            .value;
 
 
     if(categoryId){
 
         const category =
             categories.find(
-                c => c.id === categoryId
+                c =>
+                    c.id ===
+                    categoryId
             );
+
 
         if(category?.locked){
 
@@ -3114,6 +4366,7 @@ async function saveFolder(){
             );
 
             return;
+
         }
 
     }
@@ -3124,7 +4377,9 @@ async function saveFolder(){
         name,
 
         description:
-            $("modalFolderDescription").value.trim(),
+            $("modalFolderDescription")
+                .value
+                .trim(),
 
         categoryId,
 
@@ -3141,32 +4396,60 @@ async function saveFolder(){
         if(editingId){
 
             await updateDoc(
-                doc(db,"folders",editingId),
+                doc(
+                    db,
+                    "folders",
+                    editingId
+                ),
                 data
             );
 
-            showToast("✅ Ordner aktualisiert.");
+            showToast(
+                "✅ Ordner aktualisiert."
+            );
 
         }else{
 
+            const chipId =
+                createChipId();
+
+
             await addDoc(
-                collection(db,"folders"),
+                collection(
+                    db,
+                    "folders"
+                ),
                 {
+
                     ...data,
-                    createdBy:currentUser.uid,
-                    createdAt:serverTimestamp()
+
+                    chipId,
+
+                    createdBy:
+                        currentUser.uid,
+
+                    createdAt:
+                        serverTimestamp()
+
                 }
             );
 
-            showToast("✅ Ordner erstellt.");
+
+            showToast(
+                "✅ Ordner erstellt und Chip-Link erzeugt."
+            );
 
         }
+
 
         closeModal();
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "FOLDER SAVE ERROR:",
+            error
+        );
 
         showToast(
             "❌ Ordner konnte nicht gespeichert werden.",
@@ -3184,141 +4467,254 @@ async function saveFolder(){
 
 function renderCategories(){
 
-    const grid = $("categoryGrid");
+    const grid =
+        $("categoryGrid");
+
 
     if(!categories.length){
 
         grid.innerHTML = `
-            <div class="card" style="grid-column:1/-1;">
+
+            <div
+                class="card"
+                style="grid-column:1/-1;"
+            >
+
                 <div class="empty">
-                    <div class="emptyIcon">🗂️</div>
-                    <strong>Keine Kategorien</strong>
+
+                    <div class="emptyIcon">
+                        🗂️
+                    </div>
+
+                    <strong>
+                        Keine Kategorien
+                    </strong>
+
                     Erstelle eine neue Kategorie.
+
                 </div>
+
             </div>
+
         `;
 
         return;
+
     }
 
 
-    grid.innerHTML = categories.map(category=>{
-
-        const locked =
-            category.locked === true;
-
-
-        return `
-
-        <div
-            class="categoryCard ${locked ? "isLocked" : ""}"
-        >
-
-            <div class="categoryTop">
-
-                <div class="categoryIcon">
-                    ${locked ? "🔒" : "🗂️"}
-                </div>
-
-                <div class="categoryInfo">
-
-                    <h3>
-                        ${escapeHTML(category.name || "Unbenannt")}
-                    </h3>
-
-                    <p>
-                        ${escapeHTML(
-                            category.description ||
-                            "Keine Beschreibung"
-                        )}
-                    </p>
-
-                </div>
-
-            </div>
+    const search =
+        $("globalSearch")
+            .value
+            .trim()
+            .toLowerCase();
 
 
-            <div class="categoryStatus">
+    const list =
+        categories.filter(
+            category=>{
 
-                <div>
+                if(!search){
+                    return true;
+                }
 
-                    ${
+                return (
+                    String(
+                        category.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        category.description || ""
+                    )
+                    .toLowerCase()
+                    .includes(search)
+                );
+
+            }
+        );
+
+
+    grid.innerHTML =
+        list.map(
+            category=>{
+
+                const locked =
+                    category.locked === true;
+
+
+                return `
+
+                <div
+                    class="categoryCard ${
                         locked
-                        ? `
-                            <span class="badge badgeRed">
-                                🔒 Gesperrt
-                            </span>
-                          `
-                        : `
-                            <span class="badge badgeGreen">
-                                🔓 Aktiv
-                            </span>
-                          `
-                    }
+                        ? "isLocked"
+                        : ""
+                    }"
+                >
 
-                    <div class="lockInfo">
+                    <div class="categoryTop">
+
+                        <div class="categoryIcon">
+                            ${
+                                locked
+                                ? "🔒"
+                                : "🗂️"
+                            }
+                        </div>
+
+                        <div class="categoryInfo">
+
+                            <h3>
+                                ${escapeHTML(
+                                    category.name ||
+                                    "Unbenannt"
+                                )}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    category.description ||
+                                    "Keine Beschreibung"
+                                )}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="categoryStatus">
+
+                        <div>
+
+                            ${
+                                locked
+                                ? `
+                                    <span class="badge badgeRed">
+                                        🔒 Gesperrt
+                                    </span>
+                                `
+                                : `
+                                    <span class="badge badgeGreen">
+                                        🔓 Aktiv
+                                    </span>
+                                `
+                            }
+
+                            <div class="lockInfo">
+
+                                ${
+                                    locked
+                                    ? "Ändern und Löschen gesperrt"
+                                    : "Kategorie kann bearbeitet werden"
+                                }
+
+                            </div>
+
+                        </div>
+
 
                         ${
-                            locked
-                            ? "Ändern und Löschen gesperrt"
-                            : "Kategorie kann bearbeitet werden"
+                            isAdmin()
+                            ? `
+
+                                <button
+                                    class="switch ${
+                                        locked
+                                        ? "on"
+                                        : ""
+                                    }"
+                                    data-action="toggle-category-lock"
+                                    data-id="${encodeURIComponent(category.id)}"
+                                    title="${
+                                        locked
+                                        ? "Kategorie entsperren"
+                                        : "Kategorie sperren"
+                                    }"
+                                ></button>
+
+                            `
+                            : ""
                         }
+
+                    </div>
+
+
+                    <div
+                        class="actions"
+                        style="margin-top:13px;"
+                    >
+
+                        <button
+                            class="btn btnSmall"
+                            data-action="edit-category"
+                            data-id="${encodeURIComponent(category.id)}"
+                            ${
+                                locked
+                                ? "disabled"
+                                : ""
+                            }
+                        >
+                            ✏️ Bearbeiten
+                        </button>
+
+
+                        <button
+                            class="btn btnSmall btnDanger"
+                            data-action="delete-category"
+                            data-id="${encodeURIComponent(category.id)}"
+                            ${
+                                locked
+                                ? "disabled"
+                                : ""
+                            }
+                        >
+                            🗑️ Löschen
+                        </button>
 
                     </div>
 
                 </div>
 
+                `;
 
-                ${
-                    isAdmin()
-                    ? `
-                        <button
-                            class="switch ${locked ? "on" : ""}"
-                            data-action="toggle-category-lock"
-                            data-id="${encodeURIComponent(category.id)}"
-                            title="${
-                                locked
-                                ? "Kategorie entsperren"
-                                : "Kategorie sperren"
-                            }"
-                        ></button>
-                    `
-                    : ""
-                }
+            }
+        )
+        .join("");
 
-            </div>
 
+    if(!list.length){
+
+        grid.innerHTML = `
 
             <div
-                class="actions"
-                style="margin-top:13px;"
+                class="card"
+                style="grid-column:1/-1;"
             >
 
-                <button
-                    class="btn btnSmall"
-                    data-action="edit-category"
-                    data-id="${encodeURIComponent(category.id)}"
-                    ${locked ? "disabled" : ""}
-                >
-                    ✏️ Bearbeiten
-                </button>
+                <div class="empty">
 
-                <button
-                    class="btn btnSmall btnDanger"
-                    data-action="delete-category"
-                    data-id="${encodeURIComponent(category.id)}"
-                    ${locked ? "disabled" : ""}
-                >
-                    🗑️ Löschen
-                </button>
+                    <div class="emptyIcon">
+                        🔍
+                    </div>
+
+                    <strong>
+                        Nichts gefunden
+                    </strong>
+
+                    Keine passenden Kategorien gefunden.
+
+                </div>
 
             </div>
-
-        </div>
 
         `;
 
-    }).join("");
+    }
 
 }
 
@@ -3332,142 +4728,173 @@ function renderAdminCategories(){
     const box =
         $("adminCategoryList");
 
-    if(!box) return;
+
+    if(!box){
+        return;
+    }
 
 
     if(!categories.length){
 
         box.innerHTML = `
+
             <div class="empty">
-                <div class="emptyIcon">🗂️</div>
-                <strong>Keine Kategorien vorhanden</strong>
+
+                <div class="emptyIcon">
+                    🗂️
+                </div>
+
+                <strong>
+                    Keine Kategorien vorhanden
+                </strong>
+
             </div>
+
         `;
 
-        $("lockedCategoryCount").textContent =
+
+        $("lockedCategoryCount")
+            .textContent =
             "🔒 0 gesperrt";
 
         return;
+
     }
 
 
     const lockedCount =
-        categories.filter(c=>c.locked === true).length;
+        categories.filter(
+            c=>c.locked === true
+        ).length;
 
 
-    $("lockedCategoryCount").textContent =
+    $("lockedCategoryCount")
+        .textContent =
         `🔒 ${lockedCount} gesperrt`;
 
 
-    box.innerHTML = categories.map(category=>{
+    box.innerHTML =
+        categories.map(
+            category=>{
 
-        const locked =
-            category.locked === true;
+                const locked =
+                    category.locked === true;
 
 
-        return `
-
-        <div
-            class="${locked ? "lockedRow" : ""}"
-            style="
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                gap:15px;
-                padding:13px 0;
-                border-bottom:1px solid var(--border);
-            "
-        >
-
-            <div
-                style="
-                    display:flex;
-                    align-items:center;
-                    gap:11px;
-                    min-width:0;
-                "
-            >
+                return `
 
                 <div
+                    class="${
+                        locked
+                        ? "lockedRow"
+                        : ""
+                    }"
                     style="
-                        width:38px;
-                        height:38px;
-                        border-radius:10px;
-                        background:${
-                            locked
-                            ? "#fff1f2"
-                            : "#eff6ff"
-                        };
                         display:flex;
                         align-items:center;
-                        justify-content:center;
+                        justify-content:space-between;
+                        gap:15px;
+                        padding:13px 0;
+                        border-bottom:1px solid var(--border);
                     "
                 >
-                    ${locked ? "🔒" : "🗂️"}
-                </div>
 
-                <div>
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:11px;
+                        min-width:0;
+                    ">
 
-                    <div
-                        class="rowName ${
-                            locked ? "lockedLabel" : ""
-                        }"
-                    >
-                        ${escapeHTML(category.name)}
+                        <div style="
+                            width:38px;
+                            height:38px;
+                            border-radius:10px;
+                            background:${
+                                locked
+                                ? "#fff1f2"
+                                : "#eff6ff"
+                            };
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                        ">
+                            ${
+                                locked
+                                ? "🔒"
+                                : "🗂️"
+                            }
+                        </div>
+
+                        <div>
+
+                            <div
+                                class="rowName ${
+                                    locked
+                                    ? "lockedLabel"
+                                    : ""
+                                }"
+                            >
+                                ${escapeHTML(
+                                    category.name
+                                )}
+                            </div>
+
+                            <div class="rowSub">
+
+                                ${
+                                    locked
+                                    ? "🔒 Bearbeitung gesperrt"
+                                    : "🔓 Bearbeitung erlaubt"
+                                }
+
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="rowSub">
 
-                        ${
-                            locked
-                            ? "🔒 Bearbeitung gesperrt"
-                            : "🔓 Bearbeitung erlaubt"
-                        }
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:10px;
+                    ">
+
+                        <span
+                            class="badge ${
+                                locked
+                                ? "badgeRed"
+                                : "badgeGreen"
+                            }"
+                        >
+                            ${
+                                locked
+                                ? "🔒 GESPERRT"
+                                : "🔓 AKTIV"
+                            }
+                        </span>
+
+
+                        <button
+                            class="switch ${
+                                locked
+                                ? "on"
+                                : ""
+                            }"
+                            data-action="toggle-category-lock"
+                            data-id="${encodeURIComponent(category.id)}"
+                        ></button>
 
                     </div>
 
                 </div>
 
-            </div>
+                `;
 
-
-            <div
-                style="
-                    display:flex;
-                    align-items:center;
-                    gap:10px;
-                "
-            >
-
-                <span
-                    class="badge ${
-                        locked
-                        ? "badgeRed"
-                        : "badgeGreen"
-                    }"
-                >
-                    ${locked ? "🔒 GESPERRT" : "🔓 AKTIV"}
-                </span>
-
-
-                <button
-                    class="switch ${locked ? "on" : ""}"
-                    data-action="toggle-category-lock"
-                    data-id="${encodeURIComponent(category.id)}"
-                    title="${
-                        locked
-                        ? "Entsperren"
-                        : "Sperren"
-                    }"
-                ></button>
-
-            </div>
-
-        </div>
-
-        `;
-
-    }).join("");
+            }
+        )
+        .join("");
 
 }
 
@@ -3478,13 +4905,30 @@ function renderAdminCategories(){
 
 function openCategoryModal(id=null){
 
-    editingId = id;
-    modalType = "category";
+    if(!isAdmin()){
+
+        showToast(
+            "🔒 Nur Administratoren dürfen Kategorien verwalten.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    editingId =
+        id;
+
+    modalType =
+        "category";
 
 
     const category =
         id
-        ? categories.find(c=>c.id === id)
+        ? categories.find(
+            c=>c.id === id
+        )
         : null;
 
 
@@ -3496,23 +4940,30 @@ function openCategoryModal(id=null){
         );
 
         return;
+
     }
 
 
     openModal(
+
         category
         ? "✏️ Kategorie bearbeiten"
         : "➕ Neue Kategorie",
+
         `
 
         <div class="field">
 
-            <label>Name</label>
+            <label>
+                Name
+            </label>
 
             <input
                 id="modalCategoryName"
                 type="text"
-                value="${escapeHTML(category?.name || "")}"
+                value="${escapeHTML(
+                    category?.name || ""
+                )}"
                 placeholder="z.B. Rechnungen"
             >
 
@@ -3521,19 +4972,25 @@ function openCategoryModal(id=null){
 
         <div class="field">
 
-            <label>Beschreibung</label>
+            <label>
+                Beschreibung
+            </label>
 
             <textarea
                 id="modalCategoryDescription"
                 placeholder="Beschreibung der Kategorie"
-            >${escapeHTML(category?.description || "")}</textarea>
+            >${escapeHTML(
+                category?.description || ""
+            )}</textarea>
 
         </div>
 
         `,
+
         category
         ? "💾 Änderungen speichern"
         : "➕ Kategorie erstellen"
+
     );
 
 }
@@ -3544,6 +5001,18 @@ function openCategoryModal(id=null){
 ========================================================= */
 
 async function saveCategory(){
+
+    if(!isAdmin()){
+
+        showToast(
+            "🔒 Nur Administratoren dürfen Kategorien speichern.",
+            "error"
+        );
+
+        return;
+
+    }
+
 
     const name =
         $("modalCategoryName")
@@ -3559,7 +5028,14 @@ async function saveCategory(){
         );
 
         return;
+
     }
+
+
+    const description =
+        $("modalCategoryDescription")
+            .value
+            .trim();
 
 
     try{
@@ -3568,16 +5044,11 @@ async function saveCategory(){
 
             const existing =
                 categories.find(
-                    c=>c.id === editingId
+                    c =>
+                        c.id ===
+                        editingId
                 );
 
-
-            /* WICHTIG:
-               Auch beim Speichern nochmals prüfen.
-               Dadurch kann eine gesperrte Kategorie
-               nicht durch einen alten Dialog verändert
-               werden.
-            */
 
             if(existing?.locked){
 
@@ -3589,6 +5060,7 @@ async function saveCategory(){
                 );
 
                 return;
+
             }
 
 
@@ -3599,16 +5071,17 @@ async function saveCategory(){
                     editingId
                 ),
                 {
+
                     name,
-                    description:
-                        $("modalCategoryDescription")
-                            .value
-                            .trim(),
+
+                    description,
 
                     updatedAt:
                         serverTimestamp()
+
                 }
             );
+
 
             showToast(
                 "✅ Kategorie aktualisiert."
@@ -3616,15 +5089,21 @@ async function saveCategory(){
 
         }else{
 
+            /*
+               addDoc erzeugt eine sichere,
+               eindeutige Firestore-ID.
+            */
+
             await addDoc(
-                collection(db,"categories"),
+                collection(
+                    db,
+                    "categories"
+                ),
                 {
+
                     name,
 
-                    description:
-                        $("modalCategoryDescription")
-                            .value
-                            .trim(),
+                    description,
 
                     locked:false,
 
@@ -3636,8 +5115,10 @@ async function saveCategory(){
 
                     updatedAt:
                         serverTimestamp()
+
                 }
             );
+
 
             showToast(
                 "✅ Kategorie erstellt."
@@ -3650,12 +5131,34 @@ async function saveCategory(){
 
     }catch(error){
 
-        console.error(error);
-
-        showToast(
-            "❌ Kategorie konnte nicht gespeichert werden.",
-            "error"
+        console.error(
+            "CATEGORY SAVE ERROR:",
+            error
         );
+
+
+        /*
+           Firebase-Fehler genauer anzeigen.
+        */
+
+        if(
+            error.code ===
+            "permission-denied"
+        ){
+
+            showToast(
+                "❌ Firebase verweigert das Speichern. Prüfe deine Firestore-Regeln.",
+                "error"
+            );
+
+        }else{
+
+            showToast(
+                "❌ Kategorie konnte nicht gespeichert werden.",
+                "error"
+            );
+
+        }
 
     }
 
@@ -3663,8 +5166,7 @@ async function saveCategory(){
 
 
 /* =========================================================
-   🔒 CATEGORY LOCK
-   DAS IST DER WICHTIGE TEIL
+   CATEGORY LOCK
 ========================================================= */
 
 async function toggleCategoryLock(id){
@@ -3677,12 +5179,15 @@ async function toggleCategoryLock(id){
         );
 
         return;
+
     }
 
 
     const category =
         categories.find(
-            c=>c.id === id
+            c =>
+                c.id ===
+                id
         );
 
 
@@ -3694,6 +5199,7 @@ async function toggleCategoryLock(id){
         );
 
         return;
+
     }
 
 
@@ -3705,12 +5211,6 @@ async function toggleCategoryLock(id){
         !currentlyLocked;
 
 
-    const actionText =
-        newState
-        ? "sperren"
-        : "entsperren";
-
-
     const confirmed =
         confirm(
             newState
@@ -3719,12 +5219,12 @@ async function toggleCategoryLock(id){
         );
 
 
-    if(!confirmed) return;
+    if(!confirmed){
+        return;
+    }
 
 
     try{
-
-        /* Firebase speichert die Sperre */
 
         await updateDoc(
             doc(
@@ -3733,7 +5233,9 @@ async function toggleCategoryLock(id){
                 id
             ),
             {
-                locked:newState,
+
+                locked:
+                    newState,
 
                 lockedAt:
                     newState
@@ -3747,31 +5249,9 @@ async function toggleCategoryLock(id){
 
                 updatedAt:
                     serverTimestamp()
+
             }
         );
-
-
-        /* Sofort lokale Anzeige ändern */
-
-        const index =
-            categories.findIndex(
-                c=>c.id === id
-            );
-
-
-        if(index !== -1){
-
-            categories[index] = {
-                ...categories[index],
-                locked:newState
-            };
-
-        }
-
-
-        renderCategories();
-        renderAdminCategories();
-        renderFolders();
 
 
         showToast(
@@ -3790,9 +5270,7 @@ async function toggleCategoryLock(id){
 
 
         showToast(
-            "❌ Kategorie konnte nicht " +
-            actionText +
-            " werden. Prüfe deine Firestore-Regeln.",
+            "❌ Kategorie konnte nicht geändert werden. Prüfe deine Firestore-Regeln.",
             "error"
         );
 
@@ -3815,21 +5293,22 @@ async function deleteCategory(id){
         );
 
         return;
+
     }
 
 
     const category =
         categories.find(
-            c=>c.id === id
+            c =>
+                c.id ===
+                id
         );
 
 
-    if(!category) return;
+    if(!category){
+        return;
+    }
 
-
-    /* WICHTIG:
-       Vor jedem Löschen erneut prüfen.
-    */
 
     if(category.locked === true){
 
@@ -3838,9 +5317,8 @@ async function deleteCategory(id){
             "error"
         );
 
-        renderCategories();
-
         return;
+
     }
 
 
@@ -3850,7 +5328,9 @@ async function deleteCategory(id){
         );
 
 
-    if(!confirmed) return;
+    if(!confirmed){
+        return;
+    }
 
 
     try{
@@ -3862,6 +5342,7 @@ async function deleteCategory(id){
                 id
             )
         );
+
 
         showToast(
             "🗑️ Kategorie gelöscht."
@@ -3890,37 +5371,52 @@ function renderPurposes(){
     const box =
         $("purposeList");
 
+
     if(!purposes.length){
 
         box.innerHTML = `
+
             <div class="empty">
-                <div class="emptyIcon">🎯</div>
-                <strong>Keine Zwecke</strong>
+
+                <div class="emptyIcon">
+                    🎯
+                </div>
+
+                <strong>
+                    Keine Zwecke
+                </strong>
+
                 Noch wurden keine Zwecke angelegt.
+
             </div>
+
         `;
 
         return;
+
     }
 
 
-    box.innerHTML = purposes.map(p=>`
+    box.innerHTML =
+        purposes.map(
+            p=>`
 
-        <div
-            style="
+            <div style="
                 display:flex;
                 align-items:center;
                 justify-content:space-between;
                 gap:10px;
                 padding:13px 0;
                 border-bottom:1px solid var(--border);
-            "
-        >
+            ">
 
-            <div style="display:flex;align-items:center;gap:10px;">
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                ">
 
-                <div
-                    style="
+                    <div style="
                         width:37px;
                         height:37px;
                         border-radius:9px;
@@ -3928,85 +5424,111 @@ function renderPurposes(){
                         display:flex;
                         align-items:center;
                         justify-content:center;
-                    "
-                >
-                    🎯
-                </div>
+                    ">
+                        🎯
+                    </div>
 
-                <div>
+                    <div>
 
-                    <strong style="font-size:12px;">
-                        ${escapeHTML(p.name)}
-                    </strong>
+                        <strong style="font-size:12px;">
+                            ${escapeHTML(
+                                p.name
+                            )}
+                        </strong>
 
-                    <div
-                        style="
+                        <div style="
                             font-size:10px;
                             color:var(--muted);
                             margin-top:3px;
-                        "
-                    >
-                        ${escapeHTML(p.description || "")}
+                        ">
+                            ${escapeHTML(
+                                p.description || ""
+                            )}
+                        </div>
+
                     </div>
 
                 </div>
 
+
+                <div class="actions">
+
+                    <button
+                        class="btn btnSmall"
+                        data-action="edit-purpose"
+                        data-id="${encodeURIComponent(p.id)}"
+                    >
+                        ✏️
+                    </button>
+
+                    <button
+                        class="btn btnSmall btnDanger"
+                        data-action="delete-purpose"
+                        data-id="${encodeURIComponent(p.id)}"
+                    >
+                        🗑️
+                    </button>
+
+                </div>
+
             </div>
 
-
-            <div class="actions">
-
-                <button
-                    class="btn btnSmall"
-                    data-action="edit-purpose"
-                    data-id="${encodeURIComponent(p.id)}"
-                >
-                    ✏️
-                </button>
-
-                <button
-                    class="btn btnSmall btnDanger"
-                    data-action="delete-purpose"
-                    data-id="${encodeURIComponent(p.id)}"
-                >
-                    🗑️
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join("");
+        `
+        )
+        .join("");
 
 }
 
 
 function openPurposeModal(id=null){
 
-    editingId = id;
-    modalType = "purpose";
+    if(!isAdmin()){
+
+        showToast(
+            "🔒 Nur Administratoren dürfen Zwecke verwalten.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    editingId =
+        id;
+
+    modalType =
+        "purpose";
 
 
     const purpose =
         id
-        ? purposes.find(p=>p.id === id)
+        ? purposes.find(
+            p=>p.id === id
+        )
         : null;
 
 
     openModal(
+
         purpose
         ? "✏️ Zweck bearbeiten"
         : "➕ Neuer Zweck",
+
         `
 
         <div class="field">
 
-            <label>Name</label>
+            <label>
+                Name
+            </label>
 
             <input
                 id="modalPurposeName"
                 type="text"
-                value="${escapeHTML(purpose?.name || "")}"
+                value="${escapeHTML(
+                    purpose?.name || ""
+                )}"
                 placeholder="Zweck"
             >
 
@@ -4015,25 +5537,36 @@ function openPurposeModal(id=null){
 
         <div class="field">
 
-            <label>Beschreibung</label>
+            <label>
+                Beschreibung
+            </label>
 
             <textarea
                 id="modalPurposeDescription"
                 placeholder="Beschreibung"
-            >${escapeHTML(purpose?.description || "")}</textarea>
+            >${escapeHTML(
+                purpose?.description || ""
+            )}</textarea>
 
         </div>
 
         `,
+
         purpose
         ? "💾 Änderungen speichern"
         : "➕ Zweck erstellen"
+
     );
 
 }
 
 
 async function savePurpose(){
+
+    if(!isAdmin()){
+        return;
+    }
+
 
     const name =
         $("modalPurposeName")
@@ -4049,6 +5582,7 @@ async function savePurpose(){
         );
 
         return;
+
     }
 
 
@@ -4080,21 +5614,33 @@ async function savePurpose(){
                 data
             );
 
-            showToast("✅ Zweck aktualisiert.");
+            showToast(
+                "✅ Zweck aktualisiert."
+            );
 
         }else{
 
             await addDoc(
-                collection(db,"purposes"),
+                collection(
+                    db,
+                    "purposes"
+                ),
                 {
+
                     ...data,
-                    createdAt:serverTimestamp()
+
+                    createdAt:
+                        serverTimestamp()
+
                 }
             );
 
-            showToast("✅ Zweck erstellt.");
+            showToast(
+                "✅ Zweck erstellt."
+            );
 
         }
+
 
         closeModal();
 
@@ -4114,17 +5660,29 @@ async function savePurpose(){
 
 async function deletePurpose(id){
 
+    if(!isAdmin()){
+        return;
+    }
+
+
     const purpose =
         purposes.find(
             p=>p.id === id
         );
 
-    if(!purpose) return;
+
+    if(!purpose){
+        return;
+    }
 
 
-    if(!confirm(
-        `Zweck "${purpose.name}" wirklich löschen?`
-    )) return;
+    if(
+        !confirm(
+            `Zweck "${purpose.name}" wirklich löschen?`
+        )
+    ){
+        return;
+    }
 
 
     try{
@@ -4137,7 +5695,9 @@ async function deletePurpose(id){
             )
         );
 
-        showToast("🗑️ Zweck gelöscht.");
+        showToast(
+            "🗑️ Zweck gelöscht."
+        );
 
     }catch(error){
 
@@ -4162,85 +5722,106 @@ function renderRequests(){
     const box =
         $("requestList");
 
+
     if(!requests.length){
 
         box.innerHTML = `
+
             <div class="empty">
-                <div class="emptyIcon">📋</div>
-                <strong>Keine Anfragen</strong>
+
+                <div class="emptyIcon">
+                    📋
+                </div>
+
+                <strong>
+                    Keine Anfragen
+                </strong>
+
                 Es gibt derzeit keine Anfragen.
+
             </div>
+
         `;
 
         return;
+
     }
 
 
     box.innerHTML =
         [...requests]
-        .sort(
-            (a,b)=>
-                timestampNumber(b.createdAt) -
-                timestampNumber(a.createdAt)
-        )
-        .map(request=>`
+            .sort(
+                (a,b)=>
+                    timestampNumber(
+                        b.createdAt
+                    ) -
+                    timestampNumber(
+                        a.createdAt
+                    )
+            )
+            .map(
+                request=>`
 
-            <div class="requestItem">
+                <div class="requestItem">
 
-                <div class="requestLeft">
+                    <div class="requestLeft">
 
-                    <div class="requestIcon">
-                        📋
+                        <div class="requestIcon">
+                            📋
+                        </div>
+
+                        <div class="requestText">
+
+                            <strong>
+                                ${escapeHTML(
+                                    request.title ||
+                                    "Neue Anfrage"
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(
+                                    request.description ||
+                                    "Keine Beschreibung"
+                                )}
+                            </span>
+
+                            <span>
+                                📅 ${safeDate(
+                                    request.createdAt
+                                )}
+                            </span>
+
+                        </div>
+
                     </div>
 
-                    <div class="requestText">
 
-                        <strong>
-                            ${escapeHTML(
-                                request.title ||
-                                "Neue Anfrage"
-                            )}
-                        </strong>
+                    <span
+                        class="badge ${
+                            request.status === "approved"
+                            ? "badgeGreen"
+                            : request.status === "rejected"
+                            ? "badgeRed"
+                            : "badgeOrange"
+                        }"
+                    >
 
-                        <span>
-                            ${escapeHTML(
-                                request.description ||
-                                "Keine Beschreibung"
-                            )}
-                        </span>
+                        ${
+                            request.status === "approved"
+                            ? "✅ Genehmigt"
+                            : request.status === "rejected"
+                            ? "❌ Abgelehnt"
+                            : "⏳ Offen"
+                        }
 
-                        <span>
-                            📅 ${safeDate(request.createdAt)}
-                        </span>
-
-                    </div>
+                    </span>
 
                 </div>
 
-
-                <span
-                    class="badge ${
-                        request.status === "approved"
-                        ? "badgeGreen"
-                        : request.status === "rejected"
-                        ? "badgeRed"
-                        : "badgeOrange"
-                    }"
-                >
-
-                    ${
-                        request.status === "approved"
-                        ? "✅ Genehmigt"
-                        : request.status === "rejected"
-                        ? "❌ Abgelehnt"
-                        : "⏳ Offen"
-                    }
-
-                </span>
-
-            </div>
-
-        `).join("");
+            `
+            )
+            .join("");
 
 }
 
@@ -4254,58 +5835,76 @@ function renderNotifications(){
     const box =
         $("notificationList");
 
+
     if(!notifications.length){
 
         box.innerHTML = `
+
             <div class="empty">
-                <div class="emptyIcon">🔔</div>
-                <strong>Keine Benachrichtigungen</strong>
+
+                <div class="emptyIcon">
+                    🔔
+                </div>
+
+                <strong>
+                    Keine Benachrichtigungen
+                </strong>
+
                 Du bist auf dem aktuellen Stand.
+
             </div>
+
         `;
 
         return;
+
     }
 
 
     box.innerHTML =
-        notifications.map(n=>`
+        notifications
+            .map(
+                n=>`
 
-            <div class="requestItem">
+                <div class="requestItem">
 
-                <div class="requestLeft">
+                    <div class="requestLeft">
 
-                    <div class="requestIcon">
-                        🔔
-                    </div>
+                        <div class="requestIcon">
+                            🔔
+                        </div>
 
-                    <div class="requestText">
+                        <div class="requestText">
 
-                        <strong>
-                            ${escapeHTML(
-                                n.title ||
-                                "Benachrichtigung"
-                            )}
-                        </strong>
+                            <strong>
+                                ${escapeHTML(
+                                    n.title ||
+                                    "Benachrichtigung"
+                                )}
+                            </strong>
 
-                        <span>
-                            ${escapeHTML(
-                                n.message ||
-                                ""
-                            )}
-                        </span>
+                            <span>
+                                ${escapeHTML(
+                                    n.message ||
+                                    ""
+                                )}
+                            </span>
 
-                        <span>
-                            📅 ${safeDate(n.createdAt)}
-                        </span>
+                            <span>
+                                📅 ${safeDate(
+                                    n.createdAt
+                                )}
+                            </span>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
-
-        `).join("");
+            `
+            )
+            .join("");
 
 }
 
@@ -4319,17 +5918,26 @@ function setupAdmin(){
     const admin =
         isAdmin();
 
+
     if(admin){
 
-        $("adminNav").classList.remove("hidden");
+        $("adminNav")
+            .classList
+            .remove("hidden");
 
-        $("adminNavTitle").classList.remove("hidden");
+        $("adminNavTitle")
+            .classList
+            .remove("hidden");
 
     }else{
 
-        $("adminNav").classList.add("hidden");
+        $("adminNav")
+            .classList
+            .add("hidden");
 
-        $("adminNavTitle").classList.add("hidden");
+        $("adminNavTitle")
+            .classList
+            .add("hidden");
 
     }
 
@@ -4338,20 +5946,30 @@ function setupAdmin(){
 
 async function loadUsers(){
 
-    if(!isAdmin()) return;
+    if(!isAdmin()){
+        return;
+    }
+
 
     try{
 
         const snap =
             await getDocs(
-                collection(db,"users")
+                collection(
+                    db,
+                    "users"
+                )
             );
 
+
         users =
-            snap.docs.map(d=>({
-                id:d.id,
-                ...d.data()
-            }));
+            snap.docs.map(
+                d=>({
+                    id:d.id,
+                    ...d.data()
+                })
+            );
+
 
         renderUsers();
 
@@ -4376,111 +5994,151 @@ function renderUsers(){
     const tbody =
         $("userTable");
 
-    if(!tbody) return;
+
+    if(!tbody){
+        return;
+    }
 
 
     if(!users.length){
 
         tbody.innerHTML = `
+
             <tr>
+
                 <td colspan="5">
+
                     <div class="empty">
-                        <div class="emptyIcon">👥</div>
-                        <strong>Keine Benutzer</strong>
+
+                        <div class="emptyIcon">
+                            👥
+                        </div>
+
+                        <strong>
+                            Keine Benutzer
+                        </strong>
+
                     </div>
+
                 </td>
+
             </tr>
+
         `;
 
         return;
+
     }
 
 
     tbody.innerHTML =
-        users.map(user=>`
+        users
+            .map(
+                user=>`
 
-            <tr>
+                <tr>
 
-                <td>
+                    <td>
 
-                    <div style="display:flex;align-items:center;gap:9px;">
+                        <div style="
+                            display:flex;
+                            align-items:center;
+                            gap:9px;
+                        ">
 
-                        <div class="avatar">
-                            ${initials(user.name)}
-                        </div>
-
-                        <div>
-
-                            <div class="rowName">
-                                ${escapeHTML(
-                                    user.name ||
-                                    "Benutzer"
+                            <div class="avatar">
+                                ${initials(
+                                    user.name
                                 )}
                             </div>
 
-                            <div class="rowSub">
-                                ${escapeHTML(user.id)}
+                            <div>
+
+                                <div class="rowName">
+                                    ${escapeHTML(
+                                        user.name ||
+                                        "Benutzer"
+                                    )}
+                                </div>
+
+                                <div class="rowSub">
+                                    ${escapeHTML(
+                                        user.id
+                                    )}
+                                </div>
+
                             </div>
 
                         </div>
 
-                    </div>
+                    </td>
 
-                </td>
 
-                <td>
-                    ${escapeHTML(user.email || "-")}
-                </td>
+                    <td>
+                        ${escapeHTML(
+                            user.email ||
+                            "-"
+                        )}
+                    </td>
 
-                <td>
 
-                    <span
-                        class="badge ${
-                            user.role === "admin"
-                            ? "badgeRed"
-                            : "badgeBlue"
-                        }"
-                    >
-                        ${
-                            user.role === "admin"
-                            ? "🔒 Admin"
-                            : "👤 Benutzer"
-                        }
-                    </span>
+                    <td>
 
-                </td>
-
-                <td>
-                    ${safeDate(user.createdAt)}
-                </td>
-
-                <td>
-
-                    <div class="actions">
-
-                        <button
-                            class="btn btnSmall"
-                            data-action="edit-user"
-                            data-id="${encodeURIComponent(user.id)}"
+                        <span
+                            class="badge ${
+                                user.role === "admin"
+                                ? "badgeRed"
+                                : "badgeBlue"
+                            }"
                         >
-                            ✏️
-                        </button>
 
-                        <button
-                            class="btn btnSmall btnDanger"
-                            data-action="delete-user"
-                            data-id="${encodeURIComponent(user.id)}"
-                        >
-                            🗑️
-                        </button>
+                            ${
+                                user.role === "admin"
+                                ? "🔒 Admin"
+                                : "👤 Benutzer"
+                            }
 
-                    </div>
+                        </span>
 
-                </td>
+                    </td>
 
-            </tr>
 
-        `).join("");
+                    <td>
+                        ${safeDate(
+                            user.createdAt
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btnSmall"
+                                data-action="edit-user"
+                                data-id="${encodeURIComponent(user.id)}"
+                            >
+                                ✏️
+                            </button>
+
+                            <button
+                                class="btn btnSmall btnDanger"
+                                data-action="delete-user"
+                                data-id="${encodeURIComponent(user.id)}"
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `
+            )
+            .join("");
 
 }
 
@@ -4491,33 +6149,46 @@ function renderUsers(){
 
 function openUserModal(id=null){
 
-    if(!isAdmin()) return;
+    if(!isAdmin()){
+        return;
+    }
 
 
-    editingId = id;
-    modalType = "user";
+    editingId =
+        id;
+
+    modalType =
+        "user";
 
 
     const user =
         id
-        ? users.find(u=>u.id === id)
+        ? users.find(
+            u=>u.id === id
+        )
         : null;
 
 
     openModal(
+
         user
         ? "✏️ Benutzer bearbeiten"
         : "➕ Benutzer",
+
         `
 
         <div class="field">
 
-            <label>Name</label>
+            <label>
+                Name
+            </label>
 
             <input
                 id="modalUserName"
                 type="text"
-                value="${escapeHTML(user?.name || "")}"
+                value="${escapeHTML(
+                    user?.name || ""
+                )}"
             >
 
         </div>
@@ -4525,13 +6196,21 @@ function openUserModal(id=null){
 
         <div class="field">
 
-            <label>E-Mail</label>
+            <label>
+                E-Mail
+            </label>
 
             <input
                 id="modalUserEmail"
                 type="email"
-                value="${escapeHTML(user?.email || "")}"
-                ${user ? "readonly" : ""}
+                value="${escapeHTML(
+                    user?.email || ""
+                )}"
+                ${
+                    user
+                    ? "readonly"
+                    : ""
+                }
             >
 
         </div>
@@ -4539,9 +6218,13 @@ function openUserModal(id=null){
 
         <div class="field">
 
-            <label>Rolle</label>
+            <label>
+                Rolle
+            </label>
 
-            <select id="modalUserRole">
+            <select
+                id="modalUserRole"
+            >
 
                 <option
                     value="user"
@@ -4569,29 +6252,35 @@ function openUserModal(id=null){
 
         </div>
 
+
         ${
             user
             ? ""
             : `
-                <div
-                    style="
-                        padding:10px;
-                        background:#fff7ed;
-                        border-radius:9px;
-                        color:#9a3412;
-                        font-size:11px;
-                    "
-                >
-                    ⚠️ Der Firebase-Login-Benutzer muss separat
-                    in Firebase Authentication angelegt werden.
+
+                <div style="
+                    padding:10px;
+                    background:#fff7ed;
+                    border-radius:9px;
+                    color:#9a3412;
+                    font-size:11px;
+                ">
+
+                    ⚠️ Das Firebase-Login-Konto
+                    muss separat in Firebase Authentication
+                    angelegt werden.
+
                 </div>
+
             `
         }
 
         `,
+
         user
         ? "💾 Speichern"
         : "➕ Profil erstellen"
+
     );
 
 }
@@ -4599,7 +6288,9 @@ function openUserModal(id=null){
 
 async function saveUser(){
 
-    if(!isAdmin()) return;
+    if(!isAdmin()){
+        return;
+    }
 
 
     const name =
@@ -4607,10 +6298,12 @@ async function saveUser(){
             .value
             .trim();
 
+
     const email =
         $("modalUserEmail")
             .value
             .trim();
+
 
     const role =
         $("modalUserRole")
@@ -4625,6 +6318,7 @@ async function saveUser(){
         );
 
         return;
+
     }
 
 
@@ -4639,11 +6333,17 @@ async function saveUser(){
                     editingId
                 ),
                 {
+
                     name,
+
                     role,
-                    updatedAt:serverTimestamp()
+
+                    updatedAt:
+                        serverTimestamp()
+
                 }
             );
+
 
             showToast(
                 "✅ Benutzer aktualisiert."
@@ -4652,20 +6352,31 @@ async function saveUser(){
         }else{
 
             await addDoc(
-                collection(db,"users"),
+                collection(
+                    db,
+                    "users"
+                ),
                 {
+
                     name,
+
                     email,
+
                     role,
-                    createdAt:serverTimestamp()
+
+                    createdAt:
+                        serverTimestamp()
+
                 }
             );
+
 
             showToast(
                 "✅ Benutzerprofil erstellt."
             );
 
         }
+
 
         closeModal();
 
@@ -4687,7 +6398,9 @@ async function saveUser(){
 
 async function deleteUser(id){
 
-    if(!isAdmin()) return;
+    if(!isAdmin()){
+        return;
+    }
 
 
     if(id === currentUser.uid){
@@ -4698,6 +6411,7 @@ async function deleteUser(id){
         );
 
         return;
+
     }
 
 
@@ -4707,12 +6421,18 @@ async function deleteUser(id){
         );
 
 
-    if(!user) return;
+    if(!user){
+        return;
+    }
 
 
-    if(!confirm(
-        `Benutzer "${user.name || user.email}" wirklich löschen?`
-    )) return;
+    if(
+        !confirm(
+            `Benutzer "${user.name || user.email}" wirklich löschen?`
+        )
+    ){
+        return;
+    }
 
 
     try{
@@ -4725,9 +6445,11 @@ async function deleteUser(id){
             )
         );
 
+
         showToast(
             "🗑️ Benutzerprofil gelöscht."
         );
+
 
         await loadUsers();
 
@@ -4756,6 +6478,7 @@ function openFolder(id){
             f=>f.id === id
         );
 
+
     if(!folder){
 
         showToast(
@@ -4764,37 +6487,55 @@ function openFolder(id){
         );
 
         return;
+
     }
 
 
     const category =
         categories.find(
-            c=>c.id === folder.categoryId
+            c =>
+                c.id ===
+                folder.categoryId
         );
 
 
     const purpose =
         purposes.find(
-            p=>p.id === folder.purposeId
+            p =>
+                p.id ===
+                folder.purposeId
+        );
+
+
+    const chipLink =
+        getChipLink(
+            folder
         );
 
 
     openModal(
-        "📁 " + (folder.name || "Ordner"),
+
+        "📁 " +
+        (
+            folder.name ||
+            "Ordner"
+        ),
+
         `
 
-        <div
-            style="
-                background:#f8fafc;
-                border:1px solid var(--border);
-                border-radius:12px;
-                padding:15px;
-            "
-        >
+        <div style="
+            background:#f8fafc;
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:15px;
+        ">
+
 
             <div class="field">
 
-                <label>Beschreibung</label>
+                <label>
+                    Beschreibung
+                </label>
 
                 <div style="font-size:12px;">
                     ${escapeHTML(
@@ -4808,7 +6549,9 @@ function openFolder(id){
 
             <div class="field">
 
-                <label>Kategorie</label>
+                <label>
+                    Kategorie
+                </label>
 
                 <div style="font-size:12px;">
 
@@ -4818,7 +6561,10 @@ function openFolder(id){
                             category.locked
                             ? "🔒 "
                             : "🗂️ "
-                        ) + escapeHTML(category.name)
+                        ) +
+                        escapeHTML(
+                            category.name
+                        )
                         : "Keine"
                     }
 
@@ -4829,14 +6575,21 @@ function openFolder(id){
 
             <div class="field">
 
-                <label>Zweck</label>
+                <label>
+                    Zweck
+                </label>
 
                 <div style="font-size:12px;">
+
                     ${
                         purpose
-                        ? "🎯 " + escapeHTML(purpose.name)
+                        ? "🎯 " +
+                          escapeHTML(
+                              purpose.name
+                          )
                         : "Keiner"
                     }
+
                 </div>
 
             </div>
@@ -4844,238 +6597,391 @@ function openFolder(id){
 
             <div class="field">
 
-                <label>Erstellt</label>
+                <label>
+                    Erstellt
+                </label>
 
                 <div style="font-size:12px;">
-                    ${safeDate(folder.createdAt)}
+                    ${safeDate(
+                        folder.createdAt
+                    )}
                 </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    📡 NFC-Chip-Link
+                </label>
+
+                <div
+                    style="
+                        display:flex;
+                        gap:6px;
+                    "
+                >
+
+                    <input
+                        type="text"
+                        readonly
+                        value="${escapeHTML(chipLink)}"
+                        style="flex:1;"
+                    >
+
+                    <button
+                        class="btn btnPrimary"
+                        data-action="copy-chip-link"
+                        data-id="${encodeURIComponent(folder.id)}"
+                    >
+                        🔗
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:10px;
+                    padding:11px;
+                    background:#eff6ff;
+                    border-radius:9px;
+                    font-size:11px;
+                    color:#1e40af;
+                    line-height:1.5;
+                "
+            >
+
+                📱 Wenn dieser Link auf einem NFC-Chip
+                gespeichert wird, öffnet der Link
+                automatisch diesen Ordner.
 
             </div>
 
         </div>
 
         `,
-        "Schließen"
-    );
 
-    $("modalSave").style.display = "none";
+        "Schließen",
+
+        false
+
+    );
 
 }
 
 
 /* =========================================================
-   GLOBAL EVENT DELEGATION
+   GLOBAL ACTIONS
 ========================================================= */
 
-document.addEventListener("click",async event=>{
+document.addEventListener(
+    "click",
+    async event=>{
 
-    const button =
-        event.target.closest("[data-action]");
+        const button =
+            event.target.closest(
+                "[data-action]"
+            );
 
-    if(!button) return;
 
+        if(!button){
+            return;
+        }
 
-    const action =
-        button.dataset.action;
 
+        const action =
+            button.dataset.action;
 
-    const id =
-        button.dataset.id
-        ? decodeURIComponent(button.dataset.id)
-        : null;
 
+        const id =
+            button.dataset.id
+            ? decodeURIComponent(
+                button.dataset.id
+            )
+            : null;
 
-    switch(action){
 
-        case "new-folder":
-            openFolderModal();
-            break;
+        switch(action){
 
+            case "new-folder":
 
-        case "edit-folder":
+                openFolderModal();
 
-            if(button.disabled) return;
+                break;
 
-            openFolderModal(id);
 
-            break;
+            case "edit-folder":
 
+                if(button.disabled){
+                    return;
+                }
 
-        case "open-folder":
+                openFolderModal(id);
 
-            openFolder(id);
+                break;
 
-            break;
 
+            case "open-folder":
 
-        case "new-category":
+                openFolder(id);
 
-            if(!isAdmin()){
+                break;
 
-                showToast(
-                    "🔒 Nur Administratoren dürfen Kategorien erstellen.",
-                    "error"
-                );
 
-                return;
-            }
+            case "copy-chip-link":
 
-            openCategoryModal();
+                await copyChipLink(id);
 
-            break;
+                break;
 
 
-        case "edit-category":
+            case "show-chip-link":
 
-            if(button.disabled) return;
+                showChipLink(id);
 
-            openCategoryModal(id);
+                break;
 
-            break;
 
+            case "new-category":
 
-        case "delete-category":
+                if(!isAdmin()){
 
-            if(button.disabled) return;
+                    showToast(
+                        "🔒 Nur Administratoren dürfen Kategorien erstellen.",
+                        "error"
+                    );
 
-            await deleteCategory(id);
+                    return;
 
-            break;
+                }
 
+                openCategoryModal();
 
-        case "toggle-category-lock":
+                break;
 
-            await toggleCategoryLock(id);
 
-            break;
+            case "edit-category":
 
+                if(button.disabled){
+                    return;
+                }
 
-        case "new-purpose":
+                openCategoryModal(id);
 
-            if(!isAdmin()){
+                break;
 
-                showToast(
-                    "🔒 Nur Administratoren dürfen Zwecke erstellen.",
-                    "error"
-                );
 
-                return;
-            }
+            case "delete-category":
 
-            openPurposeModal();
+                if(button.disabled){
+                    return;
+                }
 
-            break;
+                await deleteCategory(id);
 
+                break;
 
-        case "edit-purpose":
 
-            if(!isAdmin()) return;
+            case "toggle-category-lock":
 
-            openPurposeModal(id);
+                await toggleCategoryLock(id);
 
-            break;
+                break;
 
 
-        case "delete-purpose":
+            case "new-purpose":
 
-            if(!isAdmin()) return;
+                if(!isAdmin()){
 
-            await deletePurpose(id);
+                    showToast(
+                        "🔒 Nur Administratoren dürfen Zwecke erstellen.",
+                        "error"
+                    );
 
-            break;
+                    return;
 
+                }
 
-        case "new-user":
+                openPurposeModal();
 
-            openUserModal();
+                break;
 
-            break;
 
+            case "edit-purpose":
 
-        case "edit-user":
+                if(!isAdmin()){
+                    return;
+                }
 
-            openUserModal(id);
+                openPurposeModal(id);
 
-            break;
+                break;
 
 
-        case "delete-user":
+            case "delete-purpose":
 
-            await deleteUser(id);
+                if(!isAdmin()){
+                    return;
+                }
 
-            break;
+                await deletePurpose(id);
 
+                break;
 
-        case "save-profile":
 
-            await saveProfile();
+            case "new-user":
 
-            break;
+                openUserModal();
+
+                break;
+
+
+            case "edit-user":
+
+                openUserModal(id);
+
+                break;
+
+
+            case "delete-user":
+
+                await deleteUser(id);
+
+                break;
+
+
+            case "save-profile":
+
+                await saveProfile();
+
+                break;
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================================================
    MODAL SAVE
 ========================================================= */
 
-$("modalSave").addEventListener("click",async()=>{
+$("modalSave")
+.addEventListener(
+    "click",
+    async()=>{
 
-    if(modalType === "folder"){
+        if(modalType === "folder"){
 
-        await saveFolder();
+            await saveFolder();
 
-        return;
+            return;
+
+        }
+
+
+        if(modalType === "category"){
+
+            await saveCategory();
+
+            return;
+
+        }
+
+
+        if(modalType === "purpose"){
+
+            await savePurpose();
+
+            return;
+
+        }
+
+
+        if(modalType === "user"){
+
+            await saveUser();
+
+            return;
+
+        }
+
+
+        if(modalType === "chip"){
+
+            const input =
+                $("chipLinkInput");
+
+            if(input){
+
+                try{
+
+                    await navigator.clipboard.writeText(
+                        input.value
+                    );
+
+                    showToast(
+                        "🔗 Chip-Link kopiert."
+                    );
+
+                }catch{
+
+                    input.select();
+
+                    document.execCommand(
+                        "copy"
+                    );
+
+                    showToast(
+                        "🔗 Chip-Link kopiert."
+                    );
+
+                }
+
+            }
+
+            return;
+
+        }
+
+
+        closeModal();
+
     }
+);
 
 
-    if(modalType === "category"){
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
 
-        await saveCategory();
-
-        return;
-    }
-
-
-    if(modalType === "purpose"){
-
-        await savePurpose();
-
-        return;
-    }
-
-
-    if(modalType === "user"){
-
-        await saveUser();
-
-        return;
-    }
-
-
-    closeModal();
-
-});
-
-
-$("modalClose").addEventListener(
+$("modalClose")
+.addEventListener(
     "click",
     closeModal
 );
 
-$("modalCancel").addEventListener(
+
+$("modalCancel")
+.addEventListener(
     "click",
     closeModal
 );
 
 
-$("modalOverlay").addEventListener(
+$("modalOverlay")
+.addEventListener(
     "click",
     event=>{
 
-        if(event.target === $("modalOverlay")){
+        if(
+            event.target ===
+            $("modalOverlay")
+        ){
 
             closeModal();
 
@@ -5089,13 +6995,16 @@ $("modalOverlay").addEventListener(
    LOGOUT
 ========================================================= */
 
-$("logoutButton").addEventListener(
+$("logoutButton")
+.addEventListener(
     "click",
     async()=>{
 
         try{
 
-            await signOut(auth);
+            await signOut(
+                auth
+            );
 
             showToast(
                 "🚪 Erfolgreich abgemeldet."
@@ -5120,13 +7029,16 @@ $("logoutButton").addEventListener(
    MOBILE MENU
 ========================================================= */
 
-$("mobileMenuButton").addEventListener(
+$("mobileMenuButton")
+.addEventListener(
     "click",
     ()=>{
 
         $("sidebar")
             .classList
-            .toggle("mobileOpen");
+            .toggle(
+                "mobileOpen"
+            );
 
     }
 );
@@ -5136,37 +7048,93 @@ $("mobileMenuButton").addEventListener(
    THEME
 ========================================================= */
 
-$("themeButton").addEventListener(
+function applyDarkTheme(){
+
+    document.body.dataset.theme =
+        "dark";
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--bg",
+            "#0b1220"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--card",
+            "#111a2b"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--text",
+            "#edf3ff"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--border",
+            "#25334a"
+        );
+
+}
+
+
+function applyLightTheme(){
+
+    document.body.dataset.theme =
+        "light";
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--bg",
+            "#f4f6f9"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--card",
+            "#ffffff"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--text",
+            "#172033"
+        );
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--border",
+            "#e3e8ef"
+        );
+
+}
+
+
+$("themeButton")
+.addEventListener(
     "click",
     ()=>{
 
         const dark =
-            document.body.dataset.theme === "dark";
+            document.body.dataset.theme ===
+            "dark";
 
 
         if(dark){
 
-            document.body.dataset.theme = "light";
-
-            document.documentElement.style.setProperty(
-                "--bg",
-                "#f4f6f9"
-            );
-
-            document.documentElement.style.setProperty(
-                "--card",
-                "#ffffff"
-            );
-
-            document.documentElement.style.setProperty(
-                "--text",
-                "#172033"
-            );
-
-            document.documentElement.style.setProperty(
-                "--border",
-                "#e3e8ef"
-            );
+            applyLightTheme();
 
             localStorage.setItem(
                 "ordnersystem-theme",
@@ -5175,27 +7143,7 @@ $("themeButton").addEventListener(
 
         }else{
 
-            document.body.dataset.theme = "dark";
-
-            document.documentElement.style.setProperty(
-                "--bg",
-                "#0b1220"
-            );
-
-            document.documentElement.style.setProperty(
-                "--card",
-                "#111a2b"
-            );
-
-            document.documentElement.style.setProperty(
-                "--text",
-                "#edf3ff"
-            );
-
-            document.documentElement.style.setProperty(
-                "--border",
-                "#25334a"
-            );
+            applyDarkTheme();
 
             localStorage.setItem(
                 "ordnersystem-theme",
@@ -5218,27 +7166,7 @@ if(
     ) === "dark"
 ){
 
-    document.body.dataset.theme = "dark";
-
-    document.documentElement.style.setProperty(
-        "--bg",
-        "#0b1220"
-    );
-
-    document.documentElement.style.setProperty(
-        "--card",
-        "#111a2b"
-    );
-
-    document.documentElement.style.setProperty(
-        "--text",
-        "#edf3ff"
-    );
-
-    document.documentElement.style.setProperty(
-        "--border",
-        "#25334a"
-    );
+    applyDarkTheme();
 
 }
 
@@ -5247,10 +7175,13 @@ if(
    NOTIFICATION BUTTON
 ========================================================= */
 
-$("notificationButton").addEventListener(
+$("notificationButton")
+.addEventListener(
     "click",
     ()=>{
-        navigate("notifications");
+        navigate(
+            "notifications"
+        );
     }
 );
 
@@ -5259,7 +7190,8 @@ $("notificationButton").addEventListener(
    GLOBAL SEARCH
 ========================================================= */
 
-$("globalSearch").addEventListener(
+$("globalSearch")
+.addEventListener(
     "input",
     ()=>{
 
@@ -5285,7 +7217,9 @@ document.addEventListener(
 
             $("sidebar")
                 .classList
-                .remove("mobileOpen");
+                .remove(
+                    "mobileOpen"
+                );
 
         }
 
@@ -5297,46 +7231,56 @@ document.addEventListener(
    ADMIN SECURITY CHECK
 ========================================================= */
 
-setInterval(()=>{
+setInterval(
+    ()=>{
 
-    if(!currentUser) return;
+        if(!currentUser){
+            return;
+        }
 
-    const admin =
-        isAdmin();
 
-    if(admin){
+        const admin =
+            isAdmin();
 
-        $("adminNav")
-            .classList
-            .remove("hidden");
 
-        $("adminNavTitle")
-            .classList
-            .remove("hidden");
+        if(admin){
 
-    }else{
-
-        $("adminNav")
-            .classList
-            .add("hidden");
-
-        $("adminNavTitle")
-            .classList
-            .add("hidden");
-
-        if(
-            $("page-admin")
+            $("adminNav")
                 .classList
-                .contains("active")
-        ){
+                .remove("hidden");
 
-            navigate("dashboard");
+            $("adminNavTitle")
+                .classList
+                .remove("hidden");
+
+        }else{
+
+            $("adminNav")
+                .classList
+                .add("hidden");
+
+            $("adminNavTitle")
+                .classList
+                .add("hidden");
+
+
+            if(
+                $("page-admin")
+                    .classList
+                    .contains("active")
+            ){
+
+                navigate(
+                    "dashboard"
+                );
+
+            }
 
         }
 
-    }
-
-},3000);
+    },
+    3000
+);
 
 
 /* =========================================================
@@ -5348,7 +7292,11 @@ console.log(
 );
 
 console.log(
-    "Kategorie-Sperren aktiviert."
+    "Kategorie-Speicherung aktiviert."
+);
+
+console.log(
+    "NFC-Chip-Link-System aktiviert."
 );
 
 </script>
