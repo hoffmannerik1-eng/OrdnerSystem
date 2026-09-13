@@ -3,1362 +3,376 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 
-<meta name="theme-color" content="#f5f7fb">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-<title>OrdnerSystem</title>
+<title>NFC Folder Manager</title>
 
-<style>
-:root{
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --card2:#f8fafc;
-    --text:#172033;
-    --muted:#718096;
-    --border:#e4e8ef;
-    --primary:#2563eb;
-    --primary2:#1d4ed8;
-    --green:#16a34a;
-    --green-bg:#dcfce7;
-    --red:#dc2626;
-    --red-bg:#fee2e2;
-    --orange:#ea580c;
-    --orange-bg:#ffedd5;
-    --shadow:0 12px 35px rgba(15,23,42,.08);
-    --radius:20px;
-}
-
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-    margin:0;
-    width:100%;
-    min-height:100%;
-    background:var(--bg);
-    color:var(--text);
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-}
-
-body{
-    overflow-x:hidden;
-}
-
-button,
-input,
-select,
-textarea{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-/* =========================
-   LOGIN
-========================= */
-
-.login-screen{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:24px;
-    background:
-        radial-gradient(circle at 10% 10%,rgba(37,99,235,.12),transparent 35%),
-        radial-gradient(circle at 90% 90%,rgba(22,163,74,.10),transparent 35%),
-        var(--bg);
-}
-
-.login-card{
-    width:min(440px,100%);
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:28px;
-    box-shadow:var(--shadow);
-    padding:34px;
-}
-
-.logo{
-    width:58px;
-    height:58px;
-    border-radius:18px;
-    background:linear-gradient(135deg,#2563eb,#60a5fa);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:27px;
-    font-weight:900;
-    margin-bottom:20px;
-    box-shadow:0 10px 25px rgba(37,99,235,.25);
-}
-
-.login-title{
-    margin:0;
-    font-size:30px;
-    letter-spacing:-.7px;
-}
-
-.login-subtitle{
-    margin:8px 0 28px;
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.form-group{
-    margin-bottom:15px;
-}
-
-.form-group label{
-    display:block;
-    margin-bottom:7px;
-    font-size:13px;
-    font-weight:800;
-}
-
-.input{
-    width:100%;
-    padding:13px 14px;
-    border:1px solid var(--border);
-    border-radius:13px;
-    outline:none;
-    background:white;
-    color:var(--text);
-    transition:.2s;
-}
-
-.input:focus{
-    border-color:var(--primary);
-    box-shadow:0 0 0 4px rgba(37,99,235,.10);
-}
-
-.btn{
-    border:0;
-    border-radius:13px;
-    padding:13px 17px;
-    font-weight:800;
-    transition:.18s;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-}
-
-.btn:hover{
-    transform:translateY(-1px);
-}
-
-.btn-primary{
-    background:var(--primary);
-    color:white;
-}
-
-.btn-primary:hover{
-    background:var(--primary2);
-}
-
-.btn-secondary{
-    background:#eef2f7;
-    color:#253047;
-}
-
-.btn-danger{
-    background:var(--red);
-    color:white;
-}
-
-.btn-success{
-    background:var(--green);
-    color:white;
-}
-
-.btn-block{
-    width:100%;
-}
-
-.login-switch{
-    margin-top:18px;
-    text-align:center;
-    color:var(--muted);
-    font-size:14px;
-}
-
-.link-btn{
-    border:0;
-    background:none;
-    color:var(--primary);
-    font-weight:800;
-    padding:0;
-}
-
-/* =========================
-   APP
-========================= */
-
-.app{
-    min-height:100vh;
-}
-
-.topbar{
-    height:72px;
-    background:rgba(255,255,255,.92);
-    backdrop-filter:blur(18px);
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 24px;
-    position:sticky;
-    top:0;
-    z-index:50;
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.brand-icon{
-    width:40px;
-    height:40px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#2563eb;
-    color:white;
-    font-weight:900;
-}
-
-.brand-title{
-    font-weight:900;
-    font-size:17px;
-}
-
-.brand-small{
-    color:var(--muted);
-    font-size:11px;
-    margin-top:2px;
-}
-
-.top-actions{
-    display:flex;
-    align-items:center;
-    gap:9px;
-}
-
-.user-pill{
-    padding:8px 12px;
-    background:#f1f5f9;
-    border-radius:12px;
-    font-size:13px;
-    font-weight:700;
-}
-
-.main{
-    display:flex;
-    min-height:calc(100vh - 72px);
-}
-
-.sidebar{
-    width:245px;
-    flex-shrink:0;
-    background:white;
-    border-right:1px solid var(--border);
-    padding:20px 14px;
-}
-
-.nav-title{
-    color:#9aa4b2;
-    font-size:11px;
-    font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    padding:10px 12px 7px;
-}
-
-.nav-item{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#526071;
-    border-radius:12px;
-    padding:12px;
-    margin:2px 0;
-    display:flex;
-    align-items:center;
-    gap:11px;
-    text-align:left;
-    font-weight:750;
-}
-
-.nav-item:hover{
-    background:#f3f6fa;
-}
-
-.nav-item.active{
-    background:#eaf1ff;
-    color:var(--primary);
-}
-
-.nav-icon{
-    width:20px;
-    text-align:center;
-}
-
-.content{
-    flex:1;
-    min-width:0;
-    padding:28px;
-}
-
-.page{
-    max-width:1450px;
-    margin:0 auto;
-}
-
-.page-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:20px;
-    margin-bottom:25px;
-}
-
-.page-title{
-    margin:0;
-    font-size:31px;
-    letter-spacing:-.8px;
-}
-
-.page-subtitle{
-    margin:6px 0 0;
-    color:var(--muted);
-}
-
-.page-actions{
-    display:flex;
-    gap:9px;
-    flex-wrap:wrap;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.stat{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:19px;
-    box-shadow:0 5px 20px rgba(15,23,42,.035);
-}
-
-.stat-top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.stat-icon{
-    width:39px;
-    height:39px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#eef2ff;
-}
-
-.stat-number{
-    font-size:29px;
-    font-weight:900;
-    margin-top:14px;
-}
-
-.stat-label{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:3px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:17px;
-}
-
-.card{
-    background:white;
-    border:1px solid var(--border);
-    border-radius:20px;
-    box-shadow:0 6px 24px rgba(15,23,42,.04);
-}
-
-.card-head{
-    padding:19px 20px;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-}
-
-.card-title{
-    margin:0;
-    font-size:17px;
-    font-weight:900;
-}
-
-.card-body{
-    padding:20px;
-}
-
-.empty{
-    padding:45px 20px;
-    text-align:center;
-    color:var(--muted);
-}
-
-.empty-icon{
-    font-size:42px;
-    margin-bottom:10px;
-}
-
-.folder-card{
-    overflow:hidden;
-    position:relative;
-}
-
-.folder-status{
-    height:7px;
-    background:var(--green);
-}
-
-.folder-status.busy{
-    background:var(--red);
-}
-
-.folder-content{
-    padding:18px;
-}
-
-.folder-top{
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-}
-
-.folder-name{
-    font-size:18px;
-    font-weight:900;
-    word-break:break-word;
-}
-
-.folder-category{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:4px;
-}
-
-.status-badge{
-    white-space:nowrap;
-    border-radius:999px;
-    padding:7px 10px;
-    font-size:11px;
-    font-weight:900;
-}
-
-.status-free{
-    color:#166534;
-    background:var(--green-bg);
-}
-
-.status-busy{
-    color:#991b1b;
-    background:var(--red-bg);
-}
-
-.holder{
-    margin-top:18px;
-    padding:12px;
-    border-radius:13px;
-    background:#f7f8fa;
-    font-size:13px;
-}
-
-.holder strong{
-    display:block;
-    margin-bottom:3px;
-}
-
-.folder-meta{
-    display:flex;
-    gap:7px;
-    flex-wrap:wrap;
-    margin-top:13px;
-}
-
-.tag{
-    background:#f1f5f9;
-    border-radius:8px;
-    padding:6px 8px;
-    font-size:11px;
-    color:#526071;
-}
-
-.folder-actions{
-    display:flex;
-    gap:7px;
-    margin-top:16px;
-}
-
-.folder-actions .btn{
-    flex:1;
-    padding:10px;
-    font-size:12px;
-}
-
-/* =========================
-   NFC LANDING
-========================= */
-
-.scan-page{
-    min-height:calc(100vh - 72px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:25px;
-}
-
-.scan-card{
-    width:min(620px,100%);
-    text-align:center;
-    background:white;
-    border:1px solid var(--border);
-    border-radius:30px;
-    padding:35px;
-    box-shadow:var(--shadow);
-}
-
-.scan-circle{
-    width:120px;
-    height:120px;
-    margin:0 auto 22px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:54px;
-    background:#eff6ff;
-}
-
-.scan-card h1{
-    margin:0;
-    font-size:29px;
-}
-
-.scan-card p{
-    color:var(--muted);
-    line-height:1.6;
-}
-
-.scan-folder-name{
-    margin:20px 0;
-    padding:16px;
-    background:#f8fafc;
-    border-radius:15px;
-    font-size:20px;
-    font-weight:900;
-}
-
-.scan-result{
-    margin-top:20px;
-    border-radius:18px;
-    padding:20px;
-    display:none;
-}
-
-.scan-result.show{
-    display:block;
-}
-
-.scan-result.free{
-    background:var(--green-bg);
-    color:#166534;
-}
-
-.scan-result.busy{
-    background:var(--red-bg);
-    color:#991b1b;
-}
-
-.scan-result h2{
-    margin:0 0 6px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-box{
-    position:relative;
-    margin-bottom:20px;
-}
-
-.search-box input{
-    width:100%;
-    padding:15px 17px 15px 45px;
-    border:1px solid var(--border);
-    border-radius:15px;
-    outline:none;
-    background:white;
-}
-
-.search-icon{
-    position:absolute;
-    left:16px;
-    top:50%;
-    transform:translateY(-50%);
-}
-
-/* =========================
-   TABLE
-========================= */
-
-.table-wrap{
-    overflow:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th,
-td{
-    padding:14px 16px;
-    border-bottom:1px solid var(--border);
-    text-align:left;
-    font-size:13px;
-}
-
-th{
-    color:#7b8798;
-    font-size:11px;
-    text-transform:uppercase;
-}
-
-tr:last-child td{
-    border-bottom:0;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal-bg{
-    position:fixed;
-    inset:0;
-    background:rgba(15,23,42,.48);
-    backdrop-filter:blur(5px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:100;
-}
-
-.modal{
-    width:min(570px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:white;
-    border-radius:23px;
-    box-shadow:0 25px 70px rgba(0,0,0,.25);
-}
-
-.modal-head{
-    padding:20px;
-    border-bottom:1px solid var(--border);
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.modal-head h2{
-    margin:0;
-    font-size:20px;
-}
-
-.modal-close{
-    border:0;
-    background:#f1f5f9;
-    width:36px;
-    height:36px;
-    border-radius:10px;
-    font-size:18px;
-}
-
-.modal-body{
-    padding:20px;
-}
-
-.modal-footer{
-    padding:16px 20px;
-    border-top:1px solid var(--border);
-    display:flex;
-    justify-content:flex-end;
-    gap:9px;
-}
-
-/* =========================
-   TOAST
-========================= */
-
-.toast-container{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    z-index:500;
-    width:min(380px,calc(100% - 40px));
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.toast{
-    background:#172033;
-    color:white;
-    border-radius:15px;
-    padding:15px 16px;
-    box-shadow:0 15px 40px rgba(15,23,42,.22);
-    animation:toastIn .22s ease;
-}
-
-.toast.success{
-    background:#166534;
-}
-
-.toast.error{
-    background:#991b1b;
-}
-
-.toast.info{
-    background:#1e40af;
-}
-
-.toast-title{
-    font-weight:900;
-    margin-bottom:4px;
-}
-
-.toast-text{
-    opacity:.9;
-    font-size:13px;
-}
-
-@keyframes toastIn{
-    from{
-        transform:translateY(12px);
-        opacity:0;
-    }
-    to{
-        transform:translateY(0);
-        opacity:1;
-    }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-.mobile-nav{
-    display:none;
-}
-
-@media(max-width:1000px){
-
-    .sidebar{
-        width:210px;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:720px){
-
-    .topbar{
-        height:64px;
-        padding:0 14px;
-    }
-
-    .brand-title{
-        font-size:15px;
-    }
-
-    .brand-small,
-    .user-pill{
-        display:none;
-    }
-
-    .main{
-        display:block;
-        min-height:calc(100vh - 64px);
-        padding-bottom:74px;
-    }
-
-    .sidebar{
-        display:none;
-    }
-
-    .content{
-        padding:18px 14px;
-    }
-
-    .page-head{
-        flex-direction:column;
-        margin-bottom:18px;
-    }
-
-    .page-title{
-        font-size:26px;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-        gap:10px;
-    }
-
-    .stat{
-        padding:14px;
-    }
-
-    .stat-number{
-        font-size:24px;
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
-
-    .mobile-nav{
-        position:fixed;
-        display:flex;
-        left:10px;
-        right:10px;
-        bottom:10px;
-        height:62px;
-        background:rgba(255,255,255,.96);
-        backdrop-filter:blur(18px);
-        border:1px solid var(--border);
-        border-radius:18px;
-        box-shadow:0 12px 35px rgba(15,23,42,.15);
-        z-index:80;
-        justify-content:space-around;
-        align-items:center;
-    }
-
-    .mobile-nav button{
-        border:0;
-        background:none;
-        color:#788396;
-        font-size:10px;
-        font-weight:800;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        gap:3px;
-    }
-
-    .mobile-nav button.active{
-        color:var(--primary);
-    }
-
-    .mobile-nav .mi{
-        font-size:20px;
-    }
-
-    .login-card{
-        padding:25px 20px;
-    }
-
-    .scan-card{
-        padding:25px 18px;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<!-- =========================================
-     LOGIN
-========================================= -->
-
-<div id="loginScreen" class="login-screen">
-
-    <div class="login-card">
-
-        <div class="logo">O</div>
-
-        <h1 class="login-title">OrdnerSystem</h1>
-
-        <p class="login-subtitle">
-            Ordner verwalten, NFC-Chips nutzen und jederzeit sehen,
-            welcher Ordner gerade verwendet wird.
-        </p>
-
-        <div id="loginForm">
-
-            <div class="form-group">
-                <label>E-Mail</label>
-                <input
-                    id="emailInput"
-                    class="input"
-                    type="email"
-                    placeholder="name@beispiel.de"
-                    autocomplete="email">
-            </div>
-
-            <div class="form-group">
-                <label>Passwort</label>
-                <input
-                    id="passwordInput"
-                    class="input"
-                    type="password"
-                    placeholder="Passwort"
-                    autocomplete="current-password">
-            </div>
-
-            <div id="registerNameGroup"
-                 class="form-group hidden">
-                <label>Name</label>
-                <input
-                    id="nameInput"
-                    class="input"
-                    type="text"
-                    placeholder="Dein Name"
-                    autocomplete="name">
-            </div>
-
-            <button
-                id="loginButton"
-                class="btn btn-primary btn-block">
-                Anmelden
-            </button>
-
-            <div class="login-switch">
-
-                <span id="loginSwitchText">
-                    Noch kein Konto?
-                </span>
-
-                <button
-                    id="switchAuthButton"
-                    class="link-btn">
-                    Registrieren
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================
-     APP
-========================================= -->
-
-<div id="app" class="app hidden">
-
-    <header class="topbar">
-
-        <div class="brand">
-
-            <div class="brand-icon">
-                O
-            </div>
-
-            <div>
-                <div class="brand-title">
-                    OrdnerSystem
-                </div>
-
-                <div class="brand-small">
-                    NFC-Ordnerverwaltung
-                </div>
-            </div>
-
-        </div>
-
-        <div class="top-actions">
-
-            <div id="userPill" class="user-pill">
-                Benutzer
-            </div>
-
-            <button
-                id="logoutButton"
-                class="btn btn-secondary">
-                Abmelden
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <div class="main">
-
-        <aside class="sidebar">
-
-            <div class="nav-title">
-                Übersicht
-            </div>
-
-            <button
-                class="nav-item active"
-                data-page="dashboard">
-                <span class="nav-icon">⌂</span>
-                Dashboard
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="folders">
-                <span class="nav-icon">📁</span>
-                Ordner
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="scan">
-                <span class="nav-icon">📳</span>
-                NFC-Scan
-            </button>
-
-            <div class="nav-title">
-                Verwaltung
-            </div>
-
-            <button
-                class="nav-item"
-                data-page="requests">
-                <span class="nav-icon">📨</span>
-                Anfragen
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="users">
-                <span class="nav-icon">👥</span>
-                Benutzer
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="categories">
-                <span class="nav-icon">🏷️</span>
-                Kategorien
-            </button>
-
-            <button
-                class="nav-item"
-                data-page="settings">
-                <span class="nav-icon">⚙️</span>
-                Einstellungen
-            </button>
-
-        </aside>
-
-
-        <main class="content">
-
-            <div id="pageContent"></div>
-
-        </main>
-
-    </div>
-
-
-    <nav class="mobile-nav">
-
-        <button
-            class="active"
-            data-page="dashboard">
-            <span class="mi">⌂</span>
-            Start
-        </button>
-
-        <button data-page="folders">
-            <span class="mi">📁</span>
-            Ordner
-        </button>
-
-        <button data-page="scan">
-            <span class="mi">📳</span>
-            NFC
-        </button>
-
-        <button data-page="users">
-            <span class="mi">👥</span>
-            Benutzer
-        </button>
-
-        <button data-page="settings">
-            <span class="mi">⚙️</span>
-            Mehr
-        </button>
-
-    </nav>
-
-</div>
-
-
-<!-- =========================================
-     MODAL
-========================================= -->
-
-<div id="modalBg"
-     class="modal-bg hidden">
-
-    <div class="modal">
-
-        <div class="modal-head">
-
-            <h2 id="modalTitle">
-                Fenster
-            </h2>
-
-            <button
-                id="modalClose"
-                class="modal-close">
-                ×
-            </button>
-
-        </div>
-
-        <div id="modalBody"
-             class="modal-body">
-        </div>
-
-        <div id="modalFooter"
-             class="modal-footer">
-        </div>
-
-    </div>
-
-</div>
-
-
-<div id="toastContainer"
-     class="toast-container">
-</div>
-
-
-<!-- =========================================
+<!-- =========================================================
      FIREBASE
-========================================= -->
+========================================================= -->
 
 <script type="module">
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    updateProfile,
-    signOut
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    signOut,
+    updateProfile
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
     doc,
+    getDoc,
+    getDocs,
     addDoc,
     setDoc,
     updateDoc,
     deleteDoc,
-    getDoc,
-    getDocs,
-    onSnapshot,
     query,
     orderBy,
+    onSnapshot,
     serverTimestamp,
     runTransaction
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-/* =========================================
+/* =========================================================
    FIREBASE CONFIG
-========================================= */
+   HIER DEINE DATEN EINTRAGEN
+========================================================= */
 
 const firebaseConfig = {
 
-    apiKey:
-        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+    apiKey: "DEINE_API_KEY",
 
-    authDomain:
-        "ordnersystem-1352a.firebaseapp.com",
+    authDomain: "DEIN-PROJEKT.firebaseapp.com",
 
-    projectId:
-        "ordnersystem-1352a",
+    projectId: "DEIN-PROJEKT",
 
-    storageBucket:
-        "ordnersystem-1352a.firebasestorage.app",
+    storageBucket: "DEIN-PROJEKT.firebasestorage.app",
 
-    messagingSenderId:
-        "39473536985",
+    messagingSenderId: "DEINE_MESSAGING_ID",
 
-    appId:
-        "1:39473536985:web:7dae48028c28dabc6a03c8"
+    appId: "DEINE_APP_ID"
 };
 
 
-/* =========================================
-   ADMIN
-========================================= */
+/* =========================================================
+   FIREBASE STARTEN
+========================================================= */
 
-const ADMIN1 =
-    "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
+const app = initializeApp(firebaseConfig);
 
-const ADMIN2 =
-    "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+const auth = getAuth(app);
 
-
-/* =========================================
-   INITIALIZE
-========================================= */
-
-const firebaseApp =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(firebaseApp);
-
-const db =
-    getFirestore(firebaseApp);
+const db = getFirestore(app);
 
 
-/* =========================================
-   STATE
-========================================= */
+/* =========================================================
+   GLOBALE VARIABLEN
+========================================================= */
 
 let currentUser = null;
 
-let isRegisterMode = false;
-
-let currentPage = "dashboard";
-
-let folders = [];
-
-let users = [];
+let isAdmin = false;
 
 let categories = [];
 
-let requests = [];
-
-let unsubscribeFolders = null;
-
-let unsubscribeUsers = null;
+let folders = [];
 
 let unsubscribeCategories = null;
 
-let unsubscribeRequests = null;
+let unsubscribeFolders = null;
 
 
-/* =========================================
-   HELPERS
-========================================= */
+/* =========================================================
+   HILFSFUNKTIONEN
+========================================================= */
 
-function $(id){
+function $(id) {
     return document.getElementById(id);
 }
 
 
-function isAdmin(){
+function escapeHTML(value) {
 
-    if(!currentUser){
-        return false;
+    if (value === undefined || value === null) {
+        return "";
     }
 
-    return (
-        currentUser.uid === ADMIN1 ||
-        currentUser.uid === ADMIN2
-    );
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
 
-function userName(){
+function show(id) {
 
-    if(!currentUser){
-        return "Benutzer";
+    const element = $(id);
+
+    if (element) {
+        element.classList.remove("hidden");
+    }
+}
+
+
+function hide(id) {
+
+    const element = $(id);
+
+    if (element) {
+        element.classList.add("hidden");
+    }
+}
+
+
+function toast(message, type = "normal") {
+
+    const container = $("toastContainer");
+
+    const item = document.createElement("div");
+
+    item.className = "toast " + type;
+
+    item.textContent = message;
+
+    container.appendChild(item);
+
+    setTimeout(() => {
+
+        item.classList.add("toast-out");
+
+        setTimeout(() => item.remove(), 300);
+
+    }, 3000);
+}
+
+
+function generateFolderUrl(folderId) {
+
+    const base = window.location.origin +
+        window.location.pathname
+            .replace(/\/index\.html$/, "")
+            .replace(/\/$/, "");
+
+    return base + "/scan/" + encodeURIComponent(folderId);
+}
+
+
+function getScanIdFromUrl() {
+
+    const path = window.location.pathname;
+
+    const match = path.match(/\/scan\/([^/]+)/);
+
+    if (match) {
+        return decodeURIComponent(match[1]);
     }
 
-    return (
-        currentUser.displayName ||
-        currentUser.email ||
-        "Benutzer"
-    );
+    return null;
 }
 
 
-function escapeHtml(value){
+/* =========================================================
+   AUTHENTIFIZIERUNG
+========================================================= */
 
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
+onAuthStateChanged(auth, async (user) => {
+
+    currentUser = user;
+
+    if (!user) {
+
+        isAdmin = false;
+
+        hide("app");
+
+        show("auth");
+
+        return;
+    }
+
+    try {
+
+        const tokenResult = await user.getIdTokenResult(true);
+
+        isAdmin = tokenResult.claims.admin === true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        isAdmin = false;
+    }
+
+    hide("auth");
+
+    show("app");
+
+    $("userName").textContent =
+        user.displayName ||
+        user.email ||
+        "Benutzer";
+
+    if (isAdmin) {
+
+        $("roleBadge").textContent = "ADMIN";
+
+        $("roleBadge").className = "role admin";
+
+        $("adminArea").classList.remove("hidden");
+
+    } else {
+
+        $("roleBadge").textContent = "BENUTZER";
+
+        $("roleBadge").className = "role";
+
+        $("adminArea").classList.add("hidden");
+    }
+
+    startDatabaseListeners();
+
+    const scanId = getScanIdFromUrl();
+
+    if (scanId) {
+
+        setTimeout(() => {
+
+            scanFolder(scanId);
+
+        }, 400);
+    }
+
+});
 
 
-function firebaseError(error){
+/* =========================================================
+   LOGIN
+========================================================= */
 
-    const code =
-        error?.code || "";
+$("loginForm").addEventListener("submit", async (event) => {
 
-    const messages = {
+    event.preventDefault();
+
+    const email = $("loginEmail").value.trim();
+
+    const password = $("loginPassword").value;
+
+    try {
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+        toast("Erfolgreich angemeldet", "success");
+
+    } catch (error) {
+
+        console.error(error);
+
+        toast(getAuthError(error), "error");
+    }
+});
+
+
+/* =========================================================
+   REGISTRIERUNG
+========================================================= */
+
+$("registerForm").addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    const name = $("registerName").value.trim();
+
+    const email = $("registerEmail").value.trim();
+
+    const password = $("registerPassword").value;
+
+    if (name.length < 2) {
+
+        toast("Bitte einen Namen eingeben.", "error");
+
+        return;
+    }
+
+    if (password.length < 6) {
+
+        toast("Das Passwort muss mindestens 6 Zeichen haben.", "error");
+
+        return;
+    }
+
+    try {
+
+        const credential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        await updateProfile(
+            credential.user,
+            {
+                displayName: name
+            }
+        );
+
+        await setDoc(
+            doc(db, "users", credential.user.uid),
+            {
+                uid: credential.user.uid,
+                name: name,
+                email: email,
+                role: "user",
+                createdAt: serverTimestamp()
+            }
+        );
+
+        toast("Konto erstellt", "success");
+
+    } catch (error) {
+
+        console.error(error);
+
+        toast(getAuthError(error), "error");
+    }
+});
+
+
+function getAuthError(error) {
+
+    const code = error.code || "";
+
+    const errors = {
+
+        "auth/invalid-email":
+            "Die E-Mail-Adresse ist ungültig.",
+
+        "auth/user-not-found":
+            "Benutzer nicht gefunden.",
+
+        "auth/wrong-password":
+            "Falsches Passwort.",
 
         "auth/invalid-credential":
             "E-Mail oder Passwort ist falsch.",
@@ -1369,3035 +383,3208 @@ function firebaseError(error){
         "auth/weak-password":
             "Das Passwort ist zu schwach.",
 
-        "auth/invalid-email":
-            "Die E-Mail-Adresse ist ungültig.",
-
-        "permission-denied":
-            "Du hast keine Berechtigung für diese Aktion.",
-
-        "failed-precondition":
-            "Die Aktion kann momentan nicht durchgeführt werden.",
-
-        "not-found":
-            "Der Ordner wurde nicht gefunden."
-
+        "auth/too-many-requests":
+            "Zu viele Versuche. Bitte später erneut versuchen."
     };
 
-    return messages[code] ||
-           error?.message ||
-           "Unbekannter Fehler.";
+    return errors[code] || "Es ist ein Fehler aufgetreten.";
 }
 
 
-function showToast(title,text,type="info"){
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-    const toast =
-        document.createElement("div");
+$("logoutButton").addEventListener("click", async () => {
 
-    toast.className =
-        `toast ${type}`;
+    try {
 
-    toast.innerHTML = `
+        await signOut(auth);
 
-        <div class="toast-title">
-            ${escapeHtml(title)}
-        </div>
+        toast("Abgemeldet");
 
-        <div class="toast-text">
-            ${escapeHtml(text)}
-        </div>
-    `;
+    } catch (error) {
 
-    $("toastContainer").appendChild(toast);
-
-    setTimeout(()=>{
-
-        toast.remove();
-
-    },4500);
-}
+        console.error(error);
+    }
+});
 
 
-function formatDate(timestamp){
+/* =========================================================
+   AUTH TABS
+========================================================= */
 
-    if(!timestamp){
-        return "Noch nicht";
+$("showLogin").addEventListener("click", () => {
+
+    $("showLogin").classList.add("active");
+
+    $("showRegister").classList.remove("active");
+
+    show("loginForm");
+
+    hide("registerForm");
+});
+
+
+$("showRegister").addEventListener("click", () => {
+
+    $("showRegister").classList.add("active");
+
+    $("showLogin").classList.remove("active");
+
+    hide("loginForm");
+
+    show("registerForm");
+});
+
+
+/* =========================================================
+   FIRESTORE LISTENER
+========================================================= */
+
+function startDatabaseListeners() {
+
+    if (unsubscribeCategories) {
+        unsubscribeCategories();
     }
 
-    let date;
-
-    try{
-
-        if(timestamp.toDate){
-            date = timestamp.toDate();
-        }else{
-            date = new Date(timestamp);
-        }
-
-    }catch{
-        return "Unbekannt";
+    if (unsubscribeFolders) {
+        unsubscribeFolders();
     }
 
-    if(Number.isNaN(date.getTime())){
-        return "Unbekannt";
-    }
 
-    return date.toLocaleString(
-        "de-DE",
-        {
-            dateStyle:"short",
-            timeStyle:"short"
-        }
-    );
-}
+    unsubscribeCategories = onSnapshot(
+        collection(db, "categories"),
+        (snapshot) => {
 
+            categories = [];
 
-/* =========================================
-   AUTH MODE
-========================================= */
+            snapshot.forEach((item) => {
 
-$("switchAuthButton").addEventListener(
-    "click",
-    ()=>{
+                categories.push({
+                    id: item.id,
+                    ...item.data()
+                });
 
-        isRegisterMode =
-            !isRegisterMode;
+            });
 
-        $("registerNameGroup")
-            .classList.toggle(
-                "hidden",
-                !isRegisterMode
+            categories.sort((a, b) =>
+                (a.name || "").localeCompare(
+                    b.name || "",
+                    "de"
+                )
             );
 
-        $("loginButton").textContent =
-            isRegisterMode
-                ? "Konto erstellen"
-                : "Anmelden";
+            renderCategories();
 
-        $("loginSwitchText").textContent =
-            isRegisterMode
-                ? "Bereits ein Konto?"
-                : "Noch kein Konto?";
+            renderAdminCategorySelect();
 
-        $("switchAuthButton").textContent =
-            isRegisterMode
-                ? "Anmelden"
-                : "Registrieren";
-    }
-);
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-$("loginButton").addEventListener(
-    "click",
-    async ()=>{
-
-        const email =
-            $("emailInput").value.trim();
-
-        const password =
-            $("passwordInput").value;
-
-        if(!email || !password){
-
-            showToast(
-                "Fehlende Angaben",
-                "Bitte E-Mail und Passwort eingeben.",
-                "error"
-            );
-
-            return;
-        }
-
-        try{
-
-            if(isRegisterMode){
-
-                const name =
-                    $("nameInput")
-                        .value
-                        .trim();
-
-                if(!name){
-
-                    showToast(
-                        "Name fehlt",
-                        "Bitte deinen Namen eingeben.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-                const credential =
-                    await createUserWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
-                    );
-
-                await updateProfile(
-                    credential.user,
-                    {
-                        displayName:name
-                    }
-                );
-
-                await setDoc(
-                    doc(
-                        db,
-                        "users",
-                        credential.user.uid
-                    ),
-                    {
-                        uid:credential.user.uid,
-                        name:name,
-                        email:email,
-                        createdAt:serverTimestamp()
-                    },
-                    {
-                        merge:true
-                    }
-                );
-
-                showToast(
-                    "Konto erstellt",
-                    "Willkommen im OrdnerSystem.",
-                    "success"
-                );
-
-            }else{
-
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-                showToast(
-                    "Willkommen",
-                    "Du wurdest erfolgreich angemeldet.",
-                    "success"
-                );
-            }
-
-        }catch(error){
+        },
+        (error) => {
 
             console.error(error);
 
-            showToast(
-                "Anmeldung fehlgeschlagen",
-                firebaseError(error),
+            toast(
+                "Kategorien konnten nicht geladen werden.",
                 "error"
             );
         }
-    }
-);
+    );
 
 
-/* =========================================
-   LOGOUT
-========================================= */
+    unsubscribeFolders = onSnapshot(
+        collection(db, "folders"),
+        (snapshot) => {
 
-$("logoutButton").addEventListener(
-    "click",
-    async ()=>{
+            folders = [];
 
-        try{
+            snapshot.forEach((item) => {
 
-            await signOut(auth);
+                folders.push({
+                    id: item.id,
+                    ...item.data()
+                });
 
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-        }
-    }
-);
-
-
-/* =========================================
-   AUTH STATE
-========================================= */
-
-onAuthStateChanged(
-    auth,
-    async user=>{
-
-        currentUser = user;
-
-        if(user){
-
-            $("loginScreen")
-                .classList.add("hidden");
-
-            $("app")
-                .classList.remove("hidden");
-
-            $("userPill").textContent =
-                userName();
-
-            startRealtimeListeners();
-
-            await handleNfcLink();
-
-            renderCurrentPage();
-
-        }else{
-
-            $("loginScreen")
-                .classList.remove("hidden");
-
-            $("app")
-                .classList.add("hidden");
-
-            stopRealtimeListeners();
-        }
-    }
-);
-
-
-/* =========================================
-   REALTIME LISTENERS
-========================================= */
-
-function startRealtimeListeners(){
-
-    stopRealtimeListeners();
-
-
-    unsubscribeFolders =
-        onSnapshot(
-            collection(db,"folders"),
-            snapshot=>{
-
-                folders =
-                    snapshot.docs.map(
-                        item=>({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
-
-                renderCurrentPage();
-            },
-            error=>{
-
-                console.error(error);
-
-                showToast(
-                    "Ordner konnten nicht geladen werden",
-                    firebaseError(error),
-                    "error"
-                );
-            }
-        );
-
-
-    unsubscribeUsers =
-        onSnapshot(
-            collection(db,"users"),
-            snapshot=>{
-
-                users =
-                    snapshot.docs.map(
-                        item=>({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
-
-                renderCurrentPage();
-            }
-        );
-
-
-    unsubscribeCategories =
-        onSnapshot(
-            collection(db,"categories"),
-            snapshot=>{
-
-                categories =
-                    snapshot.docs.map(
-                        item=>({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
-
-                renderCurrentPage();
-            }
-        );
-
-
-    unsubscribeRequests =
-        onSnapshot(
-            collection(db,"requests"),
-            snapshot=>{
-
-                requests =
-                    snapshot.docs.map(
-                        item=>({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
-
-                renderCurrentPage();
-            }
-        );
-}
-
-
-function stopRealtimeListeners(){
-
-    if(unsubscribeFolders){
-        unsubscribeFolders();
-        unsubscribeFolders = null;
-    }
-
-    if(unsubscribeUsers){
-        unsubscribeUsers();
-        unsubscribeUsers = null;
-    }
-
-    if(unsubscribeCategories){
-        unsubscribeCategories();
-        unsubscribeCategories = null;
-    }
-
-    if(unsubscribeRequests){
-        unsubscribeRequests();
-        unsubscribeRequests = null;
-    }
-}
-
-
-/* =========================================
-   NAVIGATION
-========================================= */
-
-document.addEventListener(
-    "click",
-    event=>{
-
-        const button =
-            event.target.closest(
-                "[data-page]"
-            );
-
-        if(!button){
-            return;
-        }
-
-        const page =
-            button.dataset.page;
-
-        if(!page){
-            return;
-        }
-
-        currentPage = page;
-
-        document
-            .querySelectorAll(
-                ".nav-item,.mobile-nav button"
-            )
-            .forEach(item=>{
-
-                item.classList.toggle(
-                    "active",
-                    item.dataset.page === page
-                );
             });
 
-        renderCurrentPage();
-    }
-);
+            folders.sort((a, b) =>
+                (a.name || "").localeCompare(
+                    b.name || "",
+                    "de"
+                )
+            );
+
+            renderCategories();
+
+            renderAdminFolders();
+
+        },
+        (error) => {
+
+            console.error(error);
+
+            toast(
+                "Ordner konnten nicht geladen werden.",
+                "error"
+            );
+        }
+    );
+
+}
 
 
-/* =========================================
-   RENDER
-========================================= */
+/* =========================================================
+   KATEGORIEN RENDERN
+========================================================= */
 
-function renderCurrentPage(){
+function renderCategories() {
 
-    if(!currentUser){
+    const container = $("categoriesContainer");
+
+    container.innerHTML = "";
+
+    if (categories.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty">
+                <div class="empty-icon">📁</div>
+                <h3>Noch keine Kategorien</h3>
+                <p>Ein Administrator kann die erste Kategorie erstellen.</p>
+            </div>
+        `;
+
         return;
     }
 
-    if(currentPage === "dashboard"){
-        renderDashboard();
-    }
 
-    if(currentPage === "folders"){
-        renderFolders();
-    }
+    categories.forEach(category => {
 
-    if(currentPage === "scan"){
-        renderScanPage();
-    }
-
-    if(currentPage === "requests"){
-        renderRequests();
-    }
-
-    if(currentPage === "users"){
-        renderUsers();
-    }
-
-    if(currentPage === "categories"){
-        renderCategories();
-    }
-
-    if(currentPage === "settings"){
-        renderSettings();
-    }
-}
+        const categoryFolders =
+            folders.filter(
+                folder =>
+                    folder.categoryId === category.id
+            );
 
 
-/* =========================================
-   DASHBOARD
-========================================= */
+        const section =
+            document.createElement("section");
 
-function renderDashboard(){
+        section.className = "category";
 
-    const total =
-        folders.length;
 
-    const busy =
-        folders.filter(
-            folder=>folder.chipActive === true
-        ).length;
+        const free =
+            categoryFolders.filter(
+                f => f.status !== "red"
+            ).length;
 
-    const free =
-        total - busy;
 
-    const mine =
-        folders.filter(
-            folder=>
-                folder.chipActive === true &&
-                folder.heldByUid === currentUser.uid
-        ).length;
+        const used =
+            categoryFolders.filter(
+                f => f.status === "red"
+            ).length;
 
-    $("pageContent").innerHTML = `
 
-        <div class="page">
+        section.innerHTML = `
 
-            <div class="page-head">
+            <div class="category-header">
 
                 <div>
-                    <h1 class="page-title">
-                        Dashboard
-                    </h1>
 
-                    <p class="page-subtitle">
-                        Guten Tag, ${escapeHtml(userName())}.
-                        Hier ist dein aktueller Überblick.
-                    </p>
-                </div>
+                    <div class="category-title">
 
-                <div class="page-actions">
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="openFolderModal()">
-                        ＋ Neuer Ordner
-                    </button>
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="goToScan()">
-                        📳 NFC
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <div class="stats">
-
-                <div class="stat">
-
-                    <div class="stat-top">
-                        <div class="stat-icon">
+                        <span class="category-icon">
                             📁
-                        </div>
+                        </span>
+
+                        <span>
+                            ${escapeHTML(category.name)}
+                        </span>
+
                     </div>
-
-                    <div class="stat-number">
-                        ${total}
-                    </div>
-
-                    <div class="stat-label">
-                        Ordner insgesamt
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-                        <div class="stat-icon">
-                            🟢
-                        </div>
-                    </div>
-
-                    <div class="stat-number">
-                        ${free}
-                    </div>
-
-                    <div class="stat-label">
-                        Freie Ordner
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-                        <div class="stat-icon">
-                            🔴
-                        </div>
-                    </div>
-
-                    <div class="stat-number">
-                        ${busy}
-                    </div>
-
-                    <div class="stat-label">
-                        Belegte Ordner
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-                        <div class="stat-icon">
-                            👤
-                        </div>
-                    </div>
-
-                    <div class="stat-number">
-                        ${mine}
-                    </div>
-
-                    <div class="stat-label">
-                        Bei dir
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-head">
-
-                    <h2 class="card-title">
-                        Aktuelle Ordner
-                    </h2>
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="goToFolders()">
-                        Alle anzeigen
-                    </button>
-
-                </div>
-
-                <div class="card-body">
 
                     ${
-                        folders.length
-                        ? `
-                            <div class="grid">
-                                ${
-                                    folders
-                                        .slice(0,6)
-                                        .map(folderCard)
-                                        .join("")
-                                }
-                            </div>
-                        `
-                        : `
-                            <div class="empty">
-
-                                <div class="empty-icon">
-                                    📁
-                                </div>
-
-                                Noch keine Ordner vorhanden.
-
-                            </div>
-                        `
+                        category.description
+                        ?
+                        `<div class="category-description">
+                            ${escapeHTML(category.description)}
+                        </div>`
+                        :
+                        ""
                     }
 
                 </div>
 
-            </div>
+                <div class="category-stats">
 
-        </div>
-    `;
-}
+                    <span class="stat free-stat">
+                        ● ${free} frei
+                    </span>
 
+                    <span class="stat used-stat">
+                        ● ${used} belegt
+                    </span>
 
-/* =========================================
-   FOLDERS
-========================================= */
-
-function renderFolders(){
-
-    $("pageContent").innerHTML = `
-
-        <div class="page">
-
-            <div class="page-head">
-
-                <div>
-                    <h1 class="page-title">
-                        Ordner
-                    </h1>
-
-                    <p class="page-subtitle">
-                        Alle Ordner und deren aktuellen Status.
-                    </p>
                 </div>
 
-                <button
-                    class="btn btn-primary"
-                    onclick="openFolderModal()">
-                    ＋ Neuer Ordner
-                </button>
-
             </div>
 
-
-            <div class="search-box">
-
-                <span class="search-icon">
-                    🔎
-                </span>
-
-                <input
-                    id="folderSearch"
-                    type="search"
-                    placeholder="Ordner, Kategorie oder Chip-ID suchen..."
-                    oninput="filterFolders()">
-
-            </div>
-
-
-            <div id="folderGrid"
-                 class="grid">
+            <div class="folders-grid">
 
                 ${
-                    folders.length
-                    ? folders.map(folderCard).join("")
-                    : `
-                        <div
-                            class="card"
-                            style="grid-column:1/-1">
-
-                            <div class="empty">
-
-                                <div class="empty-icon">
-                                    📁
-                                </div>
-
-                                Keine Ordner vorhanden.
-
-                            </div>
-
+                    categoryFolders.length
+                    ?
+                    categoryFolders
+                        .map(folder =>
+                            createFolderHTML(folder)
+                        )
+                        .join("")
+                    :
+                    `
+                        <div class="no-folders">
+                            Keine Ordner in dieser Kategorie.
                         </div>
                     `
                 }
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-window.filterFolders = function(){
-
-    const search =
-        $("folderSearch")
-            ?.value
-            .trim()
-            .toLowerCase();
-
-    if(!$("folderGrid")){
-        return;
-    }
-
-    const filtered =
-        folders.filter(folder=>{
-
-            const text = [
-
-                folder.name,
-                folder.category,
-                folder.chipId,
-                folder.description,
-                folder.heldByName
-
-            ]
-            .join(" ")
-            .toLowerCase();
-
-            return text.includes(search);
-        });
-
-    $("folderGrid").innerHTML =
-        filtered.length
-        ? filtered.map(folderCard).join("")
-        : `
-            <div
-                class="card"
-                style="grid-column:1/-1">
-
-                <div class="empty">
-                    🔎 Keine passenden Ordner gefunden.
-                </div>
 
             </div>
         `;
-};
 
 
-function folderCard(folder){
+        container.appendChild(section);
 
-    const busy =
-        folder.chipActive === true;
+    });
 
-    const mine =
-        busy &&
-        folder.heldByUid === currentUser?.uid;
-
-    return `
-
-        <div class="card folder-card">
-
-            <div class="folder-status ${busy ? "busy" : ""}">
-            </div>
-
-            <div class="folder-content">
-
-                <div class="folder-top">
-
-                    <div>
-
-                        <div class="folder-name">
-                            ${escapeHtml(
-                                folder.name ||
-                                "Unbenannter Ordner"
-                            )}
-                        </div>
-
-                        <div class="folder-category">
-                            ${escapeHtml(
-                                folder.category ||
-                                "Keine Kategorie"
-                            )}
-                        </div>
-
-                    </div>
-
-                    <div class="
-                        status-badge
-                        ${busy
-                            ? "status-busy"
-                            : "status-free"}
-                    ">
-
-                        ${
-                            busy
-                            ? "🔴 BELEGT"
-                            : "🟢 FREI"
-                        }
-
-                    </div>
-
-                </div>
-
-
-                ${
-                    busy
-                    ? `
-                        <div class="holder">
-
-                            <strong>
-                                ${mine
-                                    ? "👤 Bei dir"
-                                    : "👤 Aktueller Benutzer"}
-                            </strong>
-
-                            ${escapeHtml(
-                                folder.heldByName ||
-                                "Unbekannter Benutzer"
-                            )}
-
-                        </div>
-                    `
-                    : `
-                        <div class="holder">
-
-                            <strong>
-                                🟢 Frei
-                            </strong>
-
-                            Dieser Ordner kann über
-                            seinen NFC-Chip übernommen werden.
-
-                        </div>
-                    `
-                }
-
-
-                <div class="folder-meta">
-
-                    ${
-                        folder.chipId
-                        ? `
-                            <span class="tag">
-                                NFC: ${escapeHtml(folder.chipId)}
-                            </span>
-                        `
-                        : `
-                            <span class="tag">
-                                Keine Chip-ID
-                            </span>
-                        `
-                    }
-
-                    ${
-                        folder.createdBy
-                        ? `
-                            <span class="tag">
-                                Erstellt
-                            </span>
-                        `
-                        : ""
-                    }
-
-                </div>
-
-
-                <div class="folder-actions">
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="showFolder('${folder.id}')">
-                        Details
-                    </button>
-
-                    ${
-                        isAdmin()
-                        ? `
-                            <button
-                                class="btn btn-secondary"
-                                onclick="openFolderModal('${folder.id}')">
-                                Bearbeiten
-                            </button>
-
-                            <button
-                                class="btn btn-danger"
-                                onclick="deleteFolder('${folder.id}')">
-                                Löschen
-                            </button>
-                        `
-                        : ""
-                    }
-
-                </div>
-
-            </div>
-
-        </div>
-    `;
 }
 
 
-/* =========================================
-   NFC LANDING PAGE
-========================================= */
+function createFolderHTML(folder) {
 
-function renderScanPage(){
+    const red = folder.status === "red";
 
-    $("pageContent").innerHTML = `
+    const statusClass =
+        red ? "red" : "green";
 
-        <div class="scan-page">
+    const statusText =
+        red ? "IN BENUTZUNG" : "FREI";
 
-            <div class="scan-card">
 
-                <div class="scan-circle">
-                    📳
+    const userText =
+        red
+        ?
+        `
+            <div class="borrower">
+
+                <span class="person-icon">
+                    👤
+                </span>
+
+                <div>
+
+                    <small>Ausgeliehen von</small>
+
+                    <strong>
+                        ${escapeHTML(
+                            folder.borrowedByName ||
+                            folder.borrowedByEmail ||
+                            "Unbekannt"
+                        )}
+                    </strong>
+
                 </div>
 
-                <h1>
-                    NFC-Ordner
-                </h1>
+            </div>
+        `
+        :
+        `
+            <div class="available-text">
+                Niemand hat diesen Ordner.
+            </div>
+        `;
 
-                <p>
-                    Halte dein Handy einfach an den NFC-Chip
-                    des Ordners. Der Chip öffnet diese Website
-                    automatisch.
-                </p>
 
-                <p>
-                    <strong>
-                        Es gibt hier keinen Browser-NFC-Scanner.
-                    </strong>
-                </p>
+    return `
+
+        <article
+            class="folder-card ${statusClass}"
+            data-id="${escapeHTML(folder.id)}"
+        >
+
+            <div class="folder-top">
+
+                <div class="folder-symbol">
+                    📂
+                </div>
+
+                <div class="status-dot ${statusClass}"></div>
+
+            </div>
+
+
+            <h3>
+                ${escapeHTML(folder.name)}
+            </h3>
+
+
+            ${
+                folder.description
+                ?
+                `<p>
+                    ${escapeHTML(folder.description)}
+                </p>`
+                :
+                ""
+            }
+
+
+            <div class="status-box ${statusClass}">
+
+                <div class="status-title">
+
+                    <span>
+                        ${statusText}
+                    </span>
+
+                </div>
+
+                ${userText}
+
+            </div>
+
+
+            <div class="folder-actions">
 
                 <button
-                    class="btn btn-primary"
-                    onclick="showToast(
-                        'NFC',
-                        'Halte dein Handy direkt an den NFC-Chip.',
-                        'info'
-                    )">
-                    📱 So funktioniert es
+                    class="scan-button"
+                    onclick="scanFolder('${escapeHTML(folder.id)}')"
+                >
+                    ${red ? "↩ Zurückgeben" : "📱 Ausleihen"}
+                </button>
+
+                <button
+                    class="link-button"
+                    onclick="showFolderLink('${escapeHTML(folder.id)}')"
+                >
+                    🔗 NFC-Link
                 </button>
 
             </div>
 
-        </div>
+        </article>
     `;
 }
 
 
-/* =========================================
-   IMPORTANT:
-   NFC URL HANDLER
-========================================= */
+/* =========================================================
+   ORDNER SCANNEN
+========================================================= */
 
-async function handleNfcLink(){
+window.scanFolder = async function(folderId) {
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+    if (!currentUser) {
 
-    const folderId =
-        params.get("folder");
-
-    const chipId =
-        params.get("chip");
-
-
-    /*
-       Der NFC-Chip kann entweder
-
-       https://deine-seite.de/?folder=ORDNER_ID
-
-       oder
-
-       https://deine-seite.de/?chip=CHIP_ID
-
-       öffnen.
-    */
-
-    if(!folderId && !chipId){
-        return;
-    }
-
-
-    let folder = null;
-
-
-    if(folderId){
-
-        folder =
-            folders.find(
-                item => item.id === folderId
-            );
-
-        /*
-           Falls die Realtime-Daten noch nicht geladen
-           sind, direkt aus Firestore laden.
-        */
-
-        if(!folder){
-
-            try{
-
-                const snapshot =
-                    await getDoc(
-                        doc(
-                            db,
-                            "folders",
-                            folderId
-                        )
-                    );
-
-                if(snapshot.exists()){
-
-                    folder = {
-                        id:snapshot.id,
-                        ...snapshot.data()
-                    };
-
-                }
-
-            }catch(error){
-
-                console.error(error);
-
-            }
-        }
-
-    }
-
-
-    /*
-       Alternative:
-       NFC-Link enthält ?chip=CHIP-ID
-    */
-
-    if(!folder && chipId){
-
-        try{
-
-            const snapshot =
-                await getDocs(
-                    collection(
-                        db,
-                        "folders"
-                    )
-                );
-
-            const found =
-                snapshot.docs.find(
-                    item =>
-                        item.data().chipId === chipId
-                );
-
-            if(found){
-
-                folder = {
-                    id:found.id,
-                    ...found.data()
-                };
-
-            }
-
-        }catch(error){
-
-            console.error(error);
-        }
-    }
-
-
-    /*
-       URL aufräumen.
-       Dadurch bleibt nach dem Scan nicht dauerhaft
-       ?folder=... in der Adresszeile.
-    */
-
-    try{
-
-        window.history.replaceState(
-            {},
-            document.title,
-            window.location.pathname +
-            window.location.hash
-        );
-
-    }catch{}
-
-
-    if(!folder){
-
-        showToast(
-            "Ordner nicht gefunden",
-            "Der NFC-Chip ist keinem bekannten Ordner zugeordnet.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    /*
-       Der eigentliche NFC-Vorgang.
-    */
-
-    await scanFolderTransaction(
-        folder.id
-    );
-
-
-    /*
-       Schöne Ergebnis-Seite.
-    */
-
-    await showNfcResult(folder.id);
-}
-
-
-/* =========================================
-   NFC TRANSACTION
-========================================= */
-
-async function scanFolderTransaction(
-    folderId
-){
-
-    if(!currentUser){
-
-        showToast(
-            "Anmeldung erforderlich",
+        toast(
             "Bitte zuerst anmelden.",
             "error"
         );
 
-        return null;
+        return;
     }
 
 
     const folderRef =
-        doc(
+        doc(db, "folders", folderId);
+
+
+    try {
+
+        await runTransaction(
             db,
-            "folders",
-            folderId
-        );
+            async transaction => {
+
+                const snapshot =
+                    await transaction.get(folderRef);
 
 
-    try{
+                if (!snapshot.exists()) {
 
-        const result =
-            await runTransaction(
-                db,
-                async transaction=>{
-
-                    const snapshot =
-                        await transaction.get(
-                            folderRef
-                        );
+                    throw new Error(
+                        "folder-not-found"
+                    );
+                }
 
 
-                    if(!snapshot.exists()){
-
-                        throw new Error(
-                            "Ordner wurde nicht gefunden."
-                        );
-                    }
+                const folder =
+                    snapshot.data();
 
 
-                    const folder =
-                        snapshot.data();
+                const currentlyRed =
+                    folder.status === "red";
 
 
-                    const uid =
-                        currentUser.uid;
-
-
-                    const name =
-                        currentUser.displayName ||
-                        currentUser.email ||
-                        "Benutzer";
-
-
-                    const isTaken =
-                        folder.chipActive === true;
-
-
-                    const holder =
-                        folder.heldByUid ||
-                        null;
-
-
-                    /*
-                       FALL 1:
-                       Ordner ist frei.
-
-                       Der aktuelle Benutzer übernimmt ihn.
-                    */
-
-                    if(!isTaken){
-
-                        transaction.update(
-                            folderRef,
-                            {
-
-                                chipActive:true,
-
-                                heldByUid:uid,
-
-                                heldByName:name,
-
-                                lastScannedByUid:uid,
-
-                                lastScannedByName:name,
-
-                                lastScannedAt:
-                                    serverTimestamp()
-                            }
-                        );
-
-
-                        return {
-
-                            action:"taken",
-
-                            folderName:
-                                folder.name ||
-                                "Ordner"
-                        };
-                    }
-
-
-                    /*
-                       FALL 2:
-                       Ordner ist rot und gehört jemand anderem.
-
-                       NICHTS ändern.
-                    */
-
-                    if(holder !== uid){
-
-                        return {
-
-                            action:"blocked",
-
-                            folderName:
-                                folder.name ||
-                                "Ordner",
-
-                            holder:
-                                folder.heldByName ||
-                                "anderer Benutzer"
-                        };
-                    }
-
-
-                    /*
-                       FALL 3:
-                       Derselbe Benutzer scannt erneut.
-
-                       Ordner wird wieder frei.
-                    */
+                if (!currentlyRed) {
 
                     transaction.update(
                         folderRef,
                         {
 
-                            chipActive:false,
+                            status: "red",
 
-                            heldByUid:null,
+                            borrowedByUid:
+                                currentUser.uid,
 
-                            heldByName:null,
+                            borrowedByName:
+                                currentUser.displayName ||
+                                currentUser.email,
 
-                            lastScannedByUid:uid,
+                            borrowedByEmail:
+                                currentUser.email,
 
-                            lastScannedByName:name,
+                            borrowedAt:
+                                serverTimestamp(),
 
-                            lastScannedAt:
+                            updatedAt:
                                 serverTimestamp()
+
                         }
                     );
 
+                } else {
 
-                    return {
+                    transaction.update(
+                        folderRef,
+                        {
 
-                        action:"released",
+                            status: "green",
 
-                        folderName:
-                            folder.name ||
-                            "Ordner"
-                    };
+                            borrowedByUid: null,
+
+                            borrowedByName: null,
+
+                            borrowedByEmail: null,
+
+                            borrowedAt: null,
+
+                            updatedAt:
+                                serverTimestamp()
+
+                        }
+                    );
 
                 }
-            );
+
+            }
+        );
 
 
-        if(result.action === "taken"){
+        const updated =
+            await getDoc(folderRef);
 
-            showToast(
-                "🔴 Ordner übernommen",
-                `${result.folderName} ist jetzt bei dir.`,
+
+        if (!updated.exists()) {
+
+            toast(
+                "Ordner nicht gefunden.",
                 "error"
             );
+
+            return;
         }
 
 
-        if(result.action === "released"){
+        const result =
+            updated.data();
 
-            showToast(
-                "🟢 Ordner freigegeben",
-                `${result.folderName} ist wieder frei.`,
+
+        if (result.status === "red") {
+
+            toast(
+                "Ordner wurde ausgeliehen.",
+                "success"
+            );
+
+        } else {
+
+            toast(
+                "Ordner wurde zurückgegeben.",
                 "success"
             );
         }
 
 
-        if(result.action === "blocked"){
+        history.replaceState(
+            {},
+            "",
+            window.location.pathname
+        );
 
-            showToast(
-                "🔴 Bereits belegt",
-                `${result.folderName} wird bereits von ${result.holder} verwendet.`,
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        if (error.message === "folder-not-found") {
+
+            toast(
+                "Dieser Ordner existiert nicht.",
+                "error"
+            );
+
+        } else {
+
+            toast(
+                "Scan konnte nicht durchgeführt werden.",
                 "error"
             );
         }
 
-
-        return result;
-
-
-    }catch(error){
-
-        console.error(
-            "NFC transaction error:",
-            error
-        );
-
-
-        showToast(
-            "Scan fehlgeschlagen",
-            firebaseError(error),
-            "error"
-        );
-
-
-        return null;
-    }
-}
-
-
-/* =========================================
-   NFC RESULT
-========================================= */
-
-async function showNfcResult(
-    folderId
-){
-
-    let folder =
-        folders.find(
-            item => item.id === folderId
-        );
-
-
-    if(!folder){
-
-        try{
-
-            const snapshot =
-                await getDoc(
-                    doc(
-                        db,
-                        "folders",
-                        folderId
-                    )
-                );
-
-            if(snapshot.exists()){
-
-                folder = {
-                    id:snapshot.id,
-                    ...snapshot.data()
-                };
-
-            }
-
-        }catch{}
     }
 
-
-    if(!folder){
-
-        return;
-    }
-
-
-    const busy =
-        folder.chipActive === true;
-
-    const mine =
-        busy &&
-        folder.heldByUid ===
-            currentUser.uid;
-
-
-    $("pageContent").innerHTML = `
-
-        <div class="scan-page">
-
-            <div class="scan-card">
-
-                <div class="scan-circle">
-
-                    ${
-                        busy
-                        ? "🔴"
-                        : "🟢"
-                    }
-
-                </div>
-
-                <h1>
-                    ${
-                        busy
-                        ? (
-                            mine
-                            ? "Ordner übernommen"
-                            : "Ordner ist belegt"
-                        )
-                        : "Ordner freigegeben"
-                    }
-                </h1>
-
-
-                <div class="scan-folder-name">
-
-                    ${escapeHtml(
-                        folder.name ||
-                        "Ordner"
-                    )}
-
-                </div>
-
-
-                <div
-                    class="
-                        scan-result
-                        show
-                        ${busy ? "busy" : "free"}
-                    "
-                    style="
-                        display:block;
-                    ">
-
-                    ${
-                        busy
-                        ? `
-
-                            <h2>
-                                🔴 Belegt
-                            </h2>
-
-                            <div>
-                                ${
-                                    mine
-                                    ? "Dieser Ordner ist jetzt bei dir."
-                                    : `
-                                        Dieser Ordner wird gerade
-                                        von <strong>
-                                        ${escapeHtml(
-                                            folder.heldByName ||
-                                            "einem anderen Benutzer"
-                                        )}
-                                        </strong> verwendet.
-                                    `
-                                }
-                            </div>
-
-                        `
-                        : `
-
-                            <h2>
-                                🟢 Frei
-                            </h2>
-
-                            <div>
-                                Der Ordner ist wieder frei
-                                und kann übernommen werden.
-                            </div>
-
-                        `
-                    }
-
-                </div>
-
-
-                <div style="
-                    margin-top:20px;
-                    display:flex;
-                    gap:9px;
-                    justify-content:center;
-                    flex-wrap:wrap;
-                ">
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="goToFolders()">
-                        📁 Ordner anzeigen
-                    </button>
-
-                    <button
-                        class="btn btn-secondary"
-                        onclick="goToDashboard()">
-                        Dashboard
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-/* =========================================
-   FOLDER MODAL
-========================================= */
-
-window.openFolderModal =
-function(folderId=null){
-
-    if(folderId && !isAdmin()){
-
-        showToast(
-            "Keine Berechtigung",
-            "Nur Administratoren können Ordner bearbeiten.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const folder =
-        folderId
-        ? folders.find(
-            item=>item.id === folderId
-          )
-        : null;
-
-
-    openModal(
-        folder
-        ? "Ordner bearbeiten"
-        : "Neuen Ordner erstellen",
-
-        `
-
-            <div class="form-group">
-
-                <label>Ordnername</label>
-
-                <input
-                    id="modalFolderName"
-                    class="input"
-                    value="${escapeHtml(
-                        folder?.name || ""
-                    )}"
-                    placeholder="z. B. Ordner 001">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Kategorie</label>
-
-                <input
-                    id="modalFolderCategory"
-                    class="input"
-                    value="${escapeHtml(
-                        folder?.category || ""
-                    )}"
-                    placeholder="z. B. Büro">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>NFC Chip-ID</label>
-
-                <input
-                    id="modalFolderChip"
-                    class="input"
-                    value="${escapeHtml(
-                        folder?.chipId || ""
-                    )}"
-                    placeholder="z. B. CHIP-001">
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>Beschreibung</label>
-
-                <textarea
-                    id="modalFolderDescription"
-                    class="input"
-                    rows="4"
-                    placeholder="Optionale Beschreibung">${escapeHtml(
-                        folder?.description || ""
-                    )}</textarea>
-
-            </div>
-
-
-            <div style="
-                background:#eff6ff;
-                border-radius:14px;
-                padding:13px;
-                font-size:13px;
-                color:#1e40af;
-            ">
-
-                <strong>📳 NFC-Link</strong><br>
-
-                Nach dem Erstellen kann der Chip auf
-                <strong>?folder=ORDNER-ID</strong>
-                programmiert werden.
-
-            </div>
-
-        `,
-
-        `
-
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()">
-                Abbrechen
-            </button>
-
-            <button
-                class="btn btn-primary"
-                onclick="saveFolder('${folderId || ""}')">
-                Speichern
-            </button>
-
-        `
-    );
 };
 
 
-window.saveFolder =
-async function(folderId){
+/* =========================================================
+   NFC LINK
+========================================================= */
 
-    const name =
-        $("modalFolderName")
-            .value
-            .trim();
+window.showFolderLink = async function(folderId) {
 
-    const category =
-        $("modalFolderCategory")
-            .value
-            .trim();
-
-    const chipId =
-        $("modalFolderChip")
-            .value
-            .trim();
-
-    const description =
-        $("modalFolderDescription")
-            .value
-            .trim();
+    const url =
+        generateFolderUrl(folderId);
 
 
-    if(!name){
+    $("linkText").value = url;
 
-        showToast(
-            "Name fehlt",
-            "Bitte einen Ordnernamen eingeben.",
-            "error"
-        );
+    show("linkModal");
 
-        return;
+};
+
+
+$("closeLinkModal").addEventListener(
+    "click",
+    () => hide("linkModal")
+);
+
+
+$("copyLinkButton").addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            await navigator.clipboard.writeText(
+                $("linkText").value
+            );
+
+            toast(
+                "Link kopiert.",
+                "success"
+            );
+
+        } catch {
+
+            $("linkText").select();
+
+            document.execCommand("copy");
+
+            toast(
+                "Link kopiert.",
+                "success"
+            );
+        }
+
     }
+);
 
 
-    try{
+/* =========================================================
+   ADMIN - KATEGORIE ERSTELLEN
+========================================================= */
 
-        /*
-           Chip-ID darf nicht doppelt vorkommen.
-        */
+$("categoryForm").addEventListener(
+    "submit",
+    async event => {
 
-        if(chipId){
+        event.preventDefault();
 
-            const duplicate =
-                folders.find(
-                    item =>
-                        item.chipId === chipId &&
-                        item.id !== folderId
-                );
 
-            if(duplicate){
+        if (!isAdmin) {
 
-                showToast(
-                    "Chip bereits vergeben",
-                    "Diese NFC-Chip-ID gehört bereits zu einem anderen Ordner.",
-                    "error"
-                );
+            toast(
+                "Nur Administratoren dürfen Kategorien erstellen.",
+                "error"
+            );
 
-                return;
-            }
+            return;
         }
 
 
-        if(folderId){
+        const name =
+            $("categoryName").value.trim();
 
-            await updateDoc(
-                doc(
-                    db,
-                    "folders",
-                    folderId
-                ),
+
+        const description =
+            $("categoryDescription").value.trim();
+
+
+        if (!name) {
+
+            toast(
+                "Bitte einen Namen eingeben.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            await addDoc(
+                collection(db, "categories"),
                 {
 
-                    name:name,
+                    name: name,
 
-                    category:
-                        category || "Allgemein",
+                    description: description,
 
-                    chipId:chipId || null,
+                    createdAt:
+                        serverTimestamp(),
 
-                    description:
-                        description || "",
+                    createdBy:
+                        currentUser.uid
 
-                    updatedAt:
-                        serverTimestamp()
                 }
             );
 
 
-            showToast(
-                "Gespeichert",
-                "Der Ordner wurde aktualisiert.",
+            $("categoryForm").reset();
+
+
+            toast(
+                "Kategorie erstellt.",
                 "success"
             );
 
-        }else{
+        } catch (error) {
 
-            await addDoc(
-                collection(
-                    db,
-                    "folders"
-                ),
+            console.error(error);
+
+            toast(
+                "Kategorie konnte nicht erstellt werden.",
+                "error"
+            );
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ADMIN SELECT
+========================================================= */
+
+function renderAdminCategorySelect() {
+
+    const select =
+        $("folderCategory");
+
+
+    if (!select) {
+        return;
+    }
+
+
+    select.innerHTML =
+        `<option value="">
+            Kategorie auswählen
+        </option>`;
+
+
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+
+        option.value =
+            category.id;
+
+
+        option.textContent =
+            category.name;
+
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================================================
+   ADMIN - ORDNER ERSTELLEN
+========================================================= */
+
+$("folderForm").addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        if (!isAdmin) {
+
+            toast(
+                "Nur Administratoren dürfen Ordner erstellen.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        const name =
+            $("folderName").value.trim();
+
+
+        const description =
+            $("folderDescription").value.trim();
+
+
+        const categoryId =
+            $("folderCategory").value;
+
+
+        if (!name || !categoryId) {
+
+            toast(
+                "Name und Kategorie sind erforderlich.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        try {
+
+            const folderRef =
+                doc(collection(db, "folders"));
+
+
+            await setDoc(
+                folderRef,
                 {
 
-                    name:name,
-
-                    category:
-                        category || "Allgemein",
-
-                    chipId:
-                        chipId || null,
+                    name: name,
 
                     description:
-                        description || "",
+                        description,
 
-                    chipActive:false,
+                    categoryId:
+                        categoryId,
 
-                    heldByUid:null,
+                    status:
+                        "green",
 
-                    heldByName:null,
+                    borrowedByUid:
+                        null,
 
-                    createdBy:
-                        currentUser.uid,
+                    borrowedByName:
+                        null,
 
-                    createdByName:
-                        userName(),
+                    borrowedByEmail:
+                        null,
+
+                    borrowedAt:
+                        null,
 
                     createdAt:
                         serverTimestamp(),
 
                     updatedAt:
-                        serverTimestamp()
+                        serverTimestamp(),
+
+                    createdBy:
+                        currentUser.uid
+
                 }
             );
 
 
-            showToast(
-                "Ordner erstellt",
-                "Der neue Ordner wurde angelegt.",
+            $("folderForm").reset();
+
+
+            toast(
+                "Ordner erstellt.",
                 "success"
+            );
+
+
+            setTimeout(
+                () => {
+                    showFolderLink(folderRef.id);
+                },
+                300
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            toast(
+                "Ordner konnte nicht erstellt werden.",
+                "error"
             );
         }
 
-
-        closeModal();
-
-
-    }catch(error){
-
-        console.error(error);
-
-        showToast(
-            "Speichern fehlgeschlagen",
-            firebaseError(error),
-            "error"
-        );
     }
-};
+);
 
 
-/* =========================================
-   DELETE FOLDER
-========================================= */
+/* =========================================================
+   ADMIN LISTE
+========================================================= */
 
-window.deleteFolder =
-async function(folderId){
+function renderAdminFolders() {
 
-    if(!isAdmin()){
+    const container =
+        $("adminFolders");
 
-        showToast(
-            "Keine Berechtigung",
-            "Nur Administratoren können Ordner löschen.",
-            "error"
-        );
 
+    if (!container) {
+        return;
+    }
+
+
+    if (folders.length === 0) {
+
+        container.innerHTML =
+            `<div class="admin-empty">
+                Noch keine Ordner vorhanden.
+            </div>`;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        folders.map(folder => {
+
+            const category =
+                categories.find(
+                    c => c.id === folder.categoryId
+                );
+
+
+            return `
+
+                <div class="admin-row">
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(folder.name)}
+                        </strong>
+
+                        <small>
+                            ${
+                                escapeHTML(
+                                    category?.name ||
+                                    "Unbekannte Kategorie"
+                                )
+                            }
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-row-actions">
+
+                        <button
+                            onclick="editFolder('${escapeHTML(folder.id)}')"
+                            class="small-button"
+                        >
+                            Bearbeiten
+                        </button>
+
+                        <button
+                            onclick="deleteFolder('${escapeHTML(folder.id)}')"
+                            class="small-button danger"
+                        >
+                            Löschen
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================================================
+   ADMIN - ORDNER BEARBEITEN
+========================================================= */
+
+window.editFolder = async function(folderId) {
+
+    if (!isAdmin) {
         return;
     }
 
 
     const folder =
         folders.find(
-            item=>item.id === folderId
+            f => f.id === folderId
         );
 
 
-    if(!folder){
+    if (!folder) {
         return;
     }
 
 
-    if(!confirm(
-        `Ordner "${folder.name}" wirklich löschen?`
-    )){
+    const newName =
+        prompt(
+            "Neuer Name:",
+            folder.name
+        );
+
+
+    if (newName === null) {
         return;
     }
 
 
-    try{
+    const cleanName =
+        newName.trim();
 
-        await deleteDoc(
-            doc(
-                db,
-                "folders",
-                folderId
-            )
+
+    if (!cleanName) {
+
+        toast(
+            "Der Name darf nicht leer sein.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    try {
+
+        await updateDoc(
+            doc(db, "folders", folderId),
+            {
+
+                name:
+                    cleanName,
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
         );
 
 
-        showToast(
-            "Ordner gelöscht",
-            "Der Ordner wurde entfernt.",
+        toast(
+            "Ordner geändert.",
             "success"
         );
 
 
-    }catch(error){
+    } catch (error) {
 
-        showToast(
-            "Löschen fehlgeschlagen",
-            firebaseError(error),
+        console.error(error);
+
+        toast(
+            "Änderung fehlgeschlagen.",
             "error"
         );
     }
+
 };
 
 
-/* =========================================
-   FOLDER DETAILS
-========================================= */
+/* =========================================================
+   ADMIN - ORDNER LÖSCHEN
+========================================================= */
 
-window.showFolder =
-function(folderId){
+window.deleteFolder = async function(folderId) {
 
-    const folder =
-        folders.find(
-            item=>item.id === folderId
-        );
-
-    if(!folder){
+    if (!isAdmin) {
         return;
     }
 
 
-    const busy =
-        folder.chipActive === true;
+    const folder =
+        folders.find(
+            f => f.id === folderId
+        );
 
 
-    openModal(
+    if (!folder) {
+        return;
+    }
 
-        folder.name || "Ordner",
 
-        `
+    const confirmed =
+        confirm(
+            `Ordner "${folder.name}" wirklich löschen?`
+        );
 
-            <div style="
-                display:grid;
-                gap:12px;
-            ">
 
-                <div class="tag">
-                    Status:
-                    ${
-                        busy
-                        ? "🔴 BELEGT"
-                        : "🟢 FREI"
-                    }
-                </div>
+    if (!confirmed) {
+        return;
+    }
 
-                <div class="tag">
-                    Kategorie:
-                    ${escapeHtml(
-                        folder.category ||
-                        "Keine"
-                    )}
-                </div>
 
-                <div class="tag">
-                    NFC-ID:
-                    ${escapeHtml(
-                        folder.chipId ||
-                        "Nicht gesetzt"
-                    )}
-                </div>
+    try {
 
-                <div class="tag">
-                    Erstellt:
-                    ${formatDate(
-                        folder.createdAt
-                    )}
-                </div>
+        await deleteDoc(
+            doc(db, "folders", folderId)
+        );
 
-                ${
-                    busy
-                    ? `
-                        <div class="holder">
 
-                            <strong>
-                                Aktueller Benutzer
-                            </strong>
+        toast(
+            "Ordner gelöscht.",
+            "success"
+        );
 
-                            ${escapeHtml(
-                                folder.heldByName ||
-                                "Unbekannt"
-                            )}
 
-                        </div>
-                    `
-                    : ""
-                }
+    } catch (error) {
 
-                ${
-                    folder.description
-                    ? `
-                        <div style="
-                            padding:15px;
-                            background:#f8fafc;
-                            border-radius:14px;
-                            line-height:1.5;
-                        ">
-                            ${escapeHtml(
-                                folder.description
-                            )}
-                        </div>
-                    `
-                    : ""
-                }
+        console.error(error);
 
-            </div>
+        toast(
+            "Löschen fehlgeschlagen.",
+            "error"
+        );
+    }
 
-        `,
-
-        `
-
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()">
-                Schließen
-            </button>
-
-        `
-    );
 };
 
 
-/* =========================================
-   REQUESTS
-========================================= */
+/* =========================================================
+   ADMIN - KATEGORIE LÖSCHEN
+========================================================= */
 
-function renderRequests(){
+window.deleteCategory = async function(categoryId) {
 
-    $("pageContent").innerHTML = `
+    if (!isAdmin) {
+        return;
+    }
 
-        <div class="page">
 
-            <div class="page-head">
+    const category =
+        categories.find(
+            c => c.id === categoryId
+        );
+
+
+    if (!category) {
+        return;
+    }
+
+
+    const categoryFolders =
+        folders.filter(
+            f =>
+                f.categoryId === categoryId
+        );
+
+
+    if (categoryFolders.length > 0) {
+
+        toast(
+            "Kategorie enthält noch Ordner.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (
+        !confirm(
+            `Kategorie "${category.name}" löschen?`
+        )
+    ) {
+        return;
+    }
+
+
+    try {
+
+        await deleteDoc(
+            doc(db, "categories", categoryId)
+        );
+
+
+        toast(
+            "Kategorie gelöscht.",
+            "success"
+        );
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        toast(
+            "Löschen fehlgeschlagen.",
+            "error"
+        );
+    }
+
+};
+
+
+/* =========================================================
+   ADMIN KATEGORIEN LISTE
+========================================================= */
+
+function renderAdminCategories() {
+
+    const container =
+        $("adminCategories");
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML =
+        categories.map(category => `
+
+            <div class="admin-row">
 
                 <div>
-                    <h1 class="page-title">
-                        Anfragen
-                    </h1>
 
-                    <p class="page-subtitle">
-                        Verwaltungsanfragen des Systems.
-                    </p>
+                    <strong>
+                        ${escapeHTML(category.name)}
+                    </strong>
+
+                    <small>
+                        ${
+                            folders.filter(
+                                f =>
+                                    f.categoryId === category.id
+                            ).length
+                        }
+                        Ordner
+                    </small>
+
                 </div>
 
+
                 <button
-                    class="btn btn-primary"
-                    onclick="createRequest()">
-                    ＋ Anfrage
+                    class="small-button danger"
+                    onclick="deleteCategory('${escapeHTML(category.id)}')"
+                >
+                    Löschen
+                </button>
+
+            </div>
+
+        `).join("");
+
+}
+
+
+setInterval(
+    renderAdminCategories,
+    1000
+);
+
+
+/* =========================================================
+   SUCHE
+========================================================= */
+
+$("searchInput").addEventListener(
+    "input",
+    () => {
+
+        const value =
+            $("searchInput")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        document
+            .querySelectorAll(".folder-card")
+            .forEach(card => {
+
+                const text =
+                    card.textContent
+                        .toLowerCase();
+
+
+                card.style.display =
+                    text.includes(value)
+                    ? ""
+                    : "none";
+
+            });
+
+    }
+);
+
+
+/* =========================================================
+   CSS / APP ENDE
+========================================================= */
+
+</script>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #eef2f7
+        );
+
+    color: #111827;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+#auth {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+
+.auth-card {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 24px;
+
+    padding: 32px;
+
+    box-shadow:
+        0 20px 60px rgba(
+            15,
+            23,
+            42,
+            .10
+        );
+}
+
+
+.logo {
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #111827;
+
+    color: white;
+
+    font-size: 27px;
+
+    margin-bottom: 20px;
+}
+
+
+.auth-card h1 {
+
+    font-size: 28px;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 8px;
+}
+
+
+.auth-card > p {
+
+    color: #6b7280;
+
+    margin-bottom: 25px;
+
+    line-height: 1.5;
+}
+
+
+.auth-tabs {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    background: #f3f4f6;
+
+    padding: 4px;
+
+    border-radius: 12px;
+
+    margin-bottom: 22px;
+}
+
+
+.auth-tab {
+
+    border: 0;
+
+    background: transparent;
+
+    padding: 11px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    color: #6b7280;
+}
+
+
+.auth-tab.active {
+
+    background: white;
+
+    color: #111827;
+
+    box-shadow:
+        0 2px 8px rgba(
+            0,
+            0,
+            0,
+            .06
+        );
+}
+
+
+/* =========================================================
+   FORMS
+========================================================= */
+
+.form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+
+.form label {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #374151;
+}
+
+
+.form input,
+.form select,
+.form textarea {
+
+    width: 100%;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    padding: 13px 14px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    background: white;
+
+    transition:
+        border .15s,
+        box-shadow .15s;
+}
+
+
+.form textarea {
+
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+
+    border-color: #111827;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            17,
+            24,
+            39,
+            .08
+        );
+}
+
+
+.primary-button {
+
+    border: 0;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    background: #111827;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    margin-top: 4px;
+}
+
+
+.primary-button:hover {
+
+    background: #000;
+}
+
+
+/* =========================================================
+   APP HEADER
+========================================================= */
+
+.app-header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 20;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .92
+        );
+
+    backdrop-filter: blur(18px);
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+
+.header-inner {
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    min-height: 72px;
+
+    padding:
+        12px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.brand-logo {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #111827;
+
+    color: white;
+
+    font-size: 20px;
+}
+
+
+.brand-text strong {
+
+    display: block;
+
+    font-size: 16px;
+}
+
+
+.brand-text small {
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+
+.user-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.user-name {
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.role {
+
+    background: #f3f4f6;
+
+    color: #374151;
+
+    border-radius: 999px;
+
+    padding:
+        5px 9px;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+.role.admin {
+
+    background: #111827;
+
+    color: white;
+}
+
+
+.logout {
+
+    border: 1px solid #e5e7eb;
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding:
+        8px 11px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding:
+        28px 20px 80px;
+}
+
+
+.hero {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+.hero h2 {
+
+    font-size:
+        clamp(
+            25px,
+            4vw,
+            34px
+        );
+
+    letter-spacing: -1.2px;
+
+    margin-bottom: 7px;
+}
+
+
+.hero p {
+
+    color: #6b7280;
+
+    line-height: 1.5;
+}
+
+
+.search {
+
+    min-width: 260px;
+
+    border: 1px solid #d1d5db;
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding:
+        12px 14px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 20px;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+}
+
+
+.category-header {
+
+    padding: 18px 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    align-items: center;
+
+    border-bottom:
+        1px solid #f0f0f0;
+}
+
+
+.category-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+.category-icon {
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #f3f4f6;
+}
+
+
+.category-description {
+
+    margin-left: 45px;
+
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+.category-stats {
+
+    display: flex;
+
+    gap: 10px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.free-stat {
+
+    color: #16a34a;
+}
+
+
+.used-stat {
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   FOLDERS
+========================================================= */
+
+.folders-grid {
+
+    padding: 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(
+                260px,
+                1fr
+            )
+        );
+
+    gap: 15px;
+}
+
+
+.folder-card {
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 17px;
+
+    padding: 18px;
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+
+    background: white;
+}
+
+
+.folder-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            0,
+            0,
+            0,
+            .07
+        );
+}
+
+
+.folder-card.green {
+
+    border-top:
+        4px solid #22c55e;
+}
+
+
+.folder-card.red {
+
+    border-top:
+        4px solid #ef4444;
+}
+
+
+.folder-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 13px;
+}
+
+
+.folder-symbol {
+
+    font-size: 28px;
+}
+
+
+.status-dot {
+
+    width: 11px;
+
+    height: 11px;
+
+    border-radius: 50%;
+}
+
+
+.status-dot.green {
+
+    background: #22c55e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            34,
+            197,
+            94,
+            .12
+        );
+}
+
+
+.status-dot.red {
+
+    background: #ef4444;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(
+            239,
+            68,
+            68,
+            .12
+        );
+}
+
+
+.folder-card h3 {
+
+    font-size: 17px;
+
+    margin-bottom: 5px;
+}
+
+
+.folder-card > p {
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+
+    margin-bottom: 13px;
+}
+
+
+.status-box {
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    margin-bottom: 13px;
+}
+
+
+.status-box.green {
+
+    background:
+        #f0fdf4;
+
+    color:
+        #166534;
+}
+
+
+.status-box.red {
+
+    background:
+        #fef2f2;
+
+    color:
+        #991b1b;
+}
+
+
+.status-title {
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    margin-bottom: 7px;
+}
+
+
+.borrower {
+
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+}
+
+
+.person-icon {
+
+    width: 29px;
+
+    height: 29px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .7
+        );
+}
+
+
+.borrower small {
+
+    display: block;
+
+    font-size: 10px;
+
+    opacity: .7;
+}
+
+
+.borrower strong {
+
+    display: block;
+
+    font-size: 12px;
+}
+
+
+.available-text {
+
+    font-size: 12px;
+
+    opacity: .75;
+}
+
+
+.folder-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap: 7px;
+}
+
+
+.scan-button,
+.link-button {
+
+    border: 0;
+
+    border-radius: 10px;
+
+    padding: 11px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    font-size: 12px;
+}
+
+
+.scan-button {
+
+    background: #111827;
+
+    color: white;
+}
+
+
+.link-button {
+
+    background: #f3f4f6;
+
+    color: #374151;
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+.admin-section {
+
+    margin-top: 35px;
+
+    background: white;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 20px;
+
+    padding: 20px;
+}
+
+
+.admin-title {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+
+.admin-title h2 {
+
+    font-size: 20px;
+}
+
+
+.admin-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(
+                280px,
+                1fr
+            )
+        );
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+.admin-box {
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    padding: 17px;
+}
+
+
+.admin-box h3 {
+
+    margin-bottom: 15px;
+
+    font-size: 15px;
+}
+
+
+.admin-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        12px 0;
+
+    border-bottom:
+        1px solid #e5e7eb;
+}
+
+
+.admin-row:last-child {
+
+    border-bottom: 0;
+}
+
+
+.admin-row strong {
+
+    display: block;
+
+    font-size: 13px;
+}
+
+
+.admin-row small {
+
+    display: block;
+
+    margin-top: 3px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+
+.admin-row-actions {
+
+    display: flex;
+
+    gap: 5px;
+}
+
+
+.small-button {
+
+    border: 0;
+
+    background: #e5e7eb;
+
+    border-radius: 8px;
+
+    padding: 7px 9px;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.small-button.danger {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+
+    background: white;
+
+    border:
+        1px dashed #d1d5db;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    padding: 50px 20px;
+}
+
+
+.empty-icon {
+
+    font-size: 40px;
+
+    margin-bottom: 12px;
+}
+
+
+.empty h3 {
+
+    margin-bottom: 6px;
+}
+
+
+.empty p {
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+.no-folders {
+
+    grid-column:
+        1 / -1;
+
+    color: #9ca3af;
+
+    padding: 15px;
+
+    text-align: center;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(
+            15,
+            23,
+            42,
+            .55
+        );
+
+    backdrop-filter:
+        blur(5px);
+}
+
+
+.modal-card {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 23px;
+
+    box-shadow:
+        0 30px 80px
+        rgba(
+            0,
+            0,
+            0,
+            .2
+        );
+}
+
+
+.modal-card h2 {
+
+    margin-bottom: 8px;
+}
+
+
+.modal-card p {
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
+}
+
+
+.link-input {
+
+    width: 100%;
+
+    border:
+        1px solid #d1d5db;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+}
+
+
+.modal-actions {
+
+    display: flex;
+
+    gap: 8px;
+}
+
+
+.modal-actions button {
+
+    flex: 1;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
+
+
+#copyLinkButton {
+
+    background: #111827;
+
+    color: white;
+}
+
+
+#closeLinkModal {
+
+    background: #f3f4f6;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toastContainer {
+
+    position: fixed;
+
+    z-index: 500;
+
+    right: 18px;
+
+    bottom: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.toast {
+
+    background: #111827;
+
+    color: white;
+
+    padding:
+        13px 16px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(
+            0,
+            0,
+            0,
+            .2
+        );
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    animation:
+        toast-in .25s ease;
+}
+
+
+.toast.success {
+
+    background: #15803d;
+}
+
+
+.toast.error {
+
+    background: #b91c1c;
+}
+
+
+.toast-out {
+
+    opacity: 0;
+
+    transform:
+        translateY(10px);
+
+    transition:
+        .3s;
+}
+
+
+@keyframes toast-in {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width: 650px) {
+
+    .header-inner {
+
+        padding:
+            10px 14px;
+    }
+
+
+    .brand-text {
+
+        display: none;
+    }
+
+
+    .user-name {
+
+        display: none;
+    }
+
+
+    main {
+
+        padding:
+            20px 12px 60px;
+    }
+
+
+    .hero {
+
+        display: block;
+    }
+
+
+    .hero h2 {
+
+        font-size: 27px;
+    }
+
+
+    .search {
+
+        width: 100%;
+
+        margin-top: 15px;
+    }
+
+
+    .category-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+
+    .category-stats {
+
+        width: 100%;
+    }
+
+
+    .folders-grid {
+
+        padding: 12px;
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .folder-card {
+
+        padding: 15px;
+    }
+
+
+    .admin-section {
+
+        padding: 14px;
+    }
+
+
+    #toastContainer {
+
+        left: 12px;
+
+        right: 12px;
+
+        bottom: 12px;
+    }
+
+}
+
+
+/* =========================================================
+   ADMIN DESKTOP
+========================================================= */
+
+@media(min-width: 900px) {
+
+    .admin-grid {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     LOGIN / REGISTRATION
+========================================================= -->
+
+<div id="auth">
+
+    <div class="auth-card">
+
+        <div class="logo">
+            📱
+        </div>
+
+        <h1>
+            NFC Folder Manager
+        </h1>
+
+        <p>
+            Ordner scannen, ausleihen und
+            jederzeit den aktuellen Status sehen.
+        </p>
+
+
+        <div class="auth-tabs">
+
+            <button
+                id="showLogin"
+                class="auth-tab active"
+            >
+                Anmelden
+            </button>
+
+            <button
+                id="showRegister"
+                class="auth-tab"
+            >
+                Registrieren
+            </button>
+
+        </div>
+
+
+        <!-- LOGIN -->
+
+        <form
+            id="loginForm"
+            class="form"
+        >
+
+            <label>
+                E-Mail
+            </label>
+
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="name@example.com"
+                required
+            >
+
+
+            <label>
+                Passwort
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Passwort"
+                required
+            >
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Anmelden
+            </button>
+
+        </form>
+
+
+        <!-- REGISTRATION -->
+
+        <form
+            id="registerForm"
+            class="form hidden"
+        >
+
+            <label>
+                Name
+            </label>
+
+            <input
+                id="registerName"
+                type="text"
+                placeholder="Dein Name"
+                required
+            >
+
+
+            <label>
+                E-Mail
+            </label>
+
+            <input
+                id="registerEmail"
+                type="email"
+                placeholder="name@example.com"
+                required
+            >
+
+
+            <label>
+                Passwort
+            </label>
+
+            <input
+                id="registerPassword"
+                type="password"
+                placeholder="Mindestens 6 Zeichen"
+                minlength="6"
+                required
+            >
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+                Konto erstellen
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div
+    id="app"
+    class="hidden"
+>
+
+
+    <!-- HEADER -->
+
+    <header class="app-header">
+
+        <div class="header-inner">
+
+
+            <div class="brand">
+
+                <div class="brand-logo">
+                    📱
+                </div>
+
+                <div class="brand-text">
+
+                    <strong>
+                        NFC Folder Manager
+                    </strong>
+
+                    <small>
+                        Digitales Ordnersystem
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-area">
+
+                <span
+                    id="userName"
+                    class="user-name"
+                >
+                    Benutzer
+                </span>
+
+                <span
+                    id="roleBadge"
+                    class="role"
+                >
+                    BENUTZER
+                </span>
+
+                <button
+                    id="logoutButton"
+                    class="logout"
+                >
+                    ↪
                 </button>
 
             </div>
 
 
-            <div class="card">
+        </div>
 
-                <div class="card-body">
+    </header>
 
-                    ${
-                        requests.length
-                        ? `
 
-                            <div class="table-wrap">
+    <!-- MAIN -->
 
-                                <table>
+    <main>
 
-                                    <thead>
 
-                                        <tr>
-                                            <th>Anfrage</th>
-                                            <th>Benutzer</th>
-                                            <th>Status</th>
-                                            <th>Datum</th>
-                                        </tr>
+        <div class="hero">
 
-                                    </thead>
+            <div>
 
-                                    <tbody>
+                <h2>
+                    Ordnerübersicht
+                </h2>
 
-                                        ${
-                                            requests
-                                                .map(request=>`
+                <p>
+                    Scanne einen NFC-Chip oder verwalte
+                    einen Ordner direkt hier.
+                </p>
 
-                                                    <tr>
+            </div>
 
-                                                        <td>
-                                                            ${escapeHtml(
-                                                                request.title ||
-                                                                "Anfrage"
-                                                            )}
-                                                        </td>
 
-                                                        <td>
-                                                            ${escapeHtml(
-                                                                request.createdByName ||
-                                                                "Unbekannt"
-                                                            )}
-                                                        </td>
+            <input
+                id="searchInput"
+                class="search"
+                type="search"
+                placeholder="🔎 Ordner suchen..."
+            >
 
-                                                        <td>
-                                                            ${escapeHtml(
-                                                                request.status ||
-                                                                "offen"
-                                                            )}
-                                                        </td>
+        </div>
 
-                                                        <td>
-                                                            ${formatDate(
-                                                                request.createdAt
-                                                            )}
-                                                        </td>
 
-                                                    </tr>
+        <!-- CATEGORIES -->
 
-                                                `)
-                                                .join("")
-                                        }
+        <div id="categoriesContainer">
 
-                                    </tbody>
+            <div class="empty">
 
-                                </table>
-
-                            </div>
-
-                        `
-                        : `
-                            <div class="empty">
-
-                                <div class="empty-icon">
-                                    📨
-                                </div>
-
-                                Keine Anfragen vorhanden.
-
-                            </div>
-                        `
-                    }
-
+                <div class="empty-icon">
+                    ⏳
                 </div>
+
+                <h3>
+                    Lade Daten...
+                </h3>
 
             </div>
 
         </div>
-    `;
-}
 
 
-window.createRequest =
-async function(){
+        <!-- ADMIN -->
 
-    openModal(
+        <section
+            id="adminArea"
+            class="admin-section hidden"
+        >
 
-        "Neue Anfrage",
+            <div class="admin-title">
 
-        `
+                <h2>
+                    ⚙️ Administration
+                </h2>
 
-            <div class="form-group">
-
-                <label>Titel</label>
-
-                <input
-                    id="requestTitle"
-                    class="input"
-                    placeholder="Worum geht es?">
+                <span class="role admin">
+                    VOLLZUGRIFF
+                </span>
 
             </div>
 
 
-            <div class="form-group">
+            <div class="admin-grid">
 
-                <label>Nachricht</label>
 
-                <textarea
-                    id="requestText"
-                    class="input"
-                    rows="5"
-                    placeholder="Beschreibung..."></textarea>
+                <!-- KATEGORIE -->
 
-            </div>
+                <div class="admin-box">
 
-        `,
+                    <h3>
+                        Neue Kategorie
+                    </h3>
 
-        `
 
-            <button
-                class="btn btn-secondary"
-                onclick="closeModal()">
-                Abbrechen
-            </button>
+                    <form
+                        id="categoryForm"
+                        class="form"
+                    >
 
-            <button
-                class="btn btn-primary"
-                onclick="saveRequest()">
-                Absenden
-            </button>
+                        <input
+                            id="categoryName"
+                            type="text"
+                            placeholder="Kategoriename"
+                            required
+                        >
 
-        `
-    );
-};
 
+                        <textarea
+                            id="categoryDescription"
+                            placeholder="Beschreibung (optional)"
+                        ></textarea>
 
-window.saveRequest =
-async function(){
 
-    const title =
-        $("requestTitle")
-            .value
-            .trim();
-
-    const text =
-        $("requestText")
-            .value
-            .trim();
-
-
-    if(!title){
-
-        showToast(
-            "Titel fehlt",
-            "Bitte einen Titel eingeben.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    try{
-
-        await addDoc(
-            collection(
-                db,
-                "requests"
-            ),
-            {
-
-                title:title,
-
-                text:text,
-
-                status:"offen",
-
-                createdBy:
-                    currentUser.uid,
-
-                createdByName:
-                    userName(),
-
-                createdAt:
-                    serverTimestamp()
-            }
-        );
-
-
-        closeModal();
-
-        showToast(
-            "Anfrage gesendet",
-            "Die Anfrage wurde gespeichert.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        showToast(
-            "Fehler",
-            firebaseError(error),
-            "error"
-        );
-    }
-};
-
-
-/* =========================================
-   USERS
-========================================= */
-
-function renderUsers(){
-
-    $("pageContent").innerHTML = `
-
-        <div class="page">
-
-            <div class="page-head">
-
-                <div>
-
-                    <h1 class="page-title">
-                        Benutzer
-                    </h1>
-
-                    <p class="page-subtitle">
-                        Benutzer des OrdnerSystems.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Name</th>
-                                <th>E-Mail</th>
-                                <th>Rolle</th>
-                                <th>UID</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            ${
-                                users.length
-                                ? users.map(item=>`
-
-                                    <tr>
-
-                                        <td>
-                                            ${escapeHtml(
-                                                item.name ||
-                                                "Unbekannt"
-                                            )}
-                                        </td>
-
-                                        <td>
-                                            ${escapeHtml(
-                                                item.email ||
-                                                "-"
-                                            )}
-                                        </td>
-
-                                        <td>
-
-                                            ${
-                                                (
-                                                    item.uid === ADMIN1 ||
-                                                    item.uid === ADMIN2
-                                                )
-                                                ? "Administrator"
-                                                : "Benutzer"
-                                            }
-
-                                        </td>
-
-                                        <td>
-                                            <span class="tag">
-                                                ${escapeHtml(
-                                                    item.uid ||
-                                                    item.id
-                                                )}
-                                            </span>
-                                        </td>
-
-                                    </tr>
-
-                                `).join("")
-                                : `
-
-                                    <tr>
-
-                                        <td colspan="4">
-
-                                            <div class="empty">
-                                                Keine Benutzer gefunden.
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-
-                                `
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-/* =========================================
-   CATEGORIES
-========================================= */
-
-function renderCategories(){
-
-    $("pageContent").innerHTML = `
-
-        <div class="page">
-
-            <div class="page-head">
-
-                <div>
-
-                    <h1 class="page-title">
-                        Kategorien
-                    </h1>
-
-                    <p class="page-subtitle">
-                        Kategorien für deine Ordner.
-                    </p>
-
-                </div>
-
-                ${
-                    isAdmin()
-                    ? `
                         <button
-                            class="btn btn-primary"
-                            onclick="openCategoryModal()">
-                            ＋ Kategorie
+                            type="submit"
+                            class="primary-button"
+                        >
+                            + Kategorie erstellen
                         </button>
-                    `
-                    : ""
-                }
+
+                    </form>
+
+                </div>
+
+
+                <!-- ORDNER -->
+
+                <div class="admin-box">
+
+                    <h3>
+                        Neuer Ordner
+                    </h3>
+
+
+                    <form
+                        id="folderForm"
+                        class="form"
+                    >
+
+                        <input
+                            id="folderName"
+                            type="text"
+                            placeholder="Ordnername"
+                            required
+                        >
+
+
+                        <textarea
+                            id="folderDescription"
+                            placeholder="Beschreibung (optional)"
+                        ></textarea>
+
+
+                        <select
+                            id="folderCategory"
+                            required
+                        >
+
+                            <option value="">
+                                Kategorie auswählen
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            + Ordner erstellen
+                        </button>
+
+                    </form>
+
+                </div>
+
 
             </div>
 
 
-            <div class="grid">
+            <!-- ADMIN KATEGORIEN -->
 
-                ${
-                    categories.length
-                    ? categories.map(category=>`
+            <div class="admin-box">
 
-                        <div class="card">
+                <h3>
+                    Kategorien
+                </h3>
 
-                            <div class="card-body">
-
-                                <div style="
-                                    font-size:20px;
-                                    font-weight:900;
-                                ">
-                                    🏷️
-                                    ${escapeHtml(
-                                        category.name ||
-                                        "Kategorie"
-                                    )}
-                                </div>
-
-                                ${
-                                    category.description
-                                    ? `
-                                        <div style="
-                                            color:var(--muted);
-                                            margin-top:8px;
-                                            font-size:13px;
-                                        ">
-                                            ${escapeHtml(
-                                                category.description
-                                            )}
-                                        </div>
-                                    `
-                                    : ""
-                                }
-
-                                ${
-                                    isAdmin()
-                                    ? `
-                                        <button
-                                            class="btn btn-danger"
-                                            style="margin-top:15px;width:100%"
-                                            onclick="deleteCategory('${category.id}')">
-                                            Löschen
-                                        </button>
-                                    `
-                                    : ""
-                                }
-
-                            </div>
-
-                        </div>
-
-                    `).join("")
-                    : `
-
-                        <div
-                            class="card"
-                            style="grid-column:1/-1">
-
-                            <div class="empty">
-
-                                <div class="empty-icon">
-                                    🏷️
-                                </div>
-
-                                Noch keine Kategorien.
-
-                            </div>
-
-                        </div>
-
-                    `
-                }
-
-            </div>
-
-        </div>
-    `;
-}
-
-
-window.openCategoryModal =
-function(){
-
-    if(!isAdmin()){
-
-        showToast(
-            "Keine Berechtigung",
-            "Nur Administratoren können Kategorien erstellen.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    openModal(
-
-        "Neue Kategorie",
-
-        `
-
-            <div class="form-group">
-
-                <label>Name</label>
-
-                <input
-                    id="categoryName"
-                    class="input"
-                    placeholder="z. B. Schule">
+                <div id="adminCategories"></div>
 
             </div>
 
 
-            <div class="form-group">
+            <br>
 
-                <label>Beschreibung</label>
 
-                <textarea
-                    id="categoryDescription"
-                    class="input"
-                    rows="3"
-                    placeholder="Optional"></textarea>
+            <!-- ADMIN ORDNER -->
+
+            <div class="admin-box">
+
+                <h3>
+                    Alle Ordner
+                </h3>
+
+                <div id="adminFolders"></div>
 
             </div>
 
-        `,
 
-        `
+        </section>
+
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     NFC LINK MODAL
+========================================================= -->
+
+<div
+    id="linkModal"
+    class="modal hidden"
+>
+
+    <div class="modal-card">
+
+        <h2>
+            📱 NFC-Link
+        </h2>
+
+        <p>
+            Schreibe diesen Link auf deinen NFC-Chip.
+            Beim Öffnen wird der entsprechende Ordner
+            automatisch erkannt.
+        </p>
+
+
+        <input
+            id="linkText"
+            class="link-input"
+            readonly
+        >
+
+
+        <div class="modal-actions">
 
             <button
-                class="btn btn-secondary"
-                onclick="closeModal()">
-                Abbrechen
+                id="closeLinkModal"
+            >
+                Schließen
             </button>
 
             <button
-                class="btn btn-primary"
-                onclick="saveCategory()">
-                Erstellen
+                id="copyLinkButton"
+            >
+                Link kopieren
             </button>
 
-        `
-    );
-};
-
-
-window.saveCategory =
-async function(){
-
-    if(!isAdmin()){
-        return;
-    }
-
-
-    const name =
-        $("categoryName")
-            .value
-            .trim();
-
-    const description =
-        $("categoryDescription")
-            .value
-            .trim();
-
-
-    if(!name){
-
-        showToast(
-            "Name fehlt",
-            "Bitte einen Namen eingeben.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    try{
-
-        await addDoc(
-            collection(
-                db,
-                "categories"
-            ),
-            {
-
-                name:name,
-
-                description:
-                    description || "",
-
-                createdBy:
-                    currentUser.uid,
-
-                createdAt:
-                    serverTimestamp()
-            }
-        );
-
-
-        closeModal();
-
-        showToast(
-            "Kategorie erstellt",
-            "Die Kategorie wurde angelegt.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        showToast(
-            "Fehler",
-            firebaseError(error),
-            "error"
-        );
-    }
-};
-
-
-window.deleteCategory =
-async function(id){
-
-    if(!isAdmin()){
-        return;
-    }
-
-
-    if(!confirm(
-        "Kategorie wirklich löschen?"
-    )){
-        return;
-    }
-
-
-    try{
-
-        await deleteDoc(
-            doc(
-                db,
-                "categories",
-                id
-            )
-        );
-
-
-        showToast(
-            "Kategorie gelöscht",
-            "Die Kategorie wurde entfernt.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        showToast(
-            "Fehler",
-            firebaseError(error),
-            "error"
-        );
-    }
-};
-
-
-/* =========================================
-   SETTINGS
-========================================= */
-
-function renderSettings(){
-
-    $("pageContent").innerHTML = `
-
-        <div class="page">
-
-            <div class="page-head">
-
-                <div>
-
-                    <h1 class="page-title">
-                        Einstellungen
-                    </h1>
-
-                    <p class="page-subtitle">
-                        Informationen und Systemeinstellungen.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="grid">
-
-                <div class="card">
-
-                    <div class="card-head">
-
-                        <h2 class="card-title">
-                            Konto
-                        </h2>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <strong>
-                            ${escapeHtml(userName())}
-                        </strong>
-
-                        <div style="
-                            color:var(--muted);
-                            margin-top:5px;
-                        ">
-                            ${escapeHtml(
-                                currentUser.email ||
-                                ""
-                            )}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-head">
-
-                        <h2 class="card-title">
-                            NFC-System
-                        </h2>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <p style="
-                            color:var(--muted);
-                            line-height:1.6;
-                        ">
-
-                            Die NFC-Chips funktionieren als
-                            normale NFC-Links.
-
-                            <br><br>
-
-                            Es wird kein Browser-NFC-Scanner
-                            benötigt.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-head">
-
-                        <h2 class="card-title">
-                            System
-                        </h2>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <div class="tag">
-                            Ordner: ${folders.length}
-                        </div>
-
-                        <div
-                            class="tag"
-                            style="margin-top:7px">
-                            Benutzer: ${users.length}
-                        </div>
-
-                        <div
-                            class="tag"
-                            style="margin-top:7px">
-                            Kategorien: ${categories.length}
-                        </div>
-
-                        <div
-                            class="tag"
-                            style="margin-top:7px">
-                            Rolle:
-                            ${
-                                isAdmin()
-                                ? "Administrator"
-                                : "Benutzer"
-                            }
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
-    `;
-}
+
+    </div>
+
+</div>
 
 
-/* =========================================
-   MODAL
-========================================= */
+<!-- =========================================================
+     TOASTS
+========================================================= -->
 
-function openModal(
-    title,
-    body,
-    footer=""
-){
+<div id="toastContainer"></div>
 
-    $("modalTitle").textContent =
-        title;
-
-    $("modalBody").innerHTML =
-        body;
-
-    $("modalFooter").innerHTML =
-        footer;
-
-    $("modalBg")
-        .classList
-        .remove("hidden");
-}
-
-
-window.closeModal =
-function(){
-
-    $("modalBg")
-        .classList
-        .add("hidden");
-};
-
-
-$("modalClose").addEventListener(
-    "click",
-    closeModal
-);
-
-
-$("modalBg").addEventListener(
-    "click",
-    event=>{
-
-        if(event.target === $("modalBg")){
-            closeModal();
-        }
-
-    }
-);
-
-
-/* =========================================
-   QUICK NAV
-========================================= */
-
-window.goToFolders =
-function(){
-
-    currentPage = "folders";
-
-    updateNavigation();
-
-    renderCurrentPage();
-};
-
-
-window.goToDashboard =
-function(){
-
-    currentPage = "dashboard";
-
-    updateNavigation();
-
-    renderCurrentPage();
-};
-
-
-window.goToScan =
-function(){
-
-    currentPage = "scan";
-
-    updateNavigation();
-
-    renderCurrentPage();
-};
-
-
-function updateNavigation(){
-
-    document
-        .querySelectorAll(
-            ".nav-item,.mobile-nav button"
-        )
-        .forEach(item=>{
-
-            item.classList.toggle(
-                "active",
-                item.dataset.page === currentPage
-            );
-
-        });
-}
-
-
-/* =========================================
-   ENTER KEY LOGIN
-========================================= */
-
-$("passwordInput").addEventListener(
-    "keydown",
-    event=>{
-
-        if(event.key === "Enter"){
-            $("loginButton").click();
-        }
-
-    }
-);
-
-
-/* =========================================
-   DEBUG / GLOBAL
-========================================= */
-
-window.OrdnerSystem = {
-
-    firebaseApp,
-
-    auth,
-
-    db,
-
-    get currentUser(){
-        return currentUser;
-    },
-
-    get folders(){
-        return folders;
-    },
-
-    scanFolderTransaction,
-
-    handleNfcLink
-
-};
-
-</script>
 
 </body>
 </html>
