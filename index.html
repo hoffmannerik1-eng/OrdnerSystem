@@ -2,1906 +2,4283 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#2563eb">
-<meta name="description" content="OrdnerSystem – digitale Ordner- und NFC-Verwaltung">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0b1220">
 <title>OrdnerSystem</title>
+
 <style>
-/* ============================================================
-   ORDNER SYSTEM – KOMPLETTE RESPONSIVE WEBAPP
-   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0}
+
 :root{
-  --bg:#f4f7fb;
-  --surface:#ffffff;
-  --surface2:#f8fafc;
-  --text:#172033;
-  --muted:#718096;
-  --border:#e2e8f0;
-  --blue:#2563eb;
-  --blue2:#1d4ed8;
-  --green:#16a34a;
-  --greenBg:#ecfdf3;
-  --red:#dc2626;
-  --redBg:#fef2f2;
-  --shadow:0 10px 30px rgba(15,23,42,.07);
-  --radius:16px;
-  --header:72px;
+ --bg:#f4f7fb;
+ --surface:#fff;
+ --surface2:#f8fafc;
+ --border:#e2e8f0;
+ --text:#0f172a;
+ --muted:#64748b;
+ --primary:#2563eb;
+ --primaryDark:#1d4ed8;
+ --green:#16a34a;
+ --greenBg:#ecfdf3;
+ --red:#dc2626;
+ --redBg:#fef2f2;
+ --orange:#ea580c;
+ --purple:#7c3aed;
+ --shadow:0 10px 35px rgba(15,23,42,.08);
+ --radius:18px;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text)}
+
+body.dark{
+ --bg:#070b13;
+ --surface:#0d1422;
+ --surface2:#111b2c;
+ --border:#1e293b;
+ --text:#f8fafc;
+ --muted:#94a3b8;
+ --shadow:0 12px 40px rgba(0,0,0,.35);
+}
+
+html,body{
+ width:100%;
+ min-height:100%;
+ font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+}
+
 body{overflow-x:hidden}
-button,input,select,textarea{font:inherit}
-button{border:0;cursor:pointer}
-button:disabled{opacity:.55;cursor:not-allowed}
-input,select,textarea{outline:none}
+
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+
 .hidden{display:none!important}
-.noScroll{overflow:hidden}
 
-/* Header */
-header{height:var(--header);position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--border)}
-.headerBrand{display:flex;align-items:center;gap:11px;font-weight:850;font-size:19px;white-space:nowrap}
-.headerMark{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:900;box-shadow:0 6px 15px rgba(37,99,235,.22)}
-.head{display:flex;align-items:center;gap:12px}
-.headUser{display:flex;align-items:center;gap:10px}
-.headText{text-align:right}
-.headName{font-weight:800;line-height:1.1}
-.role{font-size:12px;color:var(--muted);margin-top:3px}
-.avatar,.mini,.profileAvatar,.editAvatar{border-radius:50%;overflow:hidden;background:#e8eef8;display:grid;place-items:center;font-weight:850;color:#31517e;flex:none}
-.avatar{width:42px;height:42px}
-.avatar img,.mini img,.profileAvatar img,.editAvatar img{width:100%;height:100%;object-fit:cover;display:block}
+/* LOGIN */
 
-/* Buttons */
-.gray,.blue,.danger,.outline{min-height:40px;padding:9px 13px;border-radius:10px;font-weight:750;transition:.15s ease}
-.gray{background:#edf1f6;color:#334155}
-.gray:hover{background:#e2e8f0}
-.blue{background:var(--blue);color:#fff}
-.blue:hover{background:var(--blue2);transform:translateY(-1px)}
-.danger{background:#fee2e2;color:#b91c1c}
-.danger:hover{background:#fecaca}
-.outline{background:transparent;color:var(--blue);border:1px solid #bfdbfe}
-
-/* Layout */
-.workspace{display:grid;grid-template-columns:260px minmax(0,1fr);min-height:calc(100vh - var(--header))}
-.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:18px 12px;position:sticky;top:var(--header);height:calc(100vh - var(--header));overflow:auto}
-.sidebarHead{font-weight:850;padding:12px 14px 18px;font-size:17px}
-.sidebarHead small{display:block;color:#94a3b8;font-size:11px;font-weight:650;margin-top:4px}
-.sideSection{margin-bottom:8px}
-.categoryHead{display:flex;align-items:center;gap:6px}
-.categoryHead .sideToggle{flex:1}
-.categoryPlus{width:36px;min-width:36px;height:36px;padding:0;border-radius:9px;font-size:22px;line-height:1}.categoryNavRow{display:flex;align-items:center;gap:4px}.categoryNavRow .sideLink{flex:1;min-width:0}.categoryDelete{width:32px;min-width:32px;height:32px;padding:0;border-radius:8px;font-size:15px}
-.sideToggle{width:100%;background:transparent;padding:11px 12px;text-align:left;font-weight:850;color:#475569;display:flex;justify-content:space-between;align-items:center;border-radius:10px}
-.sideToggle:hover,.sideLink:hover{background:#f1f5f9}
-.chev{transition:.2s ease}
-.sideLinks{display:none;padding:2px 0}
-.sideSection.open .sideLinks{display:block}
-.sideSection.open .chev{transform:rotate(180deg)}
-.sideLink{width:100%;background:transparent;text-align:left;padding:10px 15px;border-radius:9px;color:#475569;margin:1px 0}
-.sideLink.active{background:#eff6ff;color:#1d4ed8;font-weight:800}
-.mainContent{padding:30px;min-width:0;width:100%;max-width:1500px;margin:0 auto}
-.pageTitle{font-size:31px;line-height:1.15;margin:0 0 6px;font-weight:850}
-.pageSub{color:var(--muted);margin:0 0 22px;line-height:1.5}
-
-/* Cards / stats */
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:20px}
-.stat,.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 2px 5px rgba(15,23,42,.02)}
-.stat{padding:20px}
-.statLabel{font-size:11px;font-weight:850;color:#94a3b8;letter-spacing:.04em}
-.num{font-size:31px;font-weight:900;margin-top:7px}
-.greenText{color:var(--green)}
-.redText{color:var(--red)}
-.card{padding:20px;margin-bottom:18px}
-.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
-.sectionTitle h2{font-size:18px;margin:0;font-weight:850}
-.adminActions{display:flex;gap:9px;flex-wrap:wrap}
-
-/* Search */
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:15px}
-.searchWrap{flex:1;min-width:220px;position:relative}
-.searchWrap input{width:100%;height:42px;padding:0 13px 0 40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
-.searchIcon{position:absolute;left:13px;top:10px;color:#94a3b8}
-.filterSelect{height:42px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
-
-/* Chips */
-.chip{border:1px solid var(--border);border-radius:14px;padding:15px;margin:10px 0;background:var(--surface);transition:.15s ease}
-.chip:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
-.chipMain{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
-.chipInfo{display:flex;gap:12px;min-width:0;flex:1}
-.chipStripe{width:5px;border-radius:8px;background:#22c55e;min-height:100px;flex:none}
-.chipStripe.redStripe{background:#ef4444}
-.chipText{min-width:0}
-.chipName{font-weight:850;font-size:17px;overflow-wrap:anywhere}
-.chipMeta{color:#64748b;font-size:13px;margin-top:5px;line-height:1.45}
-.chipStatus{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.greenDot{background:#22c55e}.redDot{background:#ef4444}
-.person{display:flex;align-items:center;gap:9px;margin-top:11px;color:#64748b;font-size:13px;flex-wrap:wrap}
-.mini{width:31px;height:31px;font-size:12px}
-.chipButtons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:420px}
-.chipButtons button{padding:8px 10px;border-radius:8px}
-.empty{padding:32px 20px;text-align:center;color:#94a3b8;border:1px dashed var(--border);border-radius:12px}
-.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;background:#f1f5f9;color:#475569}
-.badge.green{background:var(--greenBg);color:#15803d}.badge.red{background:var(--redBg);color:#b91c1c}
-
-/* Settings */
-.settingsMode{grid-template-columns:1fr!important}
-.settingsMode .sidebar{display:none}
-.settingsPage{max-width:1000px}
-.settingsProfileCard{display:flex;justify-content:space-between;align-items:center;gap:20px}
-.profileRow{display:flex;align-items:center;gap:15px;min-width:0}
-.profileAvatar,.editAvatar{width:72px;height:72px;font-size:24px}
-.settingsActions{display:flex;gap:8px;flex-wrap:wrap}
-.settingsOption{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--border);border-radius:11px;margin:8px 0;cursor:pointer}
-.settingsOption input{width:18px;height:18px}
-.smallNote{font-size:12px;color:#94a3b8}
-
-/* Modals */
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100;backdrop-filter:blur(3px)}
-.modalBox{background:var(--surface);color:var(--text);border-radius:16px;width:min(600px,100%);max-height:92vh;overflow:auto;padding:24px;box-shadow:0 25px 70px rgba(15,23,42,.2)}
-.modalHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
-.modalHead h2{margin:0;font-size:21px}
-.closeBtn{background:#edf1f6;color:#334155;border-radius:9px;width:36px;height:36px;font-size:20px}
-.field{margin:14px 0}
-.field label{display:block;font-weight:750;font-size:13px;margin-bottom:7px}
-.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid #d8dee8;border-radius:10px;background:var(--surface);color:var(--text)}
-.field textarea{min-height:100px;resize:vertical}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
-.modalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
-.formMessage{min-height:20px;color:var(--red);font-size:13px;line-height:1.4}
-
-/* Login */
-.loginPage{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#eef4ff,#f7f9fc);padding:20px}
-.loginBox{width:min(440px,100%);background:var(--surface);padding:32px;border-radius:20px;border:1px solid var(--border);box-shadow:0 18px 55px rgba(15,23,42,.1)}
-.loginBox h1{margin:26px 0 5px;font-size:29px}.loginBox p{color:var(--muted);line-height:1.5}.loginBox .blue{width:100%;margin-top:8px;height:46px}
-.loginError{color:var(--red);font-size:13px;min-height:19px}
-
-/* Last scan */
-.scanBox{display:flex;align-items:center;gap:15px;padding:17px;border:1px solid var(--border);border-radius:13px;background:var(--surface2)}
-.scanIcon{width:52px;height:52px;border-radius:14px;background:#eff6ff;color:#2563eb;display:grid;place-items:center;font-size:23px;flex:none}
-
-/* Toast */
-#toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:200;background:#172033;color:white;padding:11px 15px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);transition:.2s ease;font-size:14px;max-width:calc(100vw - 30px);text-align:center}
-#toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* Dark mode */
-body.dark{--bg:#0f172a;--surface:#1e293b;--surface2:#111827;--text:#e5e7eb;--muted:#9ca3af;--border:#334155}
-.dark header,.dark .sidebar,.dark .card,.dark .stat,.dark .chip,.dark .modalBox,.dark .loginBox{background:var(--surface);border-color:var(--border)}
-.dark .sideToggle,.dark .sideLink{color:#d1d5db}
-.dark .sideToggle:hover,.dark .sideLink:hover{background:#334155}
-.dark .sideLink.active{background:#1e3a8a;color:#bfdbfe}
-.dark .gray{background:#334155;color:#e5e7eb}.dark .outline{border-color:#475569;color:#bfdbfe}
-.dark .field input,.dark .field select,.dark .field textarea,.dark .searchWrap input,.dark .filterSelect{background:#111827;color:#fff;border-color:#475569}
-.dark .settingsOption,.dark .scanBox{border-color:#334155}
-.dark .scanBox{background:#111827}.dark .modal{background:rgba(0,0,0,.7)}
-.dark .closeBtn{background:#334155;color:#e5e7eb}
-
-/* Tablet */
-@media(max-width:1000px){
-  :root{--header:68px}
-  header{padding:0 16px}
-  .workspace{grid-template-columns:220px minmax(0,1fr)}
-  .mainContent{padding:24px}
-  .chipMain{flex-direction:column}
-  .chipButtons{max-width:none;justify-content:flex-start}
+#authScreen{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:24px;
+ background:
+ radial-gradient(circle at 15% 15%,rgba(37,99,235,.14),transparent 35%),
+ radial-gradient(circle at 85% 85%,rgba(14,165,233,.10),transparent 35%),
+ var(--bg);
 }
 
-/* Mobile */
-@media(max-width:720px){
-  :root{--header:64px}
-  header{height:auto;min-height:64px;padding:9px 12px}
-  .headerBrand{font-size:16px}
-  .headerMark{width:35px;height:35px;border-radius:10px}
-  .head{gap:8px}.headText{display:none}.avatar{width:37px;height:37px}
-  .gray,.blue,.danger,.outline{min-height:42px;padding:10px 12px}
-  .workspace{display:block;min-height:calc(100vh - 64px)}
-  .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border);padding:8px}
-  .sidebarHead{padding:8px 10px 11px;font-size:15px}
-  .sideToggle{padding:11px 10px;font-size:14px}
-  .sideLinks{padding:2px 0 5px;display:none;grid-template-columns:1fr 1fr;gap:5px}
-  .sideSection.open .sideLinks{display:grid}
-  .sideLink{padding:11px 10px;font-size:13px;min-height:42px;margin:0}
-  .mainContent{padding:17px 12px}
-  .pageTitle{font-size:25px}.pageSub{font-size:14px;margin-bottom:17px}
-  .stats{grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
-  .stats .stat:last-child{grid-column:1/-1}
-  .stat{padding:14px}.num{font-size:25px}.statLabel{font-size:10px}
-  .card{padding:14px;border-radius:12px;margin-bottom:12px}
-  .sectionTitle{align-items:flex-start}.sectionTitle h2{font-size:16px}
-  .adminActions{display:grid;grid-template-columns:1fr;gap:7px}
-  .toolbar{display:grid;grid-template-columns:1fr;gap:8px}.searchWrap{min-width:0}.filterSelect{width:100%}
-  .chip{padding:12px;margin:8px 0}.chipStripe{width:100%;height:5px;min-height:5px;margin-bottom:10px}.chipInfo{gap:9px}.chipName{font-size:16px}
-  .chipMeta{font-size:12px}.person{font-size:12px}.chipButtons{display:grid;grid-template-columns:1fr 1fr;width:100%}.chipButtons button{width:100%;min-height:40px}
-  .settingsProfileCard{flex-direction:column;align-items:stretch}.settingsActions{display:grid;grid-template-columns:1fr}.settingsActions button{width:100%}
-  .modal{padding:10px}.modalBox{width:100%;max-height:94vh;padding:17px;border-radius:13px}.modalActions{display:grid;grid-template-columns:1fr 1fr}.modalActions button{min-height:44px}
-  .profileAvatar,.editAvatar{width:60px;height:60px;font-size:20px}
-  .loginPage{padding:13px}.loginBox{padding:23px 18px;border-radius:16px}
+.auth-box{
+ width:100%;
+ max-width:460px;
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-radius:26px;
+ box-shadow:var(--shadow);
+ padding:34px;
 }
-@media(max-width:390px){
-  .headerBrand span{display:none}.stats{grid-template-columns:1fr}.stats .stat:last-child{grid-column:auto}
-  .sideLinks{grid-template-columns:1fr}.chipButtons{grid-template-columns:1fr}.modalActions{grid-template-columns:1fr}
-  .pageTitle{font-size:23px}
+
+.logo{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ font-size:22px;
+ font-weight:850;
 }
-@media(max-width:720px) and (orientation:landscape){
-  .sidebar{max-height:46vh;overflow-y:auto}.mainContent{padding:17px}
+
+.logo-icon{
+ width:46px;
+ height:46px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:14px;
+ background:linear-gradient(135deg,#2563eb,#0ea5e9);
+ color:white;
+ font-size:23px;
 }
-@media(pointer:coarse){
-  button,input,select,textarea{touch-action:manipulation}.sideLink,.sideToggle,button{min-height:42px}
+
+.auth-title{
+ margin-top:30px;
+ font-size:29px;
+ font-weight:850;
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+.auth-subtitle{
+ margin-top:8px;
+ color:var(--muted);
+ line-height:1.5;
+}
+
+.auth-form{margin-top:25px}
+
+.field{margin-bottom:15px}
+
+.field label{
+ display:block;
+ margin-bottom:7px;
+ font-size:13px;
+ font-weight:750;
+ color:var(--muted);
+}
+
+.field input,
+.field textarea,
+.field select{
+ width:100%;
+ border:1px solid var(--border);
+ background:var(--surface2);
+ color:var(--text);
+ border-radius:12px;
+ padding:13px 14px;
+ outline:none;
+ transition:.2s;
+}
+
+.field textarea{
+ min-height:100px;
+ resize:vertical;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+ border-color:var(--primary);
+ box-shadow:0 0 0 3px rgba(37,99,235,.12);
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.green-btn{
+ border:0;
+ border-radius:12px;
+ padding:12px 16px;
+ font-weight:750;
+ transition:.2s;
+}
+
+.primary-btn{
+ background:var(--primary);
+ color:white;
+}
+
+.primary-btn:hover{
+ background:var(--primaryDark);
+ transform:translateY(-1px);
+}
+
+.secondary-btn{
+ background:var(--surface2);
+ color:var(--text);
+ border:1px solid var(--border);
+}
+
+.secondary-btn:hover{
+ border-color:var(--primary);
+ color:var(--primary);
+}
+
+.danger-btn{
+ background:var(--red);
+ color:white;
+}
+
+.green-btn{
+ background:var(--green);
+ color:white;
+}
+
+.full{width:100%}
+
+.auth-switch{
+ margin-top:18px;
+ text-align:center;
+ color:var(--muted);
+ font-size:14px;
+}
+
+.auth-switch button{
+ background:none;
+ border:0;
+ color:var(--primary);
+ font-weight:750;
+}
+
+/* APP */
+
+#appScreen{min-height:100vh}
+
+.app-layout{
+ min-height:100vh;
+ display:flex;
+}
+
+.sidebar{
+ width:255px;
+ flex-shrink:0;
+ position:fixed;
+ left:0;
+ top:0;
+ bottom:0;
+ background:var(--surface);
+ border-right:1px solid var(--border);
+ display:flex;
+ flex-direction:column;
+ z-index:50;
+}
+
+.sidebar-top{
+ padding:22px 18px;
+ border-bottom:1px solid var(--border);
+}
+
+.sidebar-logo{
+ display:flex;
+ align-items:center;
+ gap:11px;
+ font-weight:850;
+}
+
+.sidebar-logo-icon{
+ width:40px;
+ height:40px;
+ border-radius:12px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:linear-gradient(135deg,#2563eb,#0ea5e9);
+ color:white;
+}
+
+.nav{
+ padding:16px 12px;
+ overflow:auto;
+ flex:1;
+}
+
+.nav-section{
+ margin:14px 9px 8px;
+ font-size:10px;
+ text-transform:uppercase;
+ letter-spacing:.12em;
+ color:var(--muted);
+ font-weight:800;
+}
+
+.nav-item{
+ width:100%;
+ display:flex;
+ align-items:center;
+ gap:11px;
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ padding:12px;
+ border-radius:12px;
+ margin-bottom:3px;
+ text-align:left;
+ font-weight:650;
+ transition:.2s;
+}
+
+.nav-item:hover{
+ background:var(--surface2);
+ color:var(--text);
+}
+
+.nav-item.active{
+ background:rgba(37,99,235,.10);
+ color:var(--primary);
+}
+
+.nav-icon{
+ width:22px;
+ text-align:center;
+ font-size:17px;
+}
+
+.sidebar-bottom{
+ padding:15px;
+ border-top:1px solid var(--border);
+}
+
+.user-mini{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin-bottom:12px;
+}
+
+.avatar{
+ width:38px;
+ height:38px;
+ border-radius:50%;
+ background:linear-gradient(135deg,#2563eb,#7c3aed);
+ color:white;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:800;
+ flex-shrink:0;
+}
+
+.user-mini-info{
+ min-width:0;
+ flex:1;
+}
+
+.user-mini-name{
+ font-size:13px;
+ font-weight:750;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+
+.user-mini-email{
+ font-size:11px;
+ color:var(--muted);
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
+}
+
+.main{
+ margin-left:255px;
+ min-width:0;
+ flex:1;
+}
+
+.topbar{
+ height:72px;
+ background:var(--surface);
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ gap:14px;
+ padding:0 28px;
+ position:sticky;
+ top:0;
+ z-index:40;
+}
+
+.mobile-menu{display:none}
+
+.search{
+ flex:1;
+ max-width:550px;
+ position:relative;
+}
+
+.search input{
+ width:100%;
+ background:var(--surface2);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:11px 14px 11px 40px;
+ color:var(--text);
+ outline:none;
+}
+
+.search span{
+ position:absolute;
+ left:14px;
+ top:10px;
+ color:var(--muted);
+}
+
+.top-actions{
+ margin-left:auto;
+ display:flex;
+ gap:8px;
+}
+
+.icon-btn{
+ width:40px;
+ height:40px;
+ border-radius:11px;
+ border:1px solid var(--border);
+ background:var(--surface);
+ color:var(--text);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:17px;
+}
+
+.icon-btn:hover{background:var(--surface2)}
+
+.page{
+ padding:30px;
+ max-width:1500px;
+ margin:auto;
+}
+
+.page-header{
+ display:flex;
+ align-items:flex-start;
+ justify-content:space-between;
+ gap:20px;
+ margin-bottom:25px;
+}
+
+.page-title{
+ font-size:29px;
+ font-weight:850;
+ letter-spacing:-.03em;
+}
+
+.page-subtitle{
+ color:var(--muted);
+ margin-top:6px;
+}
+
+.header-actions{
+ display:flex;
+ gap:9px;
+ flex-wrap:wrap;
+}
+
+/* STATS */
+
+.stats-grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:15px;
+ margin-bottom:25px;
+}
+
+.stat-card{
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-radius:17px;
+ padding:19px;
+}
+
+.stat-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.stat-icon{
+ width:42px;
+ height:42px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ border-radius:12px;
+ background:var(--surface2);
+ font-size:19px;
+}
+
+.stat-number{
+ margin-top:17px;
+ font-size:29px;
+ font-weight:850;
+}
+
+.stat-label{
+ color:var(--muted);
+ margin-top:4px;
+ font-size:13px;
+}
+
+/* CARDS */
+
+.content-card{
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-radius:18px;
+ box-shadow:0 5px 25px rgba(15,23,42,.03);
+}
+
+.card-header{
+ padding:19px 20px;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+}
+
+.card-title{font-weight:800}
+
+.card-body{padding:20px}
+
+/* FOLDERS */
+
+.folder-grid{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:16px;
+}
+
+.folder-card{
+ position:relative;
+ background:var(--surface);
+ border:2px solid var(--border);
+ border-radius:18px;
+ padding:19px;
+ transition:
+ border-color .25s,
+ box-shadow .25s,
+ transform .2s,
+ background .25s;
+ overflow:hidden;
+}
+
+.folder-card:hover{
+ transform:translateY(-2px);
+ box-shadow:var(--shadow);
+}
+
+.folder-card.folder-green{
+ border-color:#22c55e;
+ background:
+ linear-gradient(
+ 135deg,
+ rgba(34,197,94,.16),
+ rgba(34,197,94,.035)
+ ),
+ var(--surface);
+ box-shadow:
+ 0 0 0 1px rgba(34,197,94,.08),
+ 0 8px 30px rgba(34,197,94,.13);
+}
+
+.folder-card.folder-red{
+ border-color:#ef4444;
+ background:
+ linear-gradient(
+ 135deg,
+ rgba(239,68,68,.14),
+ rgba(239,68,68,.035)
+ ),
+ var(--surface);
+ box-shadow:
+ 0 0 0 1px rgba(239,68,68,.07),
+ 0 8px 30px rgba(239,68,68,.12);
+}
+
+.folder-status{
+ position:absolute;
+ top:14px;
+ right:14px;
+ font-size:11px;
+ font-weight:850;
+ padding:5px 8px;
+ border-radius:999px;
+}
+
+.folder-status.green{
+ background:#dcfce7;
+ color:#15803d;
+}
+
+.folder-status.red{
+ background:#fee2e2;
+ color:#b91c1c;
+}
+
+.folder-icon{
+ width:52px;
+ height:52px;
+ border-radius:14px;
+ background:var(--surface2);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:25px;
+ margin-bottom:15px;
+}
+
+.folder-name{
+ font-size:18px;
+ font-weight:800;
+ padding-right:65px;
+}
+
+.folder-description{
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.5;
+ margin-top:7px;
+ min-height:39px;
+}
+
+.folder-meta{
+ display:flex;
+ align-items:center;
+ gap:7px;
+ flex-wrap:wrap;
+ margin-top:15px;
+}
+
+.badge{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ border:1px solid var(--border);
+ background:var(--surface2);
+ border-radius:999px;
+ padding:5px 9px;
+ font-size:11px;
+ font-weight:700;
+ color:var(--muted);
+}
+
+.folder-actions{
+ display:flex;
+ gap:7px;
+ margin-top:17px;
+ padding-top:14px;
+ border-top:1px solid var(--border);
+}
+
+.small-btn{
+ flex:1;
+ border:1px solid var(--border);
+ background:var(--surface2);
+ color:var(--text);
+ border-radius:9px;
+ padding:9px 8px;
+ font-size:12px;
+ font-weight:750;
+}
+
+.small-btn:hover{
+ border-color:var(--primary);
+ color:var(--primary);
+}
+
+.small-btn.danger:hover{
+ border-color:var(--red);
+ color:var(--red);
+}
+
+.chip-line{
+ margin-top:10px;
+ display:flex;
+ align-items:center;
+ gap:7px;
+ font-size:11px;
+ color:var(--muted);
+}
+
+.chip-code{
+ font-family:monospace;
+ color:var(--text);
+ font-weight:700;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+
+/* TABLE */
+
+.table-wrap{overflow:auto}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+}
+
+th,td{
+ text-align:left;
+ padding:13px 15px;
+ border-bottom:1px solid var(--border);
+ font-size:13px;
+}
+
+th{
+ color:var(--muted);
+ font-size:11px;
+ text-transform:uppercase;
+ letter-spacing:.05em;
+}
+
+tr:last-child td{border-bottom:0}
+
+/* EMPTY */
+
+.empty{
+ text-align:center;
+ padding:60px 20px;
+ color:var(--muted);
+}
+
+.empty-icon{
+ font-size:45px;
+ margin-bottom:12px;
+}
+
+.empty-title{
+ color:var(--text);
+ font-weight:800;
+ font-size:18px;
+}
+
+.empty-text{
+ margin-top:5px;
+}
+
+/* MODAL */
+
+.modal-overlay{
+ position:fixed;
+ inset:0;
+ background:rgba(2,6,23,.62);
+ backdrop-filter:blur(5px);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ z-index:100;
+}
+
+.modal-overlay.show{display:flex}
+
+.modal{
+ width:100%;
+ max-width:550px;
+ max-height:90vh;
+ overflow:auto;
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-radius:21px;
+ box-shadow:0 30px 80px rgba(0,0,0,.28);
+}
+
+.modal-header{
+ padding:19px 21px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ border-bottom:1px solid var(--border);
+}
+
+.modal-title{
+ font-size:18px;
+ font-weight:850;
+}
+
+.modal-close{
+ width:34px;
+ height:34px;
+ border:0;
+ border-radius:9px;
+ background:var(--surface2);
+ color:var(--text);
+}
+
+.modal-body{padding:21px}
+
+.modal-footer{
+ display:flex;
+ justify-content:flex-end;
+ gap:9px;
+ padding:16px 21px;
+ border-top:1px solid var(--border);
+}
+
+/* TOAST */
+
+#toastContainer{
+ position:fixed;
+ right:20px;
+ bottom:20px;
+ display:flex;
+ flex-direction:column;
+ gap:10px;
+ z-index:200;
+ width:min(390px,calc(100vw - 40px));
+}
+
+.toast{
+ background:var(--surface);
+ border:1px solid var(--border);
+ border-left:4px solid var(--primary);
+ box-shadow:var(--shadow);
+ border-radius:13px;
+ padding:14px 15px;
+ animation:toastIn .22s ease;
+ font-size:13px;
+}
+
+.toast.success{border-left-color:var(--green)}
+.toast.error{border-left-color:var(--red)}
+.toast.warning{border-left-color:var(--orange)}
+
+@keyframes toastIn{
+ from{opacity:0;transform:translateY(8px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+/* DETAIL */
+
+.detail-status{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ margin-bottom:20px;
+}
+
+.status-dot{
+ width:13px;
+ height:13px;
+ border-radius:50%;
+}
+
+.status-dot.green{
+ background:#22c55e;
+ box-shadow:0 0 0 5px rgba(34,197,94,.12);
+}
+
+.status-dot.red{
+ background:#ef4444;
+ box-shadow:0 0 0 5px rgba(239,68,68,.12);
+}
+
+.detail-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:13px;
+}
+
+.detail-item{
+ padding:15px;
+ border:1px solid var(--border);
+ border-radius:13px;
+ background:var(--surface2);
+}
+
+.detail-label{
+ font-size:11px;
+ color:var(--muted);
+ font-weight:700;
+ margin-bottom:6px;
+}
+
+.detail-value{
+ font-size:14px;
+ font-weight:750;
+ word-break:break-word;
+}
+
+/* SCAN */
+
+.scan-box{text-align:center}
+
+.scan-icon{
+ width:90px;
+ height:90px;
+ margin:0 auto 18px;
+ border-radius:25px;
+ background:rgba(37,99,235,.10);
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:42px;
+}
+
+/* MOBILE */
+
+@media(max-width:1100px){
+ .folder-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:800px){
+
+ .sidebar{
+  transform:translateX(-100%);
+  transition:.25s;
+ }
+
+ .sidebar.open{transform:translateX(0)}
+
+ .main{margin-left:0}
+
+ .mobile-menu{display:flex}
+
+ .topbar{padding:0 14px}
+
+ .search{max-width:none}
+
+ .page{padding:20px 14px}
+
+ .page-header{flex-direction:column}
+
+ .folder-grid{grid-template-columns:1fr}
+
+ .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:520px){
+
+ .auth-box{padding:25px 20px}
+
+ .stats-grid{
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+ }
+
+ .stat-card{padding:14px}
+
+ .stat-number{font-size:23px}
+
+ .top-actions .icon-btn:nth-child(2){display:none}
+
+ .detail-grid{grid-template-columns:1fr}
+
+ .folder-actions{flex-wrap:wrap}
+
+ .small-btn{
+  min-width:calc(50% - 4px);
+ }
+
+}
 </style>
 </head>
+
 <body>
 
-<!-- ============================================================ LOGIN ============================================================ -->
-<div id="loginPage" class="loginPage">
-  <div class="loginBox">
-    <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
-    </div>
-    <h1>Anmelden</h1>
-    <p>Melde dich mit deinem OrdnerSystem-Konto an.</p>
-    <div class="field">
-      <label for="email">E-Mail</label>
-      <input id="email" type="email" autocomplete="username" placeholder="name@example.com">
-    </div>
-    <div class="field">
-      <label for="password">Passwort</label>
-      <input id="password" type="password" autocomplete="current-password" placeholder="Passwort">
-    </div>
-    <div id="loginError" class="loginError"></div>
-    <button id="login" class="blue">Anmelden</button>
-  </div>
+<!-- ======================================================
+ AUTH
+====================================================== -->
+
+<section id="authScreen">
+
+<div class="auth-box">
+
+<div class="logo">
+<div class="logo-icon">📁</div>
+<span>OrdnerSystem</span>
 </div>
 
-<!-- ============================================================ APP ============================================================ -->
-<div id="app" class="hidden">
-  <header>
-    <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
-    </div>
-    <div class="head">
-      <div class="headUser">
-        <div class="headText">
-          <div id="headName" class="headName">Benutzer</div>
-          <div id="headRole" class="role">Benutzer</div>
-        </div>
-        <div id="headAvatar" class="avatar">?</div>
-      </div>
-      <button id="logout" class="gray">Abmelden</button>
-    </div>
-  </header>
-
-  <div id="workspace" class="workspace">
-    <!-- ======================================================== SIDEBAR ======================================================== -->
-    <aside class="sidebar">
-      <div class="sidebarHead">
-        📁 OrdnerSystem
-        <small>Navigation</small>
-      </div>
-
-      <div class="sideSection open">
-        <button class="sideToggle" onclick="toggleSide(this)">Ordner <span class="chev">⌄</span></button>
-        <div class="sideLinks">
-          <button class="sideLink" data-page="pageFolders" onclick="showPage('pageFolders')">📁 Alle Ordner</button>
-          <button class="sideLink" data-page="pageLastScan" onclick="showPage('pageLastScan')">📡 Letzter Scan</button>
-          <button class="sideLink" data-page="pageInbox" onclick="showPage('pageInbox')">📬 Postfach <span id="inboxBadge" class="badge red hidden">0</span></button>
-          <button class="sideLink" data-page="pageRequest" onclick="showPage('pageRequest')">📝 Ordner anfordern</button>
-        </div>
-      </div>
-
-      <div class="sideSection" id="categorySection">
-        <div class="categoryHead">
-          <button class="sideToggle" onclick="toggleSide(this)">Kategorien <span class="chev">⌄</span></button>
-          <button id="sidebarAddCategory" class="categoryPlus blue hidden" title="Kategorie hinzufügen" aria-label="Kategorie hinzufügen">+</button>
-        </div>
-        <div id="categoryLinks" class="sideLinks"></div>
-      </div>
-
-      <div class="sideSection">
-        <button class="sideToggle" onclick="toggleSide(this)">System <span class="chev">⌄</span></button>
-        <div class="sideLinks">
-          <button class="sideLink" onclick="openProfile()">👤 Mein Profil</button>
-          <button class="sideLink" onclick="openSettings()">⚙️ Einstellungen</button>
-          <button class="sideLink" onclick="openHelp()">❓ Hilfe</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- ======================================================== MAIN ======================================================== -->
-    <main id="mainContent" class="mainContent">
-
-      <!-- ALLE ORDNER -->
-      <section id="pageFolders" class="page">
-        <h1 class="pageTitle">Alle Ordner</h1>
-        <p class="pageSub">Alle Ordner und NFC-Chips im OrdnerSystem.</p>
-
-        <section class="stats">
-          <div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div>
-          <div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div>
-          <div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div>
-        </section>
-
-        <section id="adminPanel" class="card hidden">
-          <div class="sectionTitle">
-            <h2>Administration</h2>
-            <span class="badge">Administrator</span>
-          </div>
-          <div class="adminActions">
-            <button id="newFolder" class="blue">＋ Ordner hinzufügen</button>
-            <button id="newChip" class="blue">＋ Chip hinzufügen</button>
-            <button id="newUser" class="blue">＋ Benutzer erstellen</button>
-            <button id="newCategory" class="blue">＋ Kategorie hinzufügen</button>
-             <button id="newPurpose" class="blue">＋ Zweck hinzufügen</button>
-            <button id="showUsers" class="gray">👥 Benutzer</button>
-            <button id="closeAdmin" class="gray">Admin-Modus schließen</button>
-          </div>
-        </section>
-
-        <section class="card">
-          <div class="sectionTitle">
-            <h2>Ordner & Chips</h2>
-            <span id="folderCountLabel" class="muted">0 Einträge</span>
-          </div>
-          <div class="toolbar">
-            <div class="searchWrap">
-              <span class="searchIcon">⌕</span>
-              <input id="chipSearch" type="search" placeholder="Ordner oder Chip-ID suchen...">
-            </div>
-            <select id="chipFilter" class="filterSelect"><option value="all">Alle Kategorien</option></select>
-            <select id="statusFilter" class="filterSelect">
-              <option value="all">Alle Status</option>
-              <option value="free">Nur freie</option>
-              <option value="active">Nur aktive</option>
-            </select>
-          </div>
-          <div id="chips">Laden...</div>
-        </section>
-      </section>
-
-      <!-- LETZTER SCAN -->
-      <section id="pageLastScan" class="page hidden">
-        <h1 class="pageTitle">Letzter Scan</h1>
-        <p class="pageSub">Hier siehst du den zuletzt erkannten NFC-Chip.</p>
-        <section class="card">
-          <div class="sectionTitle"><h2>📡 Letzter NFC-Scan</h2></div>
-          <div id="lastScan"><div class="empty">Noch kein Scan.</div></div>
-        </section>
-      </section>
-
-      <!-- KATEGORIE -->
-      <section id="pageCategory" class="page hidden">
-        <div class="sectionTitle">
-          <div>
-            <h1 id="categoryPageTitle" class="pageTitle">Kategorie</h1>
-            <p id="categoryPageSub" class="pageSub">Ordner dieser Kategorie.</p>
-          </div>
-          <button id="categoryManageBtn" class="blue hidden">＋ Kategorie hinzufügen</button>
-        </div>
-        <section class="card"><div id="categoryList"></div></section>
-      </section>
-
-      <!-- POSTFACH -->
-      <section id="pageInbox" class="page hidden">
-        <h1 class="pageTitle">Postfach</h1>
-        <p class="pageSub">Hier siehst du Benachrichtigungen zu Scans, Ordnern und Anfragen.</p>
-        <section class="card">
-          <div class="sectionTitle"><h2>📬 Nachrichten</h2><button class="gray" onclick="markAllNotificationsRead()">Alle gelesen</button></div>
-          <div id="inbox">Laden...</div>
-        </section>
-      </section>
-
-      <!-- ORDNER ANFORDERN -->
-      <section id="pageRequest" class="page hidden">
-        <h1 class="pageTitle">Ordner anfordern</h1>
-        <p class="pageSub">Sende eine Anfrage an die Administratoren.</p>
-        <section class="card">
-          <div class="field"><label for="requestTitle">Was für einen Ordner brauchst du?</label><input id="requestTitle" maxlength="80" placeholder="z. B. Projekt Müller"></div>
-          <div class="field"><label for="requestReason">Wofür brauchst du ihn?</label><textarea id="requestReason" maxlength="500" placeholder="Kurze Beschreibung..."></textarea></div>
-          <div id="requestMsg" class="formMessage"></div>
-          <button id="sendRequest" class="blue">Anfrage senden</button>
-        </section>
-        <section class="card"><div class="sectionTitle"><h2>Meine Anfragen</h2></div><div id="myRequests">Laden...</div></section>
-      </section>
-
-      <!-- BENUTZER -->
-      <section id="pageUsers" class="page hidden">
-        <h1 class="pageTitle">Benutzer</h1>
-        <p class="pageSub">Benutzerverwaltung – nur im Admin-Modus.</p>
-        <section class="card">
-          <div class="sectionTitle">
-            <h2>Benutzerkonten</h2>
-            <button class="gray" onclick="showPage('pageFolders')">← Alle Ordner</button>
-          </div>
-          <div id="users">Laden...</div>
-        </section>
-      </section>
-    </main>
-
-    <!-- ======================================================== SETTINGS ======================================================== -->
-    <section id="settingsPage" class="mainContent settingsPage hidden">
-      <h1 class="pageTitle">Einstellungen</h1>
-      <p class="pageSub">Profil, Admin-Modus und Darstellung.</p>
-
-      <section class="card settingsProfileCard">
-        <div class="profileRow">
-          <div id="settingsAvatar" class="profileAvatar">?</div>
-          <div>
-            <div id="settingsName" style="font-size:20px;font-weight:850">Benutzer</div>
-            <div id="settingsEmail" class="muted"></div>
-          </div>
-        </div>
-        <div class="settingsActions">
-          <button id="settingsProfileBtn" class="blue">✏️ Profil bearbeiten</button>
-          <button id="settingsAdminBtn" class="blue hidden">⚙️ Admin-Modus</button>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="sectionTitle"><h2>Darstellung</h2></div>
-        <p class="muted">Die Auswahl wird auf diesem Gerät gespeichert.</p>
-        <label class="settingsOption">
-          <input type="radio" name="theme2" id="themeLight2" value="light">
-          <span><b>☀️ Hellmodus</b><br><span class="smallNote">Helle Darstellung</span></span>
-        </label>
-        <label class="settingsOption">
-          <input type="radio" name="theme2" id="themeDark2" value="dark">
-          <span><b>🌙 Dunkelmodus</b><br><span class="smallNote">Dunkle Darstellung</span></span>
-        </label>
-      </section>
-
-      <button id="settingsBack" class="gray">← Alle Ordner</button>
-    </section>
-  </div>
+<div class="auth-title" id="authTitle">
+Willkommen zurück
 </div>
 
-<!-- ============================================================ PROFILE MODAL ============================================================ -->
-<div id="profileModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Mein Profil</h2><button class="closeBtn" onclick="window.closeModal('profileModal')">×</button></div>
-    <div class="profileRow">
-      <div id="editAvatar" class="editAvatar">?</div>
-      <div class="muted">Profilbild ist optional.</div>
-    </div>
-    <div class="field"><label for="nameEdit">Name</label><input id="nameEdit" type="text" maxlength="40" placeholder="Dein Name"></div>
-    <div class="field"><label for="photo">Profilbild</label><input id="photo" type="file" accept="image/*"></div>
-    <button id="removePhoto" class="gray">Profilbild entfernen</button>
-    <div id="profileMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="window.closeModal('profileModal')">Abbrechen</button><button id="saveProfile" class="blue">Speichern</button></div>
-  </div>
+<div class="auth-subtitle" id="authSubtitle">
+Melde dich an, um deine Ordner und Chips zu verwalten.
 </div>
 
-<!-- ============================================================ CHIP MODAL ============================================================ -->
-<div id="chipModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2 id="chipTitle">Ordner/Chip hinzufügen</h2><button class="closeBtn" onclick="window.closeModal('chipModal')">×</button></div>
-    <div class="field"><label for="chipName">Ordnername</label><input id="chipName" type="text" maxlength="80" placeholder="z. B. Mandant Müller"></div>
-    <div class="field"><label for="chipId">Chip-ID</label><input id="chipId" type="text" maxlength="80" placeholder="z. B. 001"></div>
-    <div class="field"><label for="chipCategory">Kategorie</label><select id="chipCategory"></select></div>
-    <div class="modalActions"><button class="gray" onclick="window.closeModal('chipModal')">Abbrechen</button><button id="saveChip" class="blue">Speichern</button></div>
-  </div>
+<form id="authForm" class="auth-form">
+
+<div class="field">
+<label>E-Mail</label>
+<input
+id="authEmail"
+type="email"
+placeholder="name@example.com"
+autocomplete="email"
+required
+>
 </div>
 
-<!-- ============================================================ CATEGORY MODAL ============================================================ -->
-<div id="categoryModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Neue Kategorie</h2><button class="closeBtn" onclick="window.closeModal('categoryModal')">×</button></div>
-    <div class="field"><label for="categoryName">Name der Kategorie</label><input id="categoryName" type="text" maxlength="40" placeholder="z. B. Projekte"></div>
-    <div class="field"><label for="categoryIcon">Symbol / Emoji</label><input id="categoryIcon" type="text" maxlength="4" placeholder="📁"></div>
-    <div id="categoryMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="window.closeModal('categoryModal')">Abbrechen</button><button id="saveCategory" class="blue">Kategorie erstellen</button></div>
-  </div>
+<div class="field">
+<label>Passwort</label>
+<input
+id="authPassword"
+type="password"
+placeholder="••••••••"
+autocomplete="current-password"
+required
+>
 </div>
 
-<!-- ============================================================ PURPOSE MODAL ============================================================ -->
-<div id="purposeModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Zweck hinzufügen</h2><button class="closeBtn" onclick="window.closeModal('purposeModal')">×</button></div>
-    <div class="field"><label for="purposeName">Zweck</label><input id="purposeName" maxlength="80" placeholder="z. B. Schule"></div>
-    <div id="purposeMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="window.closeModal('purposeModal')">Abbrechen</button><button id="savePurpose" class="blue">Zweck speichern</button></div>
-  </div>
+<div class="field hidden" id="registerNameField">
+<label>Name</label>
+<input
+id="registerName"
+type="text"
+placeholder="Dein Name"
+>
 </div>
 
-<!-- ============================================================ USER MODAL ============================================================ -->
-<div id="userModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Benutzer erstellen</h2><button class="closeBtn" onclick="window.closeModal('userModal')">×</button></div>
-    <div class="field"><label for="userName">Name</label><input id="userName" type="text" maxlength="40" placeholder="Max Mustermann"></div>
-    <div class="field"><label for="userEmail">E-Mail</label><input id="userEmail" type="email" placeholder="max@example.com"></div>
-    <div class="field"><label for="userPassword">Passwort</label><input id="userPassword" type="password" minlength="6" placeholder="Mindestens 6 Zeichen"></div>
-    <div id="userMsg" class="formMessage"></div>
-    <div class="modalActions"><button class="gray" onclick="window.closeModal('userModal')">Abbrechen</button><button id="saveUser" class="blue">Benutzer erstellen</button></div>
-  </div>
+<button
+class="primary-btn full"
+id="authSubmit"
+type="submit"
+>
+🔐 Anmelden
+</button>
+
+</form>
+
+<div class="auth-switch">
+<span id="authSwitchText">Noch kein Konto?</span>
+<button type="button" id="authSwitch">
+Registrieren
+</button>
 </div>
 
-<!-- ============================================================ HELP MODAL ============================================================ -->
-<div id="helpModal" class="modal hidden">
-  <div class="modalBox">
-    <div class="modalHead"><h2>Hilfe</h2><button class="closeBtn" onclick="window.closeModal('helpModal')">×</button></div>
-    <div class="field"><label for="helpSearch">OrdnerSystem-Hilfe</label><input id="helpSearch" placeholder="z. B. NFC, Chip, Profil..."></div>
-    <div id="helpAnswer"></div>
-  </div>
+</div>
+</section>
+
+
+<!-- ======================================================
+ APP
+====================================================== -->
+
+<section id="appScreen" class="hidden">
+
+<div class="app-layout">
+
+<aside class="sidebar" id="sidebar">
+
+<div class="sidebar-top">
+
+<div class="sidebar-logo">
+<div class="sidebar-logo-icon">📁</div>
+<span>OrdnerSystem</span>
 </div>
 
-<div id="toast"></div>
+</div>
 
-<!-- ============================================================ FIREBASE + APPLICATION CODE ============================================================ -->
+<nav class="nav">
+
+<div class="nav-section">
+Übersicht
+</div>
+
+<button class="nav-item active" data-page="dashboard">
+<span class="nav-icon">📊</span>
+Dashboard
+</button>
+
+<button class="nav-item" data-page="folders">
+<span class="nav-icon">📁</span>
+Ordner
+</button>
+
+<button class="nav-item" data-page="categories">
+<span class="nav-icon">🗂️</span>
+Kategorien
+</button>
+
+<div class="nav-section">
+Verwaltung
+</div>
+
+<button class="nav-item" data-page="requests">
+<span class="nav-icon">📋</span>
+Anfragen
+</button>
+
+<button class="nav-item" data-page="users">
+<span class="nav-icon">👥</span>
+Benutzer
+</button>
+
+<button class="nav-item" data-page="notifications">
+<span class="nav-icon">🔔</span>
+Benachrichtigungen
+</button>
+
+<div class="nav-section">
+System
+</div>
+
+<button class="nav-item" data-page="profile">
+<span class="nav-icon">👤</span>
+Profil
+</button>
+
+<button class="nav-item" data-page="settings">
+<span class="nav-icon">⚙️</span>
+Einstellungen
+</button>
+
+</nav>
+
+<div class="sidebar-bottom">
+
+<div class="user-mini">
+
+<div class="avatar" id="sideAvatar">
+E
+</div>
+
+<div class="user-mini-info">
+
+<div class="user-mini-name" id="sideName">
+Benutzer
+</div>
+
+<div class="user-mini-email" id="sideEmail">
+-
+</div>
+
+</div>
+
+</div>
+
+<button class="secondary-btn full" data-action="logout">
+🚪 Abmelden
+</button>
+
+</div>
+
+</aside>
+
+
+<main class="main">
+
+<header class="topbar">
+
+<button class="icon-btn mobile-menu" id="mobileMenu">
+☰
+</button>
+
+<div class="search">
+
+<span>🔍</span>
+
+<input
+id="globalSearch"
+type="search"
+placeholder="Ordner, Kategorien oder Benutzer suchen..."
+>
+
+</div>
+
+<div class="top-actions">
+
+<button
+class="icon-btn"
+data-action="scan"
+title="Chip scannen"
+>
+📡
+</button>
+
+<button
+class="icon-btn"
+data-action="toggle-theme"
+title="Design wechseln"
+>
+🌙
+</button>
+
+<button
+class="icon-btn"
+data-page="notifications"
+title="Benachrichtigungen"
+>
+🔔
+</button>
+
+</div>
+
+</header>
+
+<div class="page" id="pageContainer"></div>
+
+</main>
+
+</div>
+
+</section>
+
+
+<!-- ======================================================
+ MODAL
+====================================================== -->
+
+<div class="modal-overlay" id="modalOverlay">
+
+<div class="modal">
+
+<div class="modal-header">
+
+<div class="modal-title" id="modalTitle">
+Fenster
+</div>
+
+<button class="modal-close" data-action="close-modal">
+✕
+</button>
+
+</div>
+
+<form id="modalForm">
+
+<div class="modal-body" id="modalBody"></div>
+
+<div class="modal-footer">
+
+<button
+type="button"
+class="secondary-btn"
+data-action="close-modal"
+>
+Abbrechen
+</button>
+
+<button
+type="submit"
+class="primary-btn"
+id="modalSave"
+>
+Speichern
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+<div id="toastContainer"></div>
+
+
 <script type="module">
-import { initializeApp, getApps, getApp, deleteApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+/* ======================================================
+ FIREBASE
+====================================================== */
+
 import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  deleteUser
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+ initializeApp,
+ getApps,
+ getApp
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
 import {
-  getFirestore,
-  collection,
-  doc,
-  addDoc,
-  setDoc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-  onSnapshot,
-  serverTimestamp,
-  runTransaction,
-  query,
-  where,
-  getDocs,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+ getAuth,
+ onAuthStateChanged,
+ signInWithEmailAndPassword,
+ createUserWithEmailAndPassword,
+ signOut,
+ updateProfile
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-/* ============================================================
-   FIREBASE KONFIGURATION
-   ============================================================ */
-const firebaseConfig = {
-  apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-  authDomain: "ordnersystem-1352a.firebaseapp.com",
-  projectId: "ordnersystem-1352a",
-  storageBucket: "ordnersystem-1352a.firebasestorage.app",
-  messagingSenderId: "39473536985",
-  appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
+import {
+ getFirestore,
+ collection,
+ addDoc,
+ setDoc,
+ updateDoc,
+ deleteDoc,
+ doc,
+ onSnapshot,
+ query,
+ orderBy,
+ serverTimestamp,
+ runTransaction
+}
+from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+const firebaseConfig={
+ apiKey:"AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+ authDomain:"ordnersystem-1352a.firebaseapp.com",
+ projectId:"ordnersystem-1352a",
+ storageBucket:"ordnersystem-1352a.firebasestorage.app",
+ messagingSenderId:"39473536985",
+ appId:"1:39473536985:web:7dae48028c28dabc6a03c8"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
-/* ============================================================
-   ADMIN IDS
-   ============================================================ */
-const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+const app=
+ getApps().length
+ ? getApp()
+ : initializeApp(firebaseConfig);
 
-/* ============================================================
-   STATE
-   ============================================================ */
-let user = null;
-let profile = {};
-let chips = [];
-let categories = [];
-let purposes = [];
-let currentCategory = "";
-const DEFAULT_CATEGORIES = [];
-let editId = null;
-let admin = false;
-let selectedFile = null;
-let removeImage = false;
-let unsub = [];
-let nfcHandled = false;
-let toastTimer = null;
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
-const $ = id => document.getElementById(id);
 
-const esc = value => String(value ?? "")
-  .replaceAll("&", "&amp;")
-  .replaceAll("<", "&lt;")
-  .replaceAll(">", "&gt;")
-  .replaceAll('"', "&quot;")
-  .replaceAll("'", "&#039;");
+/* ======================================================
+ ADMIN
+====================================================== */
 
-const isAdmin = () => !!user && (user.uid === ADMIN1 || user.uid === ADMIN2);
-const nameKey = name => String(name || "").trim().toLowerCase();
-const nameOf = () => profile.name || user?.email?.split("@")[0] || "Benutzer";
-const open = id => $(id)?.classList.remove("hidden");
-const close = id => $(id)?.classList.add("hidden");
-window.closeModal = close;
+const ADMIN1=
+"DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
 
-function toast(message){
-  const el = $("toast");
-  if(!el) return;
-  el.textContent = message;
-  el.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+const ADMIN2=
+"HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+
+
+function isAdminUser(uid){
+
+ return uid===ADMIN1 ||
+ (
+  ADMIN2!=="HIER-ZWEITE-ADMIN-UID-EINTRAGEN" &&
+  uid===ADMIN2
+ );
+
 }
 
-function avatar(id, url, name){
-  const el = $(id);
-  if(!el) return;
-  el.innerHTML = url
-    ? `<img src="${esc(url)}" alt="Profilbild">`
-    : esc((name || "?")[0].toUpperCase());
+
+/* ======================================================
+ STATE
+====================================================== */
+
+let currentUser=null;
+let isAdmin=false;
+
+let folders=[];
+let categories=[];
+let requests=[];
+let users=[];
+let notifications=[];
+
+let activePage="dashboard";
+
+let modalHandler=null;
+let editingId=null;
+
+let unsubscribers=[];
+
+let autoScanDone=false;
+
+
+/* ======================================================
+ HELPERS
+====================================================== */
+
+const $=id=>document.getElementById(id);
+
+
+function escapeHtml(value){
+
+ return String(value??"")
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
+
 }
 
-function clearListeners(){
-  unsub.forEach(fn => {
-    try{ if(typeof fn === "function") fn(); }catch(e){ console.warn(e); }
-  });
-  unsub = [];
+
+function formatDate(timestamp){
+
+ if(!timestamp)return"—";
+
+ try{
+
+  const date=
+   timestamp.toDate
+   ? timestamp.toDate()
+   : new Date(timestamp);
+
+  return date.toLocaleString(
+   "de-DE",
+   {
+    dateStyle:"medium",
+    timeStyle:"short"
+   }
+  );
+
+ }catch{
+
+  return"—";
+
+ }
+
 }
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-window.toggleSide = element => {
-  element?.parentElement?.classList.toggle("open");
-};
 
-function hideAllPages(){
-  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
-  document.querySelectorAll(".sideLink[data-page]").forEach(link => link.classList.remove("active"));
+function makeChipId(){
+
+ return(
+  "CHIP-"+
+  Math.random()
+   .toString(36)
+   .slice(2,8)
+   .toUpperCase()+
+  "-"+
+  Date.now()
+   .toString(36)
+   .toUpperCase()
+ );
+
 }
 
-function markActive(pageId){
-  document.querySelectorAll(".sideLink[data-page]").forEach(link => {
-    const categoryMatch = pageId === "pageCategory" && link.dataset.category && link.dataset.category === currentCategory;
-    link.classList.toggle("active", categoryMatch || (!link.dataset.category && link.dataset.page === pageId));
-  });
+
+function friendlyFirebaseError(error){
+
+ const code=error?.code||"";
+
+ if(code.includes("permission-denied"))
+  return"Keine Berechtigung. Prüfe die Firestore Rules.";
+
+ if(code.includes("email-already-in-use"))
+  return"Diese E-Mail wird bereits verwendet.";
+
+ if(code.includes("invalid-credential"))
+  return"E-Mail oder Passwort ist falsch.";
+
+ if(code.includes("weak-password"))
+  return"Das Passwort ist zu schwach.";
+
+ if(code.includes("network"))
+  return"Netzwerkfehler. Prüfe deine Verbindung.";
+
+ return error?.message||"Unbekannter Fehler.";
+
 }
 
-window.showPage = pageId => {
-  if(pageId === "pageUsers" && !isAdmin()) return;
-  hideAllPages();
-  $(pageId)?.classList.remove("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("settingsPage")?.classList.add("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  markActive(pageId);
-  document.querySelectorAll(".sideSection").forEach(section => section.classList.remove("open"));
-  window.scrollTo({top:0,behavior:"smooth"});
-};
 
-window.showCategoryPage = category => {
-  const found = categories.find(c => c.name.toLowerCase() === String(category).toLowerCase());
-  if(!found) return;
-  currentCategory = found.name;
-  hideAllPages();
-  $("pageCategory")?.classList.remove("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("settingsPage")?.classList.add("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  markActive("pageCategory");
-  document.querySelectorAll(".sideSection").forEach(section => section.classList.remove("open"));
-  $("categoryPageTitle").textContent = `${found.icon} ${found.name}`;
-  $("categoryPageSub").textContent = `Ordner und NFC-Chips der Kategorie ${found.name}.`;
-  $("categoryManageBtn")?.classList.toggle("hidden", !isAdmin() || !admin);
-  renderCategory(found.name);
-  window.scrollTo({top:0,behavior:"smooth"});
-};
+/* ======================================================
+ TOAST
+====================================================== */
 
-window.openSettings = () => {
-  document.querySelectorAll(".page").forEach(page => page.classList.add("hidden"));
-  $("mainContent")?.classList.add("hidden");
-  $("settingsPage")?.classList.remove("hidden");
-  $("workspace")?.classList.add("settingsMode");
-  refreshSettings();
-  window.scrollTo({top:0,behavior:"smooth"});
-};
+function toast(message,type="info"){
 
-window.closeSettings = () => {
-  $("settingsPage")?.classList.add("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  window.showPage("pageFolders");
-};
+ const container=$("toastContainer");
 
-window.enterAdminMode = () => {
-  if(!isAdmin()) return toast("Du bist kein Administrator.");
-  admin = true;
-  $("adminPanel")?.classList.remove("hidden");
-  $("categoryManageBtn")?.classList.remove("hidden");
-  $("sidebarAddCategory")?.classList.remove("hidden");
-  $("settingsPage")?.classList.add("hidden");
-  $("mainContent")?.classList.remove("hidden");
-  $("workspace")?.classList.remove("settingsMode");
-  loadUsers();
-  window.showPage("pageFolders");
-  toast("Admin-Modus aktiviert");
-};
+ const element=document.createElement("div");
 
-window.exitAdminMode = () => {
-  admin = false;
-  $("adminPanel")?.classList.add("hidden");
-  $("categoryManageBtn")?.classList.add("hidden");
-  $("sidebarAddCategory")?.classList.add("hidden");
-  $("pageUsers")?.classList.add("hidden");
-  window.showPage("pageFolders");
-  toast("Admin-Modus geschlossen");
-};
+ element.className="toast "+type;
 
-/* ============================================================
-   THEME
-   ============================================================ */
-function applyTheme(theme){
-  const dark = theme === "dark";
-  document.body.classList.toggle("dark", dark);
-  localStorage.setItem("ordnersystem-theme", dark ? "dark" : "light");
-  if($("themeLight2")) $("themeLight2").checked = !dark;
-  if($("themeDark2")) $("themeDark2").checked = dark;
+ element.textContent=message;
+
+ container.appendChild(element);
+
+ setTimeout(()=>{
+  element.remove();
+ },4500);
+
 }
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
-$("login").onclick = async () => {
-  const email = $("email").value.trim();
-  const password = $("password").value;
-  $("loginError").textContent = "";
-  if(!email || !password){
-    $("loginError").textContent = "Bitte E-Mail und Passwort eingeben.";
-    return;
+
+/* ======================================================
+ AUTH
+====================================================== */
+
+let registerMode=false;
+
+
+function updateAuthMode(){
+
+ $("registerNameField")
+ .classList
+ .toggle("hidden",!registerMode);
+
+ $("authTitle").textContent=
+ registerMode
+ ?"Konto erstellen"
+ :"Willkommen zurück";
+
+ $("authSubtitle").textContent=
+ registerMode
+ ?"Erstelle dein Konto für das OrdnerSystem."
+ :"Melde dich an, um deine Ordner und Chips zu verwalten.";
+
+ $("authSubmit").textContent=
+ registerMode
+ ?"👤 Konto erstellen"
+ :"🔐 Anmelden";
+
+ $("authSwitchText").textContent=
+ registerMode
+ ?"Du hast bereits ein Konto?"
+ :"Noch kein Konto?";
+
+ $("authSwitch").textContent=
+ registerMode
+ ?"Anmelden"
+ :"Registrieren";
+
+}
+
+
+$("authSwitch").addEventListener(
+ "click",
+ ()=>{
+  registerMode=!registerMode;
+  updateAuthMode();
+ }
+);
+
+
+$("authForm").addEventListener(
+ "submit",
+ async event=>{
+
+  event.preventDefault();
+
+  const email=$("authEmail").value.trim();
+  const password=$("authPassword").value;
+
+  if(!email||!password){
+
+   toast(
+    "Bitte E-Mail und Passwort eingeben.",
+    "error"
+   );
+
+   return;
   }
+
+  const button=$("authSubmit");
+
+  button.disabled=true;
+
   try{
-    $("login").disabled = true;
-    await signInWithEmailAndPassword(auth, email, password);
-  }catch(error){
-    console.error(error);
-    $("loginError").textContent = "E-Mail oder Passwort falsch.";
-  }finally{
-    $("login").disabled = false;
-  }
-};
 
-$("password").onkeydown = event => {
-  if(event.key === "Enter") $("login").click();
-};
+   if(registerMode){
 
-$("logout").onclick = async () => {
-  await signOut(auth);
-};
+    const name=
+     $("registerName").value.trim();
 
-/* ============================================================
-   PROFILE
-   ============================================================ */
-async function ensureProfile(){
-  const userRef = doc(db,"users",user.uid);
-  const snap = await getDoc(userRef);
-  if(snap.exists()) return;
+    const credential=
+     await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+     );
 
-  const defaultName = user.email?.split("@")[0] || "Benutzer";
-  const key = nameKey(defaultName);
+    if(name){
 
-  await runTransaction(db, async tx => {
-    const nameRef = doc(db,"userNames",key);
-    const nameSnap = await tx.get(nameRef);
+     await updateProfile(
+      credential.user,
+      {displayName:name}
+     );
 
-    if(nameSnap.exists() && nameSnap.data().uid !== user.uid){
-      throw new Error("NAME_ALREADY_USED");
     }
 
-    tx.set(userRef,{
-      name: defaultName,
-      nameKey: key,
-      email: user.email || "",
-      role: isAdmin() ? "admin" : "user",
-      profileImageData: "",
-      createdAt: serverTimestamp()
-    });
-
-    tx.set(nameRef,{uid:user.uid,name:defaultName});
-  });
-}
-
-function loadProfile(){
-  unsub.push(onSnapshot(doc(db,"users",user.uid), snap => {
-    profile = snap.exists() ? snap.data() : {};
-    const n = nameOf();
-    const image = profile.profileImageData || "";
-
-    $("headName").textContent = n;
-    $("headRole").textContent = isAdmin() ? "Administrator" : "Benutzer";
-    avatar("headAvatar", image, n);
-    avatar("settingsAvatar", image, n);
-    $("settingsName").textContent = n;
-    $("settingsEmail").textContent = user.email || "";
-    $("settingsAdminBtn")?.classList.toggle("hidden", !isAdmin());
-
-    if(!admin) $("adminPanel")?.classList.add("hidden");
-    renderChips();
-    renderAllCategories();
-  }, error => {
-    console.error("Profil Listener:",error);
-  }));
-}
-
-window.openProfile = () => {
-  selectedFile = null;
-  removeImage = false;
-  $("nameEdit").value = nameOf();
-  $("photo").value = "";
-  $("profileMsg").textContent = "";
-  avatar("editAvatar",profile.profileImageData || "",nameOf());
-  open("profileModal");
-};
-
-function compressImage(file){
-  return new Promise((resolve,reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const img = new Image();
-      img.onload = () => {
-        const max = 360;
-        const scale = Math.min(1,max / Math.max(img.width,img.height));
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.max(1,Math.round(img.width * scale));
-        canvas.height = Math.max(1,Math.round(img.height * scale));
-        const context = canvas.getContext("2d");
-        context.drawImage(img,0,0,canvas.width,canvas.height);
-        resolve(canvas.toDataURL("image/jpeg",0.76));
-      };
-      img.onerror = reject;
-      img.src = reader.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-$("photo").onchange = async event => {
-  const file = event.target.files?.[0];
-  if(!file) return;
-  try{
-    selectedFile = await compressImage(file);
-    removeImage = false;
-    avatar("editAvatar",selectedFile,nameOf());
-  }catch(error){
-    console.error(error);
-    $("profileMsg").textContent = "Das Bild konnte nicht verarbeitet werden.";
-  }
-};
-
-$("removePhoto").onclick = () => {
-  selectedFile = null;
-  removeImage = true;
-  avatar("editAvatar","",nameOf());
-};
-
-$("saveProfile").onclick = async () => {
-  const newName = $("nameEdit").value.trim();
-  if(!newName){
-    $("profileMsg").textContent = "Bitte einen Namen eingeben.";
-    return;
-  }
-
-  const newKey = nameKey(newName);
-  const oldKey = profile.nameKey || nameKey(nameOf());
-  const image = removeImage ? "" : (selectedFile ?? profile.profileImageData ?? "");
-
-  try{
-    $("saveProfile").disabled = true;
-
-    await runTransaction(db, async tx => {
-      const userRef = doc(db,"users",user.uid);
-      const newNameRef = doc(db,"userNames",newKey);
-      const oldNameRef = doc(db,"userNames",oldKey);
-
-      const newNameSnap = await tx.get(newNameRef);
-      const oldNameSnap = newKey !== oldKey ? await tx.get(oldNameRef) : null;
-
-      if(newKey !== oldKey && newNameSnap.exists() && newNameSnap.data().uid !== user.uid){
-        throw new Error("NAME_ALREADY_USED");
-      }
-
-      if(newKey !== oldKey){
-        tx.set(newNameRef,{uid:user.uid,name:newName});
-        if(oldNameSnap?.exists() && oldNameSnap.data().uid === user.uid){
-          tx.delete(oldNameRef);
-        }
-      }
-
-      tx.update(userRef,{
-        name:newName,
-        nameKey:newKey,
-        profileImageData:image
-      });
-    });
-
-    for(const chip of chips.filter(c => c.assignedTo === user.uid)){
-      try{
-        await updateDoc(doc(db,"chips",chip.firestoreId),{
-          assignedName:newName,
-          assignedProfileImageData:image
-        });
-      }catch(error){
-        console.warn("Chip-Profil konnte nicht aktualisiert werden",error);
-      }
-    }
-
-    close("profileModal");
-    toast("Profil gespeichert");
-  }catch(error){
-    console.error(error);
-    $("profileMsg").textContent = error.message === "NAME_ALREADY_USED"
-      ? "Dieser Name ist bereits vergeben."
-      : "Fehler: " + error.message;
-  }finally{
-    $("saveProfile").disabled = false;
-  }
-};
-
-function refreshSettings(){
-  const n = nameOf();
-  const image = profile.profileImageData || "";
-  $("settingsName").textContent = n;
-  $("settingsEmail").textContent = user?.email || "";
-  avatar("settingsAvatar",image,n);
-  $("settingsAdminBtn")?.classList.toggle("hidden",!isAdmin());
-  applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
-}
-
-/* ============================================================
-   CHIP LISTENER / RENDER
-   ============================================================ */
-function loadChips(){
-  unsub.push(onSnapshot(collection(db,"chips"), snap => {
-    chips = snap.docs.map(item => ({firestoreId:item.id,...item.data()}));
-    chips.sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
-    renderChips();
-    renderAllCategories();
-    updateStats();
-  }, error => {
-    console.error("Chip Listener:",error);
-    $("chips").innerHTML = `<div class="empty">Chips konnten nicht geladen werden.<br><small>${esc(error.message)}</small></div>`;
-  }));
-}
-
-function chipActive(chip){
-  return chip.assignedTo != null || chip.scanActive === true;
-}
-
-function chipPerson(chip){
-  const image = chip.assignedProfileImageData || "";
-  const name = chip.assignedName || chip.assignedEmail || "Niemand";
-  return `
-    <div class="person">
-      <div class="mini">${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}</div>
-      <span>Gerade bei: <b>${esc(name)}</b></span>
-    </div>`;
-}
-
-function chipHtml(chip, adminControls = admin){
-  const active = chipActive(chip);
-  const owner = chip.assignedTo === user?.uid;
-  const category = chip.category || "Keine Kategorie";
-  let buttons = "";
-
-  if(adminControls && isAdmin()){
-    buttons += `<button class="gray" onclick="editChip('${esc(chip.firestoreId)}')">Bearbeiten</button>`;
-    buttons += `<button class="danger" onclick="removeChip('${esc(chip.firestoreId)}')">Löschen</button>`;
-  }
-
-  if(!active){
-    buttons += `<button class="blue" onclick="take('${esc(chip.firestoreId)}')">Übernehmen</button>`;
-  }else if(owner || isAdmin()){
-    buttons += `<button class="gray" onclick="release('${esc(chip.firestoreId)}')">Freigeben</button>`;
-  }
-
-  buttons += `<button class="gray" onclick="copyNfcLink('${esc(chip.chipId || "")}')">NFC-Link</button>`;
-
-  return `
-    <article class="chip">
-      <div class="chipMain">
-        <div class="chipInfo">
-          <div class="chipStripe ${active ? "redStripe" : ""}"></div>
-          <div class="chipText">
-            <div class="chipName">${esc(chip.name || "Unbenannter Ordner")}</div>
-            <div class="chipMeta">
-              <span class="chipStatus ${active ? "redDot" : "greenDot"}"></span>
-              ${active ? "Aktiv" : "Frei"} · Chip-ID ${esc(chip.chipId || "")}
-            </div>
-            <div class="chipMeta">Kategorie: <b>${esc(category)}</b></div>
-            ${chip.lastScannedName ? `<div class="chipMeta">Letzter Scan: ${esc(chip.lastScannedName)}${chip.lastScanPurpose ? ` · Zweck: ${esc(chip.lastScanPurpose)}` : ""}</div>` : ""}
-            ${chipPerson(chip)}
-          </div>
-        </div>
-        <div class="chipButtons">${buttons}</div>
-      </div>
-    </article>`;
-}
-
-function getFilteredChips(){
-  const search = ($( "chipSearch" )?.value || "").trim().toLowerCase();
-  const category = $("chipFilter")?.value || "all";
-  const status = $("statusFilter")?.value || "all";
-
-  return chips.filter(chip => {
-    const active = chipActive(chip);
-    const searchable = `${chip.name || ""} ${chip.chipId || ""} ${chip.category || ""}`.toLowerCase();
-    if(search && !searchable.includes(search)) return false;
-    if(category !== "all" && (chip.category || "") !== category) return false;
-    if(status === "free" && active) return false;
-    if(status === "active" && !active) return false;
-    return true;
-  });
-}
-
-function renderChips(){
-  if(!$("chips")) return;
-  const list = getFilteredChips();
-  $("folderCountLabel").textContent = `${list.length} Einträge`;
-
-  if(!chips.length){
-    $("chips").innerHTML = `<div class="empty">Noch keine Chips vorhanden.</div>`;
-    updateStats();
-    return;
-  }
-
-  if(!list.length){
-    $("chips").innerHTML = `<div class="empty">Keine passenden Ordner gefunden.</div>`;
-    updateStats();
-    return;
-  }
-
-  $("chips").innerHTML = list.map(chip => chipHtml(chip)).join("");
-  updateStats();
-}
-
-function updateStats(){
-  const total = chips.length;
-  const active = chips.filter(chipActive).length;
-  $("total").textContent = total;
-  $("redCount").textContent = active;
-  $("greenCount").textContent = Math.max(0,total-active);
-}
-
-/* ============================================================
-   CLAIM / RELEASE
-   ============================================================ */
-window.take = async firestoreId => {
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip || !user) return;
-  try{
-    let oldOwner=null;
-    let newChipName='Ordner';
-    await runTransaction(db,async tx=>{
-      const ref=doc(db,'chips',firestoreId);
-      const snap=await tx.get(ref);
-      if(!snap.exists()) throw new Error('CHIP_NOT_FOUND');
-      const current=snap.data();
-      newChipName=current.name||'Ordner';
-      if(current.assignedTo===user.uid) throw new Error('ALREADY_MINE');
-      if(current.assignedTo){
-        oldOwner={uid:current.assignedTo,name:current.assignedName||'Vorheriger Benutzer'};
-      }
-      tx.update(ref,{
-        assignedTo:user.uid,
-        assignedEmail:user.email||'',
-        assignedName:nameOf(),
-        assignedProfileImageData:profile.profileImageData||'',
-        scanActive:false
-      });
-    });
-
-    if(oldOwner){
-      await addDoc(collection(db,'notifications'),{
-        recipientUid:oldOwner.uid,
-        title:'Ordner übernommen',
-        message:`${nameOf()} hat den Ordner „${newChipName}“ übernommen.`,
-        fromUid:user.uid,
-        fromName:nameOf(),
-        createdAt:serverTimestamp(),
-        read:false,
-        type:'chip_taken_over',
-        chipId:chip.chipId
-      });
-    }
-    toast(oldOwner ? 'Ordner übernommen – der vorherige Besitzer wurde informiert.' : 'Chip übernommen');
-  }catch(error){
-    console.error(error);
-    toast(error.message==='ALREADY_MINE' ? 'Dieser Ordner gehört bereits dir.' : 'Chip konnte nicht übernommen werden: '+error.message);
-  }
-};
-
-window.release = async firestoreId => {
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip) return;
-  if(!isAdmin() && chip.assignedTo !== user?.uid){
-    toast("Du darfst diesen Chip nicht freigeben.");
-    return;
-  }
-
-  try{
-    await updateDoc(doc(db,"chips",firestoreId),{
-      assignedTo:null,
-      assignedEmail:"",
-      assignedName:"",
-      assignedProfileImageData:"",
-      scanActive:false
-    });
-    toast("Chip freigegeben");
-  }catch(error){
-    console.error(error);
-    alert("Fehler beim Freigeben: " + error.message);
-  }
-};
-
-/* ============================================================
-   CHIP ADMIN CRUD
-   ============================================================ */
-$("newFolder").onclick = () => {
-  if(!isAdmin() || !admin) return;
-  editId = null;
-  $("chipTitle").textContent = "Ordner hinzufügen";
-  $("chipName").value = "";
-  $("chipId").value = "";
-  renderCategoryNavigation();
-  $("chipCategory").value = allCategories()[0]?.name || "";
-  open("chipModal");
-};
-
-$("newChip").onclick = () => {
-  if(!isAdmin() || !admin) return;
-  editId = null;
-  $("chipTitle").textContent = "Chip hinzufügen";
-  $("chipName").value = "";
-  $("chipId").value = "";
-  renderCategoryNavigation();
-  $("chipCategory").value = allCategories()[0]?.name || "";
-  open("chipModal");
-};
-
-$("saveChip").onclick = async () => {
-  if(!isAdmin() || !admin) return;
-
-  const chipName = $("chipName").value.trim();
-  const chipId = $("chipId").value.trim();
-  const category = $("chipCategory").value;
-
-  if(!chipName || !chipId){
-    alert("Bitte Ordnername und Chip-ID ausfüllen.");
-    return;
-  }
-
-  const duplicate = chips.some(chip => String(chip.chipId) === chipId && chip.firestoreId !== editId);
-  if(duplicate){
-    alert("Diese Chip-ID gibt es bereits.");
-    return;
-  }
-
-  try{
-    $("saveChip").disabled = true;
-
-    if(editId){
-      await updateDoc(doc(db,"chips",editId),{
-        name:chipName,
-        chipId,
-        category
-      });
-      toast("Chip geändert");
-    }else{
-      await addDoc(collection(db,"chips"),{
-        name:chipName,
-        chipId,
-        category,
-        assignedTo:null,
-        assignedEmail:"",
-        assignedName:"",
-        assignedProfileImageData:"",
-        scanActive:false,
-        lastScannedBy:"",
-        lastScannedEmail:"",
-        lastScannedName:"",
-        lastScannedProfileImageData:"",
-        createdAt:serverTimestamp(),
-        createdBy:user.uid
-      });
-      toast("Chip erstellt");
-    }
-    close("chipModal");
-  }catch(error){
-    console.error(error);
-    alert("Fehler: " + error.message);
-  }finally{
-    $("saveChip").disabled = false;
-  }
-};
-
-window.editChip = firestoreId => {
-  if(!isAdmin() || !admin) return;
-  const chip = chips.find(item => item.firestoreId === firestoreId);
-  if(!chip) return;
-
-  editId = firestoreId;
-  $("chipTitle").textContent = "Chip bearbeiten";
-  $("chipName").value = chip.name || "";
-  $("chipId").value = chip.chipId || "";
-  renderCategoryNavigation();
-  $("chipCategory").value = chip.category || allCategories()[0]?.name || "";
-  open("chipModal");
-};
-
-window.removeChip = async firestoreId => {
-  if(!isAdmin() || !admin) return;
-  if(!confirm("Diesen Chip wirklich löschen?")) return;
-
-  try{
-    await deleteDoc(doc(db,"chips",firestoreId));
-    toast("Chip gelöscht");
-  }catch(error){
-    console.error(error);
-    alert("Fehler beim Löschen: " + error.message);
-  }
-};
-
-window.copyNfcLink = async chipId => {
-  const url = `${location.origin}${location.pathname}?chip=${encodeURIComponent(chipId)}`;
-  try{
-    await navigator.clipboard.writeText(url);
-    toast("NFC-Link kopiert");
-  }catch(error){
-    prompt("NFC-Link kopieren:",url);
-  }
-};
-
-/* ============================================================
-   KATEGORIEN
-   ============================================================ */
-function categoryIcon(name){
-  const c = categories.find(x => x.name.toLowerCase() === String(name).toLowerCase());
-  return c?.icon || "📁";
-}
-
-function allCategories(){
-  return [...categories];
-}
-
-function renderCategoryNavigation(){
-  const list = allCategories();
-  const nav = $("categoryLinks");
-  if(nav){
-    nav.innerHTML = list.map(c => {
-      const isCustom = !!c.firestoreId;
-      const deleteBtn = isCustom && isAdmin() && admin ? `<button class="categoryDelete danger" title="Kategorie löschen" aria-label="Kategorie ${esc(c.name)} löschen" onclick="deleteCategory(\'${esc(c.firestoreId)}\', ${JSON.stringify(c.name)});event.stopPropagation();">🗑️</button>` : "";
-      return `<div class="categoryNavRow"><button class="sideLink" data-page="pageCategory" data-category="${esc(c.name)}" onclick="showCategoryPage(${JSON.stringify(c.name)})">${esc(c.icon)} ${esc(c.name)}</button>${deleteBtn}</div>`;
-    }).join("");
-  }
-  const filter = $("chipFilter");
-  if(filter){
-    const selected = filter.value;
-    filter.innerHTML = `<option value="all">Alle Kategorien</option>` + list.map(c => `<option value="${esc(c.name)}">${esc(c.icon)} ${esc(c.name)}</option>`).join("");
-    filter.value = list.some(c => c.name === selected) ? selected : "all";
-  }
-  const select = $("chipCategory");
-  if(select){
-    const selected = select.value;
-    select.innerHTML = list.map(c => `<option value="${esc(c.name)}">${esc(c.icon)} ${esc(c.name)}</option>`).join("");
-    if(list.some(c => c.name === selected)) select.value = selected;
-  }
-}
-
-function renderCategory(category){
-  const target = $("categoryList");
-  if(!target) return;
-  const list = chips.filter(chip => String(chip.category || "").toLowerCase() === String(category).toLowerCase());
-  if(!list.length){
-    target.innerHTML = `<div class="empty">Keine Ordner in der Kategorie <b>${esc(category)}</b>.</div>`;
-    return;
-  }
-  target.innerHTML = list.map(chip => chipHtml(chip,false)).join("");
-}
-
-function renderAllCategories(){
-  renderCategoryNavigation();
-  if(currentCategory) renderCategory(currentCategory);
-}
-
-function loadCategories(){
-  unsub.push(onSnapshot(collection(db,"categories"),snap => {
-    categories = snap.docs.map(item => ({firestoreId:item.id,...item.data()}))
-      .filter(c => c.name)
-      .sort((a,b) => String(a.name).localeCompare(String(b.name),"de"));
-    renderAllCategories();
-    $("categoryManageBtn")?.classList.toggle("hidden", !isAdmin() || !admin);
-    $("sidebarAddCategory")?.classList.toggle("hidden", !isAdmin() || !admin);
-  },error => {
-    console.error("Category Listener:",error);
-    categories = [];
-    renderAllCategories();
-  }));
-}
-
-window.openCategoryModal = () => {
-  if(!isAdmin() || !admin) return toast("Nur Admins dürfen Kategorien ändern.");
-  $("categoryName").value = "";
-  $("categoryIcon").value = "📁";
-  $("categoryMsg").textContent = "";
-  open("categoryModal");
-};
-
-$("newCategory").onclick = window.openCategoryModal;
-$("categoryManageBtn").onclick = window.openCategoryModal;
-$("sidebarAddCategory").onclick = event => {
-  event.stopPropagation();
-  window.openCategoryModal();
-};
-
-
-window.deleteCategory = async (firestoreId, categoryName) => {
-  if(!isAdmin() || !admin) return toast("Nur Admins dürfen Kategorien löschen.");
-  const custom = categories.find(c => c.firestoreId === firestoreId);
-  if(!custom) return toast("Kategorie nicht gefunden.");
-  const used = chips.filter(chip => String(chip.category || "").toLowerCase() === String(categoryName).toLowerCase());
-  const text = used.length ? `Die Kategorie „${categoryName}“ wird von ${used.length} Ordner(n) verwendet. Die Kategorie wird gelöscht und diese Ordner erhalten keine Kategorie mehr. Fortfahren?` : `Kategorie „${categoryName}“ wirklich löschen?`;
-  if(!confirm(text)) return;
-  try{
-    for(const chip of used) await updateDoc(doc(db,"chips",chip.firestoreId), {category:""});
-    await deleteDoc(doc(db,"categories",firestoreId));
-    if(String(currentCategory).toLowerCase() === String(categoryName).toLowerCase()) window.showPage("pageFolders");
-    toast(`Kategorie „${categoryName}“ gelöscht${used.length ? ` – ${used.length} Ordner sind jetzt ohne Kategorie` : ""}`);
-  }catch(error){
-    console.error("Kategorie löschen:",error);
-    toast("Kategorie konnte nicht gelöscht werden: " + error.message);
-  }
-};
-
-$("saveCategory").onclick = async () => {
-  if(!isAdmin() || !admin) return;
-  const name = $("categoryName").value.trim();
-  const icon = $("categoryIcon").value.trim() || "📁";
-  $("categoryMsg").textContent = "";
-  if(!name){ $("categoryMsg").textContent = "Bitte einen Namen eingeben."; return; }
-  const exists = allCategories().some(c => c.name.toLowerCase() === name.toLowerCase());
-  if(exists){ $("categoryMsg").textContent = "Diese Kategorie gibt es bereits."; return; }
-  try{
-    $("saveCategory").disabled = true;
-    await addDoc(collection(db,"categories"),{name,icon,key:nameKey(name),createdAt:serverTimestamp(),createdBy:user.uid});
-    close("categoryModal");
-    toast(`Kategorie „${name}“ erstellt`);
-  }catch(error){
-    console.error(error);
-    $("categoryMsg").textContent = "Fehler: " + error.message;
-  }finally{
-    $("saveCategory").disabled = false;
-  }
-};
-
-/* ============================================================
-   LAST SCAN
-   ============================================================ */
-function loadScan(){
-  unsub.push(onSnapshot(doc(db,"system","currentScan"),snap => {
-    if(!snap.exists()){
-      $("lastScan").innerHTML = `<div class="empty">Noch kein Scan.</div>`;
-      return;
-    }
-
-    const data = snap.data();
-    const name = data.scannedName || data.scannedEmail || "Unbekannt";
-    const image = data.scannedProfileImageData || "";
-
-    $("lastScan").innerHTML = `
-      <div class="scanBox">
-        <div class="scanIcon">📡</div>
-        <div class="mini" style="width:52px;height:52px;font-size:18px">
-          ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
-        </div>
-        <div style="min-width:0">
-          <b>Chip ${esc(data.chipId || "unbekannt")}</b>
-          <div class="muted" style="margin-top:3px">Gescannt von ${esc(name)}</div>
-          <div class="muted" style="margin-top:3px">Status: ${data.active ? "Aktiv" : "Frei"}</div>
-           <div class="muted" style="margin-top:3px">Zweck: ${esc(data.purpose || data.lastScanPurpose || "Nicht angegeben")}</div>
-        </div>
-      </div>`;
-  },error => console.error("Scan Listener:",error)));
-}
-
-/* ============================================================
-   USER MANAGEMENT
-   ============================================================ */
-$("newUser").onclick = () => {
-  if(!isAdmin() || !admin) return;
-  $("userName").value = "";
-  $("userEmail").value = "";
-  $("userPassword").value = "";
-  $("userMsg").textContent = "";
-  open("userModal");
-};
-
-$("saveUser").onclick = async () => {
-  if(!isAdmin() || !admin) return;
-
-  const newName = $("userName").value.trim();
-  const email = $("userEmail").value.trim();
-  const password = $("userPassword").value;
-
-  $("userMsg").textContent = "";
-
-  if(!newName || !email || password.length < 6){
-    $("userMsg").textContent = "Name, E-Mail und ein Passwort mit mindestens 6 Zeichen eingeben.";
-    return;
-  }
-
-  let secondaryApp = null;
-  let createdUser = null;
-
-  try{
-    $("saveUser").disabled = true;
-
-    const appName = "UserCreationApp";
-    secondaryApp = getApps().find(item => item.name === appName);
-    if(!secondaryApp) secondaryApp = initializeApp(firebaseConfig,appName);
-
-    const secondaryAuth = getAuth(secondaryApp);
-    const result = await createUserWithEmailAndPassword(secondaryAuth,email,password);
-    createdUser = result.user;
-
-    const key = nameKey(newName);
-    const nameRef = doc(db,"userNames",key);
-    const userRef = doc(db,"users",createdUser.uid);
-
-    await runTransaction(db,async tx => {
-      const nameSnap = await tx.get(nameRef);
-      if(nameSnap.exists()) throw new Error("NAME_ALREADY_USED");
-
-      tx.set(nameRef,{uid:createdUser.uid,name:newName});
-      tx.set(userRef,{
-        name:newName,
-        nameKey:key,
-        email,
-        role:"user",
-        profileImageData:"",
-        createdAt:serverTimestamp(),
-        createdBy:user.uid
-      });
-    });
-
-    close("userModal");
-    toast("Benutzer erstellt");
-  }catch(error){
-    console.error(error);
-
-    if(createdUser){
-      try{
-        await deleteUser(createdUser);
-      }catch(deleteError){
-        console.warn("Erstellter Auth-Benutzer konnte nicht automatisch gelöscht werden",deleteError);
-      }
-    }
-
-    $("userMsg").textContent = error.message === "NAME_ALREADY_USED"
-      ? "Dieser Name ist bereits vergeben."
-      : "Fehler: " + error.message;
-  }finally{
-    $("saveUser").disabled = false;
-    if(secondaryApp){
-      try{ await deleteApp(secondaryApp); }catch(error){ console.warn(error); }
-    }
-  }
-};
-
-function loadUsers(){
-  if(!isAdmin()) return;
-
-  const alreadyListening = unsub.some(item => item.__usersListener === true);
-  if(alreadyListening) return;
-
-  const listener = onSnapshot(collection(db,"users"),snap => {
-    if(!$("users")) return;
-
-    const list = snap.docs
-      .map(item => ({id:item.id,...item.data()}))
-      .sort((a,b) => String(a.name || "").localeCompare(String(b.name || ""),"de"));
-
-    if(!list.length){
-      $("users").innerHTML = `<div class="empty">Keine Benutzer vorhanden.</div>`;
-      return;
-    }
-
-    $("users").innerHTML = list.map(item => {
-      const name = item.name || item.email || "Unbekannt";
-      const image = item.profileImageData || "";
-      const role = item.role === "admin" ? "Administrator" : "Benutzer";
-      return `
-        <div class="chip">
-          <div class="profileRow">
-            <div class="mini" style="width:45px;height:45px;font-size:16px">
-              ${image ? `<img src="${esc(image)}" alt="">` : esc(name[0]?.toUpperCase() || "?")}
-            </div>
-            <div style="min-width:0">
-              <b>${esc(name)}</b>
-              <div class="muted" style="overflow-wrap:anywhere">${esc(item.email || "")}</div>
-              <div style="margin-top:5px"><span class="badge">${esc(role)}</span></div>
-            </div>
-          </div>
-        </div>`;
-    }).join("");
-  },error => {
-    console.error("Users Listener:",error);
-    $("users").innerHTML = `<div class="empty">Benutzer konnten nicht geladen werden.</div>`;
-  });
-
-  const wrapped = () => listener();
-  wrapped.__usersListener = true;
-  unsub.push(wrapped);
-}
-
-/* ============================================================
-   POSTFACH / BENACHRICHTIGUNGEN
-   ============================================================ */
-function notificationTime(item){
-  const ts=item?.createdAt;
-  if(ts?.toDate) return ts.toDate().getTime();
-  if(ts?.seconds) return ts.seconds*1000;
-  return 0;
-}
-
-function notificationHtml(item){
-  const unread=!item.read;
-  return `<article class="chip" style="border-left:4px solid ${unread ? 'var(--blue)' : 'var(--border)'}">
-    <div class="chipName">${esc(item.title || 'Nachricht')}</div>
-    <div class="chipMeta">${esc(item.message || '')}</div>
-    ${item.purpose ? `<div class="chipMeta"><b>Zweck:</b> ${esc(item.purpose)}</div>` : ''}
-    ${item.fromName ? `<div class="chipMeta">Von: ${esc(item.fromName)}</div>` : ''}
-    <div class="chipButtons" style="margin-top:10px">
-      ${unread ? `<button class="gray" onclick="markNotificationRead('${esc(item.firestoreId)}')">Als gelesen markieren</button>` : '<span class="muted">Gelesen</span>'}
-    </div>
-  </article>`;
-}
-
-function renderInbox(list){
-  const box=$('inbox');
-  if(!box) return;
-  const sorted=[...list].sort((a,b)=>notificationTime(b)-notificationTime(a));
-  const unread=sorted.filter(x=>!x.read).length;
-  $('inboxBadge')?.classList.toggle('hidden',unread===0);
-  if($('inboxBadge')) $('inboxBadge').textContent=String(unread);
-  box.innerHTML=sorted.length ? sorted.map(notificationHtml).join('') : `<div class="empty">Keine Nachrichten.</div>`;
-}
-
-function loadInbox(){
-  unsub.push(onSnapshot(query(collection(db,'notifications'),where('recipientUid','==',user.uid)),snap=>{
-    const list=snap.docs.map(d=>({firestoreId:d.id,...d.data()}));
-    renderInbox(list);
-  },error=>{
-    console.error('Inbox Listener:',error);
-    $('inbox').innerHTML=`<div class="empty">Postfach konnte nicht geladen werden.</div>`;
-  }));
-}
-
-window.markNotificationRead=async id=>{
-  try{ await updateDoc(doc(db,'notifications',id),{read:true}); }
-  catch(error){ console.error(error); toast('Nachricht konnte nicht geändert werden.'); }
-};
-
-window.markAllNotificationsRead=async()=>{
-  if(!user) return;
-  try{
-    const snap=await getDocs(query(collection(db,'notifications'),where('recipientUid','==',user.uid)));
-    await Promise.all(snap.docs.filter(d=>!d.data().read).map(d=>updateDoc(d.ref,{read:true})));
-    toast('Alle Nachrichten gelesen');
-  }catch(error){ console.error(error); toast('Nachrichten konnten nicht geändert werden.'); }
-};
-
-async function getAllUserIds(){
-  const snap=await getDocs(collection(db,'users'));
-  return snap.docs.map(d=>d.id).filter(Boolean);
-}
-
-async function notifyAll(title,message,extra={}){
-  const ids=await getAllUserIds();
-  await Promise.all(ids.map(uid=>addDoc(collection(db,'notifications'),{
-    recipientUid:uid,
-    title,
-    message,
-    fromUid:user?.uid || '',
-    fromName:nameOf(),
-    createdAt:serverTimestamp(),
-    read:false,
-    ...extra
-  })));
-}
-
-/* ============================================================
-   ZWECKE
-   ============================================================ */
-function loadPurposes(){
-  unsub.push(onSnapshot(collection(db,'purposes'),snap=>{
-    purposes=snap.docs.map(d=>({firestoreId:d.id,...d.data()})).filter(p=>p.name).sort((a,b)=>String(a.name).localeCompare(String(b.name),'de'));
-  },error=>{
-    console.error('Purpose Listener:',error);
-    purposes=[];
-  }));
-}
-
-$('newPurpose').onclick=()=>{
-  if(!isAdmin() || !admin) return toast('Nur Admins dürfen Zwecke hinzufügen.');
-  $('purposeName').value='';
-  $('purposeMsg').textContent='';
-  open('purposeModal');
-};
-
-$('savePurpose').onclick=async()=>{
-  if(!isAdmin() || !admin) return;
-  const name=$('purposeName').value.trim();
-  if(!name){ $('purposeMsg').textContent='Bitte einen Zweck eingeben.'; return; }
-  if(purposes.some(p=>p.name.toLowerCase()===name.toLowerCase())){
-    $('purposeMsg').textContent='Diesen Zweck gibt es bereits.'; return;
-  }
-  try{
-    $('savePurpose').disabled=true;
-    await addDoc(collection(db,'purposes'),{name,createdAt:serverTimestamp(),createdBy:user.uid});
-    close('purposeModal');
-    toast(`Zweck „${name}“ erstellt`);
-  }catch(error){
-    console.error(error);
-    $('purposeMsg').textContent='Fehler: '+error.message;
-  }finally{ $('savePurpose').disabled=false; }
-};
-
-/* ============================================================
-   ORDNERANFRAGEN
-   ============================================================ */
-$('sendRequest').onclick=async()=>{
-  if(!user) return;
-  const title=$('requestTitle').value.trim();
-  const reason=$('requestReason').value.trim();
-  $('requestMsg').textContent='';
-  if(!title){ $('requestMsg').textContent='Bitte angeben, welchen Ordner du brauchst.'; return; }
-  try{
-    $('sendRequest').disabled=true;
-    const requestRef=await addDoc(collection(db,'requests'),{
-      title,
-      reason,
-      requestedBy:user.uid,
-      requestedByName:nameOf(),
-      requestedByEmail:user.email||'',
-      status:'open',
+    await setDoc(
+     doc(db,"users",credential.user.uid),
+     {
+      uid:credential.user.uid,
+      email,
+      name:name||email.split("@")[0],
+      admin:false,
       createdAt:serverTimestamp()
-    });
-
-    const usersSnap=await getDocs(collection(db,'users'));
-    const admins=usersSnap.docs.filter(d=>d.data().role==='admin').map(d=>d.id);
-    await Promise.all(admins.map(uid=>addDoc(collection(db,'notifications'),{
-      recipientUid:uid,
-      title:'Neue Ordneranfrage',
-      message:`${nameOf()} möchte einen Ordner anfordern: „${title}“${reason ? ` – ${reason}` : ''}`,
-      fromUid:user.uid,
-      fromName:nameOf(),
-      requestId:requestRef.id,
-      createdAt:serverTimestamp(),
-      read:false,
-      type:'folder_request'
-    })));
-
-    await addDoc(collection(db,'notifications'),{
-      recipientUid:user.uid,
-      title:'Ordneranfrage gesendet',
-      message:`Deine Anfrage „${title}“ wurde an die Administratoren gesendet.`,
-      fromUid:user.uid,
-      fromName:nameOf(),
-      requestId:requestRef.id,
-      createdAt:serverTimestamp(),
-      read:false,
-      type:'folder_request_sent'
-    });
-
-    $('requestTitle').value='';
-    $('requestReason').value='';
-    toast('Ordneranfrage gesendet');
-  }catch(error){
-    console.error(error);
-    $('requestMsg').textContent='Fehler: '+error.message;
-  }finally{ $('sendRequest').disabled=false; }
-};
-
-/* ============================================================
-   HELP
-   ============================================================ */
-window.openHelp = () => {
-  open("helpModal");
-  helpStart();
-};
-
-function helpStart(){
-  window.help("start");
-}
-
-window.help = topic => {
-  const answers = {
-    start:`
-      <b>Wobei brauchst du Hilfe?</b>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
-        <button class="blue" onclick="help('chip')">Chips</button>
-        <button class="blue" onclick="help('nfc')">NFC</button>
-        <button class="blue" onclick="help('admin')">Admin</button>
-        <button class="blue" onclick="help('profile')">Profil</button>
-      </div>`,
-    chip:`<b>Chips:</b><br><br>Unter „Alle Ordner“ siehst du alle Chips. Grün bedeutet frei, Rot bedeutet aktiv. Mit „Übernehmen“ kannst du einen freien Chip dir zuweisen.`,
-    nfc:`<b>NFC:</b><br><br>Jeder Chip hat eine Chip-ID. Der NFC-Link enthält diese ID. Beim Öffnen des Links verarbeitet OrdnerSystem den Scan automatisch.`,
-    admin:`<b>Admin:</b><br><br>Admins öffnen unter „Einstellungen“ den Admin-Modus. Dort können sie Chips erstellen, bearbeiten, löschen und Benutzer erstellen.`,
-    profile:`<b>Profil:</b><br><br>Unter „Mein Profil“ kannst du deinen Namen und dein Profilbild ändern. Der Name wird im System eindeutig gehalten.`
-  };
-  $("helpAnswer").innerHTML = answers[topic] || answers.start;
-};
-
-$("helpSearch").oninput = event => {
-  const queryText = event.target.value.trim().toLowerCase();
-  if(!queryText) return helpStart();
-  if(queryText.includes("nfc")) return help("nfc");
-  if(queryText.includes("chip")) return help("chip");
-  if(queryText.includes("admin")) return help("admin");
-  if(queryText.includes("profil") || queryText.includes("bild") || queryText.includes("name")) return help("profile");
-  $("helpAnswer").innerHTML = `<div class="empty">Keine passende OrdnerSystem-Hilfe gefunden.</div>`;
-};
-
-/* ============================================================
-   SEARCH / FILTER EVENTS
-   ============================================================ */
-$("chipSearch").oninput = renderChips;
-$("chipFilter").onchange = renderChips;
-$("statusFilter").onchange = renderChips;
-
-$("settingsBack").onclick = () => window.closeSettings();
-$("settingsProfileBtn").onclick = () => window.openProfile();
-$("settingsAdminBtn").onclick = () => window.enterAdminMode();
-$("closeAdmin").onclick = () => window.exitAdminMode();
-$("showUsers").onclick = () => window.showPage("pageUsers");
-$("themeLight2").onchange = () => applyTheme("light");
-$("themeDark2").onchange = () => applyTheme("dark");
-
-/* ESC schließt Modals */
-document.addEventListener("keydown",event => {
-  if(event.key !== "Escape") return;
-  document.querySelectorAll(".modal:not(.hidden)").forEach(modal => modal.classList.add("hidden"));
-});
-
-/* Klick auf dunklen Modal-Hintergrund schließt */
-document.querySelectorAll(".modal").forEach(modal => {
-  modal.addEventListener("click",event => {
-    if(event.target === modal) modal.classList.add("hidden");
-  });
-});
-
-/* ============================================================
-   NFC SCANNEN
-   URL: https://DEINNAME.github.io/OrdnerSystem/?chip=001
-   ============================================================ */
-async function scanNFC(){
-  if(nfcHandled || !user) return;
-
-  const params = new URLSearchParams(location.search);
-  const id = params.get("chip");
-  if(!id) return;
-
-  nfcHandled = true;
-
-  try{
-    const searchQuery = query(
-      collection(db,"chips"),
-      where("chipId","==",String(id))
+     },
+     {merge:true}
     );
-    const result = await getDocs(searchQuery);
 
-    if(result.empty){
-      alert("Unbekannter NFC-Chip: " + id);
-      nfcHandled = false;
-      return;
-    }
+    toast(
+     "👤 Konto erfolgreich erstellt.",
+     "success"
+    );
 
-    const chipRef = result.docs[0].ref;
-    let purpose = "";
-    if(!purposes.length){
-      alert("Für Scans wurde noch kein Zweck von einem Administrator angelegt.");
-      nfcHandled=false; return;
-    }
-    const choice = prompt("Wofür benutzt du diesen Ordner?\n\n" + purposes.map((p,i)=>`${i+1}. ${p.name}`).join("\n") + "\n\nNummer eingeben:");
-    const idx=Number(choice)-1;
-    if(!Number.isInteger(idx)||!purposes[idx]){nfcHandled=false;return;}
-    purpose=purposes[idx].name;
-    let scanResult = null;
+   }else{
 
-    await runTransaction(db,async tx => {
-      const chipSnap = await tx.get(chipRef);
-      if(!chipSnap.exists()) throw new Error("CHIP_NOT_FOUND");
+    await signInWithEmailAndPassword(
+     auth,
+     email,
+     password
+    );
 
-      const chip = chipSnap.data();
-      const active = !Boolean(chip.scanActive);
-      const scannedName = nameOf();
-      const image = profile.profileImageData || "";
+    toast(
+     "🔐 Anmeldung erfolgreich.",
+     "success"
+    );
 
-      tx.update(chipRef,{
-        scanActive:active,
-        lastScannedBy:user.uid,
-        lastScannedEmail:user.email || "",
-        lastScannedName:scannedName,
-        lastScannedProfileImageData:image,
-        lastScannedAt:serverTimestamp(),
-        lastScanPurpose:purpose
-      });
+   }
 
-      scanResult = {
-        chipId:chip.chipId,
-        chipName:chip.name || '',
-        active,
-        scannedBy:user.uid,
-        scannedEmail:user.email || "",
-        scannedName,
-        scannedProfileImageData:image,
-        purpose
-      };
-    });
-
-    await setDoc(doc(db,"system","currentScan"),{
-      ...scanResult,
-      scannedAt:serverTimestamp()
-    });
-    await notifyAll('NFC-Scan',`${nameOf()} hat den Ordner „${scanResult.chipName || scanResult.chipId}“ eingescannt. Zweck: ${purpose}. Status: ${scanResult.active ? 'Aktiv' : 'Frei'}.`,{type:'scan',chipId:scanResult.chipId,purpose,active:scanResult.active});
-
-    history.replaceState({},document.title,location.pathname);
-    window.showPage("pageLastScan");
-    toast("NFC-Scan verarbeitet");
   }catch(error){
-    console.error(error);
-    alert("NFC-Scan konnte nicht verarbeitet werden: " + error.message);
-    nfcHandled = false;
+
+   console.error(error);
+
+   toast(
+    friendlyFirebaseError(error),
+    "error"
+   );
+
+  }finally{
+
+   button.disabled=false;
+
   }
+
+ }
+);
+
+
+/* ======================================================
+ AUTH STATE
+====================================================== */
+
+onAuthStateChanged(
+ auth,
+ async user=>{
+
+  if(user){
+
+   currentUser=user;
+   isAdmin=isAdminUser(user.uid);
+
+   $("authScreen")
+    .classList.add("hidden");
+
+   $("appScreen")
+    .classList.remove("hidden");
+
+   await ensureUserDocument();
+
+   updateUserUI();
+
+   subscribeData();
+
+   renderPage();
+
+  }else{
+
+   currentUser=null;
+   isAdmin=false;
+
+   stopListeners();
+
+   $("appScreen")
+    .classList.add("hidden");
+
+   $("authScreen")
+    .classList.remove("hidden");
+
+  }
+
+ }
+);
+
+
+/* ======================================================
+ USER DOCUMENT
+====================================================== */
+
+async function ensureUserDocument(){
+
+ if(!currentUser)return;
+
+ try{
+
+  await setDoc(
+   doc(db,"users",currentUser.uid),
+   {
+    uid:currentUser.uid,
+    email:currentUser.email||"",
+    name:
+     currentUser.displayName||
+     currentUser.email?.split("@")[0]||
+     "Benutzer",
+    admin:isAdmin,
+    updatedAt:serverTimestamp()
+   },
+   {merge:true}
+  );
+
+ }catch(error){
+
+  console.warn(error);
+
+ }
+
 }
 
-/* ============================================================
-   AUTH STATE
-   ============================================================ */
-onAuthStateChanged(auth,async currentUser => {
-  clearListeners();
-  user = currentUser;
-  nfcHandled = false;
 
-  if(!currentUser){
-    profile = {};
-    chips = [];
-    admin = false;
-    $("app").classList.add("hidden");
-    $("loginPage").classList.remove("hidden");
-    return;
+function updateUserUI(){
+
+ if(!currentUser)return;
+
+ const name=
+  currentUser.displayName||
+  currentUser.email?.split("@")[0]||
+  "Benutzer";
+
+ $("sideAvatar").textContent=
+  name.charAt(0).toUpperCase();
+
+ $("sideName").textContent=name;
+
+ $("sideEmail").textContent=
+  currentUser.email||"";
+
+}
+
+
+/* ======================================================
+ FIRESTORE
+====================================================== */
+
+function stopListeners(){
+
+ unsubscribers.forEach(
+  unsubscribe=>{
+   try{unsubscribe()}catch{}
   }
+ );
+
+ unsubscribers=[];
+
+}
+
+
+function subscribeData(){
+
+ stopListeners();
+
+
+ /* FOLDERS */
+
+ const folderQuery=
+  query(
+   collection(db,"folders"),
+   orderBy("createdAt","desc")
+  );
+
+ unsubscribers.push(
+
+  onSnapshot(
+   folderQuery,
+   snapshot=>{
+
+    folders=
+     snapshot.docs.map(
+      item=>({
+       id:item.id,
+       ...item.data()
+      })
+     );
+
+    renderPage();
+
+    handleFolderUrl();
+
+   },
+   error=>{
+
+    console.error(error);
+
+    toast(
+     "Ordner konnten nicht geladen werden: "+
+     friendlyFirebaseError(error),
+     "error"
+    );
+
+   }
+  )
+
+ );
+
+
+ /* CATEGORIES */
+
+ unsubscribers.push(
+
+  onSnapshot(
+   collection(db,"categories"),
+   snapshot=>{
+
+    categories=
+     snapshot.docs.map(
+      item=>({
+       id:item.id,
+       ...item.data()
+      })
+     );
+
+    renderPage();
+
+   }
+  )
+
+ );
+
+
+ /* REQUESTS */
+
+ unsubscribers.push(
+
+  onSnapshot(
+   collection(db,"requests"),
+   snapshot=>{
+
+    requests=
+     snapshot.docs.map(
+      item=>({
+       id:item.id,
+       ...item.data()
+      })
+     );
+
+    renderPage();
+
+   }
+  )
+
+ );
+
+
+ /* USERS */
+
+ if(isAdmin){
+
+  unsubscribers.push(
+
+   onSnapshot(
+    collection(db,"users"),
+    snapshot=>{
+
+     users=
+      snapshot.docs.map(
+       item=>({
+        id:item.id,
+        ...item.data()
+       })
+      );
+
+     renderPage();
+
+    }
+   )
+
+  );
+
+ }
+
+
+ /* NOTIFICATIONS */
+
+ unsubscribers.push(
+
+  onSnapshot(
+   collection(db,"notifications"),
+   snapshot=>{
+
+    notifications=
+     snapshot.docs.map(
+      item=>({
+       id:item.id,
+       ...item.data()
+      })
+     );
+
+    renderPage();
+
+   }
+  )
+
+ );
+
+}
+
+
+/* ======================================================
+ NAVIGATION
+====================================================== */
+
+document.addEventListener(
+ "click",
+ event=>{
+
+  const pageButton=
+   event.target.closest("[data-page]");
+
+  if(pageButton){
+
+   openPage(
+    pageButton.dataset.page
+   );
+
+   $("sidebar")
+    .classList.remove("open");
+
+   return;
+  }
+
+  const actionButton=
+   event.target.closest("[data-action]");
+
+  if(!actionButton)return;
+
+  handleAction(
+   actionButton.dataset.action,
+   actionButton
+  );
+
+ }
+);
+
+
+function openPage(page){
+
+ activePage=page;
+
+ document
+ .querySelectorAll(".nav-item")
+ .forEach(item=>{
+  item.classList.toggle(
+   "active",
+   item.dataset.page===page
+  );
+ });
+
+ renderPage();
+
+}
+
+
+/* ======================================================
+ RENDER
+====================================================== */
+
+function renderPage(){
+
+ if(!currentUser)return;
+
+ const container=$("pageContainer");
+
+ switch(activePage){
+
+  case"folders":
+   container.innerHTML=renderFoldersPage();
+   break;
+
+  case"categories":
+   container.innerHTML=renderCategoriesPage();
+   break;
+
+  case"requests":
+   container.innerHTML=renderRequestsPage();
+   break;
+
+  case"users":
+   container.innerHTML=renderUsersPage();
+   break;
+
+  case"notifications":
+   container.innerHTML=renderNotificationsPage();
+   break;
+
+  case"profile":
+   container.innerHTML=renderProfilePage();
+   break;
+
+  case"settings":
+   container.innerHTML=renderSettingsPage();
+   break;
+
+  default:
+   container.innerHTML=renderDashboard();
+
+ }
+
+}
+
+
+/* ======================================================
+ DASHBOARD
+====================================================== */
+
+function renderDashboard(){
+
+ const green=
+  folders.filter(
+   folder=>folder.chipActive===true
+  ).length;
+
+ const red=
+  folders.length-green;
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+📊 Dashboard
+</div>
+
+<div class="page-subtitle">
+Übersicht über dein OrdnerSystem
+</div>
+
+</div>
+
+<div class="header-actions">
+
+<button class="primary-btn" data-action="add-folder">
+➕ Neuer Ordner
+</button>
+
+<button class="secondary-btn" data-action="scan">
+📡 Chip scannen
+</button>
+
+</div>
+
+</div>
+
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<div class="stat-top">
+<div class="stat-icon">📁</div>
+</div>
+<div class="stat-number">${folders.length}</div>
+<div class="stat-label">Ordner insgesamt</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-top">
+<div class="stat-icon">🟢</div>
+</div>
+<div class="stat-number">${green}</div>
+<div class="stat-label">Aktive Ordner</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-top">
+<div class="stat-icon">🔴</div>
+</div>
+<div class="stat-number">${red}</div>
+<div class="stat-label">Inaktive Ordner</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-top">
+<div class="stat-icon">🗂️</div>
+</div>
+<div class="stat-number">${categories.length}</div>
+<div class="stat-label">Kategorien</div>
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="card-header">
+
+<div class="card-title">
+📁 Letzte Ordner
+</div>
+
+<button class="secondary-btn" data-page="folders">
+Alle anzeigen
+</button>
+
+</div>
+
+<div class="card-body">
+
+${
+folders.length
+?
+`
+<div class="folder-grid">
+${folders.slice(0,6).map(renderFolderCard).join("")}
+</div>
+`
+:
+renderEmpty(
+"📁",
+"Noch keine Ordner",
+"Erstelle deinen ersten Ordner."
+)
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ FOLDER PAGE
+====================================================== */
+
+function renderFoldersPage(){
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+📁 Ordner
+</div>
+
+<div class="page-subtitle">
+Verwalte deine Ordner und Chip-Zustände.
+</div>
+
+</div>
+
+<div class="header-actions">
+
+<button class="secondary-btn" data-action="scan">
+📡 Chip scannen
+</button>
+
+<button class="primary-btn" data-action="add-folder">
+➕ Neuer Ordner
+</button>
+
+</div>
+
+</div>
+
+
+${
+folders.length
+?
+`
+<div class="folder-grid">
+${folders.map(renderFolderCard).join("")}
+</div>
+`
+:
+renderEmpty(
+"📁",
+"Keine Ordner vorhanden",
+"Klicke auf „Neuer Ordner“, um einen Ordner anzulegen."
+)
+}
+
+`;
+
+}
+
+
+/* ======================================================
+ FOLDER CARD
+====================================================== */
+
+function renderFolderCard(folder){
+
+ const active=
+  folder.chipActive===true;
+
+ const statusClass=
+  active?"green":"red";
+
+ return`
+
+<div
+class="folder-card folder-${statusClass}"
+data-folder-id="${escapeHtml(folder.id)}"
+>
+
+<div class="folder-status ${statusClass}">
+${active?"🟢 AKTIV":"🔴 INAKTIV"}
+</div>
+
+<div class="folder-icon">
+📁
+</div>
+
+<div class="folder-name">
+${escapeHtml(folder.name||"Unbenannter Ordner")}
+</div>
+
+<div class="folder-description">
+${escapeHtml(
+ folder.description||
+ "Keine Beschreibung vorhanden."
+)}
+</div>
+
+<div class="folder-meta">
+
+<span class="badge">
+🗂️ ${escapeHtml(folder.category||"Ohne Kategorie")}
+</span>
+
+<span class="badge">
+📅 ${formatDate(folder.createdAt)}
+</span>
+
+</div>
+
+<div class="chip-line">
+
+<span>🔗</span>
+<span>Chip:</span>
+
+<span class="chip-code">
+${escapeHtml(folder.chipId||"Keine Chip-ID")}
+</span>
+
+</div>
+
+<div class="folder-actions">
+
+<button
+class="small-btn"
+data-action="open-folder"
+data-id="${folder.id}"
+>
+👁️ Öffnen
+</button>
+
+<button
+class="small-btn"
+data-action="edit-folder"
+data-id="${folder.id}"
+>
+✏️
+</button>
+
+<button
+class="small-btn"
+data-action="copy-chip"
+data-id="${folder.id}"
+>
+🔗
+</button>
+
+<button
+class="small-btn danger"
+data-action="delete-folder"
+data-id="${folder.id}"
+>
+🗑️
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ EMPTY
+====================================================== */
+
+function renderEmpty(icon,title,text){
+
+ return`
+
+<div class="empty">
+
+<div class="empty-icon">${icon}</div>
+
+<div class="empty-title">${title}</div>
+
+<div class="empty-text">${text}</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ ADD FOLDER
+====================================================== */
+
+function openAddFolder(){
+
+ editingId=null;
+
+ openModal(
+  "📁 Neuen Ordner erstellen",
+
+`
+
+<div class="field">
+
+<label>Ordnername</label>
+
+<input
+id="folderName"
+required
+placeholder="z. B. Lager 1"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Kategorie</label>
+
+<select id="folderCategory">
+
+<option value="">
+Keine Kategorie
+</option>
+
+${categories.map(
+ category=>`
+<option value="${escapeHtml(category.name)}">
+${escapeHtml(category.name)}
+</option>
+`
+).join("")}
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Beschreibung</label>
+
+<textarea
+id="folderDescription"
+placeholder="Beschreibung des Ordners..."
+></textarea>
+
+</div>
+
+`,
+  "📁 Ordner erstellen",
+  saveFolder
+ );
+
+}
+
+
+async function saveFolder(){
+
+ if(!currentUser){
+
+  toast(
+   "Bitte zuerst anmelden.",
+   "error"
+  );
+
+  return;
+ }
+
+ const name=
+  $("folderName")?.value.trim();
+
+ const category=
+  $("folderCategory")?.value.trim()||"";
+
+ const description=
+  $("folderDescription")?.value.trim()||"";
+
+ if(!name){
+
+  toast(
+   "Bitte einen Ordnernamen eingeben.",
+   "error"
+  );
+
+  return;
+ }
+
+ try{
+
+  const chipId=makeChipId();
+
+  await addDoc(
+   collection(db,"folders"),
+   {
+    name,
+    category,
+    description,
+    chipId,
+    chipActive:false,
+    createdBy:currentUser.uid,
+    createdByEmail:currentUser.email||"",
+    createdAt:serverTimestamp(),
+    updatedAt:serverTimestamp(),
+    lastChipScan:null,
+    lastChipScanBy:null
+   }
+  );
+
+  closeModal();
+
+  toast(
+   "📁 Ordner wurde erstellt.",
+   "success"
+  );
+
+  openPage("folders");
+
+ }catch(error){
+
+  console.error(error);
+
+  toast(
+   "Ordner konnte nicht erstellt werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ EDIT FOLDER
+====================================================== */
+
+function openEditFolder(id){
+
+ const folder=
+  folders.find(item=>item.id===id);
+
+ if(!folder)return;
+
+ editingId=id;
+
+ openModal(
+  "✏️ Ordner bearbeiten",
+
+`
+
+<div class="field">
+
+<label>Ordnername</label>
+
+<input
+id="folderName"
+value="${escapeHtml(folder.name||"")}"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Kategorie</label>
+
+<select id="folderCategory">
+
+<option value="">
+Keine Kategorie
+</option>
+
+${categories.map(
+ category=>`
+<option
+value="${escapeHtml(category.name)}"
+${category.name===folder.category?"selected":""}
+>
+${escapeHtml(category.name)}
+</option>
+`
+).join("")}
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Beschreibung</label>
+
+<textarea id="folderDescription">${escapeHtml(folder.description||"")}</textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>Chip-ID</label>
+
+<input
+value="${escapeHtml(folder.chipId||"")}"
+disabled
+>
+
+</div>
+
+`,
+  "💾 Änderungen speichern",
+  updateFolder
+ );
+
+}
+
+
+async function updateFolder(){
+
+ if(!editingId)return;
+
+ const name=
+  $("folderName")?.value.trim();
+
+ const category=
+  $("folderCategory")?.value.trim()||"";
+
+ const description=
+  $("folderDescription")?.value.trim()||"";
+
+ if(!name){
+
+  toast(
+   "Ordnername fehlt.",
+   "error"
+  );
+
+  return;
+ }
+
+ try{
+
+  await updateDoc(
+   doc(db,"folders",editingId),
+   {
+    name,
+    category,
+    description,
+    updatedAt:serverTimestamp()
+   }
+  );
+
+  closeModal();
+
+  toast(
+   "Ordner aktualisiert.",
+   "success"
+  );
+
+ }catch(error){
+
+  console.error(error);
+
+  toast(
+   "Änderung fehlgeschlagen: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ DELETE
+====================================================== */
+
+async function deleteFolder(id){
+
+ const folder=
+  folders.find(item=>item.id===id);
+
+ if(!folder)return;
+
+ if(!confirm(
+  `Ordner „${folder.name}“ wirklich löschen?`
+ ))return;
+
+ try{
+
+  await deleteDoc(
+   doc(db,"folders",id)
+  );
+
+  toast(
+   "🗑️ Ordner gelöscht.",
+   "success"
+  );
+
+ }catch(error){
+
+  toast(
+   "Ordner konnte nicht gelöscht werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ OPEN FOLDER
+====================================================== */
+
+function openFolder(id){
+
+ const folder=
+  folders.find(item=>item.id===id);
+
+ if(!folder)return;
+
+ const active=
+  folder.chipActive===true;
+
+ openModal(
+  "📁 "+(folder.name||"Ordner"),
+
+`
+
+<div class="detail-status">
+
+<span class="status-dot ${active?"green":"red"}"></span>
+
+<strong>
+${active?"Ordner ist AKTIV":"Ordner ist INAKTIV"}
+</strong>
+
+</div>
+
+
+<div class="detail-grid">
+
+<div class="detail-item">
+
+<div class="detail-label">
+Kategorie
+</div>
+
+<div class="detail-value">
+${escapeHtml(folder.category||"Keine Kategorie")}
+</div>
+
+</div>
+
+
+<div class="detail-item">
+
+<div class="detail-label">
+Chip-ID
+</div>
+
+<div class="detail-value">
+${escapeHtml(folder.chipId||"Keine Chip-ID")}
+</div>
+
+</div>
+
+
+<div class="detail-item">
+
+<div class="detail-label">
+Erstellt
+</div>
+
+<div class="detail-value">
+${formatDate(folder.createdAt)}
+</div>
+
+</div>
+
+
+<div class="detail-item">
+
+<div class="detail-label">
+Letzter Scan
+</div>
+
+<div class="detail-value">
+${formatDate(folder.lastChipScan)}
+</div>
+
+</div>
+
+</div>
+
+
+<div class="detail-item" style="margin-top:13px">
+
+<div class="detail-label">
+Beschreibung
+</div>
+
+<div class="detail-value">
+${escapeHtml(folder.description||"Keine Beschreibung.")}
+</div>
+
+</div>
+
+
+<div class="detail-item" style="margin-top:13px">
+
+<div class="detail-label">
+Chip-Link
+</div>
+
+<div
+class="detail-value"
+style="font-family:monospace;font-size:12px"
+>
+${escapeHtml(getChipLink(folder))}
+</div>
+
+</div>
+
+`,
+  "Schließen",
+  null,
+  false
+ );
+
+}
+
+
+/* ======================================================
+ CHIP LINK
+====================================================== */
+
+function getChipLink(folder){
+
+ const url=
+  new URL(window.location.href);
+
+ url.search="";
+ url.hash="";
+
+ url.searchParams.set(
+  "folder",
+  folder.chipId||folder.id
+ );
+
+ return url.toString();
+
+}
+
+
+async function copyChipLink(id){
+
+ const folder=
+  folders.find(item=>item.id===id);
+
+ if(!folder)return;
+
+ const link=
+  getChipLink(folder);
+
+ try{
+
+  await navigator.clipboard.writeText(link);
+
+  toast(
+   "🔗 Chip-Link kopiert.",
+   "success"
+  );
+
+ }catch{
+
+  const area=
+   document.createElement("textarea");
+
+  area.value=link;
+
+  document.body.appendChild(area);
+
+  area.select();
+
+  document.execCommand("copy");
+
+  area.remove();
+
+  toast(
+   "🔗 Chip-Link kopiert.",
+   "success"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ CHIP SCAN
+====================================================== */
+
+function openScan(){
+
+ openModal(
+  "📡 Chip scannen",
+
+`
+
+<div class="scan-box">
+
+<div class="scan-icon">
+📡
+</div>
+
+<h3>
+Chip prüfen
+</h3>
+
+<p
+style="
+color:var(--muted);
+margin-top:7px;
+line-height:1.5
+"
+>
+Gib eine Chip-ID oder einen Chip-Link ein.
+Beim Scan wird der Ordner zwischen
+grün und rot umgeschaltet.
+</p>
+
+
+<div
+class="field"
+style="margin-top:20px;text-align:left"
+>
+
+<label>
+Chip-ID oder Link
+</label>
+
+<input
+id="manualChip"
+placeholder="CHIP-ABC123-XYZ"
+>
+
+</div>
+
+
+<button
+type="button"
+class="primary-btn full"
+data-action="manual-scan"
+>
+📡 Chip prüfen
+</button>
+
+</div>
+
+`,
+  "Schließen",
+  null,
+  false
+ );
+
+}
+
+
+async function scanChip(chipId){
+
+ if(!currentUser){
+
+  toast(
+   "Bitte zuerst anmelden.",
+   "error"
+  );
+
+  return;
+ }
+
+ if(!chipId){
+
+  toast(
+   "Keine Chip-ID gefunden.",
+   "error"
+  );
+
+  return;
+ }
+
+ let cleaned;
+
+ try{
+  cleaned=decodeURIComponent(chipId).trim();
+ }catch{
+  cleaned=String(chipId).trim();
+ }
+
+ let folder=
+  folders.find(
+   item=>
+    item.chipId===cleaned||
+    item.id===cleaned
+  );
+
+ if(!folder){
+
+  toast(
+   "❌ Kein Ordner zu diesem Chip gefunden.",
+   "error"
+  );
+
+  return;
+ }
+
+ try{
+
+  const folderRef=
+   doc(db,"folders",folder.id);
+
+  let newState=false;
+
+  await runTransaction(
+   db,
+   async transaction=>{
+
+    const snapshot=
+     await transaction.get(folderRef);
+
+    if(!snapshot.exists()){
+
+     throw new Error(
+      "Der Ordner existiert nicht mehr."
+     );
+
+    }
+
+    const data=snapshot.data();
+
+    const currentState=
+     data.chipActive===true;
+
+    newState=!currentState;
+
+    transaction.update(
+     folderRef,
+     {
+      chipActive:newState,
+      lastChipScan:serverTimestamp(),
+      lastChipScanBy:currentUser.uid,
+      updatedAt:serverTimestamp()
+     }
+    );
+
+   }
+  );
+
+  closeModal();
+
+  if(newState){
+
+   toast(
+    "🟢 "+folder.name+" wurde aktiviert.",
+    "success"
+   );
+
+  }else{
+
+   toast(
+    "🔴 "+folder.name+" wurde deaktiviert.",
+    "warning"
+   );
+
+  }
+
+  openPage("folders");
+
+ }catch(error){
+
+  console.error(error);
+
+  toast(
+   "Chip konnte nicht verarbeitet werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ AUTO CHIP URL
+====================================================== */
+
+function handleFolderUrl(){
+
+ if(autoScanDone)return;
+
+ const params=
+  new URLSearchParams(
+   window.location.search
+  );
+
+ const chip=
+  params.get("folder");
+
+ if(!chip)return;
+
+ const folder=
+  folders.find(
+   item=>
+    item.chipId===chip||
+    item.id===chip
+  );
+
+ if(!folder)return;
+
+ autoScanDone=true;
+
+ scanChip(chip);
+
+}
+
+
+/* ======================================================
+ CATEGORIES
+====================================================== */
+
+function renderCategoriesPage(){
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+🗂️ Kategorien
+</div>
+
+<div class="page-subtitle">
+Verwalte die Kategorien deiner Ordner.
+</div>
+
+</div>
+
+${
+isAdmin
+?
+`
+<button class="primary-btn" data-action="add-category">
+➕ Kategorie
+</button>
+`
+:""
+}
+
+</div>
+
+
+<div class="content-card">
+
+<div class="card-body">
+
+${
+categories.length
+?
+`
+<div class="folder-grid">
+
+${categories.map(category=>`
+
+<div class="folder-card">
+
+<div class="folder-icon">
+🗂️
+</div>
+
+<div class="folder-name">
+${escapeHtml(category.name)}
+</div>
+
+<div class="folder-description">
+${category.locked?"🔒 Gesperrt":"Aktive Kategorie"}
+</div>
+
+${
+isAdmin
+?
+`
+<div class="folder-actions">
+
+<button
+class="small-btn"
+data-action="edit-category"
+data-id="${category.id}"
+>
+✏️ Bearbeiten
+</button>
+
+<button
+class="small-btn danger"
+data-action="delete-category"
+data-id="${category.id}"
+>
+🗑️
+</button>
+
+</div>
+`
+:""
+}
+
+</div>
+
+`).join("")}
+
+</div>
+`
+:
+renderEmpty(
+"🗂️",
+"Keine Kategorien",
+"Es wurden noch keine Kategorien angelegt."
+)
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+function openAddCategory(){
+
+ if(!isAdmin){
+
+  toast(
+   "Nur Administratoren können Kategorien erstellen.",
+   "error"
+  );
+
+  return;
+ }
+
+ editingId=null;
+
+ openModal(
+  "🗂️ Kategorie erstellen",
+
+`
+
+<div class="field">
+
+<label>Name</label>
+
+<input
+id="categoryName"
+required
+placeholder="z. B. Lager"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Farbe</label>
+
+<input
+id="categoryColor"
+type="color"
+value="#2563eb"
+style="height:48px;padding:4px"
+>
+
+</div>
+
+`,
+  "🗂️ Kategorie erstellen",
+  saveCategory
+ );
+
+}
+
+
+async function saveCategory(){
+
+ if(!isAdmin){
+
+  toast(
+   "Keine Admin-Berechtigung.",
+   "error"
+  );
+
+  return;
+ }
+
+ const name=
+  $("categoryName")?.value.trim();
+
+ const color=
+  $("categoryColor")?.value||"#2563eb";
+
+ if(!name){
+
+  toast(
+   "Kategoriename fehlt.",
+   "error"
+  );
+
+  return;
+ }
+
+ try{
+
+  await addDoc(
+   collection(db,"categories"),
+   {
+    name,
+    color,
+    locked:false,
+    createdBy:currentUser.uid,
+    createdAt:serverTimestamp(),
+    updatedAt:serverTimestamp()
+   }
+  );
+
+  closeModal();
+
+  toast(
+   "🗂️ Kategorie erstellt.",
+   "success"
+  );
+
+ }catch(error){
+
+  toast(
+   "Kategorie konnte nicht erstellt werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+function openEditCategory(id){
+
+ if(!isAdmin)return;
+
+ const category=
+  categories.find(item=>item.id===id);
+
+ if(!category)return;
+
+ editingId=id;
+
+ openModal(
+  "✏️ Kategorie bearbeiten",
+
+`
+
+<div class="field">
+
+<label>Name</label>
+
+<input
+id="categoryName"
+value="${escapeHtml(category.name||"")}"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>Farbe</label>
+
+<input
+id="categoryColor"
+type="color"
+value="${escapeHtml(category.color||"#2563eb")}"
+style="height:48px;padding:4px"
+>
+
+</div>
+
+`,
+  "💾 Speichern",
+  updateCategory
+ );
+
+}
+
+
+async function updateCategory(){
+
+ if(!isAdmin||!editingId)return;
+
+ const name=
+  $("categoryName")?.value.trim();
+
+ const color=
+  $("categoryColor")?.value||"#2563eb";
+
+ if(!name)return;
+
+ try{
+
+  await updateDoc(
+   doc(db,"categories",editingId),
+   {
+    name,
+    color,
+    updatedAt:serverTimestamp()
+   }
+  );
+
+  closeModal();
+
+  toast(
+   "Kategorie aktualisiert.",
+   "success"
+  );
+
+ }catch(error){
+
+  toast(
+   "Kategorie konnte nicht geändert werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+async function deleteCategory(id){
+
+ if(!isAdmin)return;
+
+ const category=
+  categories.find(item=>item.id===id);
+
+ if(!category)return;
+
+ if(!confirm(
+  `Kategorie „${category.name}“ löschen?`
+ ))return;
+
+ try{
+
+  await deleteDoc(
+   doc(db,"categories",id)
+  );
+
+  toast(
+   "Kategorie gelöscht.",
+   "success"
+  );
+
+ }catch(error){
+
+  toast(
+   "Kategorie konnte nicht gelöscht werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ REQUESTS
+====================================================== */
+
+function renderRequestsPage(){
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+📋 Anfragen
+</div>
+
+<div class="page-subtitle">
+Übersicht über eingegangene Anfragen.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="table-wrap">
+
+${
+requests.length
+?
+`
+<table>
+
+<thead>
+
+<tr>
+<th>Titel</th>
+<th>Benutzer</th>
+<th>Status</th>
+<th>Datum</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${requests.map(request=>`
+
+<tr>
+
+<td>
+${escapeHtml(request.title||"Anfrage")}
+</td>
+
+<td>
+${escapeHtml(request.createdByEmail||"-")}
+</td>
+
+<td>
+<span class="badge">
+${escapeHtml(request.status||"Offen")}
+</span>
+</td>
+
+<td>
+${formatDate(request.createdAt)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</tbody>
+
+</table>
+`
+:
+renderEmpty(
+"📋",
+"Keine Anfragen",
+"Es sind momentan keine Anfragen vorhanden."
+)
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ USERS
+====================================================== */
+
+function renderUsersPage(){
+
+ if(!isAdmin){
+
+  return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+👥 Benutzer
+</div>
+
+<div class="page-subtitle">
+Dieser Bereich ist nur für Administratoren verfügbar.
+</div>
+
+</div>
+
+</div>
+
+<div class="content-card">
+
+${renderEmpty(
+"🔒",
+"Kein Zugriff",
+"Du benötigst Administratorrechte."
+)}
+
+</div>
+
+`;
+
+ }
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+👥 Benutzer
+</div>
+
+<div class="page-subtitle">
+Benutzerübersicht.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="table-wrap">
+
+${
+users.length
+?
+`
+<table>
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>E-Mail</th>
+<th>Rolle</th>
+<th>Erstellt</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+${users.map(user=>`
+
+<tr>
+
+<td>
+${escapeHtml(user.name||"-")}
+</td>
+
+<td>
+${escapeHtml(user.email||"-")}
+</td>
+
+<td>
+<span class="badge">
+${user.admin?"🛡️ Administrator":"👤 Benutzer"}
+</span>
+</td>
+
+<td>
+${formatDate(user.createdAt)}
+</td>
+
+</tr>
+
+`).join("")}
+
+</tbody>
+
+</table>
+`
+:
+renderEmpty(
+"👥",
+"Keine Benutzer",
+"Noch keine Benutzer gefunden."
+)
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ NOTIFICATIONS
+====================================================== */
+
+function renderNotificationsPage(){
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+🔔 Benachrichtigungen
+</div>
+
+<div class="page-subtitle">
+Systemmeldungen und Informationen.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="card-body">
+
+${
+notifications.length
+?
+notifications.map(notification=>`
+
+<div
+style="
+padding:15px;
+border:1px solid var(--border);
+border-radius:13px;
+margin-bottom:10px;
+background:var(--surface2)
+"
+>
+
+<strong>
+${escapeHtml(notification.title||"Benachrichtigung")}
+</strong>
+
+<div
+style="
+color:var(--muted);
+margin-top:5px
+"
+>
+${escapeHtml(notification.message||"")}
+</div>
+
+<div
+style="
+color:var(--muted);
+font-size:11px;
+margin-top:8px
+"
+>
+${formatDate(notification.createdAt)}
+</div>
+
+</div>
+
+`).join("")
+:
+renderEmpty(
+"🔔",
+"Keine Benachrichtigungen",
+"Du bist auf dem neuesten Stand."
+)
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ PROFILE
+====================================================== */
+
+function renderProfilePage(){
+
+ const name=
+  currentUser?.displayName||"";
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+👤 Profil
+</div>
+
+<div class="page-subtitle">
+Deine persönlichen Kontodaten.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="card-body">
+
+<div
+style="
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px
+"
+>
+
+<div
+class="avatar"
+style="width:58px;height:58px;font-size:22px"
+>
+${escapeHtml(
+(name||currentUser?.email||"E")
+.charAt(0)
+.toUpperCase()
+)}
+</div>
+
+<div>
+
+<div
+style="
+font-size:19px;
+font-weight:800
+"
+>
+${escapeHtml(name||"Benutzer")}
+</div>
+
+<div
+style="
+color:var(--muted);
+margin-top:3px
+"
+>
+${escapeHtml(currentUser?.email||"")}
+</div>
+
+</div>
+
+</div>
+
+
+<div class="field">
+
+<label>Anzeigename</label>
+
+<input
+id="profileName"
+value="${escapeHtml(name)}"
+placeholder="Dein Name"
+>
+
+</div>
+
+
+<button
+class="primary-btn"
+data-action="save-profile"
+>
+💾 Profil speichern
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+async function saveProfile(){
+
+ const name=
+  $("profileName")?.value.trim();
+
+ if(!name){
+
+  toast(
+   "Bitte einen Namen eingeben.",
+   "error"
+  );
+
+  return;
+ }
+
+ try{
+
+  await updateProfile(
+   currentUser,
+   {displayName:name}
+  );
+
+  await updateDoc(
+   doc(db,"users",currentUser.uid),
+   {
+    name,
+    updatedAt:serverTimestamp()
+   }
+  );
+
+  updateUserUI();
+
+  toast(
+   "Profil gespeichert.",
+   "success"
+  );
+
+ }catch(error){
+
+  toast(
+   "Profil konnte nicht gespeichert werden: "+
+   friendlyFirebaseError(error),
+   "error"
+  );
+
+ }
+
+}
+
+
+/* ======================================================
+ SETTINGS
+====================================================== */
+
+function renderSettingsPage(){
+
+ return`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+⚙️ Einstellungen
+</div>
+
+<div class="page-subtitle">
+Passe das OrdnerSystem an.
+</div>
+
+</div>
+
+</div>
+
+
+<div class="content-card">
+
+<div class="card-header">
+
+<div class="card-title">
+Darstellung
+</div>
+
+</div>
+
+<div class="card-body">
+
+<button
+class="secondary-btn"
+data-action="toggle-theme"
+>
+🌙 Hell / Dunkel wechseln
+</button>
+
+</div>
+
+</div>
+
+
+<div
+class="content-card"
+style="margin-top:15px"
+>
+
+<div class="card-header">
+
+<div class="card-title">
+🔐 Konto
+</div>
+
+</div>
+
+<div class="card-body">
+
+<div
+style="
+color:var(--muted);
+margin-bottom:15px
+"
+>
+Angemeldet als:
+<strong style="color:var(--text)">
+${escapeHtml(currentUser?.email||"")}
+</strong>
+</div>
+
+<button
+class="danger-btn"
+data-action="logout"
+>
+🚪 Abmelden
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ======================================================
+ MODAL
+====================================================== */
+
+function openModal(
+ title,
+ body,
+ buttonText="Speichern",
+ handler=null,
+ showSave=true
+){
+
+ $("modalTitle").textContent=title;
+
+ $("modalBody").innerHTML=body;
+
+ $("modalSave").textContent=buttonText;
+
+ $("modalSave").style.display=
+  showSave?"inline-flex":"none";
+
+ modalHandler=handler;
+
+ $("modalOverlay")
+ .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+ $("modalOverlay")
+ .classList.remove("show");
+
+ $("modalBody").innerHTML="";
+
+ modalHandler=null;
+
+ editingId=null;
+
+}
+
+
+$("modalForm").addEventListener(
+ "submit",
+ async event=>{
+
+  event.preventDefault();
+
+  if(typeof modalHandler!=="function"){
+
+   closeModal();
+
+   return;
+  }
+
+  const handler=modalHandler;
 
   try{
-    await ensureProfile();
-
-    $("loginPage").classList.add("hidden");
-    $("app").classList.remove("hidden");
-
-    admin = false;
-    $("adminPanel")?.classList.add("hidden");
-    $("sidebarAddCategory")?.classList.add("hidden");
-  $("categoryManageBtn")?.classList.add("hidden");
-  $("sidebarAddCategory")?.classList.add("hidden");
-    $("pageUsers")?.classList.add("hidden");
-    applyTheme(localStorage.getItem("ordnersystem-theme") || "light");
-
-    loadProfile();
-    loadChips();
-    loadCategories();
-    loadPurposes();
-    loadScan();
-    loadInbox();
-
-    window.showPage("pageFolders");
-
-    setTimeout(scanNFC,700);
+   await handler();
   }catch(error){
-    console.error(error);
-    alert("Profil konnte nicht geladen werden: " + error.message);
-    await signOut(auth);
+   console.error(error);
   }
-});
+
+ }
+);
+
+
+$("modalOverlay").addEventListener(
+ "click",
+ event=>{
+
+  if(event.target===$("modalOverlay")){
+   closeModal();
+  }
+
+ }
+);
+
+
+/* ======================================================
+ ACTIONS
+====================================================== */
+
+async function handleAction(action,element){
+
+ const id=element?.dataset?.id;
+
+ switch(action){
+
+  case"logout":
+   await signOut(auth);
+   break;
+
+  case"add-folder":
+   openAddFolder();
+   break;
+
+  case"edit-folder":
+   openEditFolder(id);
+   break;
+
+  case"delete-folder":
+   await deleteFolder(id);
+   break;
+
+  case"open-folder":
+   openFolder(id);
+   break;
+
+  case"copy-chip":
+   await copyChipLink(id);
+   break;
+
+  case"scan":
+   openScan();
+   break;
+
+  case"manual-scan":{
+
+   const value=
+    $("manualChip")?.value.trim();
+
+   if(!value){
+
+    toast(
+     "Bitte Chip-ID oder Link eingeben.",
+     "error"
+    );
+
+    return;
+   }
+
+   let chipId=value;
+
+   try{
+
+    const url=new URL(value);
+
+    chipId=
+     url.searchParams.get("folder")||
+     value;
+
+   }catch{}
+
+   await scanChip(chipId);
+
+   break;
+  }
+
+  case"add-category":
+   openAddCategory();
+   break;
+
+  case"edit-category":
+   openEditCategory(id);
+   break;
+
+  case"delete-category":
+   await deleteCategory(id);
+   break;
+
+  case"save-profile":
+   await saveProfile();
+   break;
+
+  case"toggle-theme":
+   toggleTheme();
+   break;
+
+  case"close-modal":
+   closeModal();
+   break;
+
+ }
+
+}
+
+
+/* ======================================================
+ SEARCH
+====================================================== */
+
+$("globalSearch").addEventListener(
+ "input",
+ event=>{
+
+  const value=
+   event.target.value
+   .trim()
+   .toLowerCase();
+
+  if(!value){
+
+   renderPage();
+   return;
+  }
+
+  if(activePage!=="folders"){
+
+   openPage("folders");
+
+   setTimeout(()=>{
+    $("globalSearch").value=value;
+    $("globalSearch").dispatchEvent(
+     new Event("input")
+    );
+   },0);
+
+   return;
+  }
+
+  const filtered=
+   folders.filter(
+    folder=>
+     String(folder.name||"")
+      .toLowerCase()
+      .includes(value)||
+     String(folder.category||"")
+      .toLowerCase()
+      .includes(value)||
+     String(folder.chipId||"")
+      .toLowerCase()
+      .includes(value)
+   );
+
+  $("pageContainer").innerHTML=`
+
+<div class="page-header">
+
+<div>
+
+<div class="page-title">
+🔍 Suche
+</div>
+
+<div class="page-subtitle">
+Ergebnisse für „${escapeHtml(value)}“
+</div>
+
+</div>
+
+</div>
+
+
+${
+filtered.length
+?
+`
+<div class="folder-grid">
+${filtered.map(renderFolderCard).join("")}
+</div>
+`
+:
+renderEmpty(
+"🔍",
+"Nichts gefunden",
+"Kein Ordner passt zu deiner Suche."
+)
+}
+
+`;
+
+ }
+);
+
+
+/* ======================================================
+ MOBILE
+====================================================== */
+
+$("mobileMenu").addEventListener(
+ "click",
+ ()=>{
+  $("sidebar")
+  .classList.toggle("open");
+ }
+);
+
+
+/* ======================================================
+ THEME
+====================================================== */
+
+function loadTheme(){
+
+ const theme=
+  localStorage.getItem(
+   "ordnersystem-theme"
+  );
+
+ if(theme==="dark"){
+  document.body.classList.add("dark");
+ }
+
+}
+
+
+function toggleTheme(){
+
+ document.body.classList.toggle("dark");
+
+ localStorage.setItem(
+  "ordnersystem-theme",
+  document.body.classList.contains("dark")
+  ?"dark"
+  :"light"
+ );
+
+}
+
+loadTheme();
+
+
+/* ======================================================
+ ESC
+====================================================== */
+
+document.addEventListener(
+ "keydown",
+ event=>{
+
+  if(
+   event.key==="Escape"&&
+   $("modalOverlay")
+   .classList.contains("show")
+  ){
+
+   closeModal();
+
+  }
+
+ }
+);
+
+
+/* ======================================================
+ START
+====================================================== */
+
+updateAuthMode();
+
 </script>
+
 </body>
 </html>
