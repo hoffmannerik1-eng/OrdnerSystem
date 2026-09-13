@@ -2,59 +2,56 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0b1220">
 <title>OrdnerSystem</title>
 
 <style>
 *{
     box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 :root{
     --bg:#f4f7fb;
     --card:#ffffff;
-    --card2:#f8fafc;
     --text:#172033;
-    --muted:#6b7280;
-    --border:#e5e7eb;
+    --muted:#6c7890;
+    --border:#e4e9f1;
     --primary:#2563eb;
     --primary2:#1d4ed8;
-    --danger:#dc2626;
-    --success:#16a34a;
-    --warning:#d97706;
-    --shadow:0 12px 35px rgba(15,23,42,.08);
-    --radius:18px;
+    --green:#16a34a;
+    --green-bg:#dcfce7;
+    --red:#dc2626;
+    --red-bg:#fee2e2;
+    --orange:#ea580c;
+    --orange-bg:#ffedd5;
+    --sidebar:#0b1220;
+    --sidebar2:#111a2d;
+    --shadow:0 10px 35px rgba(15,23,42,.08);
 }
 
 body.dark{
-    --bg:#0b1220;
+    --bg:#080d17;
     --card:#111827;
-    --card2:#182234;
     --text:#f3f4f6;
     --muted:#9ca3af;
-    --border:#263244;
-    --shadow:0 12px 35px rgba(0,0,0,.28);
+    --border:#263246;
+    --sidebar:#050912;
+    --sidebar2:#0c1423;
+    --shadow:0 12px 35px rgba(0,0,0,.35);
 }
 
 html,body{
-    margin:0;
     width:100%;
     min-height:100%;
-    font-family:Inter,Arial,Helvetica,sans-serif;
+    font-family:Inter,Arial,sans-serif;
     background:var(--bg);
     color:var(--text);
 }
 
-body{
-    overflow-x:hidden;
-}
-
-button,
-input,
-select,
-textarea{
+button,input,textarea,select{
     font:inherit;
 }
 
@@ -66,689 +63,620 @@ button{
     display:none!important;
 }
 
-/* LOGIN */
-
 #loginScreen{
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:25px;
+    padding:20px;
     background:
-        radial-gradient(circle at top left,rgba(37,99,235,.16),transparent 35%),
-        radial-gradient(circle at bottom right,rgba(14,165,233,.12),transparent 35%),
+        radial-gradient(circle at 20% 20%,rgba(37,99,235,.16),transparent 35%),
+        radial-gradient(circle at 80% 80%,rgba(14,165,233,.12),transparent 35%),
         var(--bg);
 }
 
-.login-card{
-    width:min(440px,100%);
+.loginBox{
+    width:min(460px,100%);
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:28px;
+    border-radius:24px;
     padding:34px;
     box-shadow:var(--shadow);
 }
 
 .logo{
-    width:62px;
-    height:62px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    font-size:23px;
+}
+
+.logoIcon{
+    width:46px;
+    height:46px;
     display:flex;
     align-items:center;
     justify-content:center;
-    border-radius:18px;
-    background:linear-gradient(135deg,#2563eb,#0ea5e9);
+    border-radius:14px;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
     color:white;
-    font-size:30px;
-    margin-bottom:20px;
+    font-size:24px;
 }
 
-.login-card h1{
-    margin:0 0 8px;
-    font-size:30px;
+.loginTitle{
+    margin-top:30px;
+    font-size:29px;
+    font-weight:800;
 }
 
-.login-card p{
+.loginSub{
     color:var(--muted);
-    margin:0 0 25px;
+    margin-top:8px;
+    margin-bottom:25px;
 }
 
-.form-group{
+.formGroup{
     margin-bottom:16px;
 }
 
-.form-group label{
+.formGroup label{
     display:block;
     font-size:13px;
     font-weight:700;
     margin-bottom:7px;
 }
 
-input,
-select,
-textarea{
+.input{
     width:100%;
     border:1px solid var(--border);
-    background:var(--card2);
+    background:var(--card);
     color:var(--text);
     border-radius:12px;
-    padding:12px 14px;
+    padding:13px 14px;
     outline:none;
     transition:.2s;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+.input:focus{
     border-color:var(--primary);
     box-shadow:0 0 0 3px rgba(37,99,235,.12);
 }
 
-textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
 .btn{
     border:0;
-    border-radius:12px;
+    border-radius:11px;
     padding:11px 15px;
     font-weight:700;
+    transition:.18s;
     display:inline-flex;
     align-items:center;
     justify-content:center;
     gap:7px;
-    transition:.18s;
 }
 
 .btn:hover{
     transform:translateY(-1px);
 }
 
-.btn-primary{
-    background:var(--primary);
+.btnPrimary{
     color:white;
+    background:var(--primary);
 }
 
-.btn-primary:hover{
+.btnPrimary:hover{
     background:var(--primary2);
 }
 
-.btn-secondary{
-    background:var(--card2);
-    border:1px solid var(--border);
+.btnSecondary{
+    background:var(--bg);
     color:var(--text);
+    border:1px solid var(--border);
 }
 
-.btn-danger{
-    background:#fee2e2;
-    color:#b91c1c;
+.btnDanger{
+    background:var(--red-bg);
+    color:var(--red);
 }
 
-body.dark .btn-danger{
-    background:#3b171b;
-    color:#fca5a5;
+.btnSuccess{
+    background:var(--green-bg);
+    color:var(--green);
 }
 
-.btn-success{
-    background:#dcfce7;
-    color:#15803d;
-}
-
-body.dark .btn-success{
-    background:#12331f;
-    color:#86efac;
-}
-
-.btn-warning{
-    background:#fef3c7;
-    color:#92400e;
+.btnWarning{
+    background:var(--orange-bg);
+    color:var(--orange);
 }
 
 .full{
     width:100%;
 }
 
-.login-switch{
+.loginSwitch{
     margin-top:18px;
     text-align:center;
-    font-size:14px;
     color:var(--muted);
+    font-size:14px;
 }
 
-.login-switch button{
-    background:none;
+.linkBtn{
     border:0;
+    background:none;
     color:var(--primary);
     font-weight:700;
 }
 
-/* APP */
-
 #app{
     min-height:100vh;
-    display:grid;
-    grid-template-columns:260px 1fr;
+    display:flex;
 }
 
 .sidebar{
-    position:sticky;
+    position:fixed;
+    left:0;
     top:0;
-    height:100vh;
-    background:var(--card);
-    border-right:1px solid var(--border);
+    bottom:0;
+    width:250px;
+    background:linear-gradient(180deg,var(--sidebar),var(--sidebar2));
+    color:white;
     padding:20px 14px;
-    display:flex;
-    flex-direction:column;
-    z-index:50;
+    z-index:100;
+    overflow-y:auto;
 }
 
-.sidebar-logo{
+.sideLogo{
     display:flex;
     align-items:center;
     gap:11px;
-    padding:8px 10px 22px;
-    font-weight:900;
-    font-size:19px;
+    padding:8px 10px 24px;
+    font-size:20px;
+    font-weight:800;
 }
 
-.sidebar-logo-icon{
-    width:40px;
-    height:40px;
-    border-radius:12px;
+.sideLogoIcon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#2563eb,#0ea5e9);
-    color:#fff;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
 }
 
-.nav{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+.navTitle{
+    font-size:11px;
+    color:#7f8ba3;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:16px 11px 7px;
 }
 
-.nav button{
+.navBtn{
     width:100%;
     border:0;
     background:transparent;
-    color:var(--muted);
-    border-radius:12px;
-    padding:12px 13px;
+    color:#b9c3d4;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:12px 12px;
+    border-radius:10px;
+    margin:2px 0;
     text-align:left;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight:700;
+    font-weight:600;
 }
 
-.nav button:hover,
-.nav button.active{
-    background:#eff6ff;
-    color:#1d4ed8;
+.navBtn:hover{
+    background:rgba(255,255,255,.07);
+    color:white;
 }
 
-body.dark .nav button:hover,
-body.dark .nav button.active{
-    background:#16233b;
-    color:#93c5fd;
+.navBtn.active{
+    background:rgba(37,99,235,.9);
+    color:white;
 }
 
-.sidebar-bottom{
-    margin-top:auto;
-}
-
-.user-mini{
-    border-top:1px solid var(--border);
-    padding:16px 8px 4px;
-    display:flex;
-    gap:10px;
-    align-items:center;
-}
-
-.avatar{
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#2563eb,#0ea5e9);
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:900;
-}
-
-.user-mini-text{
-    min-width:0;
-}
-
-.user-mini-text strong{
-    display:block;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.user-mini-text small{
-    color:var(--muted);
+.sideBottom{
+    margin-top:30px;
+    padding-top:15px;
+    border-top:1px solid rgba(255,255,255,.08);
 }
 
 .main{
-    min-width:0;
+    width:calc(100% - 250px);
+    margin-left:250px;
+    min-height:100vh;
 }
 
 .topbar{
     height:72px;
-    background:rgba(255,255,255,.85);
-    backdrop-filter:blur(15px);
+    background:var(--card);
     border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 25px;
+    padding:0 28px;
     position:sticky;
     top:0;
-    z-index:40;
+    z-index:50;
 }
 
-body.dark .topbar{
-    background:rgba(17,24,39,.85);
-}
-
-.topbar-left{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.mobile-menu{
+.mobileMenu{
     display:none;
 }
 
-.search{
-    width:min(390px,45vw);
+.topSearch{
+    width:min(420px,45vw);
     position:relative;
 }
 
-.search input{
-    padding-left:40px;
+.topSearch input{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:11px 14px 11px 39px;
+    background:var(--bg);
+    color:var(--text);
+    outline:none;
 }
 
-.search-icon{
+.topSearch span{
     position:absolute;
-    left:14px;
-    top:50%;
-    transform:translateY(-50%);
-    color:var(--muted);
+    left:13px;
+    top:10px;
 }
 
-.top-actions{
+.topRight{
     display:flex;
-    gap:8px;
+    align-items:center;
+    gap:10px;
 }
 
-.icon-btn{
-    width:42px;
-    height:42px;
+.iconBtn{
+    width:40px;
+    height:40px;
     border:1px solid var(--border);
     background:var(--card);
     color:var(--text);
-    border-radius:12px;
+    border-radius:11px;
     display:flex;
     align-items:center;
     justify-content:center;
 }
 
+.userMini{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding-left:8px;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+}
+
 .content{
     padding:28px;
-    max-width:1500px;
+    max-width:1700px;
     margin:auto;
 }
 
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-.page-header{
+.pageHeader{
     display:flex;
-    justify-content:space-between;
     align-items:flex-start;
+    justify-content:space-between;
     gap:15px;
     margin-bottom:25px;
 }
 
-.page-header h2{
-    margin:0 0 5px;
-    font-size:27px;
+.pageTitle{
+    font-size:29px;
+    font-weight:850;
 }
 
-.page-header p{
-    margin:0;
+.pageSub{
     color:var(--muted);
+    margin-top:5px;
 }
 
-.header-actions{
+.headerActions{
     display:flex;
-    gap:8px;
+    gap:9px;
     flex-wrap:wrap;
 }
-
-/* DASHBOARD */
 
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
+    gap:16px;
     margin-bottom:22px;
 }
 
 .stat{
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:18px;
-    padding:20px;
+    border-radius:17px;
+    padding:19px;
     box-shadow:var(--shadow);
 }
 
-.stat-top{
+.statTop{
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-.stat-icon{
+.statIcon{
     width:42px;
     height:42px;
-    border-radius:13px;
-    background:#eff6ff;
+    border-radius:12px;
     display:flex;
     align-items:center;
     justify-content:center;
+    background:rgba(37,99,235,.1);
     font-size:20px;
 }
 
-body.dark .stat-icon{
-    background:#16233b;
-}
-
-.stat-number{
+.statValue{
     font-size:29px;
-    font-weight:900;
+    font-weight:850;
     margin-top:14px;
 }
 
-.stat-label{
+.statLabel{
     color:var(--muted);
     font-size:13px;
     margin-top:3px;
-}
-
-/* CARDS */
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:17px;
 }
 
 .card{
     background:var(--card);
     border:1px solid var(--border);
     border-radius:18px;
-    padding:18px;
     box-shadow:var(--shadow);
 }
 
-.folder-card{
+.cardHeader{
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.cardTitle{
+    font-weight:800;
+}
+
+.cardBody{
+    padding:20px;
+}
+
+.folderGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.folderCard{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:18px;
+    transition:.2s;
     position:relative;
     overflow:hidden;
 }
 
-.folder-card.status-red{
-    border-color:#ef4444;
-    box-shadow:0 0 0 1px rgba(239,68,68,.15),var(--shadow);
+.folderCard:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow);
 }
 
-.folder-card.status-green{
-    border-color:#22c55e;
-    box-shadow:0 0 0 1px rgba(34,197,94,.15),var(--shadow);
+.folderStatus{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:#94a3b8;
+    box-shadow:0 0 0 5px rgba(148,163,184,.12);
 }
 
-.folder-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:10px;
+.folderStatus.green{
+    background:#16a34a;
+    box-shadow:0 0 0 5px rgba(22,163,74,.14);
 }
 
-.folder-icon{
-    width:46px;
-    height:46px;
-    border-radius:13px;
+.folderStatus.red{
+    background:#dc2626;
+    box-shadow:0 0 0 5px rgba(220,38,38,.14);
+}
+
+.folderIcon{
+    width:50px;
+    height:50px;
     display:flex;
     align-items:center;
     justify-content:center;
+    border-radius:14px;
     background:#eff6ff;
-    font-size:23px;
+    font-size:25px;
+    margin-bottom:13px;
 }
 
-body.dark .folder-icon{
-    background:#16233b;
+body.dark .folderIcon{
+    background:#172554;
 }
 
-.folder-name{
+.folderName{
     font-size:18px;
-    font-weight:900;
-    margin-top:14px;
-    word-break:break-word;
+    font-weight:800;
+    padding-right:25px;
 }
 
-.folder-category{
+.folderCategory{
     display:inline-block;
-    margin-top:7px;
-    padding:5px 9px;
-    background:var(--card2);
+    margin-top:8px;
+    background:var(--bg);
     border:1px solid var(--border);
-    border-radius:999px;
+    border-radius:20px;
+    padding:4px 9px;
     font-size:11px;
     color:var(--muted);
 }
 
-.folder-description{
-    margin:13px 0;
+.folderDescription{
     color:var(--muted);
-    line-height:1.5;
     font-size:13px;
-    min-height:39px;
+    line-height:1.5;
+    margin-top:11px;
+    min-height:40px;
 }
 
-.status{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    padding:9px 11px;
-    border-radius:11px;
+.folderMeta{
+    margin-top:14px;
+    padding-top:13px;
+    border-top:1px solid var(--border);
     font-size:12px;
-    font-weight:800;
-    margin-bottom:10px;
-}
-
-.status.green{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.status.red{
-    background:#fee2e2;
-    color:#991b1b;
-}
-
-body.dark .status.green{
-    background:#12331f;
-    color:#86efac;
-}
-
-body.dark .status.red{
-    background:#3b171b;
-    color:#fca5a5;
-}
-
-.folder-meta{
     color:var(--muted);
-    font-size:12px;
-    line-height:1.7;
-    margin-bottom:13px;
 }
 
-.folder-actions{
+.holder{
+    margin-top:8px;
+    color:var(--text);
+    font-weight:700;
+}
+
+.folderActions{
     display:flex;
     gap:7px;
     flex-wrap:wrap;
+    margin-top:14px;
 }
 
-.small-btn{
+.smallBtn{
     border:1px solid var(--border);
-    background:var(--card2);
+    background:var(--bg);
     color:var(--text);
     border-radius:9px;
-    padding:8px 10px;
+    padding:8px 9px;
     font-size:12px;
     font-weight:700;
 }
 
-.small-btn:hover{
+.smallBtn:hover{
     border-color:var(--primary);
+    color:var(--primary);
 }
 
-/* TABLE */
-
-.table-wrap{
-    overflow:auto;
-    background:var(--card);
+.statusPanel{
+    margin-top:13px;
+    padding:11px;
+    border-radius:11px;
+    font-size:12px;
+    background:var(--bg);
     border:1px solid var(--border);
-    border-radius:18px;
+}
+
+.statusPanel.green{
+    background:var(--green-bg);
+    color:var(--green);
+    border-color:#bbf7d0;
+}
+
+.statusPanel.red{
+    background:var(--red-bg);
+    color:var(--red);
+    border-color:#fecaca;
+}
+
+.empty{
+    padding:50px 20px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.emptyIcon{
+    font-size:45px;
+    margin-bottom:12px;
+}
+
+.tableWrap{
+    overflow:auto;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:700px;
 }
 
-th,
-td{
-    padding:14px 16px;
-    border-bottom:1px solid var(--border);
+th,td{
+    padding:14px 12px;
     text-align:left;
-    font-size:13px;
+    border-bottom:1px solid var(--border);
+    white-space:nowrap;
 }
 
 th{
     color:var(--muted);
-    font-size:11px;
+    font-size:12px;
     text-transform:uppercase;
-    letter-spacing:.05em;
 }
 
-tr:last-child td{
-    border-bottom:0;
+td{
+    font-size:14px;
 }
 
-/* EMPTY */
-
-.empty{
-    background:var(--card);
-    border:1px dashed var(--border);
-    border-radius:18px;
-    padding:50px 25px;
-    text-align:center;
-    color:var(--muted);
-}
-
-.empty-icon{
-    font-size:42px;
-    margin-bottom:10px;
-}
-
-/* CHIP */
-
-.chip-panel{
-    background:linear-gradient(135deg,#eff6ff,#f8fafc);
-    border:1px solid #bfdbfe;
+.badge{
+    display:inline-flex;
+    padding:5px 9px;
     border-radius:20px;
-    padding:22px;
-    margin-bottom:20px;
+    font-size:11px;
+    font-weight:800;
 }
 
-body.dark .chip-panel{
-    background:#111d32;
-    border-color:#243d63;
+.badgeGreen{
+    background:var(--green-bg);
+    color:var(--green);
 }
 
-.chip-panel h3{
-    margin:0 0 7px;
+.badgeRed{
+    background:var(--red-bg);
+    color:var(--red);
 }
 
-.chip-panel p{
-    margin:0 0 15px;
-    color:var(--muted);
+.badgeBlue{
+    background:#dbeafe;
+    color:#1d4ed8;
 }
 
-.chip-result{
-    padding:18px;
-    border-radius:15px;
-    margin-top:15px;
-    display:none;
+.badgeOrange{
+    background:var(--orange-bg);
+    color:var(--orange);
 }
 
-.chip-result.show{
-    display:block;
-}
-
-.chip-result.red{
-    background:#fee2e2;
-    border:1px solid #fecaca;
-    color:#991b1b;
-}
-
-.chip-result.green{
-    background:#dcfce7;
-    border:1px solid #bbf7d0;
-    color:#166534;
-}
-
-body.dark .chip-result.red{
-    background:#3b171b;
-    border-color:#7f1d1d;
-    color:#fca5a5;
-}
-
-body.dark .chip-result.green{
-    background:#12331f;
-    border-color:#166534;
-    color:#86efac;
-}
-
-/* MODAL */
-
-.modal-overlay{
+.modalOverlay{
     position:fixed;
     inset:0;
-    background:rgba(15,23,42,.58);
+    background:rgba(2,6,23,.55);
     backdrop-filter:blur(5px);
-    z-index:100;
-    display:none;
+    display:flex;
     align-items:center;
     justify-content:center;
-    padding:20px;
-}
-
-.modal-overlay.show{
-    display:flex;
+    padding:18px;
+    z-index:500;
 }
 
 .modal{
@@ -757,117 +685,149 @@ body.dark .chip-result.green{
     overflow:auto;
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:22px;
-    box-shadow:0 30px 80px rgba(0,0,0,.25);
+    border-radius:20px;
+    box-shadow:0 25px 80px rgba(0,0,0,.25);
 }
 
-.modal-head{
-    padding:20px;
-    border-bottom:1px solid var(--border);
+.modalHeader{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+    padding:19px 20px;
+    border-bottom:1px solid var(--border);
 }
 
-.modal-head h3{
-    margin:0;
+.modalTitle{
+    font-weight:850;
+    font-size:18px;
 }
 
-.modal-body{
+.modalBody{
     padding:20px;
 }
 
-.modal-foot{
-    padding:15px 20px;
-    border-top:1px solid var(--border);
+.modalFooter{
     display:flex;
     justify-content:flex-end;
     gap:8px;
+    padding:16px 20px;
+    border-top:1px solid var(--border);
 }
 
-/* TOAST */
+.closeBtn{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    font-size:23px;
+}
 
-#toastContainer{
+.toastBox{
     position:fixed;
-    right:18px;
-    bottom:18px;
-    z-index:200;
+    right:20px;
+    bottom:20px;
+    z-index:1000;
     display:flex;
     flex-direction:column;
     gap:9px;
-    width:min(380px,calc(100vw - 36px));
 }
 
 .toast{
-    background:var(--card);
-    border:1px solid var(--border);
-    box-shadow:0 15px 40px rgba(0,0,0,.15);
-    border-radius:14px;
+    min-width:280px;
+    max-width:420px;
+    background:#111827;
+    color:white;
     padding:13px 15px;
-    display:flex;
-    gap:10px;
-    align-items:flex-start;
+    border-radius:12px;
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
     animation:toastIn .2s ease;
+    font-size:13px;
 }
 
 .toast.success{
-    border-left:4px solid var(--success);
+    border-left:4px solid #22c55e;
 }
 
 .toast.error{
-    border-left:4px solid var(--danger);
+    border-left:4px solid #ef4444;
 }
 
 .toast.warning{
-    border-left:4px solid var(--warning);
+    border-left:4px solid #f59e0b;
 }
 
 @keyframes toastIn{
     from{
+        transform:translateY(10px);
         opacity:0;
-        transform:translateY(8px);
     }
     to{
-        opacity:1;
         transform:translateY(0);
+        opacity:1;
     }
 }
 
-/* LOADING */
+.scanHero{
+    padding:22px;
+    border-radius:17px;
+    background:
+        radial-gradient(circle at 80% 20%,rgba(37,99,235,.25),transparent 35%),
+        linear-gradient(135deg,#0b1220,#18253b);
+    color:white;
+    margin-bottom:20px;
+}
 
-.loading{
-    min-height:180px;
+.scanHero h2{
+    font-size:24px;
+    margin-bottom:6px;
+}
+
+.scanHero p{
+    color:#aab5c7;
+}
+
+.linkBox{
+    display:flex;
+    gap:8px;
+    margin-top:15px;
+}
+
+.linkBox input{
+    flex:1;
+}
+
+.profileGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.userCard{
     display:flex;
     align-items:center;
-    justify-content:center;
+    gap:12px;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    margin-bottom:10px;
+}
+
+.userInfo{
+    flex:1;
+}
+
+.userName{
+    font-weight:800;
+}
+
+.userEmail{
+    font-size:12px;
     color:var(--muted);
+    margin-top:2px;
 }
 
-.spinner{
-    width:25px;
-    height:25px;
-    border:3px solid var(--border);
-    border-top-color:var(--primary);
-    border-radius:50%;
-    animation:spin .7s linear infinite;
-    margin-right:10px;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-/* RESPONSIVE */
-
-@media(max-width:1050px){
-    #app{
-        grid-template-columns:220px 1fr;
-    }
-
-    .grid{
-        grid-template-columns:repeat(2,minmax(0,1fr));
+@media(max-width:1100px){
+    .folderGrid{
+        grid-template-columns:repeat(2,1fr);
     }
 
     .stats{
@@ -875,73 +835,82 @@ body.dark .chip-result.green{
     }
 }
 
-@media(max-width:750px){
-    #app{
-        display:block;
-    }
-
+@media(max-width:800px){
     .sidebar{
-        position:fixed;
-        left:-280px;
-        top:0;
-        width:260px;
+        transform:translateX(-100%);
         transition:.25s;
-        box-shadow:15px 0 40px rgba(0,0,0,.15);
     }
 
     .sidebar.open{
-        left:0;
+        transform:translateX(0);
     }
 
-    .mobile-menu{
+    .main{
+        width:100%;
+        margin-left:0;
+    }
+
+    .mobileMenu{
         display:flex;
     }
 
-    .search{
+    .topbar{
+        padding:0 15px;
+    }
+
+    .topSearch{
         display:none;
     }
 
-    .topbar{
-        padding:0 14px;
-    }
-
     .content{
-        padding:18px 14px 30px;
+        padding:17px;
     }
 
-    .grid{
+    .pageHeader{
+        flex-direction:column;
+    }
+
+    .folderGrid{
         grid-template-columns:1fr;
     }
 
+    .profileGrid{
+        grid-template-columns:1fr;
+    }
+
+    .userMini .userText{
+        display:none;
+    }
+}
+
+@media(max-width:500px){
     .stats{
         grid-template-columns:1fr 1fr;
         gap:10px;
     }
 
     .stat{
-        padding:15px;
+        padding:14px;
     }
 
-    .stat-number{
+    .statValue{
         font-size:24px;
     }
 
-    .page-header{
-        flex-direction:column;
-    }
-}
-
-@media(max-width:480px){
-    .login-card{
+    .loginBox{
         padding:24px;
     }
 
-    .stats{
-        grid-template-columns:1fr;
+    .headerActions{
+        width:100%;
     }
 
-    .top-actions .icon-btn:nth-child(2){
-        display:none;
+    .headerActions .btn{
+        flex:1;
+    }
+
+    .linkBox{
+        flex-direction:column;
     }
 }
 </style>
@@ -949,146 +918,163 @@ body.dark .chip-result.green{
 
 <body>
 
-<!-- LOGIN -->
+<div id="loginScreen">
 
-<section id="loginScreen">
+    <div class="loginBox">
 
-    <div class="login-card">
+        <div class="logo">
+            <div class="logoIcon">📁</div>
+            <span>OrdnerSystem</span>
+        </div>
 
-        <div class="logo">📁</div>
+        <div class="loginTitle" id="loginTitle">
+            Willkommen zurück
+        </div>
 
-        <h1 id="authTitle">OrdnerSystem</h1>
-        <p id="authSubtitle">
-            Sichere Verwaltung deiner Ordner und NFC-Chips.
-        </p>
+        <div class="loginSub" id="loginSub">
+            Melde dich an, um deine Ordner zu verwalten.
+        </div>
 
-        <form id="authForm">
+        <form id="loginForm">
 
-            <div class="form-group hidden" id="nameGroup">
-                <label>Name</label>
-                <input id="authName"
-                       type="text"
-                       placeholder="Dein Name"
-                       autocomplete="name">
-            </div>
-
-            <div class="form-group">
+            <div class="formGroup">
                 <label>E-Mail</label>
-                <input id="authEmail"
-                       type="email"
-                       placeholder="name@beispiel.de"
-                       required
-                       autocomplete="email">
+                <input
+                    id="loginEmail"
+                    class="input"
+                    type="email"
+                    autocomplete="email"
+                    required
+                    placeholder="name@example.com">
             </div>
 
-            <div class="form-group">
+            <div class="formGroup">
                 <label>Passwort</label>
-                <input id="authPassword"
-                       type="password"
-                       placeholder="••••••••"
-                       required
-                       minlength="6"
-                       autocomplete="current-password">
+                <input
+                    id="loginPassword"
+                    class="input"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                    placeholder="••••••••">
             </div>
 
-            <button class="btn btn-primary full" type="submit">
-                🔐 <span id="authButtonText">Anmelden</span>
+            <button class="btn btnPrimary full" type="submit">
+                🔐 Anmelden
             </button>
 
         </form>
 
-        <div class="login-switch">
+        <form id="registerForm" class="hidden">
+
+            <div class="formGroup">
+                <label>Name</label>
+                <input
+                    id="registerName"
+                    class="input"
+                    type="text"
+                    required
+                    placeholder="Max Mustermann">
+            </div>
+
+            <div class="formGroup">
+                <label>E-Mail</label>
+                <input
+                    id="registerEmail"
+                    class="input"
+                    type="email"
+                    required
+                    placeholder="name@example.com">
+            </div>
+
+            <div class="formGroup">
+                <label>Passwort</label>
+                <input
+                    id="registerPassword"
+                    class="input"
+                    type="password"
+                    minlength="6"
+                    required
+                    placeholder="Mindestens 6 Zeichen">
+            </div>
+
+            <button class="btn btnPrimary full" type="submit">
+                👤 Konto erstellen
+            </button>
+
+        </form>
+
+        <div class="loginSwitch">
             <span id="switchText">Noch kein Konto?</span>
-            <button id="switchAuth" type="button">
+            <button class="linkBtn" id="switchAuth">
                 Registrieren
             </button>
         </div>
 
     </div>
 
-</section>
+</div>
 
 
-<!-- APP -->
-
-<section id="app" class="hidden">
+<div id="app" class="hidden">
 
     <aside class="sidebar" id="sidebar">
 
-        <div class="sidebar-logo">
-            <div class="sidebar-logo-icon">📁</div>
+        <div class="sideLogo">
+            <div class="sideLogoIcon">📁</div>
             OrdnerSystem
         </div>
 
-        <nav class="nav">
+        <div class="navTitle">Übersicht</div>
 
-            <button class="active"
-                    data-page="dashboard">
-                📊
-                Dashboard
+        <button class="navBtn active" data-page="dashboard">
+            📊
+            <span>Dashboard</span>
+        </button>
+
+        <button class="navBtn" data-page="folders">
+            📁
+            <span>Ordner</span>
+        </button>
+
+        <button class="navBtn" data-page="categories">
+            🗂️
+            <span>Kategorien</span>
+        </button>
+
+        <button class="navBtn" data-page="requests">
+            📋
+            <span>Anfragen</span>
+        </button>
+
+        <div class="navTitle">Verwaltung</div>
+
+        <button class="navBtn" data-page="users">
+            👥
+            <span>Benutzer</span>
+        </button>
+
+        <button class="navBtn" data-page="notifications">
+            🔔
+            <span>Benachrichtigungen</span>
+        </button>
+
+        <button class="navBtn" data-page="settings">
+            ⚙️
+            <span>Einstellungen</span>
+        </button>
+
+        <div class="sideBottom">
+
+            <button class="navBtn" id="helpBtn">
+                ❓
+                <span>Hilfe</span>
             </button>
 
-            <button data-page="folders">
-                📁
-                Ordner
+            <button class="navBtn" id="logoutBtn">
+                🚪
+                <span>Abmelden</span>
             </button>
-
-            <button data-page="scan">
-                📡
-                NFC scannen
-            </button>
-
-            <button data-page="categories">
-                🗂️
-                Kategorien
-            </button>
-
-            <button data-page="requests">
-                📋
-                Anfragen
-            </button>
-
-            <button data-page="users">
-                👥
-                Benutzer
-            </button>
-
-            <button data-page="notifications">
-                🔔
-                Benachrichtigungen
-            </button>
-
-            <button data-page="settings">
-                ⚙️
-                Einstellungen
-            </button>
-
-        </nav>
-
-        <div class="sidebar-bottom">
-
-            <button class="btn btn-secondary full"
-                    id="logoutButton">
-                🚪 Abmelden
-            </button>
-
-            <div class="user-mini">
-
-                <div class="avatar" id="miniAvatar">
-                    ?
-                </div>
-
-                <div class="user-mini-text">
-                    <strong id="miniName">
-                        Benutzer
-                    </strong>
-
-                    <small id="miniEmail">
-                        —
-                    </small>
-                </div>
-
-            </div>
 
         </div>
 
@@ -1099,542 +1085,87 @@ body.dark .chip-result.green{
 
         <header class="topbar">
 
-            <div class="topbar-left">
+            <button class="iconBtn mobileMenu" id="mobileMenu">
+                ☰
+            </button>
 
-                <button class="icon-btn mobile-menu"
-                        id="mobileMenu">
-                    ☰
-                </button>
-
-                <div class="search">
-
-                    <span class="search-icon">
-                        🔍
-                    </span>
-
-                    <input id="globalSearch"
-                           placeholder="Suchen...">
-
-                </div>
-
+            <div class="topSearch">
+                <span>🔍</span>
+                <input
+                    id="globalSearch"
+                    placeholder="Suche...">
             </div>
 
-            <div class="top-actions">
+            <div class="topRight">
 
-                <button class="icon-btn"
-                        id="themeButton"
-                        title="Theme">
+                <button class="iconBtn" id="themeBtn">
                     🌙
                 </button>
 
-                <button class="icon-btn"
-                        data-page-button="notifications"
-                        title="Benachrichtigungen">
+                <button class="iconBtn" id="notificationBtn">
                     🔔
                 </button>
+
+                <div class="userMini">
+
+                    <div class="avatar" id="topAvatar">
+                        U
+                    </div>
+
+                    <div class="userText">
+                        <strong id="topName">Benutzer</strong>
+                        <div style="font-size:11px;color:var(--muted)" id="topRole">
+                            Benutzer
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
 
         </header>
 
 
-        <div class="content">
-
-            <!-- DASHBOARD -->
-
-            <section class="page active"
-                     id="page-dashboard">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Dashboard</h2>
-                        <p>
-                            Übersicht über Ordner, NFC-Chips und Benutzer.
-                        </p>
-                    </div>
-
-                    <div class="header-actions">
-
-                        <button class="btn btn-primary"
-                                id="dashboardAddFolder">
-                            ➕ Ordner
-                        </button>
-
-                        <button class="btn btn-secondary"
-                                data-page-button="scan">
-                            📡 NFC scannen
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <div class="stats">
-
-                    <div class="stat">
-
-                        <div class="stat-top">
-                            <div>
-                                <div class="stat-label">
-                                    Alle Ordner
-                                </div>
-                            </div>
-
-                            <div class="stat-icon">
-                                📁
-                            </div>
-                        </div>
-
-                        <div class="stat-number"
-                             id="statFolders">
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-top">
-
-                            <div>
-                                <div class="stat-label">
-                                    Verfügbar
-                                </div>
-                            </div>
-
-                            <div class="stat-icon">
-                                🟢
-                            </div>
-
-                        </div>
-
-                        <div class="stat-number"
-                             id="statAvailable">
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-top">
-
-                            <div>
-                                <div class="stat-label">
-                                    Ausgegeben
-                                </div>
-                            </div>
-
-                            <div class="stat-icon">
-                                🔴
-                            </div>
-
-                        </div>
-
-                        <div class="stat-number"
-                             id="statTaken">
-                            0
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-top">
-
-                            <div>
-                                <div class="stat-label">
-                                    Benutzer
-                                </div>
-                            </div>
-
-                            <div class="stat-icon">
-                                👥
-                            </div>
-
-                        </div>
-
-                        <div class="stat-number"
-                             id="statUsers">
-                            0
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="page-header"
-                     style="margin-top:28px">
-
-                    <div>
-                        <h2 style="font-size:20px">
-                            Letzte Ordner
-                        </h2>
-                        <p>
-                            Schnellzugriff auf deine Ordner.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="grid"
-                     id="dashboardFolders">
-                </div>
-
-            </section>
-
-
-            <!-- FOLDERS -->
-
-            <section class="page"
-                     id="page-folders">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Ordner</h2>
-                        <p>
-                            Verwalte alle Ordner und ihre NFC-Chips.
-                        </p>
-                    </div>
-
-                    <div class="header-actions">
-
-                        <button class="btn btn-primary"
-                                id="addFolderButton">
-                            ➕ Ordner erstellen
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="grid"
-                     id="foldersGrid">
-                </div>
-
-            </section>
-
-
-            <!-- SCAN -->
-
-            <section class="page"
-                     id="page-scan">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>NFC scannen</h2>
-                        <p>
-                            Scanne einen Ordner-Chip, um seinen Status zu ändern.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="chip-panel">
-
-                    <h3>
-                        📡 NFC-Chip
-                    </h3>
-
-                    <p>
-                        Beim ersten Scan wird der Ordner
-                        <strong>rot</strong> und die Person wird als aktueller Besitzer
-                        gespeichert. Beim nächsten Scan wird er wieder
-                        <strong>grün</strong>.
-                    </p>
-
-                    <button class="btn btn-primary"
-                            id="startNfcButton">
-                        📡 NFC-Scan starten
-                    </button>
-
-                    <button class="btn btn-secondary"
-                            id="stopNfcButton">
-                        ⏹ Scan stoppen
-                    </button>
-
-                    <div id="nfcSupport"
-                         style="margin-top:15px;color:var(--muted)">
-                    </div>
-
-                    <div class="chip-result"
-                         id="scanResult">
-                    </div>
-
-                </div>
-
-
-                <div class="card">
-
-                    <h3 style="margin-top:0">
-                        🔗 Alternativ: Chip-Link
-                    </h3>
-
-                    <p style="color:var(--muted)">
-                        Wenn dein Browser kein Web-NFC unterstützt,
-                        kannst du einen erzeugten Chip-Link öffnen.
-                    </p>
-
-                    <div class="form-group">
-
-                        <label>
-                            Chip-ID
-                        </label>
-
-                        <input id="manualChipInput"
-                               placeholder="z.B. CHIP-A8K92M-MZ81">
-
-                    </div>
-
-                    <button class="btn btn-primary"
-                            id="manualScanButton">
-                        🔄 Chip verarbeiten
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- CATEGORIES -->
-
-            <section class="page"
-                     id="page-categories">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Kategorien</h2>
-                        <p>
-                            Kategorien für deine Ordner.
-                        </p>
-                    </div>
-
-                    <button class="btn btn-primary"
-                            id="addCategoryButton">
-                        ➕ Kategorie
-                    </button>
-
-                </div>
-
-                <div class="grid"
-                     id="categoriesGrid">
-                </div>
-
-            </section>
-
-
-            <!-- REQUESTS -->
-
-            <section class="page"
-                     id="page-requests">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Anfragen</h2>
-                        <p>
-                            Verwaltung von Ordner-Anfragen.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Ordner</th>
-                                <th>Antragsteller</th>
-                                <th>Status</th>
-                                <th>Datum</th>
-                                <th>Aktion</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="requestsTable">
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- USERS -->
-
-            <section class="page"
-                     id="page-users">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Benutzer</h2>
-                        <p>
-                            Benutzer des Systems.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Name</th>
-                                <th>E-Mail</th>
-                                <th>Rolle</th>
-                                <th>Registriert</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="usersTable">
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTIFICATIONS -->
-
-            <section class="page"
-                     id="page-notifications">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Benachrichtigungen</h2>
-                        <p>
-                            Systemmeldungen und Scan-Aktivitäten.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div id="notificationsList">
-                </div>
-
-            </section>
-
-
-            <!-- SETTINGS -->
-
-            <section class="page"
-                     id="page-settings">
-
-                <div class="page-header">
-
-                    <div>
-                        <h2>Einstellungen</h2>
-                        <p>
-                            Persönliche Einstellungen.
-                        </p>
-                    </div>
-
-                </div>
-
-                <div class="card"
-                     style="max-width:700px">
-
-                    <h3>👤 Profil</h3>
-
-                    <div class="form-group">
-
-                        <label>Name</label>
-
-                        <input id="profileName"
-                               placeholder="Dein Name">
-
-                    </div>
-
-                    <button class="btn btn-primary"
-                            id="saveProfileButton">
-                        💾 Profil speichern
-                    </button>
-
-                </div>
-
-                <br>
-
-                <div class="card"
-                     style="max-width:700px">
-
-                    <h3>🎨 Darstellung</h3>
-
-                    <button class="btn btn-secondary"
-                            id="settingsThemeButton">
-                        🌙 Theme wechseln
-                    </button>
-
-                </div>
-
-            </section>
-
-        </div>
+        <div class="content" id="pageContent"></div>
 
     </main>
 
-</section>
+</div>
 
 
-<!-- MODAL -->
-
-<div class="modal-overlay"
-     id="modalOverlay">
+<div id="modalOverlay" class="modalOverlay hidden">
 
     <div class="modal">
 
-        <div class="modal-head">
+        <div class="modalHeader">
 
-            <h3 id="modalTitle">
+            <div class="modalTitle" id="modalTitle">
                 Fenster
-            </h3>
+            </div>
 
-            <button class="icon-btn"
-                    id="modalClose">
-                ✕
+            <button class="closeBtn" id="modalClose">
+                ×
             </button>
 
         </div>
 
         <form id="modalForm">
 
-            <div class="modal-body"
-                 id="modalBody">
-            </div>
+            <div class="modalBody" id="modalBody"></div>
 
-            <div class="modal-foot">
+            <div class="modalFooter">
 
-                <button type="button"
-                        class="btn btn-secondary"
-                        id="modalCancel">
+                <button
+                    type="button"
+                    class="btn btnSecondary"
+                    id="modalCancel">
                     Abbrechen
                 </button>
 
-                <button type="submit"
-                        class="btn btn-primary"
-                        id="modalSave">
+                <button
+                    type="submit"
+                    class="btn btnPrimary"
+                    id="modalSave">
                     Speichern
                 </button>
 
@@ -1647,14 +1178,10 @@ body.dark .chip-result.green{
 </div>
 
 
-<div id="toastContainer"></div>
+<div class="toastBox" id="toastBox"></div>
 
 
 <script type="module">
-
-/* =========================================================
-   FIREBASE
-========================================================= */
 
 import {
     initializeApp,
@@ -1688,27 +1215,18 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
+/* =========================================================
+   FIREBASE
+========================================================= */
+
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-
-    authDomain:
-        "ordnersystem-1352a.firebaseapp.com",
-
-    projectId:
-        "ordnersystem-1352a",
-
-    storageBucket:
-        "ordnersystem-1352a.firebasestorage.app",
-
-    messagingSenderId:
-        "39473536985",
-
-    appId:
-        "1:39473536985:web:7dae48028c28dabc6a03c8"
+    apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+    authDomain: "ordnersystem-1352a.firebaseapp.com",
+    projectId: "ordnersystem-1352a",
+    storageBucket: "ordnersystem-1352a.firebasestorage.app",
+    messagingSenderId: "39473536985",
+    appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
 };
-
 
 const app = getApps().length
     ? getApp()
@@ -1722,11 +1240,8 @@ const db = getFirestore(app);
    ADMIN
 ========================================================= */
 
-const ADMIN1 =
-    "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-
-const ADMIN2 =
-    "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
+const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
 
 
 /* =========================================================
@@ -1734,6 +1249,7 @@ const ADMIN2 =
 ========================================================= */
 
 let currentUser = null;
+let currentProfile = null;
 let isAdmin = false;
 
 let folders = [];
@@ -1742,16 +1258,16 @@ let requests = [];
 let users = [];
 let notifications = [];
 
+let currentPage = "dashboard";
+let activeFolder = null;
+
+let modalSubmit = null;
+
 let unsubscribeFolders = null;
 let unsubscribeCategories = null;
 let unsubscribeRequests = null;
 let unsubscribeUsers = null;
 let unsubscribeNotifications = null;
-
-let modalSubmitHandler = null;
-
-let nfcReader = null;
-let nfcAbortController = null;
 
 
 /* =========================================================
@@ -1760,170 +1276,37 @@ let nfcAbortController = null;
 
 const $ = id => document.getElementById(id);
 
+function esc(value){
 
-function escapeHTML(value){
-
-    if(value === null || value === undefined){
-        return "";
-    }
-
-    return String(value)
+    return String(value ?? "")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
         .replaceAll('"',"&quot;")
         .replaceAll("'","&#039;");
+
 }
 
 
-function formatDate(value){
+function initials(name,email){
 
-    if(!value){
-        return "—";
-    }
+    const text = name || email || "U";
 
-    let date;
-
-    if(value?.toDate){
-        date = value.toDate();
-    }else{
-        date = new Date(value);
-    }
-
-    if(Number.isNaN(date.getTime())){
-        return "—";
-    }
-
-    return date.toLocaleString("de-DE",{
-        dateStyle:"short",
-        timeStyle:"short"
-    });
-}
-
-
-function getUserName(){
-
-    if(!currentUser){
-        return "Unbekannt";
-    }
-
-    return currentUser.displayName ||
-           currentUser.email ||
-           "Unbekannt";
-}
-
-
-function getInitials(name){
-
-    if(!name){
-        return "?";
-    }
-
-    return name
+    return text
         .split(/\s+/)
         .slice(0,2)
         .map(x => x[0])
         .join("")
         .toUpperCase();
+
 }
 
 
-function isAdminUser(uid){
+function friendlyError(error){
 
-    return uid === ADMIN1 ||
-           uid === ADMIN2;
-}
+    const code = error?.code || "";
 
-
-function makeChipId(){
-
-    return "CHIP-" +
-        Math.random()
-            .toString(36)
-            .substring(2,8)
-            .toUpperCase() +
-        "-" +
-        Date.now()
-            .toString(36)
-            .toUpperCase();
-}
-
-
-/*
- * WICHTIG:
- *
- * Wir tragen hier KEINEN GitHub-Namen ein.
- *
- * Dadurch wird automatisch die aktuelle Adresse benutzt.
- *
- * Wenn deine GitHub-Adresse z.B.
- *
- * https://DEINNAME1.github.io/
- *
- * ist, wird daraus automatisch:
- *
- * https://DEINNAME1.github.io/?chip=CHIP-...
- */
-function getChipLink(folder){
-
-    const url =
-        new URL(
-            window.location.origin +
-            window.location.pathname
-        );
-
-    url.search = "";
-    url.hash = "";
-
-    url.searchParams.set(
-        "chip",
-        folder.chipId || folder.id
-    );
-
-    return url.toString();
-}
-
-
-async function copyText(text){
-
-    try{
-
-        await navigator.clipboard.writeText(text);
-
-        toast(
-            "🔗 Chip-Link kopiert.",
-            "success"
-        );
-
-    }catch{
-
-        const area =
-            document.createElement("textarea");
-
-        area.value = text;
-
-        document.body.appendChild(area);
-
-        area.select();
-
-        document.execCommand("copy");
-
-        area.remove();
-
-        toast(
-            "🔗 Chip-Link kopiert.",
-            "success"
-        );
-    }
-}
-
-
-function friendlyFirebaseError(error){
-
-    const code =
-        error?.code || "";
-
-    const messages = {
+    const map = {
 
         "auth/invalid-credential":
             "E-Mail oder Passwort ist falsch.",
@@ -1932,217 +1315,406 @@ function friendlyFirebaseError(error){
             "Diese E-Mail wird bereits verwendet.",
 
         "auth/weak-password":
-            "Das Passwort muss mindestens 6 Zeichen haben.",
+            "Das Passwort ist zu schwach.",
 
         "auth/invalid-email":
             "Die E-Mail-Adresse ist ungültig.",
+
+        "auth/network-request-failed":
+            "Netzwerkfehler.",
 
         "permission-denied":
             "Firebase hat den Zugriff verweigert.",
 
         "failed-precondition":
-            "Firebase benötigt noch eine Konfiguration.",
+            "Firebase benötigt noch eine Einstellung.",
 
         "unavailable":
             "Firebase ist momentan nicht erreichbar."
+
     };
 
-    return messages[code] ||
+    return map[code] ||
         error?.message ||
-        "Unbekannter Firebase-Fehler.";
+        "Unbekannter Fehler.";
+
 }
 
-
-/* =========================================================
-   TOAST
-========================================================= */
 
 function toast(message,type="success"){
 
-    const box =
-        document.createElement("div");
+    const box = $("toastBox");
 
-    box.className =
-        "toast " + type;
+    const el = document.createElement("div");
 
-    box.innerHTML = `
-        <div style="font-size:19px">
-            ${type === "success" ? "✓" :
-              type === "error" ? "!" : "⚠"}
-        </div>
-        <div>${escapeHTML(message)}</div>
-    `;
+    el.className = "toast " + type;
 
-    $("toastContainer").appendChild(box);
+    el.textContent = message;
+
+    box.appendChild(el);
 
     setTimeout(() => {
 
-        box.remove();
+        el.remove();
 
     },4500);
+
+}
+
+
+function formatDate(timestamp){
+
+    if(!timestamp) return "—";
+
+    try{
+
+        const d = timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+        return d.toLocaleString("de-DE",{
+            dateStyle:"short",
+            timeStyle:"short"
+        });
+
+    }catch{
+
+        return "—";
+
+    }
+
 }
 
 
 /* =========================================================
-   AUTH
+   CHIP ID
 ========================================================= */
 
-let registerMode = false;
+function makeChipId(){
+
+    const random =
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+    const time =
+        Date.now()
+        .toString(36)
+        .toUpperCase();
+
+    return "CHIP-" + random + "-" + time;
+
+}
 
 
-$("switchAuth").addEventListener(
-    "click",
-    () => {
+/* =========================================================
+   EXTREMELY IMPORTANT:
+   REAL GITHUB PAGE URL
+========================================================= */
 
-        registerMode =
-            !registerMode;
+function getChipLink(folder){
 
-        $("nameGroup")
-            .classList.toggle(
-                "hidden",
-                !registerMode
-            );
+    /*
+       NICHTS mit deinem GitHub-Namen hier eintragen.
 
-        $("authTitle").textContent =
-            registerMode
-                ? "Konto erstellen"
-                : "OrdnerSystem";
+       Die aktuell geöffnete Website wird automatisch benutzt.
 
-        $("authSubtitle").textContent =
-            registerMode
-                ? "Erstelle dein Benutzerkonto."
-                : "Sichere Verwaltung deiner Ordner und NFC-Chips.";
+       Beispiel:
+       https://DEIN-ECHTER-NAME.github.io/OrdnerSystem/
 
-        $("authButtonText").textContent =
-            registerMode
-                ? "Registrieren"
-                : "Anmelden";
+       Dadurch funktioniert auch ein Benutzername mit "1".
+    */
 
-        $("switchText").textContent =
-            registerMode
-                ? "Bereits ein Konto?"
-                : "Noch kein Konto?";
+    const url = new URL(window.location.href);
 
-        $("switchAuth").textContent =
-            registerMode
-                ? "Anmelden"
-                : "Registrieren";
+    url.search = "";
+    url.hash = "";
+
+    url.searchParams.set(
+        "folder",
+        folder.chipId || folder.id
+    );
+
+    return url.toString();
+
+}
+
+
+/* =========================================================
+   COPY
+========================================================= */
+
+async function copyText(text){
+
+    try{
+
+        await navigator.clipboard.writeText(text);
+
+        toast("🔗 Link kopiert.","success");
+
+    }catch{
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.remove();
+
+        toast("🔗 Link kopiert.","success");
+
     }
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(
+    title,
+    html,
+    submitText="Speichern",
+    handler=null,
+    showSave=true
+){
+
+    $("modalTitle").textContent = title;
+
+    $("modalBody").innerHTML = html;
+
+    $("modalSave").textContent = submitText;
+
+    $("modalSave").style.display =
+        showSave ? "inline-flex" : "none";
+
+    modalSubmit = handler;
+
+    $("modalOverlay").classList.remove("hidden");
+
+}
+
+
+function closeModal(){
+
+    $("modalOverlay").classList.add("hidden");
+
+    $("modalBody").innerHTML = "";
+
+    modalSubmit = null;
+
+}
+
+
+$("modalClose").addEventListener(
+    "click",
+    closeModal
+);
+
+$("modalCancel").addEventListener(
+    "click",
+    closeModal
 );
 
 
-$("authForm").addEventListener(
+$("modalForm").addEventListener(
     "submit",
-    async event => {
+    async e => {
 
-        event.preventDefault();
+        e.preventDefault();
 
-        const email =
-            $("authEmail").value.trim();
-
-        const password =
-            $("authPassword").value;
-
-        const name =
-            $("authName").value.trim();
+        if(!modalSubmit) return;
 
         try{
 
-            if(registerMode){
+            $("modalSave").disabled = true;
 
-                if(!name){
-
-                    toast(
-                        "Bitte deinen Namen eingeben.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-                const credential =
-                    await createUserWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
-                    );
-
-                await updateProfile(
-                    credential.user,
-                    {
-                        displayName:name
-                    }
-                );
-
-                await setDoc(
-                    doc(
-                        db,
-                        "users",
-                        credential.user.uid
-                    ),
-                    {
-                        uid:
-                            credential.user.uid,
-
-                        name,
-
-                        email,
-
-                        role:
-                            isAdminUser(
-                                credential.user.uid
-                            )
-                                ? "admin"
-                                : "user",
-
-                        createdAt:
-                            serverTimestamp()
-                    }
-                );
-
-                toast(
-                    "Konto erfolgreich erstellt.",
-                    "success"
-                );
-
-            }else{
-
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-                toast(
-                    "Anmeldung erfolgreich.",
-                    "success"
-                );
-            }
+            await modalSubmit();
 
         }catch(error){
 
             console.error(error);
 
             toast(
-                friendlyFirebaseError(error),
+                "❌ " + friendlyError(error),
                 "error"
             );
+
+        }finally{
+
+            $("modalSave").disabled = false;
+
         }
+
     }
 );
 
 
 /* =========================================================
-   AUTH STATE
+   LOGIN
+========================================================= */
+
+let registerMode = false;
+
+$("switchAuth").addEventListener(
+    "click",
+    () => {
+
+        registerMode = !registerMode;
+
+        $("loginForm")
+            .classList.toggle(
+                "hidden",
+                registerMode
+            );
+
+        $("registerForm")
+            .classList.toggle(
+                "hidden",
+                !registerMode
+            );
+
+        if(registerMode){
+
+            $("loginTitle").textContent =
+                "Konto erstellen";
+
+            $("loginSub").textContent =
+                "Erstelle dein persönliches OrdnerSystem-Konto.";
+
+            $("switchText").textContent =
+                "Bereits ein Konto?";
+
+            $("switchAuth").textContent =
+                "Anmelden";
+
+        }else{
+
+            $("loginTitle").textContent =
+                "Willkommen zurück";
+
+            $("loginSub").textContent =
+                "Melde dich an, um deine Ordner zu verwalten.";
+
+            $("switchText").textContent =
+                "Noch kein Konto?";
+
+            $("switchAuth").textContent =
+                "Registrieren";
+
+        }
+
+    }
+);
+
+
+$("loginForm").addEventListener(
+    "submit",
+    async e => {
+
+        e.preventDefault();
+
+        try{
+
+            await signInWithEmailAndPassword(
+                auth,
+                $("loginEmail").value.trim(),
+                $("loginPassword").value
+            );
+
+        }catch(error){
+
+            toast(
+                "❌ " + friendlyError(error),
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+$("registerForm").addEventListener(
+    "submit",
+    async e => {
+
+        e.preventDefault();
+
+        try{
+
+            const name =
+                $("registerName").value.trim();
+
+            const email =
+                $("registerEmail").value.trim();
+
+            const password =
+                $("registerPassword").value;
+
+            const credential =
+                await createUserWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+            await updateProfile(
+                credential.user,
+                {
+                    displayName:name
+                }
+            );
+
+            await setDoc(
+                doc(db,"users",credential.user.uid),
+                {
+                    name,
+                    email,
+                    role:"user",
+                    createdAt:serverTimestamp()
+                }
+            );
+
+            toast(
+                "✅ Konto wurde erstellt.",
+                "success"
+            );
+
+        }catch(error){
+
+            toast(
+                "❌ " + friendlyError(error),
+                "error"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUTH
 ========================================================= */
 
 onAuthStateChanged(
     auth,
     async user => {
 
-        currentUser = user;
-
         if(!user){
+
+            currentUser = null;
 
             $("loginScreen")
                 .classList.remove("hidden");
@@ -2150,13 +1722,19 @@ onAuthStateChanged(
             $("app")
                 .classList.add("hidden");
 
-            cleanupListeners();
+            stopListeners();
 
             return;
+
         }
 
+        currentUser = user;
+
         isAdmin =
-            isAdminUser(user.uid);
+            user.uid === ADMIN1 ||
+            user.uid === ADMIN2;
+
+        await loadUserProfile();
 
         $("loginScreen")
             .classList.add("hidden");
@@ -2164,44 +1742,42 @@ onAuthStateChanged(
         $("app")
             .classList.remove("hidden");
 
-        updateUserUI();
-
-        await ensureUserDocument();
+        updateTopUser();
 
         startListeners();
 
-        handleUrlChip();
+        renderPage();
+
+        setTimeout(
+            handleIncomingChipLink,
+            700
+        );
+
     }
 );
 
 
 /* =========================================================
-   USER
+   USER PROFILE
 ========================================================= */
 
-async function ensureUserDocument(){
+async function loadUserProfile(){
 
-    if(!currentUser){
-        return;
-    }
+    try{
 
-    const reference =
-        doc(
-            db,
-            "users",
-            currentUser.uid
-        );
+        const ref =
+            doc(db,"users",currentUser.uid);
 
-    const snapshot =
-        await getDoc(reference);
+        const snap =
+            await getDoc(ref);
 
-    if(!snapshot.exists()){
+        if(snap.exists()){
 
-        await setDoc(
-            reference,
-            {
-                uid:
-                    currentUser.uid,
+            currentProfile = snap.data();
+
+        }else{
+
+            currentProfile = {
 
                 name:
                     currentUser.displayName ||
@@ -2212,35 +1788,64 @@ async function ensureUserDocument(){
                     currentUser.email || "",
 
                 role:
-                    isAdmin ? "admin" : "user",
+                    isAdmin ? "admin" : "user"
 
-                createdAt:
-                    serverTimestamp()
-            },
-            {
-                merge:true
-            }
-        );
+            };
+
+            await setDoc(
+                ref,
+                {
+                    ...currentProfile,
+                    createdAt:serverTimestamp()
+                },
+                {merge:true}
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        currentProfile = {
+
+            name:
+                currentUser.displayName ||
+                currentUser.email ||
+                "Benutzer",
+
+            email:
+                currentUser.email || "",
+
+            role:
+                isAdmin ? "admin" : "user"
+
+        };
+
     }
+
 }
 
 
-function updateUserUI(){
+function updateTopUser(){
 
     const name =
-        getUserName();
+        currentProfile?.name ||
+        currentUser?.displayName ||
+        currentUser?.email ||
+        "Benutzer";
 
-    $("miniName").textContent =
-        name;
+    $("topName").textContent = name;
 
-    $("miniEmail").textContent =
-        currentUser?.email || "";
+    $("topRole").textContent =
+        isAdmin ? "Administrator" : "Benutzer";
 
-    $("miniAvatar").textContent =
-        getInitials(name);
+    $("topAvatar").textContent =
+        initials(
+            name,
+            currentUser?.email
+        );
 
-    $("profileName").value =
-        currentUser?.displayName || "";
 }
 
 
@@ -2248,56 +1853,40 @@ function updateUserUI(){
    FIRESTORE LISTENERS
 ========================================================= */
 
-function cleanupListeners(){
+function stopListeners(){
 
-    [
-        unsubscribeFolders,
-        unsubscribeCategories,
-        unsubscribeRequests,
-        unsubscribeUsers,
-        unsubscribeNotifications
-    ].forEach(fn => {
-
-        if(typeof fn === "function"){
-            fn();
-        }
-
-    });
+    if(unsubscribeFolders) unsubscribeFolders();
+    if(unsubscribeCategories) unsubscribeCategories();
+    if(unsubscribeRequests) unsubscribeRequests();
+    if(unsubscribeUsers) unsubscribeUsers();
+    if(unsubscribeNotifications) unsubscribeNotifications();
 
     unsubscribeFolders = null;
     unsubscribeCategories = null;
     unsubscribeRequests = null;
     unsubscribeUsers = null;
     unsubscribeNotifications = null;
+
 }
 
 
 function startListeners(){
 
-    cleanupListeners();
-
-    const foldersQuery =
-        query(
-            collection(db,"folders"),
-            orderBy("createdAt","desc")
-        );
+    stopListeners();
 
     unsubscribeFolders =
         onSnapshot(
-            foldersQuery,
-            snapshot => {
+            collection(db,"folders"),
+            snap => {
 
-                folders =
-                    snapshot.docs.map(
-                        item => ({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
+                folders = snap.docs.map(
+                    d => ({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
-                renderFolders();
-                updateDashboard();
-                handleUrlChip();
+                renderPage();
 
             },
             error => {
@@ -2305,10 +1894,11 @@ function startListeners(){
                 console.error(error);
 
                 toast(
-                    "Ordner konnten nicht geladen werden: " +
-                    friendlyFirebaseError(error),
+                    "❌ Ordner konnten nicht geladen werden: " +
+                    friendlyError(error),
                     "error"
                 );
+
             }
         );
 
@@ -2316,87 +1906,74 @@ function startListeners(){
     unsubscribeCategories =
         onSnapshot(
             collection(db,"categories"),
-            snapshot => {
+            snap => {
 
-                categories =
-                    snapshot.docs.map(
-                        item => ({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
+                categories = snap.docs.map(
+                    d => ({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
-                renderCategories();
-                refreshFolderCategorySelect();
+                renderPage();
 
-            },
-            error => console.error(error)
+            }
         );
 
 
     unsubscribeRequests =
         onSnapshot(
             collection(db,"requests"),
-            snapshot => {
+            snap => {
 
-                requests =
-                    snapshot.docs.map(
-                        item => ({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
+                requests = snap.docs.map(
+                    d => ({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
-                renderRequests();
-            },
-            error => console.error(error)
+                renderPage();
+
+            }
         );
 
 
     unsubscribeUsers =
         onSnapshot(
             collection(db,"users"),
-            snapshot => {
+            snap => {
 
-                users =
-                    snapshot.docs.map(
-                        item => ({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
+                users = snap.docs.map(
+                    d => ({
+                        id:d.id,
+                        ...d.data()
+                    })
+                );
 
-                renderUsers();
-                updateDashboard();
+                renderPage();
 
-            },
-            error => console.error(error)
+            }
         );
 
 
     unsubscribeNotifications =
         onSnapshot(
             collection(db,"notifications"),
-            snapshot => {
+            snap => {
 
-                notifications =
-                    snapshot.docs.map(
-                        item => ({
-                            id:item.id,
-                            ...item.data()
-                        })
-                    );
-
-                notifications.sort(
-                    (a,b) =>
-                        (b.createdAt?.seconds || 0) -
-                        (a.createdAt?.seconds || 0)
+                notifications = snap.docs.map(
+                    d => ({
+                        id:d.id,
+                        ...d.data()
+                    })
                 );
 
-                renderNotifications();
-            },
-            error => console.error(error)
+                renderPage();
+
+            }
         );
+
 }
 
 
@@ -2404,556 +1981,599 @@ function startListeners(){
    NAVIGATION
 ========================================================= */
 
-function openPage(page){
+document.querySelectorAll(".navBtn[data-page]")
+.forEach(btn => {
 
-    document
-        .querySelectorAll(".page")
-        .forEach(item => {
-
-            item.classList.toggle(
-                "active",
-                item.id ===
-                "page-" + page
-            );
-        });
-
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(item => {
-
-            item.classList.toggle(
-                "active",
-                item.dataset.page === page
-            );
-        });
-
-
-    $("sidebar")
-        .classList.remove("open");
-}
-
-
-document
-    .querySelectorAll(".nav button")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                openPage(
-                    button.dataset.page
-                );
-
-            }
-        );
-    });
-
-
-document
-    .querySelectorAll("[data-page-button]")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                openPage(
-                    button.dataset.pageButton
-                );
-
-            }
-        );
-    });
-
-
-$("mobileMenu")
-    .addEventListener(
+    btn.addEventListener(
         "click",
         () => {
 
+            currentPage =
+                btn.dataset.page;
+
+            document
+                .querySelectorAll(".navBtn[data-page]")
+                .forEach(x =>
+                    x.classList.remove("active")
+                );
+
+            btn.classList.add("active");
+
             $("sidebar")
-                .classList.toggle("open");
+                .classList.remove("open");
+
+            renderPage();
+
         }
     );
 
+});
 
-$("logoutButton")
-    .addEventListener(
-        "click",
-        async () => {
 
-            await signOut(auth);
-        }
-    );
+$("mobileMenu").addEventListener(
+    "click",
+    () => {
+
+        $("sidebar")
+            .classList.toggle("open");
+
+    }
+);
 
 
 /* =========================================================
-   THEME
+   RENDER PAGE
 ========================================================= */
 
-function loadTheme(){
+function renderPage(){
 
-    const saved =
-        localStorage.getItem(
-            "ordnersystem-theme"
-        );
+    if(!currentUser) return;
 
-    if(saved === "dark"){
+    const content =
+        $("pageContent");
 
-        document.body.classList.add("dark");
+    if(currentPage === "dashboard")
+        renderDashboard(content);
 
-        $("themeButton").textContent =
-            "☀️";
+    else if(currentPage === "folders")
+        renderFoldersPage(content);
 
-    }else{
+    else if(currentPage === "categories")
+        renderCategoriesPage(content);
 
-        $("themeButton").textContent =
-            "🌙";
-    }
+    else if(currentPage === "requests")
+        renderRequestsPage(content);
+
+    else if(currentPage === "users")
+        renderUsersPage(content);
+
+    else if(currentPage === "notifications")
+        renderNotificationsPage(content);
+
+    else if(currentPage === "settings")
+        renderSettingsPage(content);
+
 }
-
-
-function toggleTheme(){
-
-    const dark =
-        document.body.classList.toggle(
-            "dark"
-        );
-
-    localStorage.setItem(
-        "ordnersystem-theme",
-        dark ? "dark" : "light"
-    );
-
-    $("themeButton").textContent =
-        dark ? "☀️" : "🌙";
-}
-
-
-$("themeButton")
-    .addEventListener(
-        "click",
-        toggleTheme
-    );
-
-$("settingsThemeButton")
-    .addEventListener(
-        "click",
-        toggleTheme
-    );
-
-loadTheme();
 
 
 /* =========================================================
    DASHBOARD
 ========================================================= */
 
-function updateDashboard(){
+function renderDashboard(el){
 
-    const available =
-        folders.filter(
-            x => x.chipActive !== true
-        ).length;
-
-    const taken =
+    const green =
         folders.filter(
             x => x.chipActive === true
         ).length;
 
-    $("statFolders").textContent =
-        folders.length;
+    const red =
+        folders.filter(
+            x => x.chipActive === false
+        ).length;
 
-    $("statAvailable").textContent =
-        available;
+    const recent =
+        [...folders]
+        .sort(
+            (a,b) =>
+                (b.updatedAt?.seconds || 0) -
+                (a.updatedAt?.seconds || 0)
+        )
+        .slice(0,6);
 
-    $("statTaken").textContent =
-        taken;
+    el.innerHTML = `
 
-    $("statUsers").textContent =
-        users.length;
+        <div class="pageHeader">
 
-    renderDashboardFolders();
-}
+            <div>
+                <div class="pageTitle">
+                    Dashboard
+                </div>
 
-
-function renderDashboardFolders(){
-
-    const target =
-        $("dashboardFolders");
-
-    const latest =
-        folders.slice(0,6);
-
-    if(!latest.length){
-
-        target.innerHTML = `
-            <div class="empty"
-                 style="grid-column:1/-1">
-                <div class="empty-icon">📁</div>
-                Noch keine Ordner vorhanden.
+                <div class="pageSub">
+                    Willkommen zurück,
+                    ${esc(
+                        currentProfile?.name ||
+                        currentUser.email
+                    )}.
+                </div>
             </div>
-        `;
 
-        return;
-    }
+            <div class="headerActions">
 
-    target.innerHTML =
-        latest
-            .map(folderCardHTML)
-            .join("");
+                <button
+                    class="btn btnPrimary"
+                    data-action="new-folder">
+                    ➕ Neuer Ordner
+                </button>
+
+                <button
+                    class="btn btnSecondary"
+                    data-action="scan-link">
+                    📡 Chip-Link
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="statTop">
+                    <span>Ordner</span>
+                    <div class="statIcon">📁</div>
+                </div>
+
+                <div class="statValue">
+                    ${folders.length}
+                </div>
+
+                <div class="statLabel">
+                    Gesamt
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="statTop">
+                    <span>Aktiv</span>
+                    <div class="statIcon">🟢</div>
+                </div>
+
+                <div class="statValue">
+                    ${green}
+                </div>
+
+                <div class="statLabel">
+                    Grüner Status
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="statTop">
+                    <span>Inaktiv</span>
+                    <div class="statIcon">🔴</div>
+                </div>
+
+                <div class="statValue">
+                    ${red}
+                </div>
+
+                <div class="statLabel">
+                    Roter Status
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="statTop">
+                    <span>Benutzer</span>
+                    <div class="statIcon">👥</div>
+                </div>
+
+                <div class="statValue">
+                    ${users.length}
+                </div>
+
+                <div class="statLabel">
+                    Registrierte Benutzer
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardHeader">
+
+                <div class="cardTitle">
+                    📁 Zuletzt bearbeitete Ordner
+                </div>
+
+                <button
+                    class="btn btnSecondary"
+                    data-page-direct="folders">
+                    Alle anzeigen
+                </button>
+
+            </div>
+
+            <div class="cardBody">
+
+                ${
+                    recent.length
+                    ? `
+                    <div class="folderGrid">
+                        ${recent.map(folderCard).join("")}
+                    </div>
+                    `
+                    : `
+                    <div class="empty">
+                        <div class="emptyIcon">📁</div>
+                        <div>Noch keine Ordner vorhanden.</div>
+                    </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
 /* =========================================================
-   FOLDERS
+   FOLDER CARD
 ========================================================= */
 
-function folderCardHTML(folder){
+function folderCard(folder){
 
     const active =
         folder.chipActive === true;
 
     const statusClass =
-        active ? "red" : "green";
+        active ? "green" : "red";
 
     const statusText =
-        active
-            ? "🔴 Ausgegeben"
-            : "🟢 Verfügbar";
+        active ? "🟢 Aktiv" : "🔴 Nicht aktiv";
 
     const holder =
-        folder.currentHolderName ||
+        folder.heldByName ||
         "Niemand";
 
-    const lastScanner =
+    const scannedBy =
         folder.lastScannedByName ||
-        "Noch niemand";
-
-    const chip =
-        folder.chipId ||
-        "—";
-
-    const canEdit =
-        isAdmin ||
-        folder.createdBy ===
-        currentUser?.uid;
+        "Noch nie";
 
     return `
-        <article class="card folder-card status-${active ? "red" : "green"}">
 
-            <div class="folder-top">
+        <div class="folderCard">
 
-                <div class="folder-icon">
-                    📁
-                </div>
+            <div class="folderStatus ${statusClass}"></div>
 
-                <div style="font-size:11px;color:var(--muted)">
-                    ${escapeHTML(chip)}
-                </div>
-
+            <div class="folderIcon">
+                📁
             </div>
 
-            <div class="folder-name">
-                ${escapeHTML(folder.name || "Ohne Namen")}
+            <div class="folderName">
+                ${esc(folder.name)}
             </div>
 
             ${
                 folder.category
-                ?
-                `<div class="folder-category">
-                    ${escapeHTML(folder.category)}
-                </div>`
-                :
-                ""
+                ? `
+                <span class="folderCategory">
+                    ${esc(folder.category)}
+                </span>
+                `
+                : ""
             }
 
-            <div class="folder-description">
-                ${escapeHTML(folder.description || "Keine Beschreibung.")}
+            <div class="folderDescription">
+                ${esc(
+                    folder.description ||
+                    "Keine Beschreibung."
+                )}
             </div>
 
-            <div class="status ${statusClass}">
-                ${statusText}
-            </div>
-
-            <div class="folder-meta">
-
-                👤 <strong>Gerade bei:</strong>
-                ${escapeHTML(holder)}
+            <div class="statusPanel ${statusClass}">
+                <strong>${statusText}</strong>
                 <br>
+                Status zuletzt geändert:
+                ${formatDate(folder.updatedAt)}
+            </div>
 
-                📡 <strong>Zuletzt gescannt von:</strong>
-                ${escapeHTML(lastScanner)}
-                <br>
+            <div class="folderMeta">
 
-                🕒 <strong>Letzter Scan:</strong>
-                ${formatDate(folder.lastScannedAt)}
+                <div>
+                    📡 Gescannt von:
+                    <strong>
+                        ${esc(scannedBy)}
+                    </strong>
+                </div>
+
+                <div class="holder">
+                    🙋 Gerade bei:
+                    <strong>
+                        ${esc(holder)}
+                    </strong>
+                </div>
 
             </div>
 
-            <div class="folder-actions">
+            <div class="folderActions">
 
-                <button class="small-btn"
-                        data-folder-action="scan"
-                        data-id="${folder.id}">
-                    📡 Scan
-                </button>
-
-                <button class="small-btn"
-                        data-folder-action="open"
-                        data-id="${folder.id}">
+                <button
+                    class="smallBtn"
+                    data-action="open-folder"
+                    data-id="${folder.id}">
                     👁️ Öffnen
                 </button>
 
-                <button class="small-btn"
-                        data-folder-action="copy"
-                        data-id="${folder.id}">
+                <button
+                    class="smallBtn"
+                    data-action="copy-link"
+                    data-id="${folder.id}">
                     🔗 Link
                 </button>
 
-                ${
-                    canEdit
-                    ?
-                    `
-                    <button class="small-btn"
-                            data-folder-action="edit"
-                            data-id="${folder.id}">
-                        ✏️
-                    </button>
+                <button
+                    class="smallBtn"
+                    data-action="take-folder"
+                    data-id="${folder.id}">
+                    🙋 Übernehmen
+                </button>
 
-                    <button class="small-btn"
-                            data-folder-action="delete"
-                            data-id="${folder.id}">
-                        🗑️
-                    </button>
-                    `
-                    :
-                    ""
-                }
+                <button
+                    class="smallBtn"
+                    data-action="release-folder"
+                    data-id="${folder.id}">
+                    ↩️ Freigeben
+                </button>
+
+                <button
+                    class="smallBtn"
+                    data-action="edit-folder"
+                    data-id="${folder.id}">
+                    ✏️
+                </button>
+
+                <button
+                    class="smallBtn"
+                    data-action="delete-folder"
+                    data-id="${folder.id}">
+                    🗑️
+                </button>
 
             </div>
 
-        </article>
+        </div>
+
     `;
-}
 
-
-function renderFolders(){
-
-    const target =
-        $("foldersGrid");
-
-    const search =
-        $("globalSearch")
-            .value
-            .trim()
-            .toLowerCase();
-
-    let list =
-        folders.filter(folder => {
-
-            if(!search){
-                return true;
-            }
-
-            return (
-                String(folder.name || "")
-                    .toLowerCase()
-                    .includes(search)
-                ||
-                String(folder.category || "")
-                    .toLowerCase()
-                    .includes(search)
-                ||
-                String(folder.chipId || "")
-                    .toLowerCase()
-                    .includes(search)
-            );
-        });
-
-
-    if(!list.length){
-
-        target.innerHTML = `
-            <div class="empty"
-                 style="grid-column:1/-1">
-
-                <div class="empty-icon">
-                    📁
-                </div>
-
-                ${
-                    search
-                    ? "Keine passenden Ordner gefunden."
-                    : "Noch keine Ordner vorhanden."
-                }
-
-            </div>
-        `;
-
-        return;
-    }
-
-    target.innerHTML =
-        list
-            .map(folderCardHTML)
-            .join("");
-
-    renderDashboardFolders();
 }
 
 
 /* =========================================================
-   ADD FOLDER
+   FOLDERS PAGE
 ========================================================= */
 
-function openAddFolder(){
+function renderFoldersPage(el){
 
-    refreshFolderCategorySelect();
+    el.innerHTML = `
+
+        <div class="pageHeader">
+
+            <div>
+                <div class="pageTitle">
+                    Ordner
+                </div>
+
+                <div class="pageSub">
+                    Verwalte alle Ordner und Chip-Links.
+                </div>
+            </div>
+
+            <div class="headerActions">
+
+                <button
+                    class="btn btnPrimary"
+                    data-action="new-folder">
+                    ➕ Neuer Ordner
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="scanHero">
+
+            <h2>📡 NFC / Chip-System</h2>
+
+            <p>
+                Jeder Ordner besitzt einen eigenen Link.
+                Beim Öffnen des Links wird der Status
+                automatisch zwischen 🟢 und 🔴 gewechselt.
+            </p>
+
+        </div>
+
+
+        <div class="folderGrid">
+
+            ${
+                folders.length
+                ? folders.map(folderCard).join("")
+                : `
+                <div class="card" style="grid-column:1/-1">
+                    <div class="empty">
+                        <div class="emptyIcon">📁</div>
+                        Noch keine Ordner.
+                        <br><br>
+                        <button
+                            class="btn btnPrimary"
+                            data-action="new-folder">
+                            ➕ Ersten Ordner erstellen
+                        </button>
+                    </div>
+                </div>
+                `
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CREATE FOLDER
+========================================================= */
+
+function openNewFolder(){
+
+    const categoryOptions =
+        categories
+        .map(
+            c =>
+            `<option value="${esc(c.name)}">
+                ${esc(c.name)}
+            </option>`
+        )
+        .join("");
 
     openModal(
         "📁 Neuen Ordner erstellen",
         `
-            <div class="form-group">
-                <label>Ordnername</label>
 
-                <input
-                    id="modalFolderName"
-                    required
-                    placeholder="z.B. Lager 01">
-            </div>
+        <div class="formGroup">
+            <label>Ordnername</label>
+            <input
+                id="folderName"
+                class="input"
+                required
+                placeholder="z. B. Kundenakten">
+        </div>
 
-            <div class="form-group">
-                <label>Kategorie</label>
+        <div class="formGroup">
+            <label>Kategorie</label>
+            <select id="folderCategory" class="input">
 
-                <select id="modalFolderCategory">
-                    <option value="">
-                        Keine Kategorie
-                    </option>
-                </select>
-            </div>
+                <option value="">
+                    Keine Kategorie
+                </option>
 
-            <div class="form-group">
-                <label>Beschreibung</label>
+                ${categoryOptions}
 
-                <textarea
-                    id="modalFolderDescription"
-                    placeholder="Beschreibung des Ordners..."></textarea>
-            </div>
+            </select>
+        </div>
+
+        <div class="formGroup">
+            <label>Beschreibung</label>
+            <textarea
+                id="folderDescription"
+                class="input"
+                rows="4"
+                placeholder="Beschreibung des Ordners"></textarea>
+        </div>
+
+        <div class="statusPanel">
+            🔗 Nach dem Speichern wird automatisch
+            ein eindeutiger Chip-Link erzeugt.
+        </div>
+
         `,
+        "Ordner erstellen",
         async () => {
 
-            if(!currentUser){
-
-                toast(
-                    "Bitte zuerst anmelden.",
-                    "error"
-                );
-
-                return;
-            }
-
             const name =
-                $("modalFolderName")
-                    .value
-                    .trim();
+                $("folderName").value.trim();
 
             const category =
-                $("modalFolderCategory")
-                    .value
-                    .trim();
+                $("folderCategory").value.trim();
 
             const description =
-                $("modalFolderDescription")
-                    .value
-                    .trim();
+                $("folderDescription").value.trim();
 
             if(!name){
 
                 toast(
-                    "Bitte einen Ordnernamen eingeben.",
+                    "❌ Bitte einen Ordnernamen eingeben.",
                     "error"
                 );
 
                 return;
+
             }
 
             const chipId =
                 makeChipId();
 
-            try{
+            await addDoc(
+                collection(db,"folders"),
+                {
 
-                await addDoc(
-                    collection(db,"folders"),
-                    {
-                        name,
-                        category,
-                        description,
+                    name,
+                    category,
+                    description,
 
-                        chipId,
-
-                        chipActive:false,
-
-                        currentHolderUid:"",
-                        currentHolderName:"",
-
-                        lastScannedByUid:"",
-                        lastScannedByName:"",
-                        lastScannedAt:null,
-
-                        createdBy:
-                            currentUser.uid,
-
-                        createdByName:
-                            getUserName(),
-
-                        createdByEmail:
-                            currentUser.email || "",
-
-                        createdAt:
-                            serverTimestamp(),
-
-                        updatedAt:
-                            serverTimestamp()
-                    }
-                );
-
-                closeModal();
-
-                toast(
-                    "📁 Ordner erstellt. Chip-ID: " +
                     chipId,
-                    "success"
-                );
 
-            }catch(error){
+                    chipActive:false,
 
-                console.error(error);
+                    heldByUid:"",
+                    heldByName:"",
 
-                toast(
-                    "Ordner konnte nicht erstellt werden: " +
-                    friendlyFirebaseError(error),
-                    "error"
-                );
-            }
+                    lastScannedByUid:"",
+                    lastScannedByName:"",
+
+                    createdBy:
+                        currentUser.uid,
+
+                    createdByName:
+                        currentProfile?.name ||
+                        currentUser.displayName ||
+                        currentUser.email,
+
+                    createdByEmail:
+                        currentUser.email || "",
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    updatedAt:
+                        serverTimestamp()
+
+                }
+            );
+
+            closeModal();
+
+            toast(
+                "📁 Ordner erfolgreich erstellt.",
+                "success"
+            );
+
         }
     );
+
 }
-
-
-$("addFolderButton")
-    .addEventListener(
-        "click",
-        openAddFolder
-    );
-
-$("dashboardAddFolder")
-    .addEventListener(
-    "click",
-    openAddFolder
-);
 
 
 /* =========================================================
@@ -2963,211 +2583,93 @@ $("dashboardAddFolder")
 function openEditFolder(id){
 
     const folder =
-        folders.find(
-            item => item.id === id
-        );
+        folders.find(x => x.id === id);
 
-    if(!folder){
-        return;
-    }
-
-    refreshFolderCategorySelect();
+    if(!folder) return;
 
     openModal(
         "✏️ Ordner bearbeiten",
         `
-            <div class="form-group">
 
-                <label>Ordnername</label>
+        <div class="formGroup">
+            <label>Ordnername</label>
+            <input
+                id="editFolderName"
+                class="input"
+                value="${esc(folder.name)}">
+        </div>
 
-                <input
-                    id="modalFolderName"
-                    value="${escapeHTML(folder.name || "")}"
-                    required>
+        <div class="formGroup">
+            <label>Kategorie</label>
+            <input
+                id="editFolderCategory"
+                class="input"
+                value="${esc(folder.category || "")}">
+        </div>
 
-            </div>
+        <div class="formGroup">
+            <label>Beschreibung</label>
+            <textarea
+                id="editFolderDescription"
+                class="input"
+                rows="4">${esc(folder.description || "")}</textarea>
+        </div>
 
-            <div class="form-group">
+        <div class="statusPanel">
+            🔗 Chip-ID:
+            <strong>${esc(folder.chipId || folder.id)}</strong>
+        </div>
 
-                <label>Kategorie</label>
-
-                <select id="modalFolderCategory">
-                    <option value="">
-                        Keine Kategorie
-                    </option>
-
-                    ${
-                        categories
-                            .map(category => `
-                                <option
-                                    value="${escapeHTML(category.name || "")}"
-                                    ${category.name === folder.category ? "selected" : ""}>
-                                    ${escapeHTML(category.name || "")}
-                                </option>
-                            `)
-                            .join("")
-                    }
-
-                </select>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Beschreibung</label>
-
-                <textarea
-                    id="modalFolderDescription">${escapeHTML(folder.description || "")}</textarea>
-
-            </div>
-
-            <div class="card"
-                 style="background:var(--card2);box-shadow:none">
-
-                <strong>🔗 Chip-ID</strong>
-
-                <div style="margin-top:8px;color:var(--muted)">
-                    ${escapeHTML(folder.chipId || "—")}
-                </div>
-
-            </div>
         `,
+        "Änderungen speichern",
         async () => {
 
             const name =
-                $("modalFolderName")
-                    .value
-                    .trim();
-
-            const category =
-                $("modalFolderCategory")
-                    .value
-                    .trim();
-
-            const description =
-                $("modalFolderDescription")
-                    .value
-                    .trim();
+                $("editFolderName").value.trim();
 
             if(!name){
 
                 toast(
-                    "Ordnername fehlt.",
+                    "❌ Ordnername fehlt.",
                     "error"
                 );
 
                 return;
+
             }
 
-            try{
+            await updateDoc(
+                doc(db,"folders",id),
+                {
 
-                await updateDoc(
-                    doc(
-                        db,
-                        "folders",
-                        id
-                    ),
-                    {
-                        name,
-                        category,
-                        description,
+                    name,
 
-                        updatedAt:
-                            serverTimestamp()
-                    }
-                );
+                    category:
+                        $("editFolderCategory")
+                        .value
+                        .trim(),
 
-                closeModal();
+                    description:
+                        $("editFolderDescription")
+                        .value
+                        .trim(),
 
-                toast(
-                    "Ordner gespeichert.",
-                    "success"
-                );
+                    updatedAt:
+                        serverTimestamp()
 
-            }catch(error){
+                }
+            );
 
-                console.error(error);
+            closeModal();
 
-                toast(
-                    friendlyFirebaseError(error),
-                    "error"
-                );
-            }
+            toast(
+                "✅ Ordner gespeichert.",
+                "success"
+            );
+
         }
     );
-}
 
-
-/* =========================================================
-   DELETE FOLDER
-========================================================= */
-
-async function deleteFolder(id){
-
-    const folder =
-        folders.find(
-            item => item.id === id
-        );
-
-    if(!folder){
-        return;
-    }
-
-    const ok =
-        confirm(
-            `Ordner "${folder.name}" wirklich löschen?`
-        );
-
-    if(!ok){
-        return;
-    }
-
-    try{
-
-        await deleteDoc(
-            doc(
-                db,
-                "folders",
-                id
-            )
-        );
-
-        toast(
-            "Ordner gelöscht.",
-            "success"
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            friendlyFirebaseError(error),
-            "error"
-        );
-    }
-}
-
-
-/* =========================================================
-   COPY LINK
-========================================================= */
-
-async function copyFolderLink(id){
-
-    const folder =
-        folders.find(
-            item => item.id === id
-        );
-
-    if(!folder){
-        return;
-    }
-
-    const link =
-        getChipLink(folder);
-
-    await copyText(link);
 }
 
 
@@ -3178,739 +2680,369 @@ async function copyFolderLink(id){
 function openFolder(id){
 
     const folder =
-        folders.find(
-            item => item.id === id
-        );
+        folders.find(x => x.id === id);
 
-    if(!folder){
-        return;
-    }
+    if(!folder) return;
+
+    activeFolder = folder;
+
+    const link =
+        getChipLink(folder);
 
     openModal(
-        "📁 " + (folder.name || "Ordner"),
+        "📁 " + folder.name,
         `
-            <div class="status ${folder.chipActive ? "red" : "green"}">
 
+        <div class="statusPanel ${
+            folder.chipActive === true
+            ? "green"
+            : "red"
+        }">
+
+            <strong>
                 ${
-                    folder.chipActive
-                    ? "🔴 Ausgegeben"
-                    : "🟢 Verfügbar"
+                    folder.chipActive === true
+                    ? "🟢 Ordner ist aktiv"
+                    : "🔴 Ordner ist nicht aktiv"
                 }
+            </strong>
+
+        </div>
+
+        <br>
+
+        <div class="formGroup">
+
+            <label>Chip-Link</label>
+
+            <div class="linkBox">
+
+                <input
+                    id="folderLink"
+                    class="input"
+                    readonly
+                    value="${esc(link)}">
+
+                <button
+                    type="button"
+                    class="btn btnSecondary"
+                    id="copyModalLink">
+                    🔗 Kopieren
+                </button>
 
             </div>
 
-            <div class="card"
-                 style="box-shadow:none;background:var(--card2)">
+        </div>
 
-                <strong>Beschreibung</strong>
+        <div class="formGroup">
 
-                <p style="color:var(--muted)">
-                    ${escapeHTML(folder.description || "Keine Beschreibung.")}
-                </p>
+            <label>Zuletzt gescannt von</label>
 
-                <strong>🔗 Chip-ID</strong>
+            <input
+                class="input"
+                readonly
+                value="${esc(
+                    folder.lastScannedByName ||
+                    "Noch nie"
+                )}">
 
-                <p style="color:var(--muted)">
-                    ${escapeHTML(folder.chipId || "—")}
-                </p>
+        </div>
 
-                <strong>👤 Gerade bei</strong>
+        <div class="formGroup">
 
-                <p style="color:var(--muted)">
-                    ${escapeHTML(folder.currentHolderName || "Niemand")}
-                </p>
+            <label>Gerade bei</label>
 
-                <strong>📡 Zuletzt gescannt von</strong>
+            <input
+                class="input"
+                readonly
+                value="${esc(
+                    folder.heldByName ||
+                    "Niemand"
+                )}">
 
-                <p style="color:var(--muted)">
-                    ${escapeHTML(folder.lastScannedByName || "Noch niemand")}
-                </p>
+        </div>
 
-                <strong>🕒 Letzter Scan</strong>
+        <div class="formGroup">
 
-                <p style="color:var(--muted)">
-                    ${formatDate(folder.lastScannedAt)}
-                </p>
+            <label>Chip-ID</label>
 
-            </div>
+            <input
+                class="input"
+                readonly
+                value="${esc(
+                    folder.chipId ||
+                    folder.id
+                )}">
 
-            <br>
+        </div>
 
-            <button type="button"
-                    class="btn btn-primary"
-                    id="modalCopyLink">
-                🔗 Chip-Link kopieren
-            </button>
         `,
+        "Schließen",
         null,
         false
     );
 
     setTimeout(() => {
 
-        const button =
-            $("modalCopyLink");
+        const btn =
+            $("copyModalLink");
 
-        if(button){
+        if(btn){
 
-            button.addEventListener(
+            btn.addEventListener(
                 "click",
-                () => copyFolderLink(id)
+                () => copyText(link)
             );
+
         }
 
-    },0);
+    },50);
+
 }
 
 
 /* =========================================================
-   FOLDER EVENTS
+   DELETE FOLDER
 ========================================================= */
 
-$("foldersGrid")
-    .addEventListener(
-        "click",
-        folderActionHandler
-    );
+async function deleteFolder(id){
 
+    const folder =
+        folders.find(x => x.id === id);
 
-$("dashboardFolders")
-    .addEventListener(
-        "click",
-        folderActionHandler
-    );
+    if(!folder) return;
 
+    if(
+        !confirm(
+            `Ordner "${folder.name}" wirklich löschen?`
+        )
+    ) return;
 
-function folderActionHandler(event){
+    try{
 
-    const button =
-        event.target.closest(
-            "[data-folder-action]"
+        await deleteDoc(
+            doc(db,"folders",id)
         );
 
-    if(!button){
-        return;
+        toast(
+            "🗑️ Ordner gelöscht.",
+            "success"
+        );
+
+    }catch(error){
+
+        toast(
+            "❌ " + friendlyError(error),
+            "error"
+        );
+
     }
 
-    const action =
-        button.dataset.folderAction;
-
-    const id =
-        button.dataset.id;
-
-    if(action === "scan"){
-
-        scanFolder(id);
-
-    }else if(action === "open"){
-
-        openFolder(id);
-
-    }else if(action === "copy"){
-
-        copyFolderLink(id);
-
-    }else if(action === "edit"){
-
-        openEditFolder(id);
-
-    }else if(action === "delete"){
-
-        deleteFolder(id);
-    }
 }
 
 
 /* =========================================================
-   SCAN FOLDER
+   TAKE / RELEASE FOLDER
 ========================================================= */
 
-/*
- * ROT = ausgegeben
- *
- * GRÜN = zurück / verfügbar
- *
- * Der Benutzer, der den Scan ausführt,
- * wird gespeichert.
- *
- * Firestore Transaction sorgt dafür,
- * dass der Status atomar gewechselt wird.
- */
+async function takeFolder(id){
 
-async function scanFolder(folderId){
+    const folder =
+        folders.find(x => x.id === id);
+
+    if(!folder) return;
+
+    try{
+
+        await updateDoc(
+            doc(db,"folders",id),
+            {
+
+                heldByUid:
+                    currentUser.uid,
+
+                heldByName:
+                    currentProfile?.name ||
+                    currentUser.displayName ||
+                    currentUser.email,
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+        toast(
+            "🙋 Ordner wurde übernommen.",
+            "success"
+        );
+
+    }catch(error){
+
+        toast(
+            "❌ " + friendlyError(error),
+            "error"
+        );
+
+    }
+
+}
+
+
+async function releaseFolder(id){
+
+    try{
+
+        await updateDoc(
+            doc(db,"folders",id),
+            {
+
+                heldByUid:"",
+                heldByName:"",
+
+                updatedAt:
+                    serverTimestamp()
+
+            }
+        );
+
+        toast(
+            "↩️ Ordner wurde freigegeben.",
+            "success"
+        );
+
+    }catch(error){
+
+        toast(
+            "❌ " + friendlyError(error),
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   REAL CHIP/NFC SCAN
+========================================================= */
+
+async function scanChip(folder){
 
     if(!currentUser){
 
         toast(
-            "Bitte zuerst anmelden.",
+            "❌ Bitte zuerst anmelden.",
             "error"
         );
 
         return;
+
     }
 
-    const folderReference =
-        doc(
-            db,
-            "folders",
-            folderId
-        );
-
-    let newActiveState = false;
-    let folderName = "";
+    const ref =
+        doc(db,"folders",folder.id);
 
     try{
+
+        let newState = false;
 
         await runTransaction(
             db,
             async transaction => {
 
                 const snapshot =
-                    await transaction.get(
-                        folderReference
-                    );
+                    await transaction.get(ref);
 
                 if(!snapshot.exists()){
 
                     throw new Error(
                         "Ordner existiert nicht."
                     );
+
                 }
 
                 const data =
                     snapshot.data();
 
-                const currentlyActive =
+                const oldState =
                     data.chipActive === true;
 
-                /*
-                 * bisher grün -> rot
-                 * bisher rot -> grün
-                 */
-                newActiveState =
-                    !currentlyActive;
+                newState = !oldState;
 
-                folderName =
-                    data.name || "Ordner";
+                transaction.update(
+                    ref,
+                    {
 
-                const scannerName =
-                    getUserName();
+                        chipActive:
+                            newState,
 
+                        lastScannedByUid:
+                            currentUser.uid,
 
-                if(newActiveState){
+                        lastScannedByName:
+                            currentProfile?.name ||
+                            currentUser.displayName ||
+                            currentUser.email,
 
-                    /*
-                     * ROT:
-                     * Person bekommt den Ordner.
-                     */
+                        lastScannedAt:
+                            serverTimestamp(),
 
-                    transaction.update(
-                        folderReference,
-                        {
-                            chipActive:true,
+                        updatedAt:
+                            serverTimestamp()
 
-                            currentHolderUid:
-                                currentUser.uid,
+                    }
+                );
 
-                            currentHolderName:
-                                scannerName,
-
-                            lastScannedByUid:
-                                currentUser.uid,
-
-                            lastScannedByName:
-                                scannerName,
-
-                            lastScannedAt:
-                                serverTimestamp(),
-
-                            updatedAt:
-                                serverTimestamp()
-                        }
-                    );
-
-                }else{
-
-                    /*
-                     * GRÜN:
-                     * Ordner wird zurückgegeben.
-                     */
-
-                    transaction.update(
-                        folderReference,
-                        {
-                            chipActive:false,
-
-                            currentHolderUid:"",
-                            currentHolderName:"",
-
-                            lastScannedByUid:
-                                currentUser.uid,
-
-                            lastScannedByName:
-                                scannerName,
-
-                            lastScannedAt:
-                                serverTimestamp(),
-
-                            updatedAt:
-                                serverTimestamp()
-                        }
-                    );
-                }
             }
         );
 
+        if(newState){
 
-        await addDoc(
-            collection(
-                db,
-                "notifications"
-            ),
-            {
-                type:
-                    "chip_scan",
+            toast(
+                "🟢 Chip erkannt – Ordner ist jetzt aktiv.",
+                "success"
+            );
 
-                folderId,
+        }else{
 
-                folderName,
+            toast(
+                "🔴 Chip erneut erkannt – Ordner ist jetzt deaktiviert.",
+                "warning"
+            );
 
-                action:
-                    newActiveState
-                    ? "checkout"
-                    : "return",
+        }
 
-                scannedByUid:
-                    currentUser.uid,
+        currentPage = "folders";
 
-                scannedByName:
-                    getUserName(),
-
-                createdAt:
-                    serverTimestamp()
-            }
-        );
-
-
-        /*
-         * Scan-Historie
-         */
-        await addDoc(
-            collection(
-                db,
-                "scanLogs"
-            ),
-            {
-                folderId,
-
-                folderName,
-
-                action:
-                    newActiveState
-                    ? "checkout"
-                    : "return",
-
-                scannedByUid:
-                    currentUser.uid,
-
-                scannedByName:
-                    getUserName(),
-
-                createdAt:
-                    serverTimestamp()
-            }
-        );
-
-
-        showScanResult(
-            folderName,
-            newActiveState
-        );
-
-
-        toast(
-            newActiveState
-                ? `🔴 ${folderName} wurde ausgegeben.`
-                : `🟢 ${folderName} wurde zurückgegeben.`,
-            newActiveState
-                ? "warning"
-                : "success"
-        );
+        renderPage();
 
     }catch(error){
 
         console.error(error);
 
         toast(
-            "Scan konnte nicht verarbeitet werden: " +
-            friendlyFirebaseError(error),
-            "error"
-        );
-    }
-}
-
-
-/* =========================================================
-   SCAN RESULT
-========================================================= */
-
-function showScanResult(
-    folderName,
-    active
-){
-
-    const box =
-        $("scanResult");
-
-    box.className =
-        "chip-result show " +
-        (active ? "red" : "green");
-
-    box.innerHTML = active
-        ? `
-            <strong style="font-size:17px">
-                🔴 Ordner ausgegeben
-            </strong>
-
-            <p>
-                <strong>${escapeHTML(folderName)}</strong>
-                ist jetzt bei
-                <strong>${escapeHTML(getUserName())}</strong>.
-            </p>
-
-            <p style="margin-bottom:0">
-                Dieser Scan wurde gerade von
-                <strong>${escapeHTML(getUserName())}</strong>
-                durchgeführt.
-            </p>
-        `
-        : `
-            <strong style="font-size:17px">
-                🟢 Ordner zurückgegeben
-            </strong>
-
-            <p>
-                <strong>${escapeHTML(folderName)}</strong>
-                ist wieder verfügbar.
-            </p>
-
-            <p style="margin-bottom:0">
-                Zurückgegeben von
-                <strong>${escapeHTML(getUserName())}</strong>.
-            </p>
-        `;
-}
-
-
-/* =========================================================
-   MANUAL CHIP
-========================================================= */
-
-$("manualScanButton")
-    .addEventListener(
-        "click",
-        async () => {
-
-            const chip =
-                $("manualChipInput")
-                    .value
-                    .trim();
-
-            if(!chip){
-
-                toast(
-                    "Bitte eine Chip-ID eingeben.",
-                    "error"
-                );
-
-                return;
-            }
-
-            await processChipId(chip);
-        }
-    );
-
-
-async function processChipId(chipId){
-
-    const clean =
-        String(chipId)
-            .trim()
-            .toUpperCase();
-
-    const folder =
-        folders.find(
-            item =>
-                String(item.chipId || "")
-                    .toUpperCase() === clean
-                ||
-                item.id === chipId
-        );
-
-    if(!folder){
-
-        toast(
-            "❌ Kein Ordner mit dieser Chip-ID gefunden.",
+            "❌ Chip konnte nicht verarbeitet werden: " +
+            friendlyError(error),
             "error"
         );
 
-        return;
     }
 
-    await scanFolder(
-        folder.id
-    );
 }
 
 
 /* =========================================================
-   WEB NFC
+   INCOMING NFC / CHIP LINK
 ========================================================= */
 
-function updateNfcSupport(){
+let incomingHandled = false;
 
-    if("NDEFReader" in window){
+async function handleIncomingChipLink(){
 
-        $("nfcSupport").innerHTML =
-            "✅ Dieser Browser stellt Web-NFC bereit.";
+    if(incomingHandled) return;
 
-    }else{
-
-        $("nfcSupport").innerHTML =
-            "ℹ️ Web-NFC wird von diesem Browser nicht unterstützt. Verwende den Chip-Link oder die manuelle Chip-ID.";
-
-    }
-}
-
-
-async function startNfcScan(){
-
-    if(!("NDEFReader" in window)){
-
-        toast(
-            "Web-NFC wird von diesem Browser nicht unterstützt.",
-            "warning"
-        );
-
-        return;
-    }
-
-    try{
-
-        nfcReader =
-            new NDEFReader();
-
-        nfcAbortController =
-            new AbortController();
-
-        await nfcReader.scan({
-            signal:
-                nfcAbortController.signal
-        });
-
-
-        toast(
-            "📡 NFC-Scan gestartet. Halte einen NFC-Chip an das Gerät.",
-            "success"
-        );
-
-
-        nfcReader.onreadingerror =
-            () => {
-
-                toast(
-                    "NFC-Chip konnte nicht gelesen werden.",
-                    "error"
-                );
-            };
-
-
-        nfcReader.onreading =
-            async event => {
-
-                let chipId = "";
-
-                /*
-                 * URL/Text aus NFC-Nachrichten lesen.
-                 */
-
-                for(
-                    const record of event.message.records
-                ){
-
-                    try{
-
-                        const decoder =
-                            new TextDecoder(
-                                record.encoding ||
-                                "utf-8"
-                            );
-
-                        const text =
-                            decoder.decode(
-                                record.data
-                            ).trim();
-
-                        if(text){
-                            chipId = text;
-                        }
-
-                    }catch{
-
-                        /* ignorieren */
-                    }
-
-
-                    /*
-                     * Falls der NFC-Chip eine URL enthält.
-                     */
-
-                    if(
-                        record.recordType ===
-                        "url"
-                    ){
-
-                        try{
-
-                            const url =
-                                new URL(
-                                    new TextDecoder()
-                                        .decode(record.data)
-                                );
-
-                            const chip =
-                                url.searchParams
-                                    .get("chip");
-
-                            if(chip){
-                                chipId = chip;
-                            }
-
-                        }catch{
-
-                            /* ignorieren */
-                        }
-                    }
-                }
-
-
-                /*
-                 * Falls der Browser die Seriennummer
-                 * zur Verfügung stellt.
-                 */
-                if(!chipId && event.serialNumber){
-
-                    chipId =
-                        event.serialNumber;
-                }
-
-
-                if(!chipId){
-
-                    toast(
-                        "NFC erkannt, aber keine Chip-ID gefunden.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                /*
-                 * URL auslesen, falls der NFC-Chip
-                 * direkt unseren Chip-Link enthält.
-                 */
-                if(
-                    chipId.startsWith("http://") ||
-                    chipId.startsWith("https://")
-                ){
-
-                    try{
-
-                        const url =
-                            new URL(chipId);
-
-                        const chip =
-                            url.searchParams
-                                .get("chip");
-
-                        if(chip){
-                            chipId = chip;
-                        }
-
-                    }catch{
-
-                        /* ignorieren */
-                    }
-                }
-
-
-                $("manualChipInput").value =
-                    chipId;
-
-                await processChipId(
-                    chipId
-                );
-            };
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "NFC konnte nicht gestartet werden: " +
-            (error?.message || "unbekannter Fehler"),
-            "error"
-        );
-    }
-}
-
-
-function stopNfcScan(){
-
-    try{
-
-        if(nfcAbortController){
-
-            nfcAbortController.abort();
-        }
-
-    }catch{}
-
-    nfcReader = null;
-    nfcAbortController = null;
-
-    toast(
-        "NFC-Scan gestoppt.",
-        "success"
-    );
-}
-
-
-$("startNfcButton")
-    .addEventListener(
-        "click",
-        startNfcScan
-    );
-
-
-$("stopNfcButton")
-    .addEventListener(
-        "click",
-        stopNfcScan
-    );
-
-updateNfcSupport();
-
-
-/* =========================================================
-   URL CHIP
-========================================================= */
-
-let processedUrlChip = "";
-
-
-function handleUrlChip(){
+    incomingHandled = true;
 
     const params =
         new URLSearchParams(
@@ -3918,41 +3050,40 @@ function handleUrlChip(){
         );
 
     const chip =
-        params.get("chip");
+        params.get("folder");
 
-    if(!chip){
-        return;
-    }
-
-    /*
-     * Verhindert, dass derselbe URL-Aufruf
-     * innerhalb derselben Seiteninstanz mehrfach
-     * automatisch ausgeführt wird.
-     */
-
-    if(processedUrlChip === chip){
-        return;
-    }
+    if(!chip) return;
 
     const folder =
         folders.find(
-            item =>
-                String(item.chipId || "")
-                    .toUpperCase() ===
-                String(chip)
-                    .toUpperCase()
+            x =>
+                x.chipId === chip ||
+                x.id === chip
         );
 
     if(!folder){
+
+        toast(
+            "❌ Kein Ordner für diesen Chip gefunden.",
+            "error"
+        );
+
         return;
+
     }
 
-    processedUrlChip =
-        chip;
+    /*
+       Genau hier passiert der Scan.
 
-    openPage("scan");
+       Der NFC-Chip öffnet die URL:
+       ?folder=CHIP-....
 
-    processChipId(chip);
+       Danach wird der Status atomar
+       zwischen rot und grün umgeschaltet.
+    */
+
+    await scanChip(folder);
+
 }
 
 
@@ -3960,429 +3091,522 @@ function handleUrlChip(){
    CATEGORIES
 ========================================================= */
 
-function refreshFolderCategorySelect(){
+function renderCategoriesPage(el){
 
-    const select =
-        $("modalFolderCategory");
+    el.innerHTML = `
 
-    if(!select){
-        return;
-    }
+        <div class="pageHeader">
 
-    const current =
-        select.value;
-
-    select.innerHTML = `
-        <option value="">
-            Keine Kategorie
-        </option>
-
-        ${
-            categories
-                .map(category => `
-                    <option value="${escapeHTML(category.name || "")}">
-                        ${escapeHTML(category.name || "")}
-                    </option>
-                `)
-                .join("")
-        }
-    `;
-
-    if(current){
-        select.value = current;
-    }
-}
-
-
-function renderCategories(){
-
-    const target =
-        $("categoriesGrid");
-
-    if(!categories.length){
-
-        target.innerHTML = `
-            <div class="empty"
-                 style="grid-column:1/-1">
-
-                <div class="empty-icon">
-                    🗂️
+            <div>
+                <div class="pageTitle">
+                    🗂️ Kategorien
                 </div>
 
-                Noch keine Kategorien vorhanden.
-
+                <div class="pageSub">
+                    Ordner übersichtlich gruppieren.
+                </div>
             </div>
-        `;
 
-        return;
-    }
+            <button
+                class="btn btnPrimary"
+                data-action="new-category">
+                ➕ Kategorie
+            </button>
+
+        </div>
 
 
-    target.innerHTML =
-        categories
-            .map(category => {
+        <div class="card">
 
-                const count =
-                    folders.filter(
-                        folder =>
-                            folder.category ===
-                            category.name
-                    ).length;
+            <div class="cardBody">
 
-                return `
-                    <div class="card">
+                ${
+                    categories.length
+                    ? categories.map(c => `
 
-                        <div style="font-size:30px">
-                            🗂️
+                        <div class="userCard">
+
+                            <div class="statIcon">
+                                🗂️
+                            </div>
+
+                            <div class="userInfo">
+
+                                <div class="userName">
+                                    ${esc(c.name)}
+                                </div>
+
+                                <div class="userEmail">
+                                    ${esc(
+                                        c.description ||
+                                        "Keine Beschreibung"
+                                    )}
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="smallBtn"
+                                data-action="delete-category"
+                                data-id="${c.id}">
+                                🗑️
+                            </button>
+
                         </div>
 
-                        <h3>
-                            ${escapeHTML(category.name || "Kategorie")}
-                        </h3>
-
-                        <p style="color:var(--muted)">
-                            ${count} Ordner
-                        </p>
-
-                        ${
-                            isAdmin
-                            ?
-                            `
-                            <button class="small-btn"
-                                    data-category-delete="${category.id}">
-                                🗑️ Löschen
-                            </button>
-                            `
-                            :
-                            ""
-                        }
-
+                    `).join("")
+                    : `
+                    <div class="empty">
+                        Noch keine Kategorien vorhanden.
                     </div>
-                `;
+                    `
+                }
 
-            })
-            .join("");
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
-$("categoriesGrid")
-    .addEventListener(
-        "click",
-        async event => {
+function openNewCategory(){
 
-            const button =
-                event.target.closest(
-                    "[data-category-delete]"
-                );
+    openModal(
+        "🗂️ Neue Kategorie",
+        `
 
-            if(!button){
-                return;
-            }
+        <div class="formGroup">
 
-            const id =
-                button.dataset.categoryDelete;
+            <label>Name</label>
 
-            if(!isAdmin){
+            <input
+                id="categoryName"
+                class="input"
+                placeholder="z. B. Personal">
+
+        </div>
+
+        <div class="formGroup">
+
+            <label>Beschreibung</label>
+
+            <textarea
+                id="categoryDescription"
+                class="input"
+                rows="3"></textarea>
+
+        </div>
+
+        `,
+        "Erstellen",
+        async () => {
+
+            const name =
+                $("categoryName")
+                .value
+                .trim();
+
+            if(!name){
 
                 toast(
-                    "Nur Admins können Kategorien löschen.",
+                    "❌ Name fehlt.",
                     "error"
                 );
 
                 return;
+
             }
 
-            if(
-                !confirm(
-                    "Kategorie wirklich löschen?"
-                )
-            ){
-                return;
-            }
+            await addDoc(
+                collection(db,"categories"),
+                {
 
-            try{
+                    name,
 
-                await deleteDoc(
-                    doc(
-                        db,
-                        "categories",
-                        id
-                    )
-                );
+                    description:
+                        $("categoryDescription")
+                        .value
+                        .trim(),
 
-                toast(
-                    "Kategorie gelöscht.",
-                    "success"
-                );
+                    createdBy:
+                        currentUser.uid,
 
-            }catch(error){
+                    createdAt:
+                        serverTimestamp()
 
-                toast(
-                    friendlyFirebaseError(error),
-                    "error"
-                );
-            }
-        }
-    );
-
-
-$("addCategoryButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            if(!isAdmin){
-
-                toast(
-                    "Nur Admins können Kategorien erstellen.",
-                    "error"
-                );
-
-                return;
-            }
-
-            openModal(
-                "🗂️ Kategorie erstellen",
-                `
-                    <div class="form-group">
-
-                        <label>Name</label>
-
-                        <input
-                            id="modalCategoryName"
-                            placeholder="z.B. Lager"
-                            required>
-
-                    </div>
-                `,
-                async () => {
-
-                    const name =
-                        $("modalCategoryName")
-                            .value
-                            .trim();
-
-                    if(!name){
-
-                        toast(
-                            "Name fehlt.",
-                            "error"
-                        );
-
-                        return;
-                    }
-
-                    try{
-
-                        await addDoc(
-                            collection(
-                                db,
-                                "categories"
-                            ),
-                            {
-                                name,
-
-                                createdBy:
-                                    currentUser.uid,
-
-                                createdAt:
-                                    serverTimestamp()
-                            }
-                        );
-
-                        closeModal();
-
-                        toast(
-                            "Kategorie erstellt.",
-                            "success"
-                        );
-
-                    }catch(error){
-
-                        toast(
-                            friendlyFirebaseError(error),
-                            "error"
-                        );
-                    }
                 }
             );
+
+            closeModal();
+
+            toast(
+                "🗂️ Kategorie erstellt.",
+                "success"
+            );
+
         }
     );
+
+}
+
+
+async function deleteCategory(id){
+
+    if(!isAdmin){
+
+        toast(
+            "🔒 Nur Administratoren dürfen Kategorien löschen.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if(
+        !confirm(
+            "Kategorie wirklich löschen?"
+        )
+    ) return;
+
+    await deleteDoc(
+        doc(db,"categories",id)
+    );
+
+    toast(
+        "🗑️ Kategorie gelöscht.",
+        "success"
+    );
+
+}
 
 
 /* =========================================================
    REQUESTS
 ========================================================= */
 
-function renderRequests(){
+function renderRequestsPage(el){
 
-    const target =
-        $("requestsTable");
+    el.innerHTML = `
 
-    if(!requests.length){
+        <div class="pageHeader">
 
-        target.innerHTML = `
-            <tr>
-                <td colspan="5"
-                    style="text-align:center;color:var(--muted)">
-                    Keine Anfragen.
-                </td>
-            </tr>
-        `;
+            <div>
+                <div class="pageTitle">
+                    📋 Anfragen
+                </div>
 
-        return;
-    }
+                <div class="pageSub">
+                    Interne Anfragen verwalten.
+                </div>
+            </div>
+
+            <button
+                class="btn btnPrimary"
+                data-action="new-request">
+                ➕ Anfrage
+            </button>
+
+        </div>
 
 
-    target.innerHTML =
-        requests
-            .map(request => {
+        <div class="card">
 
-                const canManage =
-                    isAdmin ||
-                    request.createdBy ===
-                    currentUser?.uid;
+            <div class="tableWrap">
 
-                return `
-                    <tr>
+                <table>
 
-                        <td>
-                            ${escapeHTML(request.folderName || "—")}
-                        </td>
+                    <thead>
+                        <tr>
+                            <th>Anfrage</th>
+                            <th>Von</th>
+                            <th>Status</th>
+                            <th>Datum</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                        <td>
-                            ${escapeHTML(request.createdByName || "—")}
-                        </td>
+                    <tbody>
 
-                        <td>
-                            ${escapeHTML(request.status || "offen")}
-                        </td>
+                        ${
+                            requests.length
+                            ? requests.map(r => `
 
-                        <td>
-                            ${formatDate(request.createdAt)}
-                        </td>
+                                <tr>
 
-                        <td>
+                                    <td>
+                                        <strong>
+                                            ${esc(r.title)}
+                                        </strong>
+                                    </td>
 
-                            ${
-                                canManage
-                                ?
-                                `
-                                <button class="small-btn"
-                                        data-request-delete="${request.id}">
-                                    🗑️
-                                </button>
-                                `
-                                :
-                                "—"
-                            }
+                                    <td>
+                                        ${esc(
+                                            r.createdByName ||
+                                            "—"
+                                        )}
+                                    </td>
 
-                        </td>
+                                    <td>
+                                        <span class="badge ${
+                                            r.status === "done"
+                                            ? "badgeGreen"
+                                            : "badgeOrange"
+                                        }">
+                                            ${
+                                                r.status === "done"
+                                                ? "Erledigt"
+                                                : "Offen"
+                                            }
+                                        </span>
+                                    </td>
 
-                    </tr>
-                `;
+                                    <td>
+                                        ${formatDate(r.createdAt)}
+                                    </td>
 
-            })
-            .join("");
+                                    <td>
+
+                                        <button
+                                            class="smallBtn"
+                                            data-action="toggle-request"
+                                            data-id="${r.id}">
+                                            ${
+                                                r.status === "done"
+                                                ? "↩️"
+                                                : "✅"
+                                            }
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            `).join("")
+                            : `
+                            <tr>
+                                <td colspan="5">
+                                    <div class="empty">
+                                        Keine Anfragen vorhanden.
+                                    </div>
+                                </td>
+                            </tr>
+                            `
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
-$("requestsTable")
-    .addEventListener(
-        "click",
-        async event => {
+function openNewRequest(){
 
-            const button =
-                event.target.closest(
-                    "[data-request-delete]"
-                );
+    openModal(
+        "📋 Neue Anfrage",
+        `
 
-            if(!button){
-                return;
-            }
+        <div class="formGroup">
 
-            try{
+            <label>Titel</label>
 
-                await deleteDoc(
-                    doc(
-                        db,
-                        "requests",
-                        button.dataset.requestDelete
-                    )
-                );
+            <input
+                id="requestTitle"
+                class="input"
+                placeholder="Was wird benötigt?">
+
+        </div>
+
+        <div class="formGroup">
+
+            <label>Beschreibung</label>
+
+            <textarea
+                id="requestDescription"
+                class="input"
+                rows="4"></textarea>
+
+        </div>
+
+        `,
+        "Anfrage erstellen",
+        async () => {
+
+            const title =
+                $("requestTitle")
+                .value
+                .trim();
+
+            if(!title){
 
                 toast(
-                    "Anfrage gelöscht.",
-                    "success"
-                );
-
-            }catch(error){
-
-                toast(
-                    friendlyFirebaseError(error),
+                    "❌ Titel fehlt.",
                     "error"
                 );
+
+                return;
+
             }
+
+            await addDoc(
+                collection(db,"requests"),
+                {
+
+                    title,
+
+                    description:
+                        $("requestDescription")
+                        .value
+                        .trim(),
+
+                    status:"open",
+
+                    createdBy:
+                        currentUser.uid,
+
+                    createdByName:
+                        currentProfile?.name ||
+                        currentUser.email,
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+            closeModal();
+
+            toast(
+                "📋 Anfrage erstellt.",
+                "success"
+            );
+
         }
     );
+
+}
+
+
+async function toggleRequest(id){
+
+    const request =
+        requests.find(x => x.id === id);
+
+    if(!request) return;
+
+    await updateDoc(
+        doc(db,"requests",id),
+        {
+
+            status:
+                request.status === "done"
+                ? "open"
+                : "done",
+
+            updatedAt:
+                serverTimestamp()
+
+        }
+    );
+
+}
 
 
 /* =========================================================
    USERS
 ========================================================= */
 
-function renderUsers(){
+function renderUsersPage(el){
 
-    const target =
-        $("usersTable");
+    el.innerHTML = `
 
-    if(!users.length){
+        <div class="pageHeader">
 
-        target.innerHTML = `
-            <tr>
-                <td colspan="4"
-                    style="text-align:center;color:var(--muted)">
-                    Keine Benutzer.
-                </td>
-            </tr>
-        `;
+            <div>
+                <div class="pageTitle">
+                    👥 Benutzer
+                </div>
 
-        return;
-    }
+                <div class="pageSub">
+                    Benutzer des OrdnerSystems.
+                </div>
+            </div>
+
+        </div>
 
 
-    target.innerHTML =
-        users
-            .map(user => {
+        <div class="card">
 
-                return `
-                    <tr>
+            <div class="cardBody">
 
-                        <td>
-                            ${escapeHTML(user.name || "—")}
-                        </td>
+                ${
+                    users.length
+                    ? users.map(u => `
 
-                        <td>
-                            ${escapeHTML(user.email || "—")}
-                        </td>
+                        <div class="userCard">
 
-                        <td>
-                            ${
-                                user.role === "admin"
-                                ? "🔒 Admin"
-                                : "👤 Benutzer"
-                            }
-                        </td>
+                            <div class="avatar">
+                                ${initials(
+                                    u.name,
+                                    u.email
+                                )}
+                            </div>
 
-                        <td>
-                            ${formatDate(user.createdAt)}
-                        </td>
+                            <div class="userInfo">
 
-                    </tr>
-                `;
+                                <div class="userName">
+                                    ${esc(
+                                        u.name ||
+                                        "Benutzer"
+                                    )}
+                                </div>
 
-            })
-            .join("");
+                                <div class="userEmail">
+                                    ${esc(
+                                        u.email ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </div>
+
+                            <span class="badge ${
+                                u.role === "admin"
+                                ? "badgeBlue"
+                                : "badgeGreen"
+                            }">
+                                ${
+                                    u.role === "admin"
+                                    ? "Admin"
+                                    : "Benutzer"
+                                }
+                            </span>
+
+                        </div>
+
+                    `).join("")
+                    : `
+                    <div class="empty">
+                        Keine Benutzer gefunden.
+                    </div>
+                    `
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
 }
 
 
@@ -4390,284 +3614,837 @@ function renderUsers(){
    NOTIFICATIONS
 ========================================================= */
 
-function renderNotifications(){
+function renderNotificationsPage(el){
 
-    const target =
-        $("notificationsList");
+    const own =
+        notifications.filter(
+            n =>
+                n.userId === currentUser.uid ||
+                n.userId === "all"
+        );
 
-    if(!notifications.length){
+    el.innerHTML = `
 
-        target.innerHTML = `
-            <div class="empty">
+        <div class="pageHeader">
 
-                <div class="empty-icon">
-                    🔔
+            <div>
+                <div class="pageTitle">
+                    🔔 Benachrichtigungen
                 </div>
 
-                Keine Benachrichtigungen.
+                <div class="pageSub">
+                    Wichtige Meldungen und Systemereignisse.
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="cardBody">
+
+                ${
+                    own.length
+                    ? own
+                        .sort(
+                            (a,b) =>
+                                (b.createdAt?.seconds || 0) -
+                                (a.createdAt?.seconds || 0)
+                        )
+                        .map(n => `
+
+                            <div class="userCard">
+
+                                <div class="statIcon">
+                                    🔔
+                                </div>
+
+                                <div class="userInfo">
+
+                                    <div class="userName">
+                                        ${esc(n.title || "Meldung")}
+                                    </div>
+
+                                    <div class="userEmail">
+                                        ${esc(n.message || "")}
+                                    </div>
+
+                                </div>
+
+                                <span class="userEmail">
+                                    ${formatDate(n.createdAt)}
+                                </span>
+
+                            </div>
+
+                        `).join("")
+                    : `
+                    <div class="empty">
+                        Keine Benachrichtigungen.
+                    </div>
+                    `
+                }
 
             </div>
-        `;
 
-        return;
-    }
+        </div>
 
+    `;
 
-    target.innerHTML =
-        notifications
-            .slice(0,30)
-            .map(notification => {
-
-                const checkout =
-                    notification.action ===
-                    "checkout";
-
-                return `
-                    <div class="card"
-                         style="margin-bottom:10px">
-
-                        <strong>
-                            ${
-                                checkout
-                                ? "🔴 Ordner ausgegeben"
-                                : "🟢 Ordner zurückgegeben"
-                            }
-                        </strong>
-
-                        <p style="margin:7px 0;color:var(--muted)">
-
-                            <strong>
-                                ${escapeHTML(notification.folderName || "Ordner")}
-                            </strong>
-
-                            wurde von
-                            <strong>
-                                ${escapeHTML(notification.scannedByName || "Unbekannt")}
-                            </strong>
-
-                            ${
-                                checkout
-                                ? "übernommen."
-                                : "zurückgegeben."
-                            }
-
-                        </p>
-
-                        <small style="color:var(--muted)">
-                            ${formatDate(notification.createdAt)}
-                        </small>
-
-                    </div>
-                `;
-
-            })
-            .join("");
 }
 
 
 /* =========================================================
-   PROFILE
+   SETTINGS
 ========================================================= */
 
-$("saveProfileButton")
-    .addEventListener(
-        "click",
-        async () => {
+function renderSettingsPage(el){
 
-            if(!currentUser){
-                return;
-            }
+    el.innerHTML = `
 
-            const name =
-                $("profileName")
-                    .value
-                    .trim();
+        <div class="pageHeader">
 
-            if(!name){
+            <div>
+                <div class="pageTitle">
+                    ⚙️ Einstellungen
+                </div>
 
-                toast(
-                    "Bitte einen Namen eingeben.",
-                    "error"
-                );
+                <div class="pageSub">
+                    Deine Kontoeinstellungen.
+                </div>
+            </div>
 
-                return;
-            }
+        </div>
 
-            try{
 
-                await updateProfile(
-                    currentUser,
-                    {
-                        displayName:name
-                    }
-                );
+        <div class="profileGrid">
 
-                await setDoc(
-                    doc(
-                        db,
-                        "users",
-                        currentUser.uid
-                    ),
-                    {
-                        name
-                    },
-                    {
-                        merge:true
-                    }
-                );
+            <div class="card">
 
-                updateUserUI();
+                <div class="cardHeader">
+                    <div class="cardTitle">
+                        👤 Profil
+                    </div>
+                </div>
 
-                toast(
-                    "Profil gespeichert.",
-                    "success"
-                );
+                <div class="cardBody">
 
-            }catch(error){
+                    <div class="formGroup">
 
-                console.error(error);
+                        <label>Name</label>
 
-                toast(
-                    friendlyFirebaseError(error),
-                    "error"
-                );
-            }
+                        <input
+                            id="profileName"
+                            class="input"
+                            value="${esc(
+                                currentProfile?.name ||
+                                currentUser.displayName ||
+                                ""
+                            )}">
+
+                    </div>
+
+                    <div class="formGroup">
+
+                        <label>E-Mail</label>
+
+                        <input
+                            class="input"
+                            readonly
+                            value="${esc(
+                                currentUser.email
+                            )}">
+
+                    </div>
+
+                    <button
+                        class="btn btnPrimary"
+                        data-action="save-profile">
+                        💾 Speichern
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="cardHeader">
+                    <div class="cardTitle">
+                        🎨 Darstellung
+                    </div>
+                </div>
+
+                <div class="cardBody">
+
+                    <button
+                        class="btn btnSecondary"
+                        data-action="toggle-theme">
+                        🌙 Design wechseln
+                    </button>
+
+                    <br><br>
+
+                    <div class="statusPanel">
+                        Benutzer:
+                        <strong>
+                            ${esc(
+                                currentProfile?.name ||
+                                currentUser.email
+                            )}
+                        </strong>
+                        <br>
+                        Rolle:
+                        <strong>
+                            ${
+                                isAdmin
+                                ? "Administrator"
+                                : "Benutzer"
+                            }
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+async function saveProfile(){
+
+    const name =
+        $("profileName")
+        ?.value
+        .trim();
+
+    if(!name){
+
+        toast(
+            "❌ Name darf nicht leer sein.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    await updateProfile(
+        currentUser,
+        {
+            displayName:name
         }
     );
+
+    await setDoc(
+        doc(db,"users",currentUser.uid),
+        {
+            name
+        },
+        {
+            merge:true
+        }
+    );
+
+    currentProfile.name = name;
+
+    updateTopUser();
+
+    toast(
+        "✅ Profil gespeichert.",
+        "success"
+    );
+
+}
 
 
 /* =========================================================
    SEARCH
 ========================================================= */
 
-$("globalSearch")
-    .addEventListener(
-        "input",
-        () => {
+$("globalSearch").addEventListener(
+    "input",
+    e => {
 
-            renderFolders();
+        const term =
+            e.target.value
+            .trim()
+            .toLowerCase();
+
+        if(!term){
+
+            renderPage();
+
+            return;
+
         }
-    );
 
+        const found =
+            folders.filter(
+                folder =>
+                    String(folder.name || "")
+                    .toLowerCase()
+                    .includes(term) ||
 
-/* =========================================================
-   MODAL
-========================================================= */
+                    String(folder.category || "")
+                    .toLowerCase()
+                    .includes(term) ||
 
-function openModal(
-    title,
-    body,
-    handler,
-    showSave = true
-){
+                    String(folder.description || "")
+                    .toLowerCase()
+                    .includes(term) ||
 
-    $("modalTitle").textContent =
-        title;
+                    String(folder.chipId || "")
+                    .toLowerCase()
+                    .includes(term)
+            );
 
-    $("modalBody").innerHTML =
-        body;
+        $("pageContent").innerHTML = `
 
-    $("modalSave").style.display =
-        showSave
-        ? "inline-flex"
-        : "none";
+            <div class="pageHeader">
 
-    modalSubmitHandler =
-        handler;
+                <div>
+                    <div class="pageTitle">
+                        🔍 Suchergebnisse
+                    </div>
 
-    $("modalOverlay")
-        .classList.add("show");
-}
+                    <div class="pageSub">
+                        ${found.length} Ergebnis(se)
+                    </div>
+                </div>
 
+            </div>
 
-function closeModal(){
+            <div class="folderGrid">
 
-    $("modalOverlay")
-        .classList.remove("show");
+                ${
+                    found.length
+                    ? found.map(folderCard).join("")
+                    : `
+                    <div
+                        class="card"
+                        style="grid-column:1/-1">
 
-    $("modalBody")
-        .innerHTML = "";
+                        <div class="empty">
+                            Keine passenden Ordner gefunden.
+                        </div>
 
-    modalSubmitHandler =
-        null;
-}
+                    </div>
+                    `
+                }
 
+            </div>
 
-$("modalForm")
-    .addEventListener(
-        "submit",
-        async event => {
+        `;
 
-            event.preventDefault();
-
-            if(
-                typeof modalSubmitHandler ===
-                "function"
-            ){
-
-                await modalSubmitHandler();
-            }
-        }
-    );
-
-
-$("modalClose")
-    .addEventListener(
-        "click",
-        closeModal
-    );
-
-
-$("modalCancel")
-    .addEventListener(
-        "click",
-        closeModal
-    );
-
-
-$("modalOverlay")
-    .addEventListener(
-        "click",
-        event => {
-
-            if(
-                event.target ===
-                $("modalOverlay")
-            ){
-
-                closeModal();
-            }
-        }
-    );
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if(event.key === "Escape"){
-
-            closeModal();
-        }
     }
 );
 
 
 /* =========================================================
-   START
+   THEME
 ========================================================= */
 
-window.addEventListener(
-    "beforeunload",
+function toggleTheme(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "ordnerTheme",
+        dark ? "dark" : "light"
+    );
+
+}
+
+
+if(
+    localStorage.getItem("ordnerTheme") === "dark"
+){
+
+    document.body.classList.add("dark");
+
+}
+
+
+$("themeBtn").addEventListener(
+    "click",
+    toggleTheme
+);
+
+
+/* =========================================================
+   NOTIFICATION BUTTON
+========================================================= */
+
+$("notificationBtn").addEventListener(
+    "click",
     () => {
 
-        if(nfcAbortController){
+        currentPage =
+            "notifications";
+
+        document
+            .querySelectorAll(".navBtn[data-page]")
+            .forEach(x =>
+                x.classList.remove("active")
+            );
+
+        document
+            .querySelector(
+                '.navBtn[data-page="notifications"]'
+            )
+            ?.classList.add("active");
+
+        renderPage();
+
+    }
+);
+
+
+/* =========================================================
+   HELP
+========================================================= */
+
+$("helpBtn").addEventListener(
+    "click",
+    () => {
+
+        openModal(
+            "❓ Hilfe",
+            `
+
+            <div class="statusPanel">
+
+                <strong>📡 NFC / Chip</strong>
+
+                <br><br>
+
+                Jeder Ordner besitzt einen eigenen Link.
+
+                <br><br>
+
+                Diesen Link kannst du auf einen
+                NFC-Chip schreiben.
+
+                <br><br>
+
+                Wird der Link geöffnet,
+                wechselt der Ordner:
+
+                <br><br>
+
+                🟢 erster Scan
+
+                <br>
+
+                🔴 nächster Scan
+
+                <br>
+
+                🟢 nächster Scan
+
+                <br>
+
+                🔴 usw.
+
+            </div>
+
+            <br>
+
+            <div class="statusPanel">
+
+                <strong>🙋 Übernehmen</strong>
+
+                <br><br>
+
+                Mit „Übernehmen“ wird gespeichert,
+                welcher Benutzer den Ordner gerade hat.
+
+            </div>
+
+            `,
+            "Schließen",
+            null,
+            false
+        );
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+$("logoutBtn").addEventListener(
+    "click",
+    async () => {
+
+        await signOut(auth);
+
+        toast(
+            "👋 Du wurdest abgemeldet.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   GLOBAL ACTIONS
+========================================================= */
+
+document.addEventListener(
+    "click",
+    async e => {
+
+        const button =
+            e.target.closest("[data-action]");
+
+        if(button){
+
+            const action =
+                button.dataset.action;
+
+            const id =
+                button.dataset.id;
 
             try{
-                nfcAbortController.abort();
-            }catch{}
+
+                if(action === "new-folder")
+                    openNewFolder();
+
+                else if(action === "open-folder")
+                    openFolder(id);
+
+                else if(action === "copy-link"){
+
+                    const folder =
+                        folders.find(x => x.id === id);
+
+                    if(folder)
+                        copyText(
+                            getChipLink(folder)
+                        );
+
+                }
+
+                else if(action === "edit-folder")
+                    openEditFolder(id);
+
+                else if(action === "delete-folder")
+                    await deleteFolder(id);
+
+                else if(action === "take-folder")
+                    await takeFolder(id);
+
+                else if(action === "release-folder")
+                    await releaseFolder(id);
+
+                else if(action === "new-category")
+                    openNewCategory();
+
+                else if(action === "delete-category")
+                    await deleteCategory(id);
+
+                else if(action === "new-request")
+                    openNewRequest();
+
+                else if(action === "toggle-request")
+                    await toggleRequest(id);
+
+                else if(action === "toggle-theme")
+                    toggleTheme();
+
+                else if(action === "save-profile")
+                    await saveProfile();
+
+                else if(action === "scan-link")
+                    showScanLink();
+
+            }catch(error){
+
+                console.error(error);
+
+                toast(
+                    "❌ " + friendlyError(error),
+                    "error"
+                );
+
+            }
+
         }
+
+
+        const direct =
+            e.target.closest("[data-page-direct]");
+
+        if(direct){
+
+            currentPage =
+                direct.dataset.pageDirect;
+
+            document
+                .querySelectorAll(".navBtn[data-page]")
+                .forEach(x =>
+                    x.classList.remove("active")
+                );
+
+            document
+                .querySelector(
+                    `.navBtn[data-page="${currentPage}"]`
+                )
+                ?.classList.add("active");
+
+            renderPage();
+
+        }
+
     }
+);
+
+
+/* =========================================================
+   SHOW CHIP LINK
+========================================================= */
+
+function showScanLink(){
+
+    const existing =
+        folders[0];
+
+    if(!existing){
+
+        toast(
+            "📁 Erstelle zuerst einen Ordner.",
+            "warning"
+        );
+
+        return;
+
+    }
+
+    const link =
+        getChipLink(existing);
+
+    openModal(
+        "📡 Chip-Link",
+        `
+
+        <div class="formGroup">
+
+            <label>Ordner auswählen</label>
+
+            <select
+                id="scanFolderSelect"
+                class="input">
+
+                ${
+                    folders.map(
+                        f =>
+                        `<option value="${esc(f.id)}">
+                            ${esc(f.name)}
+                        </option>`
+                    ).join("")
+                }
+
+            </select>
+
+        </div>
+
+        <div class="formGroup">
+
+            <label>Link</label>
+
+            <input
+                id="scanLinkInput"
+                class="input"
+                readonly
+                value="${esc(link)}">
+
+        </div>
+
+        <div class="statusPanel">
+
+            🔗 Der Link wird automatisch
+            aus der aktuellen Website-Adresse
+            erzeugt.
+
+            <br><br>
+
+            Dadurch musst du deinen
+            GitHub-Benutzernamen hier
+            <strong>nicht</strong> eintragen.
+
+        </div>
+
+        `,
+        "Kopieren",
+        async () => {
+
+            const id =
+                $("scanFolderSelect").value;
+
+            const folder =
+                folders.find(
+                    x => x.id === id
+                );
+
+            if(folder){
+
+                await copyText(
+                    getChipLink(folder)
+                );
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+    setTimeout(() => {
+
+        $("scanFolderSelect")
+        ?.addEventListener(
+            "change",
+            e => {
+
+                const folder =
+                    folders.find(
+                        x =>
+                        x.id === e.target.value
+                    );
+
+                if(folder){
+
+                    $("scanLinkInput")
+                    .value =
+                        getChipLink(folder);
+
+                }
+
+            }
+        );
+
+    },50);
+
+}
+
+
+/* =========================================================
+   AUTO CHIP ID REPAIR
+========================================================= */
+
+async function repairMissingChipIds(){
+
+    for(const folder of folders){
+
+        if(
+            !folder.chipId &&
+            folder.id
+        ){
+
+            try{
+
+                await updateDoc(
+                    doc(db,"folders",folder.id),
+                    {
+
+                        chipId:
+                            makeChipId(),
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+                );
+
+            }catch(error){
+
+                console.error(
+                    "Chip-ID konnte nicht erstellt werden:",
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   WATCH FOLDER DATA FOR MISSING CHIP IDS
+========================================================= */
+
+let repairTimer = null;
+
+function scheduleChipRepair(){
+
+    clearTimeout(repairTimer);
+
+    repairTimer =
+        setTimeout(
+            repairMissingChipIds,
+            1000
+        );
+
+}
+
+
+/* =========================================================
+   RE-RENDER HOOK
+========================================================= */
+
+const originalRenderPage =
+    renderPage;
+
+
+/* =========================================================
+   PERIODIC CHIP CHECK
+========================================================= */
+
+setInterval(
+    () => {
+
+        if(
+            currentUser &&
+            folders.length
+        ){
+
+            scheduleChipRepair();
+
+        }
+
+    },
+    5000
+);
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+console.log(
+    "OrdnerSystem gestartet."
+);
+
+console.log(
+    "Aktuelle Website-Adresse:",
+    window.location.href
 );
 
 </script>
