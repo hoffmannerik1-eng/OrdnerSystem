@@ -1,46 +1,54 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#0b1020">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+
+<meta name="theme-color" content="#f5f7fb">
 
 <title>OrdnerSystem</title>
 
 <style>
 :root{
-    --bg:#07101d;
-    --bg2:#0b1525;
-    --panel:#101d30;
-    --panel2:#14243a;
-    --panel3:#182b44;
-    --border:#253954;
-    --text:#f4f7fb;
-    --muted:#91a4bb;
-    --blue:#3b82f6;
-    --blue2:#60a5fa;
-    --green:#22c55e;
-    --red:#ef4444;
-    --orange:#f59e0b;
-    --purple:#8b5cf6;
-    --shadow:0 20px 60px rgba(0,0,0,.35);
-    --radius:18px;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --card2:#f8fafc;
+    --text:#172033;
+    --muted:#718096;
+    --border:#e4e8ef;
+    --primary:#2563eb;
+    --primary2:#1d4ed8;
+    --green:#16a34a;
+    --green-bg:#dcfce7;
+    --red:#dc2626;
+    --red-bg:#fee2e2;
+    --orange:#ea580c;
+    --orange-bg:#ffedd5;
+    --shadow:0 12px 35px rgba(15,23,42,.08);
+    --radius:20px;
 }
 
 *{
     box-sizing:border-box;
-    margin:0;
-    padding:0;
+    -webkit-tap-highlight-color:transparent;
 }
 
 html,body{
+    margin:0;
     width:100%;
     min-height:100%;
     background:var(--bg);
     color:var(--text);
-    font-family:Inter,Arial,Helvetica,sans-serif;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
 }
 
 body{
@@ -66,641 +74,604 @@ button{
    LOGIN
 ========================= */
 
-#loginScreen{
+.login-screen{
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
-    padding:25px;
+    align-items:center;
+    padding:24px;
     background:
-        radial-gradient(circle at 20% 10%,rgba(59,130,246,.18),transparent 35%),
-        radial-gradient(circle at 90% 80%,rgba(139,92,246,.15),transparent 35%),
-        linear-gradient(135deg,#050a13,#0b1423);
+        radial-gradient(circle at 10% 10%,rgba(37,99,235,.12),transparent 35%),
+        radial-gradient(circle at 90% 90%,rgba(22,163,74,.10),transparent 35%),
+        var(--bg);
 }
 
-.loginBox{
-    width:min(460px,100%);
-    background:rgba(16,29,48,.92);
+.login-card{
+    width:min(440px,100%);
+    background:var(--card);
     border:1px solid var(--border);
     border-radius:28px;
     box-shadow:var(--shadow);
-    padding:35px;
-    backdrop-filter:blur(18px);
+    padding:34px;
 }
 
 .logo{
-    width:62px;
-    height:62px;
+    width:58px;
+    height:58px;
     border-radius:18px;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,var(--blue),var(--purple));
-    font-size:28px;
+    color:white;
+    font-size:27px;
     font-weight:900;
     margin-bottom:20px;
+    box-shadow:0 10px 25px rgba(37,99,235,.25);
 }
 
-.loginBox h1{
-    font-size:32px;
-    margin-bottom:8px;
+.login-title{
+    margin:0;
+    font-size:30px;
+    letter-spacing:-.7px;
 }
 
-.loginBox p{
+.login-subtitle{
+    margin:8px 0 28px;
     color:var(--muted);
-    margin-bottom:28px;
+    line-height:1.5;
 }
 
-.inputGroup{
-    margin-bottom:16px;
+.form-group{
+    margin-bottom:15px;
 }
 
-.inputGroup label{
+.form-group label{
     display:block;
     margin-bottom:7px;
-    color:#c8d4e4;
-    font-size:14px;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    background:#091525;
-    border:1px solid var(--border);
-    border-radius:12px;
-    color:var(--text);
-    padding:13px 14px;
-    outline:none;
-    transition:.2s;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-    border-color:var(--blue);
-    box-shadow:0 0 0 3px rgba(59,130,246,.12);
-}
-
-textarea{
-    min-height:110px;
-    resize:vertical;
-}
-
-.primaryBtn,
-.secondaryBtn,
-.dangerBtn,
-.successBtn,
-.warningBtn{
-    border:0;
-    border-radius:12px;
-    padding:12px 16px;
-    color:white;
+    font-size:13px;
     font-weight:800;
+}
+
+.input{
+    width:100%;
+    padding:13px 14px;
+    border:1px solid var(--border);
+    border-radius:13px;
+    outline:none;
+    background:white;
+    color:var(--text);
     transition:.2s;
 }
 
-.primaryBtn{
-    background:linear-gradient(135deg,#2563eb,#3b82f6);
+.input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
 }
 
-.secondaryBtn{
-    background:#1b2c43;
-    border:1px solid var(--border);
+.btn{
+    border:0;
+    border-radius:13px;
+    padding:13px 17px;
+    font-weight:800;
+    transition:.18s;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
 }
 
-.dangerBtn{
-    background:#b91c1c;
-}
-
-.successBtn{
-    background:#15803d;
-}
-
-.warningBtn{
-    background:#b45309;
-}
-
-.primaryBtn:hover,
-.secondaryBtn:hover,
-.dangerBtn:hover,
-.successBtn:hover,
-.warningBtn:hover{
+.btn:hover{
     transform:translateY(-1px);
-    filter:brightness(1.1);
 }
 
-.full{
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary2);
+}
+
+.btn-secondary{
+    background:#eef2f7;
+    color:#253047;
+}
+
+.btn-danger{
+    background:var(--red);
+    color:white;
+}
+
+.btn-success{
+    background:var(--green);
+    color:white;
+}
+
+.btn-block{
     width:100%;
 }
 
-.authSwitch{
+.login-switch{
     margin-top:18px;
     text-align:center;
     color:var(--muted);
+    font-size:14px;
 }
 
-.authSwitch button{
-    background:none;
+.link-btn{
     border:0;
-    color:var(--blue2);
+    background:none;
+    color:var(--primary);
     font-weight:800;
+    padding:0;
 }
 
 /* =========================
    APP
 ========================= */
 
-#app{
-    display:none;
-    min-height:100vh;
-}
-
-#app.active{
-    display:flex;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-    width:260px;
-    min-height:100vh;
-    background:#091321;
-    border-right:1px solid var(--border);
-    padding:20px 15px;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    z-index:50;
-}
-
-.sidebarLogo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:8px 10px 25px;
-    font-size:20px;
-    font-weight:900;
-}
-
-.sidebarLogoIcon{
-    width:40px;
-    height:40px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--blue),var(--purple));
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.navTitle{
-    color:#61748c;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:1.4px;
-    padding:15px 11px 7px;
-}
-
-.navBtn{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#9eb0c6;
-    text-align:left;
-    padding:12px 13px;
-    border-radius:11px;
-    margin-bottom:4px;
-    display:flex;
-    align-items:center;
-    gap:11px;
-    font-weight:700;
-}
-
-.navBtn:hover{
-    background:#122139;
-    color:white;
-}
-
-.navBtn.active{
-    background:linear-gradient(90deg,rgba(59,130,246,.22),rgba(59,130,246,.08));
-    color:#fff;
-    border-left:3px solid var(--blue);
-}
-
-.sidebarBottom{
-    position:absolute;
-    left:15px;
-    right:15px;
-    bottom:18px;
-}
-
-.userMini{
-    padding:13px;
-    background:#0e1b2d;
-    border:1px solid var(--border);
-    border-radius:14px;
-    margin-bottom:10px;
-}
-
-.userMiniName{
-    font-weight:800;
-}
-
-.userMiniEmail{
-    color:var(--muted);
-    font-size:12px;
-    margin-top:4px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-/* MAIN */
-
-.main{
-    margin-left:260px;
-    width:calc(100% - 260px);
+.app{
     min-height:100vh;
 }
 
 .topbar{
     height:72px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(18px);
     border-bottom:1px solid var(--border);
-    background:rgba(7,16,29,.86);
-    backdrop-filter:blur(15px);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 28px;
+    padding:0 24px;
     position:sticky;
     top:0;
-    z-index:30;
+    z-index:50;
 }
 
-.topTitle{
-    font-size:22px;
-    font-weight:900;
-}
-
-.topActions{
+.brand{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
 }
 
-.iconBtn{
-    width:42px;
-    height:42px;
-    border:1px solid var(--border);
-    background:#101d30;
-    color:#dce7f4;
+.brand-icon{
+    width:40px;
+    height:40px;
     border-radius:12px;
-}
-
-.content{
-    padding:28px;
-}
-
-/* =========================
-   DASHBOARD
-========================= */
-
-.statsGrid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:24px;
-}
-
-.statCard{
-    background:linear-gradient(145deg,#101e31,#0d1929);
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:20px;
-    box-shadow:0 12px 35px rgba(0,0,0,.15);
-}
-
-.statTop{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    color:var(--muted);
-    font-size:13px;
-}
-
-.statIcon{
-    width:38px;
-    height:38px;
-    border-radius:11px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#172943;
+    background:#2563eb;
+    color:white;
+    font-weight:900;
 }
 
-.statValue{
-    font-size:32px;
+.brand-title{
+    font-weight:900;
+    font-size:17px;
+}
+
+.brand-small{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:2px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.user-pill{
+    padding:8px 12px;
+    background:#f1f5f9;
+    border-radius:12px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.main{
+    display:flex;
+    min-height:calc(100vh - 72px);
+}
+
+.sidebar{
+    width:245px;
+    flex-shrink:0;
+    background:white;
+    border-right:1px solid var(--border);
+    padding:20px 14px;
+}
+
+.nav-title{
+    color:#9aa4b2;
+    font-size:11px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:10px 12px 7px;
+}
+
+.nav-item{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#526071;
+    border-radius:12px;
+    padding:12px;
+    margin:2px 0;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    text-align:left;
+    font-weight:750;
+}
+
+.nav-item:hover{
+    background:#f3f6fa;
+}
+
+.nav-item.active{
+    background:#eaf1ff;
+    color:var(--primary);
+}
+
+.nav-icon{
+    width:20px;
+    text-align:center;
+}
+
+.content{
+    flex:1;
+    min-width:0;
+    padding:28px;
+}
+
+.page{
+    max-width:1450px;
+    margin:0 auto;
+}
+
+.page-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    margin-bottom:25px;
+}
+
+.page-title{
+    margin:0;
+    font-size:31px;
+    letter-spacing:-.8px;
+}
+
+.page-subtitle{
+    margin:6px 0 0;
+    color:var(--muted);
+}
+
+.page-actions{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:19px;
+    box-shadow:0 5px 20px rgba(15,23,42,.035);
+}
+
+.stat-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.stat-icon{
+    width:39px;
+    height:39px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eef2ff;
+}
+
+.stat-number{
+    font-size:29px;
     font-weight:900;
     margin-top:14px;
 }
 
-.sectionHeader{
+.stat-label{
+    color:var(--muted);
+    font-size:13px;
+    margin-top:3px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:0 6px 24px rgba(15,23,42,.04);
+}
+
+.card-head{
+    padding:19px 20px;
+    border-bottom:1px solid var(--border);
     display:flex;
     justify-content:space-between;
     align-items:center;
-    gap:15px;
-    margin-bottom:15px;
+    gap:12px;
 }
 
-.sectionHeader h2{
-    font-size:20px;
-}
-
-.sectionHeader p{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:4px;
-}
-
-/* =========================
-   FOLDERS
-========================= */
-
-.toolbar{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-bottom:20px;
-}
-
-.searchBox{
-    flex:1;
-    min-width:220px;
-}
-
-.folderGrid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
-    gap:18px;
-}
-
-.folderCard{
-    background:linear-gradient(145deg,#101e31,#0c1828);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:19px;
-    position:relative;
-    overflow:hidden;
-}
-
-.folderCard::before{
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    bottom:0;
-    width:4px;
-    background:#334155;
-}
-
-.folderCard.taken::before{
-    background:var(--red);
-}
-
-.folderCard.free::before{
-    background:var(--green);
-}
-
-.folderHeader{
-    display:flex;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.folderName{
-    font-size:19px;
+.card-title{
+    margin:0;
+    font-size:17px;
     font-weight:900;
 }
 
-.folderCategory{
+.card-body{
+    padding:20px;
+}
+
+.empty{
+    padding:45px 20px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.folder-card{
+    overflow:hidden;
+    position:relative;
+}
+
+.folder-status{
+    height:7px;
+    background:var(--green);
+}
+
+.folder-status.busy{
+    background:var(--red);
+}
+
+.folder-content{
+    padding:18px;
+}
+
+.folder-top{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.folder-name{
+    font-size:18px;
+    font-weight:900;
+    word-break:break-word;
+}
+
+.folder-category{
     color:var(--muted);
     font-size:12px;
     margin-top:4px;
 }
 
-.statusBadge{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:6px 9px;
+.status-badge{
+    white-space:nowrap;
     border-radius:999px;
+    padding:7px 10px;
     font-size:11px;
     font-weight:900;
 }
 
-.statusBadge.green{
-    background:rgba(34,197,94,.13);
-    color:#4ade80;
+.status-free{
+    color:#166534;
+    background:var(--green-bg);
 }
 
-.statusBadge.red{
-    background:rgba(239,68,68,.13);
-    color:#f87171;
+.status-busy{
+    color:#991b1b;
+    background:var(--red-bg);
 }
 
-.folderDescription{
-    color:#9fb0c4;
+.holder{
+    margin-top:18px;
+    padding:12px;
+    border-radius:13px;
+    background:#f7f8fa;
     font-size:13px;
-    line-height:1.5;
-    margin:15px 0;
-    min-height:40px;
 }
 
-.folderInfo{
-    border-top:1px solid var(--border);
-    padding-top:13px;
-    display:grid;
-    gap:8px;
+.holder strong{
+    display:block;
+    margin-bottom:3px;
 }
 
-.infoRow{
+.folder-meta{
     display:flex;
-    justify-content:space-between;
-    gap:10px;
-    font-size:12px;
+    gap:7px;
+    flex-wrap:wrap;
+    margin-top:13px;
 }
 
-.infoRow span:first-child{
-    color:#71849c;
+.tag{
+    background:#f1f5f9;
+    border-radius:8px;
+    padding:6px 8px;
+    font-size:11px;
+    color:#526071;
 }
 
-.infoRow span:last-child{
-    color:#dce7f4;
-    text-align:right;
-}
-
-.chipId{
-    font-family:monospace;
-    color:#8dbbff!important;
-    word-break:break-all;
-}
-
-.folderActions{
+.folder-actions{
     display:flex;
-    gap:8px;
-    margin-top:15px;
+    gap:7px;
+    margin-top:16px;
 }
 
-.folderActions button{
+.folder-actions .btn{
     flex:1;
-    padding:9px;
-    border-radius:10px;
-    border:1px solid var(--border);
-    background:#14253b;
-    color:white;
-    font-weight:800;
+    padding:10px;
     font-size:12px;
-}
-
-.folderActions button:hover{
-    background:#1c3552;
-}
-
-.empty{
-    padding:55px 20px;
-    text-align:center;
-    color:var(--muted);
-    background:#0d1929;
-    border:1px dashed var(--border);
-    border-radius:18px;
 }
 
 /* =========================
-   NFC
+   NFC LANDING
 ========================= */
 
-.nfcPanel{
-    background:
-        radial-gradient(circle at 90% 10%,rgba(59,130,246,.16),transparent 35%),
-        linear-gradient(145deg,#10213a,#0c1727);
-    border:1px solid #294363;
-    border-radius:22px;
+.scan-page{
+    min-height:calc(100vh - 72px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     padding:25px;
-    margin-bottom:25px;
 }
 
-.nfcPanelHeader{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.nfcIcon{
-    width:56px;
-    height:56px;
-    border-radius:17px;
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:27px;
-}
-
-.nfcPanel h2{
-    font-size:22px;
-}
-
-.nfcPanel p{
-    color:var(--muted);
-    margin-top:4px;
-}
-
-.nfcControls{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:20px;
-}
-
-.nfcStatus{
-    margin-top:17px;
-    padding:13px 15px;
-    border-radius:12px;
-    background:#081321;
+.scan-card{
+    width:min(620px,100%);
+    text-align:center;
+    background:white;
     border:1px solid var(--border);
-    color:#9fb1c8;
+    border-radius:30px;
+    padding:35px;
+    box-shadow:var(--shadow);
 }
 
-.nfcStatus.scanning{
-    color:#60a5fa;
-    border-color:#2563eb;
-}
-
-.nfcStatus.success{
-    color:#4ade80;
-    border-color:#15803d;
-}
-
-.nfcStatus.error{
-    color:#f87171;
-    border-color:#991b1b;
-}
-
-.scanAnimation{
-    width:80px;
-    height:80px;
+.scan-circle{
+    width:120px;
+    height:120px;
+    margin:0 auto 22px;
     border-radius:50%;
-    border:2px solid rgba(59,130,246,.5);
-    margin:20px auto;
-    display:none;
+    display:flex;
     align-items:center;
     justify-content:center;
-    font-size:35px;
-    animation:nfcPulse 1.5s infinite;
+    font-size:54px;
+    background:#eff6ff;
 }
 
-.scanAnimation.active{
-    display:flex;
+.scan-card h1{
+    margin:0;
+    font-size:29px;
 }
 
-@keyframes nfcPulse{
-    0%{box-shadow:0 0 0 0 rgba(59,130,246,.35)}
-    70%{box-shadow:0 0 0 25px rgba(59,130,246,0)}
-    100%{box-shadow:0 0 0 0 rgba(59,130,246,0)}
+.scan-card p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.scan-folder-name{
+    margin:20px 0;
+    padding:16px;
+    background:#f8fafc;
+    border-radius:15px;
+    font-size:20px;
+    font-weight:900;
+}
+
+.scan-result{
+    margin-top:20px;
+    border-radius:18px;
+    padding:20px;
+    display:none;
+}
+
+.scan-result.show{
+    display:block;
+}
+
+.scan-result.free{
+    background:var(--green-bg);
+    color:#166534;
+}
+
+.scan-result.busy{
+    background:var(--red-bg);
+    color:#991b1b;
+}
+
+.scan-result h2{
+    margin:0 0 6px;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.search-box input{
+    width:100%;
+    padding:15px 17px 15px 45px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    outline:none;
+    background:white;
+}
+
+.search-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
 }
 
 /* =========================
    TABLE
 ========================= */
 
-.tableWrap{
+.table-wrap{
     overflow:auto;
-    border:1px solid var(--border);
-    border-radius:17px;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    min-width:700px;
 }
 
 th,
 td{
-    text-align:left;
-    padding:14px;
+    padding:14px 16px;
     border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
 }
 
 th{
-    color:#8195ae;
-    font-size:12px;
+    color:#7b8798;
+    font-size:11px;
     text-transform:uppercase;
-    letter-spacing:.6px;
-}
-
-td{
-    font-size:13px;
 }
 
 tr:last-child td{
@@ -711,59 +682,55 @@ tr:last-child td{
    MODAL
 ========================= */
 
-.modalOverlay{
+.modal-bg{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.68);
-    backdrop-filter:blur(7px);
-    display:none;
+    background:rgba(15,23,42,.48);
+    backdrop-filter:blur(5px);
+    display:flex;
     align-items:center;
     justify-content:center;
     padding:20px;
     z-index:100;
 }
 
-.modalOverlay.open{
-    display:flex;
-}
-
 .modal{
-    width:min(600px,100%);
+    width:min(570px,100%);
     max-height:90vh;
     overflow:auto;
-    background:#101d30;
-    border:1px solid var(--border);
-    border-radius:22px;
-    box-shadow:var(--shadow);
+    background:white;
+    border-radius:23px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
 }
 
-.modalHeader{
-    padding:20px 22px;
+.modal-head{
+    padding:20px;
     border-bottom:1px solid var(--border);
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
 }
 
-.modalHeader h2{
+.modal-head h2{
+    margin:0;
     font-size:20px;
 }
 
-.closeBtn{
+.modal-close{
+    border:0;
+    background:#f1f5f9;
     width:36px;
     height:36px;
     border-radius:10px;
-    border:1px solid var(--border);
-    background:#16273d;
-    color:white;
+    font-size:18px;
 }
 
-.modalBody{
-    padding:22px;
+.modal-body{
+    padding:20px;
 }
 
-.modalFooter{
-    padding:17px 22px;
+.modal-footer{
+    padding:16px 20px;
     border-top:1px solid var(--border);
     display:flex;
     justify-content:flex-end;
@@ -774,51 +741,51 @@ tr:last-child td{
    TOAST
 ========================= */
 
-#toastContainer{
+.toast-container{
     position:fixed;
     right:20px;
     bottom:20px;
-    z-index:300;
+    z-index:500;
+    width:min(380px,calc(100% - 40px));
     display:flex;
     flex-direction:column;
     gap:10px;
-    width:min(380px,calc(100% - 40px));
 }
 
 .toast{
-    background:#101d30;
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:14px 16px;
-    box-shadow:var(--shadow);
-    animation:toastIn .25s ease;
+    background:#172033;
+    color:white;
+    border-radius:15px;
+    padding:15px 16px;
+    box-shadow:0 15px 40px rgba(15,23,42,.22);
+    animation:toastIn .22s ease;
 }
 
 .toast.success{
-    border-left:4px solid var(--green);
+    background:#166534;
 }
 
 .toast.error{
-    border-left:4px solid var(--red);
+    background:#991b1b;
 }
 
 .toast.info{
-    border-left:4px solid var(--blue);
+    background:#1e40af;
 }
 
-.toastTitle{
+.toast-title{
     font-weight:900;
-    margin-bottom:3px;
+    margin-bottom:4px;
 }
 
-.toastText{
-    color:#9eb0c4;
+.toast-text{
+    opacity:.9;
     font-size:13px;
 }
 
 @keyframes toastIn{
     from{
-        transform:translateY(15px);
+        transform:translateY(12px);
         opacity:0;
     }
     to{
@@ -831,63 +798,124 @@ tr:last-child td{
    MOBILE
 ========================= */
 
-.mobileMenu{
+.mobile-nav{
     display:none;
 }
 
-@media(max-width:1050px){
-    .statsGrid{
+@media(max-width:1000px){
+
+    .sidebar{
+        width:210px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
         grid-template-columns:repeat(2,1fr);
     }
 }
 
-@media(max-width:800px){
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
+@media(max-width:720px){
+
+    .topbar{
+        height:64px;
+        padding:0 14px;
     }
 
-    .sidebar.open{
-        transform:translateX(0);
+    .brand-title{
+        font-size:15px;
+    }
+
+    .brand-small,
+    .user-pill{
+        display:none;
     }
 
     .main{
-        margin-left:0;
-        width:100%;
-    }
-
-    .mobileMenu{
         display:block;
+        min-height:calc(100vh - 64px);
+        padding-bottom:74px;
     }
 
-    .topbar{
-        padding:0 15px;
+    .sidebar{
+        display:none;
     }
 
     .content{
-        padding:18px;
+        padding:18px 14px;
     }
 
-    .statsGrid{
-        grid-template-columns:1fr 1fr;
+    .page-head{
+        flex-direction:column;
+        margin-bottom:18px;
     }
 
-    .folderGrid{
+    .page-title{
+        font-size:26px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+    }
+
+    .stat{
+        padding:14px;
+    }
+
+    .stat-number{
+        font-size:24px;
+    }
+
+    .grid{
         grid-template-columns:1fr;
     }
-}
 
-@media(max-width:500px){
-    .statsGrid{
-        grid-template-columns:1fr;
+    .mobile-nav{
+        position:fixed;
+        display:flex;
+        left:10px;
+        right:10px;
+        bottom:10px;
+        height:62px;
+        background:rgba(255,255,255,.96);
+        backdrop-filter:blur(18px);
+        border:1px solid var(--border);
+        border-radius:18px;
+        box-shadow:0 12px 35px rgba(15,23,42,.15);
+        z-index:80;
+        justify-content:space-around;
+        align-items:center;
     }
 
-    .loginBox{
+    .mobile-nav button{
+        border:0;
+        background:none;
+        color:#788396;
+        font-size:10px;
+        font-weight:800;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:3px;
+    }
+
+    .mobile-nav button.active{
+        color:var(--primary);
+    }
+
+    .mobile-nav .mi{
+        font-size:20px;
+    }
+
+    .login-card{
         padding:25px 20px;
     }
 
-    .topTitle{
-        font-size:18px;
+    .scan-card{
+        padding:25px 18px;
     }
 }
 </style>
@@ -895,950 +923,428 @@ tr:last-child td{
 
 <body>
 
-<!-- =========================
+<!-- =========================================
      LOGIN
-========================= -->
+========================================= -->
 
-<section id="loginScreen">
+<div id="loginScreen" class="login-screen">
 
-    <div class="loginBox">
+    <div class="login-card">
 
-        <div class="logo">📁</div>
+        <div class="logo">O</div>
 
-        <h1 id="authTitle">OrdnerSystem</h1>
+        <h1 class="login-title">OrdnerSystem</h1>
 
-        <p id="authSubtitle">
-            Melde dich an, um deine Ordner und NFC-Chips zu verwalten.
+        <p class="login-subtitle">
+            Ordner verwalten, NFC-Chips nutzen und jederzeit sehen,
+            welcher Ordner gerade verwendet wird.
         </p>
 
-        <form id="authForm">
+        <div id="loginForm">
 
-            <div class="inputGroup hidden" id="registerNameGroup">
-                <label>Vollständiger Name</label>
-                <input id="registerName" type="text" autocomplete="name">
-            </div>
-
-            <div class="inputGroup">
+            <div class="form-group">
                 <label>E-Mail</label>
-                <input id="email" type="email" autocomplete="email" required>
+                <input
+                    id="emailInput"
+                    class="input"
+                    type="email"
+                    placeholder="name@beispiel.de"
+                    autocomplete="email">
             </div>
 
-            <div class="inputGroup">
+            <div class="form-group">
                 <label>Passwort</label>
-                <input id="password" type="password" autocomplete="current-password" required>
+                <input
+                    id="passwordInput"
+                    class="input"
+                    type="password"
+                    placeholder="Passwort"
+                    autocomplete="current-password">
             </div>
 
-            <button class="primaryBtn full" id="authSubmit">
+            <div id="registerNameGroup"
+                 class="form-group hidden">
+                <label>Name</label>
+                <input
+                    id="nameInput"
+                    class="input"
+                    type="text"
+                    placeholder="Dein Name"
+                    autocomplete="name">
+            </div>
+
+            <button
+                id="loginButton"
+                class="btn btn-primary btn-block">
                 Anmelden
             </button>
 
-        </form>
+            <div class="login-switch">
 
-        <div class="authSwitch">
-            <span id="switchText">Noch kein Konto?</span>
-            <button id="switchAuth">Registrieren</button>
+                <span id="loginSwitchText">
+                    Noch kein Konto?
+                </span>
+
+                <button
+                    id="switchAuthButton"
+                    class="link-btn">
+                    Registrieren
+                </button>
+
+            </div>
+
         </div>
 
     </div>
 
-</section>
+</div>
 
 
-<!-- =========================
+<!-- =========================================
      APP
-========================= -->
+========================================= -->
 
-<div id="app">
+<div id="app" class="app hidden">
 
-    <aside class="sidebar" id="sidebar">
+    <header class="topbar">
 
-        <div class="sidebarLogo">
-            <div class="sidebarLogoIcon">📁</div>
-            <span>OrdnerSystem</span>
-        </div>
+        <div class="brand">
 
-        <div class="navTitle">Übersicht</div>
+            <div class="brand-icon">
+                O
+            </div>
 
-        <button class="navBtn active" data-page="dashboard">
-            📊
-            <span>Dashboard</span>
-        </button>
-
-        <button class="navBtn" data-page="folders">
-            📁
-            <span>Ordner</span>
-        </button>
-
-        <button class="navBtn" data-page="nfc">
-            📡
-            <span>NFC / Chips</span>
-        </button>
-
-        <div class="navTitle">Verwaltung</div>
-
-        <button class="navBtn" data-page="categories">
-            🗂️
-            <span>Kategorien</span>
-        </button>
-
-        <button class="navBtn" data-page="requests">
-            📥
-            <span>Anfragen</span>
-        </button>
-
-        <button class="navBtn" data-page="users">
-            👥
-            <span>Benutzer</span>
-        </button>
-
-        <button class="navBtn" data-page="notifications">
-            🔔
-            <span>Benachrichtigungen</span>
-        </button>
-
-        <div class="navTitle">System</div>
-
-        <button class="navBtn" data-page="settings">
-            ⚙️
-            <span>Einstellungen</span>
-        </button>
-
-        <div class="sidebarBottom">
-
-            <div class="userMini">
-                <div class="userMiniName" id="miniName">
-                    Benutzer
+            <div>
+                <div class="brand-title">
+                    OrdnerSystem
                 </div>
-                <div class="userMiniEmail" id="miniEmail">
-                    -
+
+                <div class="brand-small">
+                    NFC-Ordnerverwaltung
                 </div>
             </div>
 
-            <button class="secondaryBtn full" id="logoutBtn">
+        </div>
+
+        <div class="top-actions">
+
+            <div id="userPill" class="user-pill">
+                Benutzer
+            </div>
+
+            <button
+                id="logoutButton"
+                class="btn btn-secondary">
                 Abmelden
             </button>
 
         </div>
 
-    </aside>
+    </header>
 
 
-    <main class="main">
+    <div class="main">
 
-        <header class="topbar">
+        <aside class="sidebar">
 
-            <div style="display:flex;align-items:center;gap:12px">
-
-                <button class="iconBtn mobileMenu" id="mobileMenuBtn">
-                    ☰
-                </button>
-
-                <div class="topTitle" id="pageTitle">
-                    Dashboard
-                </div>
-
+            <div class="nav-title">
+                Übersicht
             </div>
 
-            <div class="topActions">
+            <button
+                class="nav-item active"
+                data-page="dashboard">
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </button>
 
-                <button class="iconBtn" id="quickNfcBtn" title="NFC starten">
-                    📡
-                </button>
+            <button
+                class="nav-item"
+                data-page="folders">
+                <span class="nav-icon">📁</span>
+                Ordner
+            </button>
 
-                <button class="iconBtn" id="refreshBtn" title="Aktualisieren">
-                    ↻
-                </button>
+            <button
+                class="nav-item"
+                data-page="scan">
+                <span class="nav-icon">📳</span>
+                NFC-Scan
+            </button>
 
+            <div class="nav-title">
+                Verwaltung
             </div>
 
-        </header>
-
-
-        <div class="content">
-
-            <!-- DASHBOARD -->
-
-            <section class="page" id="page-dashboard">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Übersicht</h2>
-                        <p>Aktueller Zustand deines Ordnersystems.</p>
-                    </div>
-
-                    <button class="primaryBtn" id="newFolderDashboardBtn">
-                        + Neuer Ordner
-                    </button>
-
-                </div>
-
-
-                <div class="statsGrid">
-
-                    <div class="statCard">
-                        <div class="statTop">
-                            <span>Ordner gesamt</span>
-                            <div class="statIcon">📁</div>
-                        </div>
-                        <div class="statValue" id="statFolders">0</div>
-                    </div>
-
-                    <div class="statCard">
-                        <div class="statTop">
-                            <span>Freie Ordner</span>
-                            <div class="statIcon">🟢</div>
-                        </div>
-                        <div class="statValue" id="statFree">0</div>
-                    </div>
-
-                    <div class="statCard">
-                        <div class="statTop">
-                            <span>Belegte Ordner</span>
-                            <div class="statIcon">🔴</div>
-                        </div>
-                        <div class="statValue" id="statTaken">0</div>
-                    </div>
-
-                    <div class="statCard">
-                        <div class="statTop">
-                            <span>Benutzer</span>
-                            <div class="statIcon">👥</div>
-                        </div>
-                        <div class="statValue" id="statUsers">0</div>
-                    </div>
-
-                </div>
-
-
-                <div class="nfcPanel">
-
-                    <div class="nfcPanelHeader">
-
-                        <div class="nfcIcon">📡</div>
-
-                        <div>
-                            <h2>NFC-Schnellscan</h2>
-                            <p>Halte einen registrierten NFC-Chip an das Gerät.</p>
-                        </div>
-
-                    </div>
-
-                    <div class="nfcControls">
-
-                        <button class="primaryBtn" id="dashboardNfcBtn">
-                            📡 NFC-Scan starten
-                        </button>
-
-                        <button class="secondaryBtn" id="openNfcPageBtn">
-                            NFC-Verwaltung
-                        </button>
-
-                    </div>
-
-                    <div class="scanAnimation" id="dashboardScanAnimation">
-                        📡
-                    </div>
-
-                    <div class="nfcStatus" id="dashboardNfcStatus">
-                        Bereit für einen Scan.
-                    </div>
-
-                </div>
-
-
-                <div class="sectionHeader">
-                    <div>
-                        <h2>Letzte Ordner</h2>
-                    </div>
-                </div>
-
-                <div class="folderGrid" id="dashboardFolders"></div>
-
-            </section>
-
-
-            <!-- FOLDERS -->
-
-            <section class="page hidden" id="page-folders">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Ordner</h2>
-                        <p>Verwalte alle Ordner und ihre NFC-Chips.</p>
-                    </div>
-
-                    <button class="primaryBtn" id="newFolderBtn">
-                        + Neuer Ordner
-                    </button>
-
-                </div>
-
-
-                <div class="toolbar">
-
-                    <div class="searchBox">
-                        <input
-                            id="folderSearch"
-                            type="search"
-                            placeholder="Ordner suchen..."
-                        >
-                    </div>
-
-                    <select id="folderCategoryFilter" style="max-width:220px">
-                        <option value="">Alle Kategorien</option>
-                    </select>
-
-                    <select id="folderStatusFilter" style="max-width:180px">
-                        <option value="">Alle Status</option>
-                        <option value="free">Frei</option>
-                        <option value="taken">Belegt</option>
-                    </select>
-
-                </div>
-
-                <div class="folderGrid" id="folderGrid"></div>
-
-            </section>
-
-
-            <!-- NFC -->
-
-            <section class="page hidden" id="page-nfc">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>NFC / Chips</h2>
-                        <p>Chips lesen, registrieren und Ordner automatisch umschalten.</p>
-                    </div>
-
-                </div>
-
-
-                <div class="nfcPanel">
-
-                    <div class="nfcPanelHeader">
-
-                        <div class="nfcIcon">
-                            📡
-                        </div>
-
-                        <div>
-                            <h2>NFC-Reader</h2>
-                            <p>
-                                Der Browser wartet auf einen NDEF-NFC-Chip.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <div class="nfcControls">
-
-                        <button class="primaryBtn" id="startNfcBtn">
-                            📡 NFC-Reader starten
-                        </button>
-
-                        <button class="secondaryBtn" id="stopNfcBtn">
-                            ■ Scan stoppen
-                        </button>
-
-                        <button class="secondaryBtn" id="writeTestChipBtn">
-                            ✎ Test-Chip beschreiben
-                        </button>
-
-                    </div>
-
-
-                    <div class="scanAnimation" id="nfcScanAnimation">
-                        📡
-                    </div>
-
-
-                    <div class="nfcStatus" id="nfcStatus">
-                        NFC-Reader ist nicht aktiv.
-                    </div>
-
-                </div>
-
-
-                <div class="sectionHeader">
-                    <div>
-                        <h2>So funktioniert der Chip</h2>
-                        <p>Der Chip muss eine NDEF-Nachricht enthalten.</p>
-                    </div>
-                </div>
-
-
-                <div class="folderCard">
-
-                    <div class="folderDescription" style="margin:0">
-
-                        <b>1.</b> Ordner anlegen.<br><br>
-
-                        <b>2.</b> Der Ordner bekommt automatisch eine eindeutige Chip-ID.<br><br>
-
-                        <b>3.</b> Den Chip mit der Chip-ID oder dem erzeugten Ordner-Link beschreiben.<br><br>
-
-                        <b>4.</b> NFC-Reader starten und Chip an das Gerät halten.<br><br>
-
-                        <b>5.</b> Erster Scan:
-                        <strong style="color:#f87171">🔴 Ordner wird belegt.</strong><br><br>
-
-                        <b>6.</b> Zweiter Scan:
-                        <strong style="color:#4ade80">🟢 Ordner wird wieder frei.</strong><br><br>
-
-                        <b>7.</b> Das System speichert automatisch Benutzer, Zeit und letzten Scan.
-
-                    </div>
-
-                </div>
-
-
-                <div class="sectionHeader" style="margin-top:25px">
-                    <div>
-                        <h2>Chip-Zuordnung</h2>
-                        <p>Hier findest du die NFC-IDs deiner Ordner.</p>
-                    </div>
-                </div>
-
-                <div class="tableWrap">
-
-                    <table>
-
-                        <thead>
-                            <tr>
-                                <th>Ordner</th>
-                                <th>Chip-ID</th>
-                                <th>Status</th>
-                                <th>Zuletzt gescannt</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="nfcTableBody"></tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- CATEGORIES -->
-
-            <section class="page hidden" id="page-categories">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Kategorien</h2>
-                        <p>Ordner übersichtlich gruppieren.</p>
-                    </div>
-
-                    <button class="primaryBtn" id="newCategoryBtn">
-                        + Kategorie
-                    </button>
-
-                </div>
-
-                <div class="folderGrid" id="categoryGrid"></div>
-
-            </section>
-
-
-            <!-- REQUESTS -->
-
-            <section class="page hidden" id="page-requests">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Anfragen</h2>
-                        <p>Verwalte Ordner-Anfragen.</p>
-                    </div>
-
-                    <button class="primaryBtn" id="newRequestBtn">
-                        + Anfrage
-                    </button>
-
-                </div>
-
-                <div class="tableWrap">
-
-                    <table>
-
-                        <thead>
-                            <tr>
-                                <th>Ordner</th>
-                                <th>Benutzer</th>
-                                <th>Status</th>
-                                <th>Datum</th>
-                                <th>Aktion</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="requestsBody"></tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- USERS -->
-
-            <section class="page hidden" id="page-users">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Benutzer</h2>
-                        <p>Registrierte Benutzer des Systems.</p>
-                    </div>
-
-                </div>
-
-                <div class="tableWrap">
-
-                    <table>
-
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>E-Mail</th>
-                                <th>Rolle</th>
-                                <th>Erstellt</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="usersBody"></tbody>
-
-                    </table>
-
-                </div>
-
-            </section>
-
-
-            <!-- NOTIFICATIONS -->
-
-            <section class="page hidden" id="page-notifications">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Benachrichtigungen</h2>
-                        <p>Systemmeldungen und wichtige Ereignisse.</p>
-                    </div>
-
-                </div>
-
-                <div id="notificationsList"></div>
-
-            </section>
-
-
-            <!-- SETTINGS -->
-
-            <section class="page hidden" id="page-settings">
-
-                <div class="sectionHeader">
-
-                    <div>
-                        <h2>Einstellungen</h2>
-                        <p>System- und Benutzeroptionen.</p>
-                    </div>
-
-                </div>
-
-
-                <div class="folderCard">
-
-                    <h3>Benutzerkonto</h3>
-
-                    <div class="inputGroup" style="margin-top:20px">
-                        <label>Name</label>
-                        <input id="settingsName">
-                    </div>
-
-                    <button class="primaryBtn" id="saveSettingsBtn">
-                        Änderungen speichern
-                    </button>
-
-                </div>
-
-
-                <div class="folderCard" style="margin-top:18px">
-
-                    <h3>NFC-System</h3>
-
-                    <div class="folderDescription">
-
-                        NFC ist nur verfügbar, wenn dein Gerät und Browser
-                        Web NFC unterstützen. Die Seite muss über HTTPS
-                        geladen werden.
-
-                    </div>
-
-                    <div class="infoRow">
-                        <span>NDEFReader</span>
-                        <span id="nfcSupport">Prüfe...</span>
-                    </div>
-
-                    <div class="infoRow">
-                        <span>HTTPS</span>
-                        <span id="httpsSupport">Prüfe...</span>
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
+            <button
+                class="nav-item"
+                data-page="requests">
+                <span class="nav-icon">📨</span>
+                Anfragen
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="users">
+                <span class="nav-icon">👥</span>
+                Benutzer
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="categories">
+                <span class="nav-icon">🏷️</span>
+                Kategorien
+            </button>
+
+            <button
+                class="nav-item"
+                data-page="settings">
+                <span class="nav-icon">⚙️</span>
+                Einstellungen
+            </button>
+
+        </aside>
+
+
+        <main class="content">
+
+            <div id="pageContent"></div>
+
+        </main>
+
+    </div>
+
+
+    <nav class="mobile-nav">
+
+        <button
+            class="active"
+            data-page="dashboard">
+            <span class="mi">⌂</span>
+            Start
+        </button>
+
+        <button data-page="folders">
+            <span class="mi">📁</span>
+            Ordner
+        </button>
+
+        <button data-page="scan">
+            <span class="mi">📳</span>
+            NFC
+        </button>
+
+        <button data-page="users">
+            <span class="mi">👥</span>
+            Benutzer
+        </button>
+
+        <button data-page="settings">
+            <span class="mi">⚙️</span>
+            Mehr
+        </button>
+
+    </nav>
 
 </div>
 
 
-<!-- =========================
-     FOLDER MODAL
-========================= -->
+<!-- =========================================
+     MODAL
+========================================= -->
 
-<div class="modalOverlay" id="folderModal">
+<div id="modalBg"
+     class="modal-bg hidden">
 
     <div class="modal">
 
-        <div class="modalHeader">
+        <div class="modal-head">
 
-            <h2 id="folderModalTitle">
-                Neuer Ordner
+            <h2 id="modalTitle">
+                Fenster
             </h2>
 
-            <button class="closeBtn" data-close="folderModal">
+            <button
+                id="modalClose"
+                class="modal-close">
                 ×
             </button>
 
         </div>
 
+        <div id="modalBody"
+             class="modal-body">
+        </div>
 
-        <form id="folderForm">
-
-            <div class="modalBody">
-
-                <input type="hidden" id="folderEditId">
-
-                <div class="inputGroup">
-
-                    <label>Ordnername</label>
-
-                    <input
-                        id="folderName"
-                        required
-                        placeholder="z. B. Ordner 001"
-                    >
-
-                </div>
-
-
-                <div class="inputGroup">
-
-                    <label>Kategorie</label>
-
-                    <select id="folderCategory">
-                        <option value="">Keine Kategorie</option>
-                    </select>
-
-                </div>
-
-
-                <div class="inputGroup">
-
-                    <label>Beschreibung</label>
-
-                    <textarea
-                        id="folderDescription"
-                        placeholder="Beschreibung..."
-                    ></textarea>
-
-                </div>
-
-
-                <div class="inputGroup">
-
-                    <label>Chip-ID</label>
-
-                    <input
-                        id="folderChipId"
-                        readonly
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="modalFooter">
-
-                <button
-                    type="button"
-                    class="secondaryBtn"
-                    data-close="folderModal"
-                >
-                    Abbrechen
-                </button>
-
-                <button
-                    type="submit"
-                    class="primaryBtn"
-                >
-                    Speichern
-                </button>
-
-            </div>
-
-        </form>
+        <div id="modalFooter"
+             class="modal-footer">
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =========================
-     CATEGORY MODAL
-========================= -->
-
-<div class="modalOverlay" id="categoryModal">
-
-    <div class="modal">
-
-        <div class="modalHeader">
-
-            <h2>Neue Kategorie</h2>
-
-            <button class="closeBtn" data-close="categoryModal">
-                ×
-            </button>
-
-        </div>
-
-
-        <form id="categoryForm">
-
-            <div class="modalBody">
-
-                <div class="inputGroup">
-                    <label>Name</label>
-                    <input id="categoryName" required>
-                </div>
-
-            </div>
-
-            <div class="modalFooter">
-
-                <button
-                    type="button"
-                    class="secondaryBtn"
-                    data-close="categoryModal"
-                >
-                    Abbrechen
-                </button>
-
-                <button class="primaryBtn">
-                    Erstellen
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
+<div id="toastContainer"
+     class="toast-container">
 </div>
 
 
-<!-- =========================
-     REQUEST MODAL
-========================= -->
-
-<div class="modalOverlay" id="requestModal">
-
-    <div class="modal">
-
-        <div class="modalHeader">
-
-            <h2>Neue Anfrage</h2>
-
-            <button class="closeBtn" data-close="requestModal">
-                ×
-            </button>
-
-        </div>
-
-
-        <form id="requestForm">
-
-            <div class="modalBody">
-
-                <div class="inputGroup">
-
-                    <label>Ordner</label>
-
-                    <select id="requestFolder" required></select>
-
-                </div>
-
-            </div>
-
-
-            <div class="modalFooter">
-
-                <button
-                    type="button"
-                    class="secondaryBtn"
-                    data-close="requestModal"
-                >
-                    Abbrechen
-                </button>
-
-                <button class="primaryBtn">
-                    Anfrage senden
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-<div id="toastContainer"></div>
-
-
-<!-- =========================
+<!-- =========================================
      FIREBASE
-========================= -->
+========================================= -->
 
 <script type="module">
 
 import {
-    initializeApp,
-    getApps,
-    getApp
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    signOut,
-    updateProfile
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    updateProfile,
+    signOut
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
     doc,
-    getDoc,
     addDoc,
     setDoc,
     updateDoc,
     deleteDoc,
+    getDoc,
+    getDocs,
     onSnapshot,
     query,
     orderBy,
     serverTimestamp,
     runTransaction
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
 
-/* =========================================================
-   FIREBASE
-========================================================= */
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
-    authDomain: "ordnersystem-1352a.firebaseapp.com",
-    projectId: "ordnersystem-1352a",
-    storageBucket: "ordnersystem-1352a.firebasestorage.app",
-    messagingSenderId: "39473536985",
-    appId: "1:39473536985:web:7dae48028c28dabc6a03c8"
+
+    apiKey:
+        "AIzaSyAYD56NLKpXVGAZ31807UQh9sSB-kncBjk",
+
+    authDomain:
+        "ordnersystem-1352a.firebaseapp.com",
+
+    projectId:
+        "ordnersystem-1352a",
+
+    storageBucket:
+        "ordnersystem-1352a.firebasestorage.app",
+
+    messagingSenderId:
+        "39473536985",
+
+    appId:
+        "1:39473536985:web:7dae48028c28dabc6a03c8"
 };
 
-const app = getApps().length
-    ? getApp()
-    : initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-
-/* =========================================================
+/* =========================================
    ADMIN
-========================================================= */
+========================================= */
 
-const ADMIN1 = "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
-const ADMIN2 = "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
+const ADMIN1 =
+    "DQDq2eSl9HZbJJR6yiSgNm6YWaz1";
 
-
-function isAdmin(){
-
-    if(!auth.currentUser) return false;
-
-    return (
-        auth.currentUser.uid === ADMIN1 ||
-        auth.currentUser.uid === ADMIN2
-    );
-}
+const ADMIN2 =
+    "HIER-ZWEITE-ADMIN-UID-EINTRAGEN";
 
 
-/* =========================================================
+/* =========================================
+   INITIALIZE
+========================================= */
+
+const firebaseApp =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(firebaseApp);
+
+const db =
+    getFirestore(firebaseApp);
+
+
+/* =========================================
    STATE
-========================================================= */
+========================================= */
 
 let currentUser = null;
+
+let isRegisterMode = false;
+
+let currentPage = "dashboard";
+
 let folders = [];
-let categories = [];
+
 let users = [];
+
+let categories = [];
+
 let requests = [];
-let notifications = [];
 
 let unsubscribeFolders = null;
-let unsubscribeCategories = null;
+
 let unsubscribeUsers = null;
+
+let unsubscribeCategories = null;
+
 let unsubscribeRequests = null;
-let unsubscribeNotifications = null;
-
-let nfcReader = null;
-let nfcAbortController = null;
-let nfcRunning = false;
-
-let authRegisterMode = false;
 
 
-/* =========================================================
+/* =========================================
    HELPERS
-========================================================= */
+========================================= */
 
 function $(id){
     return document.getElementById(id);
 }
 
 
-function escapeHtml(value){
+function isAdmin(){
 
-    if(value === null || value === undefined){
-        return "";
+    if(!currentUser){
+        return false;
     }
 
-    return String(value)
+    return (
+        currentUser.uid === ADMIN1 ||
+        currentUser.uid === ADMIN2
+    );
+}
+
+
+function userName(){
+
+    if(!currentUser){
+        return "Benutzer";
+    }
+
+    return (
+        currentUser.displayName ||
+        currentUser.email ||
+        "Benutzer"
+    );
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
         .replaceAll("&","&amp;")
         .replaceAll("<","&lt;")
         .replaceAll(">","&gt;")
@@ -1847,163 +1353,183 @@ function escapeHtml(value){
 }
 
 
-function formatDate(timestamp){
+function firebaseError(error){
 
-    if(!timestamp) return "-";
+    const code =
+        error?.code || "";
 
-    try{
+    const messages = {
 
-        const date = timestamp.toDate
-            ? timestamp.toDate()
-            : new Date(timestamp);
+        "auth/invalid-credential":
+            "E-Mail oder Passwort ist falsch.",
 
-        return date.toLocaleString(
-            "de-DE",
-            {
-                dateStyle:"short",
-                timeStyle:"short"
-            }
-        );
+        "auth/email-already-in-use":
+            "Diese E-Mail-Adresse wird bereits verwendet.",
 
-    }catch{
+        "auth/weak-password":
+            "Das Passwort ist zu schwach.",
 
-        return "-";
-    }
+        "auth/invalid-email":
+            "Die E-Mail-Adresse ist ungültig.",
+
+        "permission-denied":
+            "Du hast keine Berechtigung für diese Aktion.",
+
+        "failed-precondition":
+            "Die Aktion kann momentan nicht durchgeführt werden.",
+
+        "not-found":
+            "Der Ordner wurde nicht gefunden."
+
+    };
+
+    return messages[code] ||
+           error?.message ||
+           "Unbekannter Fehler.";
 }
 
 
-function generateChipId(){
+function showToast(title,text,type="info"){
 
-    const bytes = new Uint8Array(12);
-
-    crypto.getRandomValues(bytes);
-
-    return Array
-        .from(bytes)
-        .map(x => x.toString(16).padStart(2,"0"))
-        .join("")
-        .toUpperCase();
-}
-
-
-function getFolderUrl(folder){
-
-    const url = new URL(
-        window.location.href
-    );
-
-    url.search = "";
-    url.hash = "";
-
-    url.searchParams.set(
-        "folder",
-        folder.chipId
-    );
-
-    return url.toString();
-}
-
-
-function showToast(
-    title,
-    text,
-    type="info"
-){
-
-    const toast = document.createElement("div");
+    const toast =
+        document.createElement("div");
 
     toast.className =
         `toast ${type}`;
 
     toast.innerHTML = `
-        <div class="toastTitle">
+
+        <div class="toast-title">
             ${escapeHtml(title)}
         </div>
 
-        <div class="toastText">
+        <div class="toast-text">
             ${escapeHtml(text)}
         </div>
     `;
 
     $("toastContainer").appendChild(toast);
 
-    setTimeout(
-        () => toast.remove(),
-        4500
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },4500);
+}
+
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+        return "Noch nicht";
+    }
+
+    let date;
+
+    try{
+
+        if(timestamp.toDate){
+            date = timestamp.toDate();
+        }else{
+            date = new Date(timestamp);
+        }
+
+    }catch{
+        return "Unbekannt";
+    }
+
+    if(Number.isNaN(date.getTime())){
+        return "Unbekannt";
+    }
+
+    return date.toLocaleString(
+        "de-DE",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
     );
 }
 
 
-/* =========================================================
-   AUTH UI
-========================================================= */
+/* =========================================
+   AUTH MODE
+========================================= */
 
-function setAuthMode(register){
-
-    authRegisterMode = register;
-
-    $("registerNameGroup")
-        .classList
-        .toggle("hidden",!register);
-
-    $("authTitle").textContent =
-        register
-            ? "Konto erstellen"
-            : "OrdnerSystem";
-
-    $("authSubtitle").textContent =
-        register
-            ? "Erstelle dein Benutzerkonto."
-            : "Melde dich an, um deine Ordner und NFC-Chips zu verwalten.";
-
-    $("authSubmit").textContent =
-        register
-            ? "Registrieren"
-            : "Anmelden";
-
-    $("switchText").textContent =
-        register
-            ? "Bereits ein Konto?"
-            : "Noch kein Konto?";
-
-    $("switchAuth").textContent =
-        register
-            ? "Anmelden"
-            : "Registrieren";
-}
-
-
-$("switchAuth").addEventListener(
+$("switchAuthButton").addEventListener(
     "click",
-    () => setAuthMode(!authRegisterMode)
+    ()=>{
+
+        isRegisterMode =
+            !isRegisterMode;
+
+        $("registerNameGroup")
+            .classList.toggle(
+                "hidden",
+                !isRegisterMode
+            );
+
+        $("loginButton").textContent =
+            isRegisterMode
+                ? "Konto erstellen"
+                : "Anmelden";
+
+        $("loginSwitchText").textContent =
+            isRegisterMode
+                ? "Bereits ein Konto?"
+                : "Noch kein Konto?";
+
+        $("switchAuthButton").textContent =
+            isRegisterMode
+                ? "Anmelden"
+                : "Registrieren";
+    }
 );
 
 
-$("authForm").addEventListener(
-    "submit",
-    async event => {
+/* =========================================
+   LOGIN
+========================================= */
 
-        event.preventDefault();
+$("loginButton").addEventListener(
+    "click",
+    async ()=>{
 
         const email =
-            $("email").value.trim();
+            $("emailInput").value.trim();
 
         const password =
-            $("password").value;
+            $("passwordInput").value;
+
+        if(!email || !password){
+
+            showToast(
+                "Fehlende Angaben",
+                "Bitte E-Mail und Passwort eingeben.",
+                "error"
+            );
+
+            return;
+        }
 
         try{
 
-            $("authSubmit").disabled = true;
-
-            if(authRegisterMode){
+            if(isRegisterMode){
 
                 const name =
-                    $("registerName").value.trim();
+                    $("nameInput")
+                        .value
+                        .trim();
 
                 if(!name){
-                    throw new Error(
-                        "Bitte einen Namen eingeben."
+
+                    showToast(
+                        "Name fehlt",
+                        "Bitte deinen Namen eingeben.",
+                        "error"
                     );
+
+                    return;
                 }
 
                 const credential =
@@ -2028,9 +1554,8 @@ $("authForm").addEventListener(
                     ),
                     {
                         uid:credential.user.uid,
-                        name,
-                        email,
-                        role:"user",
+                        name:name,
+                        email:email,
                         createdAt:serverTimestamp()
                     },
                     {
@@ -2040,7 +1565,7 @@ $("authForm").addEventListener(
 
                 showToast(
                     "Konto erstellt",
-                    "Du wurdest erfolgreich registriert.",
+                    "Willkommen im OrdnerSystem.",
                     "success"
                 );
 
@@ -2052,6 +1577,11 @@ $("authForm").addEventListener(
                     password
                 );
 
+                showToast(
+                    "Willkommen",
+                    "Du wurdest erfolgreich angemeldet.",
+                    "success"
+                );
             }
 
         }catch(error){
@@ -2059,243 +1589,113 @@ $("authForm").addEventListener(
             console.error(error);
 
             showToast(
+                "Anmeldung fehlgeschlagen",
+                firebaseError(error),
+                "error"
+            );
+        }
+    }
+);
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+$("logoutButton").addEventListener(
+    "click",
+    async ()=>{
+
+        try{
+
+            await signOut(auth);
+
+        }catch(error){
+
+            showToast(
                 "Fehler",
                 firebaseError(error),
                 "error"
             );
-
-        }finally{
-
-            $("authSubmit").disabled = false;
         }
     }
 );
 
 
-function firebaseError(error){
-
-    const code =
-        error?.code || "";
-
-    const messages = {
-
-        "auth/invalid-email":
-            "Die E-Mail-Adresse ist ungültig.",
-
-        "auth/user-not-found":
-            "Benutzer nicht gefunden.",
-
-        "auth/wrong-password":
-            "Passwort ist falsch.",
-
-        "auth/invalid-credential":
-            "E-Mail oder Passwort ist falsch.",
-
-        "auth/email-already-in-use":
-            "Diese E-Mail wird bereits verwendet.",
-
-        "auth/weak-password":
-            "Das Passwort ist zu schwach.",
-
-        "auth/network-request-failed":
-            "Netzwerkfehler.",
-
-        "permission-denied":
-            "Keine Berechtigung."
-    };
-
-    return messages[code]
-        || error?.message
-        || "Unbekannter Fehler.";
-}
-
-
-/* =========================================================
+/* =========================================
    AUTH STATE
-========================================================= */
+========================================= */
 
 onAuthStateChanged(
     auth,
-    async user => {
+    async user=>{
+
+        currentUser = user;
 
         if(user){
 
-            currentUser = user;
-
             $("loginScreen")
-                .style
-                .display = "none";
+                .classList.add("hidden");
 
             $("app")
-                .classList
-                .add("active");
+                .classList.remove("hidden");
 
-            await ensureUserDocument();
+            $("userPill").textContent =
+                userName();
 
-            updateUserUI();
+            startRealtimeListeners();
 
-            startListeners();
+            await handleNfcLink();
 
-            checkNfcSupport();
-
-            handleFolderUrl();
+            renderCurrentPage();
 
         }else{
 
-            currentUser = null;
-
-            stopListeners();
+            $("loginScreen")
+                .classList.remove("hidden");
 
             $("app")
-                .classList
-                .remove("active");
+                .classList.add("hidden");
 
-            $("loginScreen")
-                .style
-                .display = "flex";
+            stopRealtimeListeners();
         }
-
     }
 );
 
 
-async function ensureUserDocument(){
+/* =========================================
+   REALTIME LISTENERS
+========================================= */
 
-    if(!currentUser) return;
+function startRealtimeListeners(){
 
-    const ref =
-        doc(
-            db,
-            "users",
-            currentUser.uid
-        );
-
-    const snapshot =
-        await getDoc(ref);
-
-    if(!snapshot.exists()){
-
-        await setDoc(
-            ref,
-            {
-                uid:currentUser.uid,
-                name:
-                    currentUser.displayName
-                    || "Benutzer",
-                email:
-                    currentUser.email || "",
-                role:
-                    isAdmin()
-                        ? "admin"
-                        : "user",
-                createdAt:serverTimestamp()
-            }
-        );
-
-    }
-
-}
-
-
-function updateUserUI(){
-
-    const name =
-        currentUser.displayName
-        || currentUser.email?.split("@")[0]
-        || "Benutzer";
-
-    $("miniName").textContent =
-        name;
-
-    $("miniEmail").textContent =
-        currentUser.email || "";
-
-    $("settingsName").value =
-        name;
-}
-
-
-/* =========================================================
-   FIRESTORE LISTENERS
-========================================================= */
-
-function stopListeners(){
-
-    [
-        unsubscribeFolders,
-        unsubscribeCategories,
-        unsubscribeUsers,
-        unsubscribeRequests,
-        unsubscribeNotifications
-    ].forEach(fn => {
-
-        if(typeof fn === "function"){
-            fn();
-        }
-
-    });
-
-    unsubscribeFolders = null;
-    unsubscribeCategories = null;
-    unsubscribeUsers = null;
-    unsubscribeRequests = null;
-    unsubscribeNotifications = null;
-}
-
-
-function startListeners(){
-
-    stopListeners();
+    stopRealtimeListeners();
 
 
     unsubscribeFolders =
         onSnapshot(
             collection(db,"folders"),
-            snapshot => {
+            snapshot=>{
 
                 folders =
                     snapshot.docs.map(
-                        d => ({
-                            id:d.id,
-                            ...d.data()
+                        item=>({
+                            id:item.id,
+                            ...item.data()
                         })
                     );
 
-                repairMissingChipIds();
-
-                renderEverything();
-
+                renderCurrentPage();
             },
-            error => {
+            error=>{
 
                 console.error(error);
 
                 showToast(
-                    "Ordner",
-                    "Ordner konnten nicht geladen werden.",
+                    "Ordner konnten nicht geladen werden",
+                    firebaseError(error),
                     "error"
                 );
-
-            }
-        );
-
-
-    unsubscribeCategories =
-        onSnapshot(
-            collection(db,"categories"),
-            snapshot => {
-
-                categories =
-                    snapshot.docs.map(
-                        d => ({
-                            id:d.id,
-                            ...d.data()
-                        })
-                    );
-
-                renderCategories();
-                updateCategorySelects();
-
             }
         );
 
@@ -2303,21 +1703,35 @@ function startListeners(){
     unsubscribeUsers =
         onSnapshot(
             collection(db,"users"),
-            snapshot => {
+            snapshot=>{
 
                 users =
                     snapshot.docs.map(
-                        d => ({
-                            id:d.id,
-                            ...d.data()
+                        item=>({
+                            id:item.id,
+                            ...item.data()
                         })
                     );
 
-                $("statUsers").textContent =
-                    users.length;
+                renderCurrentPage();
+            }
+        );
 
-                renderUsers();
 
+    unsubscribeCategories =
+        onSnapshot(
+            collection(db,"categories"),
+            snapshot=>{
+
+                categories =
+                    snapshot.docs.map(
+                        item=>({
+                            id:item.id,
+                            ...item.data()
+                        })
+                    );
+
+                renderCurrentPage();
             }
         );
 
@@ -2325,774 +1739,793 @@ function startListeners(){
     unsubscribeRequests =
         onSnapshot(
             collection(db,"requests"),
-            snapshot => {
+            snapshot=>{
 
                 requests =
                     snapshot.docs.map(
-                        d => ({
-                            id:d.id,
-                            ...d.data()
+                        item=>({
+                            id:item.id,
+                            ...item.data()
                         })
                     );
 
-                renderRequests();
-
-            }
-        );
-
-
-    unsubscribeNotifications =
-        onSnapshot(
-            collection(db,"notifications"),
-            snapshot => {
-
-                notifications =
-                    snapshot.docs.map(
-                        d => ({
-                            id:d.id,
-                            ...d.data()
-                        })
-                    );
-
-                notifications.sort(
-                    (a,b) =>
-                        (b.createdAt?.seconds || 0)
-                        -
-                        (a.createdAt?.seconds || 0)
-                );
-
-                renderNotifications();
-
+                renderCurrentPage();
             }
         );
 }
 
 
-/* =========================================================
-   AUTO CHIP IDS
-========================================================= */
+function stopRealtimeListeners(){
 
-async function repairMissingChipIds(){
-
-    for(const folder of folders){
-
-        if(folder.chipId) continue;
-
-        try{
-
-            await updateDoc(
-                doc(
-                    db,
-                    "folders",
-                    folder.id
-                ),
-                {
-                    chipId:generateChipId()
-                }
-            );
-
-        }catch(error){
-
-            console.warn(
-                "Chip-ID konnte nicht erzeugt werden",
-                error
-            );
-
-        }
-
+    if(unsubscribeFolders){
+        unsubscribeFolders();
+        unsubscribeFolders = null;
     }
 
+    if(unsubscribeUsers){
+        unsubscribeUsers();
+        unsubscribeUsers = null;
+    }
+
+    if(unsubscribeCategories){
+        unsubscribeCategories();
+        unsubscribeCategories = null;
+    }
+
+    if(unsubscribeRequests){
+        unsubscribeRequests();
+        unsubscribeRequests = null;
+    }
 }
 
 
-/* =========================================================
-   RENDER EVERYTHING
-========================================================= */
+/* =========================================
+   NAVIGATION
+========================================= */
 
-function renderEverything(){
+document.addEventListener(
+    "click",
+    event=>{
 
-    renderStats();
-    renderFolders();
-    renderDashboardFolders();
-    renderNfcTable();
-    updateRequestFolderSelect();
+        const button =
+            event.target.closest(
+                "[data-page]"
+            );
+
+        if(!button){
+            return;
+        }
+
+        const page =
+            button.dataset.page;
+
+        if(!page){
+            return;
+        }
+
+        currentPage = page;
+
+        document
+            .querySelectorAll(
+                ".nav-item,.mobile-nav button"
+            )
+            .forEach(item=>{
+
+                item.classList.toggle(
+                    "active",
+                    item.dataset.page === page
+                );
+            });
+
+        renderCurrentPage();
+    }
+);
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderCurrentPage(){
+
+    if(!currentUser){
+        return;
+    }
+
+    if(currentPage === "dashboard"){
+        renderDashboard();
+    }
+
+    if(currentPage === "folders"){
+        renderFolders();
+    }
+
+    if(currentPage === "scan"){
+        renderScanPage();
+    }
+
+    if(currentPage === "requests"){
+        renderRequests();
+    }
+
+    if(currentPage === "users"){
+        renderUsers();
+    }
+
+    if(currentPage === "categories"){
+        renderCategories();
+    }
+
+    if(currentPage === "settings"){
+        renderSettings();
+    }
 }
 
 
-function renderStats(){
+/* =========================================
+   DASHBOARD
+========================================= */
+
+function renderDashboard(){
 
     const total =
         folders.length;
 
-    const taken =
+    const busy =
         folders.filter(
-            folder =>
-                folder.chipActive === true
+            folder=>folder.chipActive === true
         ).length;
 
     const free =
-        total - taken;
+        total - busy;
 
-    $("statFolders").textContent =
-        total;
+    const mine =
+        folders.filter(
+            folder=>
+                folder.chipActive === true &&
+                folder.heldByUid === currentUser.uid
+        ).length;
 
-    $("statTaken").textContent =
-        taken;
+    $("pageContent").innerHTML = `
 
-    $("statFree").textContent =
-        free;
+        <div class="page">
+
+            <div class="page-head">
+
+                <div>
+                    <h1 class="page-title">
+                        Dashboard
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Guten Tag, ${escapeHtml(userName())}.
+                        Hier ist dein aktueller Überblick.
+                    </p>
+                </div>
+
+                <div class="page-actions">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openFolderModal()">
+                        ＋ Neuer Ordner
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="goToScan()">
+                        📳 NFC
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="stat-top">
+                        <div class="stat-icon">
+                            📁
+                        </div>
+                    </div>
+
+                    <div class="stat-number">
+                        ${total}
+                    </div>
+
+                    <div class="stat-label">
+                        Ordner insgesamt
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-top">
+                        <div class="stat-icon">
+                            🟢
+                        </div>
+                    </div>
+
+                    <div class="stat-number">
+                        ${free}
+                    </div>
+
+                    <div class="stat-label">
+                        Freie Ordner
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-top">
+                        <div class="stat-icon">
+                            🔴
+                        </div>
+                    </div>
+
+                    <div class="stat-number">
+                        ${busy}
+                    </div>
+
+                    <div class="stat-label">
+                        Belegte Ordner
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-top">
+                        <div class="stat-icon">
+                            👤
+                        </div>
+                    </div>
+
+                    <div class="stat-number">
+                        ${mine}
+                    </div>
+
+                    <div class="stat-label">
+                        Bei dir
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-head">
+
+                    <h2 class="card-title">
+                        Aktuelle Ordner
+                    </h2>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="goToFolders()">
+                        Alle anzeigen
+                    </button>
+
+                </div>
+
+                <div class="card-body">
+
+                    ${
+                        folders.length
+                        ? `
+                            <div class="grid">
+                                ${
+                                    folders
+                                        .slice(0,6)
+                                        .map(folderCard)
+                                        .join("")
+                                }
+                            </div>
+                        `
+                        : `
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    📁
+                                </div>
+
+                                Noch keine Ordner vorhanden.
+
+                            </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
 }
 
 
-/* =========================================================
-   FOLDER CARD
-========================================================= */
+/* =========================================
+   FOLDERS
+========================================= */
 
-function folderCard(folder){
+function renderFolders(){
 
-    /*
-        chipActive === false
-        = GRÜN / FREI
+    $("pageContent").innerHTML = `
 
-        chipActive === true
-        = ROT / BELEGT
-    */
+        <div class="page">
 
-    const taken =
-        folder.chipActive === true;
-
-    const status =
-        taken
-            ? "taken"
-            : "free";
-
-    const statusText =
-        taken
-            ? "🔴 Belegt"
-            : "🟢 Frei";
-
-    const category =
-        categories.find(
-            c => c.id === folder.categoryId
-        );
-
-    const holder =
-        folder.heldByName
-        || "-";
-
-    const lastScan =
-        formatDate(
-            folder.lastScannedAt
-        );
-
-    return `
-
-        <div class="folderCard ${status}">
-
-            <div class="folderHeader">
+            <div class="page-head">
 
                 <div>
+                    <h1 class="page-title">
+                        Ordner
+                    </h1>
 
-                    <div class="folderName">
-                        ${escapeHtml(folder.name || "Ohne Namen")}
-                    </div>
-
-                    <div class="folderCategory">
-                        ${escapeHtml(category?.name || "Keine Kategorie")}
-                    </div>
-
+                    <p class="page-subtitle">
+                        Alle Ordner und deren aktuellen Status.
+                    </p>
                 </div>
 
-                <span class="statusBadge ${taken ? "red":"green"}">
-                    ${statusText}
+                <button
+                    class="btn btn-primary"
+                    onclick="openFolderModal()">
+                    ＋ Neuer Ordner
+                </button>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔎
                 </span>
 
-            </div>
-
-
-            <div class="folderDescription">
-
-                ${escapeHtml(
-                    folder.description
-                    || "Keine Beschreibung."
-                )}
+                <input
+                    id="folderSearch"
+                    type="search"
+                    placeholder="Ordner, Kategorie oder Chip-ID suchen..."
+                    oninput="filterFolders()">
 
             </div>
 
 
-            <div class="folderInfo">
-
-                <div class="infoRow">
-                    <span>Chip-ID</span>
-                    <span class="chipId">
-                        ${escapeHtml(folder.chipId || "-")}
-                    </span>
-                </div>
-
-                <div class="infoRow">
-                    <span>Gehalten von</span>
-                    <span>
-                        ${escapeHtml(holder)}
-                    </span>
-                </div>
-
-                <div class="infoRow">
-                    <span>Letzter Scan</span>
-                    <span>
-                        ${escapeHtml(lastScan)}
-                    </span>
-                </div>
-
-                <div class="infoRow">
-                    <span>Letzter Scanner</span>
-                    <span>
-                        ${escapeHtml(
-                            folder.lastScannedByName || "-"
-                        )}
-                    </span>
-                </div>
-
-            </div>
-
-
-            <div class="folderActions">
-
-                <button
-                    data-action="scan-folder"
-                    data-id="${folder.id}"
-                >
-                    📡 Scannen
-                </button>
-
-                <button
-                    data-action="copy-link"
-                    data-id="${folder.id}"
-                >
-                    🔗 Link
-                </button>
-
-                <button
-                    data-action="edit-folder"
-                    data-id="${folder.id}"
-                >
-                    ✎
-                </button>
+            <div id="folderGrid"
+                 class="grid">
 
                 ${
-                    isAdmin()
-                    || folder.createdBy === currentUser?.uid
-                    ? `
-                    <button
-                        data-action="delete-folder"
-                        data-id="${folder.id}"
-                    >
-                        🗑
-                    </button>
+                    folders.length
+                    ? folders.map(folderCard).join("")
+                    : `
+                        <div
+                            class="card"
+                            style="grid-column:1/-1">
+
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    📁
+                                </div>
+
+                                Keine Ordner vorhanden.
+
+                            </div>
+
+                        </div>
                     `
-                    : ""
                 }
 
             </div>
 
         </div>
-
     `;
 }
 
 
-/* =========================================================
-   FOLDERS
-========================================================= */
-
-function renderFolders(){
-
-    const grid =
-        $("folderGrid");
+window.filterFolders = function(){
 
     const search =
-        ($("folderSearch").value || "")
-        .toLowerCase()
-        .trim();
+        $("folderSearch")
+            ?.value
+            .trim()
+            .toLowerCase();
 
-    const category =
-        $("folderCategoryFilter").value;
+    if(!$("folderGrid")){
+        return;
+    }
 
-    const status =
-        $("folderStatusFilter").value;
+    const filtered =
+        folders.filter(folder=>{
 
+            const text = [
 
-    let result =
-        folders.filter(folder => {
+                folder.name,
+                folder.category,
+                folder.chipId,
+                folder.description,
+                folder.heldByName
 
-            const matchesSearch =
-                !search
-                ||
-                (folder.name || "")
-                    .toLowerCase()
-                    .includes(search)
-                ||
-                (folder.chipId || "")
-                    .toLowerCase()
-                    .includes(search);
+            ]
+            .join(" ")
+            .toLowerCase();
 
-            const matchesCategory =
-                !category
-                || folder.categoryId === category;
-
-            const matchesStatus =
-                !status
-                ||
-                (
-                    status === "taken"
-                    &&
-                    folder.chipActive === true
-                )
-                ||
-                (
-                    status === "free"
-                    &&
-                    folder.chipActive !== true
-                );
-
-            return (
-                matchesSearch
-                &&
-                matchesCategory
-                &&
-                matchesStatus
-            );
-
+            return text.includes(search);
         });
 
+    $("folderGrid").innerHTML =
+        filtered.length
+        ? filtered.map(folderCard).join("")
+        : `
+            <div
+                class="card"
+                style="grid-column:1/-1">
 
-    result.sort(
-        (a,b) =>
-            (a.name || "")
-                .localeCompare(
-                    b.name || "",
-                    "de"
-                )
-    );
-
-
-    grid.innerHTML =
-        result.length
-            ? result.map(folderCard).join("")
-            : `
                 <div class="empty">
-                    Keine Ordner gefunden.
+                    🔎 Keine passenden Ordner gefunden.
                 </div>
-              `;
-}
+
+            </div>
+        `;
+};
 
 
-function renderDashboardFolders(){
+function folderCard(folder){
 
-    const grid =
-        $("dashboardFolders");
+    const busy =
+        folder.chipActive === true;
 
-    const latest =
-        [...folders]
-            .sort(
-                (a,b) =>
-                    (b.lastScannedAt?.seconds || 0)
-                    -
-                    (a.lastScannedAt?.seconds || 0)
-            )
-            .slice(0,6);
+    const mine =
+        busy &&
+        folder.heldByUid === currentUser?.uid;
 
-    grid.innerHTML =
-        latest.length
-            ? latest.map(folderCard).join("")
-            : `
-                <div class="empty">
-                    Noch keine Ordner vorhanden.
-                </div>
-              `;
-}
+    return `
 
+        <div class="card folder-card">
 
-/* =========================================================
-   NFC TABLE
-========================================================= */
+            <div class="folder-status ${busy ? "busy" : ""}">
+            </div>
 
-function renderNfcTable(){
+            <div class="folder-content">
 
-    const body =
-        $("nfcTableBody");
+                <div class="folder-top">
 
-    body.innerHTML =
-        folders.length
-            ? folders.map(folder => {
+                    <div>
 
-                const taken =
-                    folder.chipActive === true;
-
-                return `
-                    <tr>
-
-                        <td>
-                            <strong>
-                                ${escapeHtml(folder.name)}
-                            </strong>
-                        </td>
-
-                        <td class="chipId">
-                            ${escapeHtml(folder.chipId || "-")}
-                        </td>
-
-                        <td>
-                            <span class="statusBadge ${taken ? "red":"green"}">
-                                ${taken ? "🔴 Belegt":"🟢 Frei"}
-                            </span>
-                        </td>
-
-                        <td>
+                        <div class="folder-name">
                             ${escapeHtml(
-                                formatDate(
-                                    folder.lastScannedAt
-                                )
+                                folder.name ||
+                                "Unbenannter Ordner"
                             )}
-                        </td>
+                        </div>
 
-                        <td>
+                        <div class="folder-category">
+                            ${escapeHtml(
+                                folder.category ||
+                                "Keine Kategorie"
+                            )}
+                        </div>
 
+                    </div>
+
+                    <div class="
+                        status-badge
+                        ${busy
+                            ? "status-busy"
+                            : "status-free"}
+                    ">
+
+                        ${
+                            busy
+                            ? "🔴 BELEGT"
+                            : "🟢 FREI"
+                        }
+
+                    </div>
+
+                </div>
+
+
+                ${
+                    busy
+                    ? `
+                        <div class="holder">
+
+                            <strong>
+                                ${mine
+                                    ? "👤 Bei dir"
+                                    : "👤 Aktueller Benutzer"}
+                            </strong>
+
+                            ${escapeHtml(
+                                folder.heldByName ||
+                                "Unbekannter Benutzer"
+                            )}
+
+                        </div>
+                    `
+                    : `
+                        <div class="holder">
+
+                            <strong>
+                                🟢 Frei
+                            </strong>
+
+                            Dieser Ordner kann über
+                            seinen NFC-Chip übernommen werden.
+
+                        </div>
+                    `
+                }
+
+
+                <div class="folder-meta">
+
+                    ${
+                        folder.chipId
+                        ? `
+                            <span class="tag">
+                                NFC: ${escapeHtml(folder.chipId)}
+                            </span>
+                        `
+                        : `
+                            <span class="tag">
+                                Keine Chip-ID
+                            </span>
+                        `
+                    }
+
+                    ${
+                        folder.createdBy
+                        ? `
+                            <span class="tag">
+                                Erstellt
+                            </span>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+
+                <div class="folder-actions">
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="showFolder('${folder.id}')">
+                        Details
+                    </button>
+
+                    ${
+                        isAdmin()
+                        ? `
                             <button
-                                class="secondaryBtn"
-                                data-nfc-folder="${folder.id}"
-                                style="padding:8px 11px"
-                            >
-                                📡
+                                class="btn btn-secondary"
+                                onclick="openFolderModal('${folder.id}')">
+                                Bearbeiten
                             </button>
 
                             <button
-                                class="secondaryBtn"
-                                data-copy-folder="${folder.id}"
-                                style="padding:8px 11px"
-                            >
-                                🔗
+                                class="btn btn-danger"
+                                onclick="deleteFolder('${folder.id}')">
+                                Löschen
                             </button>
+                        `
+                        : ""
+                    }
 
-                        </td>
+                </div>
 
-                    </tr>
-                `;
+            </div>
 
-            }).join("")
-            : `
-                <tr>
-                    <td colspan="5">
-                        Keine Ordner vorhanden.
-                    </td>
-                </tr>
-            `;
+        </div>
+    `;
 }
 
 
-/* =========================================================
-   FOLDER EVENTS
-========================================================= */
+/* =========================================
+   NFC LANDING PAGE
+========================================= */
 
-document.addEventListener(
-    "click",
-    async event => {
+function renderScanPage(){
 
-        const actionButton =
-            event.target.closest("[data-action]");
+    $("pageContent").innerHTML = `
 
-        if(actionButton){
+        <div class="scan-page">
 
-            const id =
-                actionButton.dataset.id;
+            <div class="scan-card">
 
-            const action =
-                actionButton.dataset.action;
+                <div class="scan-circle">
+                    📳
+                </div>
 
-            const folder =
-                folders.find(
-                    f => f.id === id
-                );
+                <h1>
+                    NFC-Ordner
+                </h1>
 
-            if(!folder) return;
+                <p>
+                    Halte dein Handy einfach an den NFC-Chip
+                    des Ordners. Der Chip öffnet diese Website
+                    automatisch.
+                </p>
 
+                <p>
+                    <strong>
+                        Es gibt hier keinen Browser-NFC-Scanner.
+                    </strong>
+                </p>
 
-            if(action === "scan-folder"){
+                <button
+                    class="btn btn-primary"
+                    onclick="showToast(
+                        'NFC',
+                        'Halte dein Handy direkt an den NFC-Chip.',
+                        'info'
+                    )">
+                    📱 So funktioniert es
+                </button>
 
-                await scanFolderTransaction(
-                    folder.id,
-                    "Manueller Scan"
-                );
+            </div>
 
-            }
-
-
-            if(action === "copy-link"){
-
-                await copyFolderLink(folder);
-
-            }
-
-
-            if(action === "edit-folder"){
-
-                openFolderModal(folder);
-
-            }
+        </div>
+    `;
+}
 
 
-            if(action === "delete-folder"){
+/* =========================================
+   IMPORTANT:
+   NFC URL HANDLER
+========================================= */
 
-                await deleteFolder(folder);
+async function handleNfcLink(){
 
-            }
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
 
-        }
+    const folderId =
+        params.get("folder");
+
+    const chipId =
+        params.get("chip");
 
 
-        const nfcButton =
-            event.target.closest(
-                "[data-nfc-folder]"
+    /*
+       Der NFC-Chip kann entweder
+
+       https://deine-seite.de/?folder=ORDNER_ID
+
+       oder
+
+       https://deine-seite.de/?chip=CHIP_ID
+
+       öffnen.
+    */
+
+    if(!folderId && !chipId){
+        return;
+    }
+
+
+    let folder = null;
+
+
+    if(folderId){
+
+        folder =
+            folders.find(
+                item => item.id === folderId
             );
 
-        if(nfcButton){
+        /*
+           Falls die Realtime-Daten noch nicht geladen
+           sind, direkt aus Firestore laden.
+        */
 
-            await scanFolderTransaction(
-                nfcButton.dataset.nfcFolder,
-                "NFC-Tabelle"
-            );
+        if(!folder){
 
-        }
+            try{
 
+                const snapshot =
+                    await getDoc(
+                        doc(
+                            db,
+                            "folders",
+                            folderId
+                        )
+                    );
 
-        const copyButton =
-            event.target.closest(
-                "[data-copy-folder]"
-            );
+                if(snapshot.exists()){
 
-        if(copyButton){
+                    folder = {
+                        id:snapshot.id,
+                        ...snapshot.data()
+                    };
 
-            const folder =
-                folders.find(
-                    f =>
-                        f.id ===
-                        copyButton.dataset.copyFolder
-                );
+                }
 
-            if(folder){
-                await copyFolderLink(folder);
+            }catch(error){
+
+                console.error(error);
+
             }
-
         }
 
     }
-);
 
 
-async function copyFolderLink(folder){
+    /*
+       Alternative:
+       NFC-Link enthält ?chip=CHIP-ID
+    */
 
-    const link =
-        getFolderUrl(folder);
-
-    try{
-
-        await navigator.clipboard.writeText(
-            link
-        );
-
-        showToast(
-            "Link kopiert",
-            "Der NFC-/Ordner-Link wurde kopiert.",
-            "success"
-        );
-
-    }catch{
-
-        prompt(
-            "Ordner-Link:",
-            link
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   FOLDER MODAL
-========================================================= */
-
-$("newFolderBtn").addEventListener(
-    "click",
-    () => openFolderModal()
-);
-
-$("newFolderDashboardBtn").addEventListener(
-    "click",
-    () => openFolderModal()
-);
-
-
-function openFolderModal(folder=null){
-
-    $("folderEditId").value =
-        folder?.id || "";
-
-    $("folderName").value =
-        folder?.name || "";
-
-    $("folderCategory").value =
-        folder?.categoryId || "";
-
-    $("folderDescription").value =
-        folder?.description || "";
-
-    $("folderChipId").value =
-        folder?.chipId
-        || generateChipId();
-
-    $("folderModalTitle").textContent =
-        folder
-            ? "Ordner bearbeiten"
-            : "Neuer Ordner";
-
-    openModal("folderModal");
-}
-
-
-$("folderForm").addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        const id =
-            $("folderEditId").value;
-
-        const data = {
-
-            name:
-                $("folderName").value.trim(),
-
-            categoryId:
-                $("folderCategory").value || null,
-
-            description:
-                $("folderDescription").value.trim(),
-
-            chipId:
-                $("folderChipId").value.trim()
-
-        };
-
-
-        if(!data.name){
-
-            showToast(
-                "Fehler",
-                "Bitte einen Ordnernamen eingeben.",
-                "error"
-            );
-
-            return;
-        }
-
+    if(!folder && chipId){
 
         try{
 
-            if(id){
-
-                const existing =
-                    folders.find(
-                        f => f.id === id
-                    );
-
-                await updateDoc(
-                    doc(
-                        db,
-                        "folders",
-                        id
-                    ),
-                    data
-                );
-
-                showToast(
-                    "Gespeichert",
-                    `${existing?.name || "Ordner"} wurde aktualisiert.`,
-                    "success"
-                );
-
-            }else{
-
-                await addDoc(
+            const snapshot =
+                await getDocs(
                     collection(
                         db,
                         "folders"
-                    ),
-                    {
-                        ...data,
-
-                        createdBy:
-                            currentUser.uid,
-
-                        createdByName:
-                            currentUser.displayName
-                            || currentUser.email,
-
-                        chipActive:false,
-
-                        heldByUid:null,
-                        heldByName:null,
-
-                        lastScannedByUid:null,
-                        lastScannedByName:null,
-                        lastScannedAt:null,
-
-                        createdAt:
-                            serverTimestamp()
-                    }
+                    )
                 );
 
-                showToast(
-                    "Ordner erstellt",
-                    "Der Ordner wurde mit einer NFC-ID angelegt.",
-                    "success"
+            const found =
+                snapshot.docs.find(
+                    item =>
+                        item.data().chipId === chipId
                 );
+
+            if(found){
+
+                folder = {
+                    id:found.id,
+                    ...found.data()
+                };
 
             }
-
-            closeModal("folderModal");
 
         }catch(error){
 
             console.error(error);
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
         }
-
     }
-);
 
 
-/* =========================================================
-   DELETE
-========================================================= */
+    /*
+       URL aufräumen.
+       Dadurch bleibt nach dem Scan nicht dauerhaft
+       ?folder=... in der Adresszeile.
+    */
 
-async function deleteFolder(folder){
+    try{
 
-    if(
-        !isAdmin()
-        &&
-        folder.createdBy !== currentUser.uid
-    ){
+        window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname +
+            window.location.hash
+        );
+
+    }catch{}
+
+
+    if(!folder){
 
         showToast(
-            "Keine Berechtigung",
-            "Du darfst diesen Ordner nicht löschen.",
+            "Ordner nicht gefunden",
+            "Der NFC-Chip ist keinem bekannten Ordner zugeordnet.",
             "error"
         );
 
@@ -3100,81 +2533,40 @@ async function deleteFolder(folder){
     }
 
 
-    const confirmed =
-        confirm(
-            `Ordner "${folder.name}" wirklich löschen?`
-        );
+    /*
+       Der eigentliche NFC-Vorgang.
+    */
 
-    if(!confirmed) return;
+    await scanFolderTransaction(
+        folder.id
+    );
 
 
-    try{
+    /*
+       Schöne Ergebnis-Seite.
+    */
 
-        await deleteDoc(
-            doc(
-                db,
-                "folders",
-                folder.id
-            )
-        );
-
-        showToast(
-            "Gelöscht",
-            "Der Ordner wurde gelöscht.",
-            "success"
-        );
-
-    }catch(error){
-
-        showToast(
-            "Fehler",
-            firebaseError(error),
-            "error"
-        );
-
-    }
+    await showNfcResult(folder.id);
 }
 
 
-/* =========================================================
-   NFC CORE
-========================================================= */
-
-/*
-    WICHTIGE STATUSLOGIK:
-
-    chipActive = false
-    -> GRÜN
-    -> Ordner frei
-
-    chipActive = true
-    -> ROT
-    -> Ordner belegt
-
-    ERSTER SCAN:
-    false -> true
-    GRÜN -> ROT
-
-    ZWEITER SCAN:
-    true -> false
-    ROT -> GRÜN
-*/
-
+/* =========================================
+   NFC TRANSACTION
+========================================= */
 
 async function scanFolderTransaction(
-    folderId,
-    source="NFC"
+    folderId
 ){
 
     if(!currentUser){
 
         showToast(
-            "Nicht angemeldet",
+            "Anmeldung erforderlich",
             "Bitte zuerst anmelden.",
             "error"
         );
 
-        return;
+        return null;
     }
 
 
@@ -3191,7 +2583,7 @@ async function scanFolderTransaction(
         const result =
             await runTransaction(
                 db,
-                async transaction => {
+                async transaction=>{
 
                     const snapshot =
                         await transaction.get(
@@ -3202,9 +2594,8 @@ async function scanFolderTransaction(
                     if(!snapshot.exists()){
 
                         throw new Error(
-                            "Ordner nicht gefunden."
+                            "Ordner wurde nicht gefunden."
                         );
-
                     }
 
 
@@ -3212,105 +2603,169 @@ async function scanFolderTransaction(
                         snapshot.data();
 
 
-                    const wasTaken =
+                    const uid =
+                        currentUser.uid;
+
+
+                    const name =
+                        currentUser.displayName ||
+                        currentUser.email ||
+                        "Benutzer";
+
+
+                    const isTaken =
                         folder.chipActive === true;
 
 
-                    const nowTaken =
-                        !wasTaken;
+                    const holder =
+                        folder.heldByUid ||
+                        null;
 
 
-                    const userName =
-                        currentUser.displayName
-                        || currentUser.email
-                        || "Unbekannter Benutzer";
+                    /*
+                       FALL 1:
+                       Ordner ist frei.
+
+                       Der aktuelle Benutzer übernimmt ihn.
+                    */
+
+                    if(!isTaken){
+
+                        transaction.update(
+                            folderRef,
+                            {
+
+                                chipActive:true,
+
+                                heldByUid:uid,
+
+                                heldByName:name,
+
+                                lastScannedByUid:uid,
+
+                                lastScannedByName:name,
+
+                                lastScannedAt:
+                                    serverTimestamp()
+                            }
+                        );
 
 
-                    const updates = {
+                        return {
 
-                        chipActive:
-                            nowTaken,
+                            action:"taken",
 
-                        lastScannedByUid:
-                            currentUser.uid,
-
-                        lastScannedByName:
-                            userName,
-
-                        lastScannedAt:
-                            serverTimestamp()
-
-                    };
-
-
-                    if(nowTaken){
-
-                        updates.heldByUid =
-                            currentUser.uid;
-
-                        updates.heldByName =
-                            userName;
-
-                    }else{
-
-                        updates.heldByUid =
-                            null;
-
-                        updates.heldByName =
-                            null;
-
+                            folderName:
+                                folder.name ||
+                                "Ordner"
+                        };
                     }
 
 
+                    /*
+                       FALL 2:
+                       Ordner ist rot und gehört jemand anderem.
+
+                       NICHTS ändern.
+                    */
+
+                    if(holder !== uid){
+
+                        return {
+
+                            action:"blocked",
+
+                            folderName:
+                                folder.name ||
+                                "Ordner",
+
+                            holder:
+                                folder.heldByName ||
+                                "anderer Benutzer"
+                        };
+                    }
+
+
+                    /*
+                       FALL 3:
+                       Derselbe Benutzer scannt erneut.
+
+                       Ordner wird wieder frei.
+                    */
+
                     transaction.update(
                         folderRef,
-                        updates
+                        {
+
+                            chipActive:false,
+
+                            heldByUid:null,
+
+                            heldByName:null,
+
+                            lastScannedByUid:uid,
+
+                            lastScannedByName:name,
+
+                            lastScannedAt:
+                                serverTimestamp()
+                        }
                     );
 
 
                     return {
-                        nowTaken,
+
+                        action:"released",
+
                         folderName:
-                            folder.name || "Ordner"
+                            folder.name ||
+                            "Ordner"
                     };
 
                 }
             );
 
 
-        if(result.nowTaken){
+        if(result.action === "taken"){
 
             showToast(
-                "🔴 Ordner genommen",
-                `${result.folderName} ist jetzt belegt.`,
+                "🔴 Ordner übernommen",
+                `${result.folderName} ist jetzt bei dir.`,
                 "error"
             );
-
-        }else{
-
-            showToast(
-                "🟢 Ordner zurückgegeben",
-                `${result.folderName} ist wieder frei.`,
-                "success"
-            );
-
         }
 
 
-        await createNotification(
-            result.nowTaken
-                ? "Ordner genommen"
-                : "Ordner zurückgegeben",
-            `${result.folderName} wurde per ${source} ${result.nowTaken ? "belegt":"freigegeben"}.`
-        );
+        if(result.action === "released"){
+
+            showToast(
+                "🟢 Ordner freigegeben",
+                `${result.folderName} ist wieder frei.`,
+                "success"
+            );
+        }
+
+
+        if(result.action === "blocked"){
+
+            showToast(
+                "🔴 Bereits belegt",
+                `${result.folderName} wird bereits von ${result.holder} verwendet.`,
+                "error"
+            );
+        }
+
+
+        return result;
 
 
     }catch(error){
 
         console.error(
-            "Scan transaction error:",
+            "NFC transaction error:",
             error
         );
+
 
         showToast(
             "Scan fehlgeschlagen",
@@ -3318,564 +2773,199 @@ async function scanFolderTransaction(
             "error"
         );
 
-    }
 
+        return null;
+    }
 }
 
 
-/* =========================================================
-   REAL WEB NFC
-========================================================= */
+/* =========================================
+   NFC RESULT
+========================================= */
 
-async function startNfcScan(){
+async function showNfcResult(
+    folderId
+){
 
-    if(!currentUser){
-
-        showToast(
-            "Anmeldung erforderlich",
-            "Bitte zuerst anmelden.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(!("NDEFReader" in window)){
-
-        showToast(
-            "Web NFC nicht verfügbar",
-            "Dieser Browser unterstützt den direkten NFC-Reader nicht.",
-            "error"
-        );
-
-        setNfcStatus(
-            "Web NFC wird von diesem Browser/Gerät nicht unterstützt.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(!window.isSecureContext){
-
-        showToast(
-            "HTTPS erforderlich",
-            "Web NFC funktioniert nur in einem sicheren HTTPS-Kontext.",
-            "error"
-        );
-
-        setNfcStatus(
-            "HTTPS ist erforderlich.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(nfcRunning){
-
-        showToast(
-            "NFC läuft bereits",
-            "Der Reader wartet schon auf einen Chip.",
-            "info"
-        );
-
-        return;
-    }
-
-
-    try{
-
-        nfcReader =
-            new NDEFReader();
-
-        nfcAbortController =
-            new AbortController();
-
-
-        nfcRunning = true;
-
-        setNfcScanningUI(true);
-
-        setNfcStatus(
-            "📡 NFC-Reader aktiv – halte jetzt einen Chip an das Gerät.",
-            "scanning"
+    let folder =
+        folders.find(
+            item => item.id === folderId
         );
 
 
-        nfcReader.onreadingerror =
-            () => {
-
-                setNfcStatus(
-                    "❌ Der NFC-Chip konnte nicht gelesen werden.",
-                    "error"
-                );
-
-            };
-
-
-        nfcReader.onreading =
-            async event => {
-
-                try{
-
-                    const chip =
-                        extractChipFromNdef(
-                            event.message
-                        );
-
-
-                    if(!chip){
-
-                        setNfcStatus(
-                            "❌ Kein gültiger Ordner-Chip erkannt.",
-                            "error"
-                        );
-
-                        showToast(
-                            "Unbekannter Chip",
-                            "Der NFC-Tag enthält keine passende Ordner-ID.",
-                            "error"
-                        );
-
-                        return;
-                    }
-
-
-                    setNfcStatus(
-                        `✓ Chip erkannt: ${chip}`,
-                        "success"
-                    );
-
-
-                    const folder =
-                        findFolderByChip(
-                            chip
-                        );
-
-
-                    if(!folder){
-
-                        setNfcStatus(
-                            `❌ Chip ${chip} ist keinem Ordner zugeordnet.`,
-                            "error"
-                        );
-
-                        showToast(
-                            "Chip nicht registriert",
-                            `Die Chip-ID ${chip} ist nicht im System.`,
-                            "error"
-                        );
-
-                        return;
-                    }
-
-
-                    await scanFolderTransaction(
-                        folder.id,
-                        "NFC"
-                    );
-
-
-                }catch(error){
-
-                    console.error(error);
-
-                    setNfcStatus(
-                        "❌ Fehler beim Verarbeiten des NFC-Tags.",
-                        "error"
-                    );
-
-                }
-
-            };
-
-
-        await nfcReader.scan({
-            signal:
-                nfcAbortController.signal
-        });
-
-
-        showToast(
-            "NFC aktiviert",
-            "Halte jetzt den Chip an das Gerät.",
-            "success"
-        );
-
-
-    }catch(error){
-
-        nfcRunning = false;
-
-        setNfcScanningUI(false);
-
-        console.error(
-            "NFC start error:",
-            error
-        );
-
-
-        let message =
-            "NFC konnte nicht gestartet werden.";
-
-
-        if(error.name === "NotAllowedError"){
-
-            message =
-                "NFC-Berechtigung wurde abgelehnt.";
-
-        }else if(error.name === "NotSupportedError"){
-
-            message =
-                "Das Gerät oder der Browser unterstützt Web NFC nicht.";
-
-        }else if(error.name === "InvalidStateError"){
-
-            message =
-                "Es läuft bereits ein NFC-Scan.";
-
-        }
-
-
-        setNfcStatus(
-            `❌ ${message}`,
-            "error"
-        );
-
-
-        showToast(
-            "NFC-Fehler",
-            message,
-            "error"
-        );
-
-    }
-
-}
-
-
-function stopNfcScan(){
-
-    try{
-
-        if(nfcAbortController){
-
-            nfcAbortController.abort();
-
-        }
-
-    }catch(error){
-
-        console.warn(error);
-
-    }
-
-
-    nfcAbortController = null;
-    nfcReader = null;
-    nfcRunning = false;
-
-    setNfcScanningUI(false);
-
-    setNfcStatus(
-        "NFC-Reader gestoppt.",
-        ""
-    );
-}
-
-
-function extractChipFromNdef(message){
-
-    if(!message) return null;
-
-
-    for(const record of message.records){
-
-        /*
-            TEXT RECORD
-        */
-
-        if(
-            record.recordType === "text"
-        ){
-
-            try{
-
-                const decoder =
-                    new TextDecoder(
-                        record.encoding || "utf-8"
-                    );
-
-                let text =
-                    decoder.decode(
-                        record.data
-                    ).trim();
-
-
-                const chip =
-                    extractChipString(
-                        text
-                    );
-
-                if(chip){
-                    return chip;
-                }
-
-            }catch(error){
-
-                console.warn(
-                    "Text record error",
-                    error
-                );
-
-            }
-
-        }
-
-
-        /*
-            URL RECORD
-        */
-
-        if(
-            record.recordType === "url"
-            ||
-            record.recordType === "absolute-url"
-        ){
-
-            try{
-
-                const decoder =
-                    new TextDecoder();
-
-                const urlText =
-                    decoder.decode(
-                        record.data
-                    ).trim();
-
-
-                const chip =
-                    extractChipString(
-                        urlText
-                    );
-
-                if(chip){
-                    return chip;
-                }
-
-            }catch(error){
-
-                console.warn(
-                    "URL record error",
-                    error
-                );
-
-            }
-
-        }
-
-
-        /*
-            MIME / OTHER
-        */
+    if(!folder){
 
         try{
 
-            const decoder =
-                new TextDecoder();
-
-            const raw =
-                decoder.decode(
-                    record.data
-                ).trim();
-
-
-            const chip =
-                extractChipString(
-                    raw
+            const snapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "folders",
+                        folderId
+                    )
                 );
 
-            if(chip){
-                return chip;
+            if(snapshot.exists()){
+
+                folder = {
+                    id:snapshot.id,
+                    ...snapshot.data()
+                };
+
             }
 
         }catch{}
-
     }
 
 
-    return null;
-}
-
-
-function extractChipString(text){
-
-    if(!text) return null;
-
-
-    /*
-        Direkte Chip-ID
-    */
-
-    const direct =
-        text
-            .match(
-                /[A-Fa-f0-9]{24}/
-            );
-
-
-    if(direct){
-
-        return direct[0]
-            .toUpperCase();
-
-    }
-
-
-    /*
-        URL:
-        ?folder=CHIPID
-    */
-
-    try{
-
-        const url =
-            new URL(text);
-
-        const chip =
-            url.searchParams.get(
-                "folder"
-            );
-
-        if(chip){
-
-            return chip
-                .trim()
-                .toUpperCase();
-
-        }
-
-    }catch{}
-
-
-    /*
-        chipId=XXXX
-    */
-
-    const match =
-        text.match(
-            /(?:chipId|chip|id)\s*=\s*([A-Fa-f0-9]{12,64})/i
-        );
-
-
-    if(match){
-
-        return match[1]
-            .toUpperCase();
-
-    }
-
-
-    return null;
-}
-
-
-function findFolderByChip(chip){
-
-    const normalized =
-        chip
-            .trim()
-            .toUpperCase();
-
-
-    return folders.find(
-        folder =>
-            (
-                folder.chipId || ""
-            )
-                .toUpperCase()
-            === normalized
-    );
-}
-
-
-/* =========================================================
-   WRITE NFC CHIP
-========================================================= */
-
-async function writeTestChip(){
-
-    if(!("NDEFReader" in window)){
-
-        showToast(
-            "Nicht verfügbar",
-            "Web NFC wird von diesem Browser nicht unterstützt.",
-            "error"
-        );
+    if(!folder){
 
         return;
     }
 
 
-    if(!window.isSecureContext){
+    const busy =
+        folder.chipActive === true;
+
+    const mine =
+        busy &&
+        folder.heldByUid ===
+            currentUser.uid;
+
+
+    $("pageContent").innerHTML = `
+
+        <div class="scan-page">
+
+            <div class="scan-card">
+
+                <div class="scan-circle">
+
+                    ${
+                        busy
+                        ? "🔴"
+                        : "🟢"
+                    }
+
+                </div>
+
+                <h1>
+                    ${
+                        busy
+                        ? (
+                            mine
+                            ? "Ordner übernommen"
+                            : "Ordner ist belegt"
+                        )
+                        : "Ordner freigegeben"
+                    }
+                </h1>
+
+
+                <div class="scan-folder-name">
+
+                    ${escapeHtml(
+                        folder.name ||
+                        "Ordner"
+                    )}
+
+                </div>
+
+
+                <div
+                    class="
+                        scan-result
+                        show
+                        ${busy ? "busy" : "free"}
+                    "
+                    style="
+                        display:block;
+                    ">
+
+                    ${
+                        busy
+                        ? `
+
+                            <h2>
+                                🔴 Belegt
+                            </h2>
+
+                            <div>
+                                ${
+                                    mine
+                                    ? "Dieser Ordner ist jetzt bei dir."
+                                    : `
+                                        Dieser Ordner wird gerade
+                                        von <strong>
+                                        ${escapeHtml(
+                                            folder.heldByName ||
+                                            "einem anderen Benutzer"
+                                        )}
+                                        </strong> verwendet.
+                                    `
+                                }
+                            </div>
+
+                        `
+                        : `
+
+                            <h2>
+                                🟢 Frei
+                            </h2>
+
+                            <div>
+                                Der Ordner ist wieder frei
+                                und kann übernommen werden.
+                            </div>
+
+                        `
+                    }
+
+                </div>
+
+
+                <div style="
+                    margin-top:20px;
+                    display:flex;
+                    gap:9px;
+                    justify-content:center;
+                    flex-wrap:wrap;
+                ">
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="goToFolders()">
+                        📁 Ordner anzeigen
+                    </button>
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="goToDashboard()">
+                        Dashboard
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================
+   FOLDER MODAL
+========================================= */
+
+window.openFolderModal =
+function(folderId=null){
+
+    if(folderId && !isAdmin()){
 
         showToast(
-            "HTTPS erforderlich",
-            "Web NFC benötigt HTTPS.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if(!folders.length){
-
-        showToast(
-            "Keine Ordner",
-            "Lege zuerst einen Ordner an.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    const names =
-        folders
-            .map(
-                (folder,index) =>
-                    `${index+1}. ${folder.name}`
-            )
-            .join("\n");
-
-
-    const choice =
-        prompt(
-            `Für welchen Ordner soll der Chip beschrieben werden?\n\n${names}\n\nNummer eingeben:`
-        );
-
-
-    if(choice === null) return;
-
-
-    const index =
-        Number(choice) - 1;
-
-
-    if(
-        !Number.isInteger(index)
-        ||
-        !folders[index]
-    ){
-
-        showToast(
-            "Ungültig",
-            "Bitte eine gültige Nummer eingeben.",
+            "Keine Berechtigung",
+            "Nur Administratoren können Ordner bearbeiten.",
             "error"
         );
 
@@ -3884,38 +2974,263 @@ async function writeTestChip(){
 
 
     const folder =
-        folders[index];
+        folderId
+        ? folders.find(
+            item=>item.id === folderId
+          )
+        : null;
+
+
+    openModal(
+        folder
+        ? "Ordner bearbeiten"
+        : "Neuen Ordner erstellen",
+
+        `
+
+            <div class="form-group">
+
+                <label>Ordnername</label>
+
+                <input
+                    id="modalFolderName"
+                    class="input"
+                    value="${escapeHtml(
+                        folder?.name || ""
+                    )}"
+                    placeholder="z. B. Ordner 001">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Kategorie</label>
+
+                <input
+                    id="modalFolderCategory"
+                    class="input"
+                    value="${escapeHtml(
+                        folder?.category || ""
+                    )}"
+                    placeholder="z. B. Büro">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>NFC Chip-ID</label>
+
+                <input
+                    id="modalFolderChip"
+                    class="input"
+                    value="${escapeHtml(
+                        folder?.chipId || ""
+                    )}"
+                    placeholder="z. B. CHIP-001">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Beschreibung</label>
+
+                <textarea
+                    id="modalFolderDescription"
+                    class="input"
+                    rows="4"
+                    placeholder="Optionale Beschreibung">${escapeHtml(
+                        folder?.description || ""
+                    )}</textarea>
+
+            </div>
+
+
+            <div style="
+                background:#eff6ff;
+                border-radius:14px;
+                padding:13px;
+                font-size:13px;
+                color:#1e40af;
+            ">
+
+                <strong>📳 NFC-Link</strong><br>
+
+                Nach dem Erstellen kann der Chip auf
+                <strong>?folder=ORDNER-ID</strong>
+                programmiert werden.
+
+            </div>
+
+        `,
+
+        `
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+                Abbrechen
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveFolder('${folderId || ""}')">
+                Speichern
+            </button>
+
+        `
+    );
+};
+
+
+window.saveFolder =
+async function(folderId){
+
+    const name =
+        $("modalFolderName")
+            .value
+            .trim();
+
+    const category =
+        $("modalFolderCategory")
+            .value
+            .trim();
+
+    const chipId =
+        $("modalFolderChip")
+            .value
+            .trim();
+
+    const description =
+        $("modalFolderDescription")
+            .value
+            .trim();
+
+
+    if(!name){
+
+        showToast(
+            "Name fehlt",
+            "Bitte einen Ordnernamen eingeben.",
+            "error"
+        );
+
+        return;
+    }
 
 
     try{
 
-        const ndef =
-            new NDEFReader();
+        /*
+           Chip-ID darf nicht doppelt vorkommen.
+        */
 
+        if(chipId){
 
-        await ndef.write(
-            {
-                records:[
-                    {
-                        recordType:"text",
-                        data:
-                            folder.chipId
-                    },
-                    {
-                        recordType:"url",
-                        data:
-                            getFolderUrl(folder)
-                    }
-                ]
+            const duplicate =
+                folders.find(
+                    item =>
+                        item.chipId === chipId &&
+                        item.id !== folderId
+                );
+
+            if(duplicate){
+
+                showToast(
+                    "Chip bereits vergeben",
+                    "Diese NFC-Chip-ID gehört bereits zu einem anderen Ordner.",
+                    "error"
+                );
+
+                return;
             }
-        );
+        }
 
 
-        showToast(
-            "Chip beschrieben",
-            `${folder.name} wurde auf den NFC-Chip geschrieben.`,
-            "success"
-        );
+        if(folderId){
+
+            await updateDoc(
+                doc(
+                    db,
+                    "folders",
+                    folderId
+                ),
+                {
+
+                    name:name,
+
+                    category:
+                        category || "Allgemein",
+
+                    chipId:chipId || null,
+
+                    description:
+                        description || "",
+
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            showToast(
+                "Gespeichert",
+                "Der Ordner wurde aktualisiert.",
+                "success"
+            );
+
+        }else{
+
+            await addDoc(
+                collection(
+                    db,
+                    "folders"
+                ),
+                {
+
+                    name:name,
+
+                    category:
+                        category || "Allgemein",
+
+                    chipId:
+                        chipId || null,
+
+                    description:
+                        description || "",
+
+                    chipActive:false,
+
+                    heldByUid:null,
+
+                    heldByName:null,
+
+                    createdBy:
+                        currentUser.uid,
+
+                    createdByName:
+                        userName(),
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    updatedAt:
+                        serverTimestamp()
+                }
+            );
+
+
+            showToast(
+                "Ordner erstellt",
+                "Der neue Ordner wurde angelegt.",
+                "success"
+            );
+        }
+
+
+        closeModal();
 
 
     }catch(error){
@@ -3923,1153 +3238,1167 @@ async function writeTestChip(){
         console.error(error);
 
         showToast(
-            "Schreiben fehlgeschlagen",
-            error.message || "NFC-Chip konnte nicht beschrieben werden.",
+            "Speichern fehlgeschlagen",
+            firebaseError(error),
+            "error"
+        );
+    }
+};
+
+
+/* =========================================
+   DELETE FOLDER
+========================================= */
+
+window.deleteFolder =
+async function(folderId){
+
+    if(!isAdmin()){
+
+        showToast(
+            "Keine Berechtigung",
+            "Nur Administratoren können Ordner löschen.",
             "error"
         );
 
+        return;
     }
 
-}
-
-
-/* =========================================================
-   NFC UI
-========================================================= */
-
-function setNfcScanningUI(active){
-
-    $("nfcScanAnimation")
-        .classList
-        .toggle(
-            "active",
-            active
-        );
-
-    $("dashboardScanAnimation")
-        .classList
-        .toggle(
-            "active",
-            active
-        );
-}
-
-
-function setNfcStatus(
-    text,
-    type=""
-){
-
-    $("nfcStatus").textContent =
-        text;
-
-    $("nfcStatus").className =
-        `nfcStatus ${type}`;
-
-
-    $("dashboardNfcStatus").textContent =
-        text;
-
-    $("dashboardNfcStatus").className =
-        `nfcStatus ${type}`;
-}
-
-
-function checkNfcSupport(){
-
-    $("nfcSupport").textContent =
-        "NDEFReader" in window
-            ? "✓ Unterstützt"
-            : "✕ Nicht unterstützt";
-
-    $("httpsSupport").textContent =
-        window.isSecureContext
-            ? "✓ HTTPS"
-            : "✕ Kein HTTPS";
-
-}
-
-
-/* =========================================================
-   URL NFC FALLBACK
-========================================================= */
-
-async function handleFolderUrl(){
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const chip =
-        params.get("folder");
-
-
-    if(!chip) return;
-
-
-    /*
-        Wichtig:
-        Wir benutzen sessionStorage NICHT zum Blockieren
-        des echten NFC-Readers.
-
-        Die URL-Funktion ist nur ein Fallback,
-        wenn der NFC-Tag einfach einen Link öffnet.
-    */
 
     const folder =
-        findFolderByChip(
-            chip
+        folders.find(
+            item=>item.id === folderId
         );
 
 
     if(!folder){
+        return;
+    }
+
+
+    if(!confirm(
+        `Ordner "${folder.name}" wirklich löschen?`
+    )){
+        return;
+    }
+
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "folders",
+                folderId
+            )
+        );
+
 
         showToast(
-            "Chip nicht registriert",
-            `Kein Ordner für ${chip} gefunden.`,
+            "Ordner gelöscht",
+            "Der Ordner wurde entfernt.",
+            "success"
+        );
+
+
+    }catch(error){
+
+        showToast(
+            "Löschen fehlgeschlagen",
+            firebaseError(error),
+            "error"
+        );
+    }
+};
+
+
+/* =========================================
+   FOLDER DETAILS
+========================================= */
+
+window.showFolder =
+function(folderId){
+
+    const folder =
+        folders.find(
+            item=>item.id === folderId
+        );
+
+    if(!folder){
+        return;
+    }
+
+
+    const busy =
+        folder.chipActive === true;
+
+
+    openModal(
+
+        folder.name || "Ordner",
+
+        `
+
+            <div style="
+                display:grid;
+                gap:12px;
+            ">
+
+                <div class="tag">
+                    Status:
+                    ${
+                        busy
+                        ? "🔴 BELEGT"
+                        : "🟢 FREI"
+                    }
+                </div>
+
+                <div class="tag">
+                    Kategorie:
+                    ${escapeHtml(
+                        folder.category ||
+                        "Keine"
+                    )}
+                </div>
+
+                <div class="tag">
+                    NFC-ID:
+                    ${escapeHtml(
+                        folder.chipId ||
+                        "Nicht gesetzt"
+                    )}
+                </div>
+
+                <div class="tag">
+                    Erstellt:
+                    ${formatDate(
+                        folder.createdAt
+                    )}
+                </div>
+
+                ${
+                    busy
+                    ? `
+                        <div class="holder">
+
+                            <strong>
+                                Aktueller Benutzer
+                            </strong>
+
+                            ${escapeHtml(
+                                folder.heldByName ||
+                                "Unbekannt"
+                            )}
+
+                        </div>
+                    `
+                    : ""
+                }
+
+                ${
+                    folder.description
+                    ? `
+                        <div style="
+                            padding:15px;
+                            background:#f8fafc;
+                            border-radius:14px;
+                            line-height:1.5;
+                        ">
+                            ${escapeHtml(
+                                folder.description
+                            )}
+                        </div>
+                    `
+                    : ""
+                }
+
+            </div>
+
+        `,
+
+        `
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+                Schließen
+            </button>
+
+        `
+    );
+};
+
+
+/* =========================================
+   REQUESTS
+========================================= */
+
+function renderRequests(){
+
+    $("pageContent").innerHTML = `
+
+        <div class="page">
+
+            <div class="page-head">
+
+                <div>
+                    <h1 class="page-title">
+                        Anfragen
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Verwaltungsanfragen des Systems.
+                    </p>
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="createRequest()">
+                    ＋ Anfrage
+                </button>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-body">
+
+                    ${
+                        requests.length
+                        ? `
+
+                            <div class="table-wrap">
+
+                                <table>
+
+                                    <thead>
+
+                                        <tr>
+                                            <th>Anfrage</th>
+                                            <th>Benutzer</th>
+                                            <th>Status</th>
+                                            <th>Datum</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        ${
+                                            requests
+                                                .map(request=>`
+
+                                                    <tr>
+
+                                                        <td>
+                                                            ${escapeHtml(
+                                                                request.title ||
+                                                                "Anfrage"
+                                                            )}
+                                                        </td>
+
+                                                        <td>
+                                                            ${escapeHtml(
+                                                                request.createdByName ||
+                                                                "Unbekannt"
+                                                            )}
+                                                        </td>
+
+                                                        <td>
+                                                            ${escapeHtml(
+                                                                request.status ||
+                                                                "offen"
+                                                            )}
+                                                        </td>
+
+                                                        <td>
+                                                            ${formatDate(
+                                                                request.createdAt
+                                                            )}
+                                                        </td>
+
+                                                    </tr>
+
+                                                `)
+                                                .join("")
+                                        }
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        `
+                        : `
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    📨
+                                </div>
+
+                                Keine Anfragen vorhanden.
+
+                            </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+window.createRequest =
+async function(){
+
+    openModal(
+
+        "Neue Anfrage",
+
+        `
+
+            <div class="form-group">
+
+                <label>Titel</label>
+
+                <input
+                    id="requestTitle"
+                    class="input"
+                    placeholder="Worum geht es?">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Nachricht</label>
+
+                <textarea
+                    id="requestText"
+                    class="input"
+                    rows="5"
+                    placeholder="Beschreibung..."></textarea>
+
+            </div>
+
+        `,
+
+        `
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+                Abbrechen
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveRequest()">
+                Absenden
+            </button>
+
+        `
+    );
+};
+
+
+window.saveRequest =
+async function(){
+
+    const title =
+        $("requestTitle")
+            .value
+            .trim();
+
+    const text =
+        $("requestText")
+            .value
+            .trim();
+
+
+    if(!title){
+
+        showToast(
+            "Titel fehlt",
+            "Bitte einen Titel eingeben.",
             "error"
         );
 
         return;
     }
 
-
-    /*
-        Bei einem geöffneten NFC-Link soll der Scan
-        ebenfalls genau einmal für diesen Seitenaufruf
-        verarbeitet werden.
-    */
-
-    const scanKey =
-        `urlScan:${chip}:${window.location.pathname}`;
-
-
-    if(
-        sessionStorage.getItem(scanKey)
-    ){
-
-        return;
-    }
-
-
-    sessionStorage.setItem(
-        scanKey,
-        "1"
-    );
-
-
-    await scanFolderTransaction(
-        folder.id,
-        "NFC-Link"
-    );
-
-}
-
-
-/* =========================================================
-   CATEGORIES
-========================================================= */
-
-function updateCategorySelects(){
-
-    const current =
-        $("folderCategory").value;
-
-    const filterCurrent =
-        $("folderCategoryFilter").value;
-
-
-    $("folderCategory").innerHTML =
-        `
-        <option value="">
-            Keine Kategorie
-        </option>
-        `
-        +
-        categories
-            .map(
-                category =>
-                    `
-                    <option value="${category.id}">
-                        ${escapeHtml(category.name)}
-                    </option>
-                    `
-            )
-            .join("");
-
-
-    $("folderCategory").value =
-        current;
-
-
-    $("folderCategoryFilter").innerHTML =
-        `
-        <option value="">
-            Alle Kategorien
-        </option>
-        `
-        +
-        categories
-            .map(
-                category =>
-                    `
-                    <option value="${category.id}">
-                        ${escapeHtml(category.name)}
-                    </option>
-                    `
-            )
-            .join("");
-
-
-    $("folderCategoryFilter").value =
-        filterCurrent;
-}
-
-
-$("newCategoryBtn").addEventListener(
-    "click",
-    () => openModal("categoryModal")
-);
-
-
-$("categoryForm").addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        const name =
-            $("categoryName")
-                .value
-                .trim();
-
-
-        if(!name) return;
-
-
-        try{
-
-            await addDoc(
-                collection(
-                    db,
-                    "categories"
-                ),
-                {
-                    name,
-                    createdBy:
-                        currentUser.uid,
-                    createdAt:
-                        serverTimestamp()
-                }
-            );
-
-
-            $("categoryName").value = "";
-
-            closeModal(
-                "categoryModal"
-            );
-
-
-            showToast(
-                "Kategorie erstellt",
-                name,
-                "success"
-            );
-
-
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
-        }
-
-    }
-);
-
-
-function renderCategories(){
-
-    const grid =
-        $("categoryGrid");
-
-
-    grid.innerHTML =
-        categories.length
-            ? categories.map(category => {
-
-                const count =
-                    folders.filter(
-                        f =>
-                            f.categoryId
-                            ===
-                            category.id
-                    ).length;
-
-
-                return `
-
-                    <div class="folderCard">
-
-                        <div class="folderName">
-                            🗂️
-                            ${escapeHtml(category.name)}
-                        </div>
-
-                        <div class="folderDescription">
-                            ${count}
-                            Ordner
-                        </div>
-
-                        <div class="folderActions">
-
-                            ${
-                                isAdmin()
-                                ? `
-                                <button
-                                    data-delete-category="${category.id}"
-                                >
-                                    🗑 Löschen
-                                </button>
-                                `
-                                : ""
-                            }
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }).join("")
-            : `
-                <div class="empty">
-                    Noch keine Kategorien.
-                </div>
-              `;
-}
-
-
-document.addEventListener(
-    "click",
-    async event => {
-
-        const btn =
-            event.target.closest(
-                "[data-delete-category]"
-            );
-
-        if(!btn) return;
-
-
-        if(!isAdmin()){
-
-            showToast(
-                "Keine Berechtigung",
-                "Nur Admins dürfen Kategorien löschen.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const id =
-            btn.dataset.deleteCategory;
-
-
-        if(!confirm("Kategorie löschen?"))
-            return;
-
-
-        try{
-
-            await deleteDoc(
-                doc(
-                    db,
-                    "categories",
-                    id
-                )
-            );
-
-            showToast(
-                "Kategorie gelöscht",
-                "Die Kategorie wurde gelöscht.",
-                "success"
-            );
-
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   REQUESTS
-========================================================= */
-
-function updateRequestFolderSelect(){
-
-    $("requestFolder").innerHTML =
-        folders.length
-            ? folders
-                .map(
-                    folder =>
-                        `
-                        <option value="${folder.id}">
-                            ${escapeHtml(folder.name)}
-                        </option>
-                        `
-                )
-                .join("")
-            : `
-                <option value="">
-                    Keine Ordner vorhanden
-                </option>
-              `;
-}
-
-
-$("newRequestBtn").addEventListener(
-    "click",
-    () => openModal("requestModal")
-);
-
-
-$("requestForm").addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        const folderId =
-            $("requestFolder").value;
-
-        const folder =
-            folders.find(
-                f =>
-                    f.id === folderId
-            );
-
-
-        if(!folder) return;
-
-
-        try{
-
-            await addDoc(
-                collection(
-                    db,
-                    "requests"
-                ),
-                {
-                    folderId,
-                    folderName:
-                        folder.name,
-
-                    createdBy:
-                        currentUser.uid,
-
-                    createdByName:
-                        currentUser.displayName
-                        || currentUser.email,
-
-                    status:"open",
-
-                    createdAt:
-                        serverTimestamp()
-                }
-            );
-
-
-            closeModal(
-                "requestModal"
-            );
-
-
-            showToast(
-                "Anfrage erstellt",
-                "Die Anfrage wurde gespeichert.",
-                "success"
-            );
-
-
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
-        }
-
-    }
-);
-
-
-function renderRequests(){
-
-    const body =
-        $("requestsBody");
-
-
-    body.innerHTML =
-        requests.length
-            ? requests.map(request => {
-
-                return `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHtml(
-                                request.folderName
-                                || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                request.createdByName
-                                || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                request.status
-                                || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                formatDate(
-                                    request.createdAt
-                                )
-                            )}
-                        </td>
-
-                        <td>
-
-                            ${
-                                isAdmin()
-                                ? `
-                                <button
-                                    class="secondaryBtn"
-                                    data-request-delete="${request.id}"
-                                    style="padding:8px"
-                                >
-                                    🗑
-                                </button>
-                                `
-                                : ""
-                            }
-
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }).join("")
-            : `
-                <tr>
-                    <td colspan="5">
-                        Keine Anfragen.
-                    </td>
-                </tr>
-              `;
-}
-
-
-document.addEventListener(
-    "click",
-    async event => {
-
-        const btn =
-            event.target.closest(
-                "[data-request-delete]"
-            );
-
-        if(!btn) return;
-
-
-        if(!isAdmin()) return;
-
-
-        try{
-
-            await deleteDoc(
-                doc(
-                    db,
-                    "requests",
-                    btn.dataset.requestDelete
-                )
-            );
-
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   USERS
-========================================================= */
-
-function renderUsers(){
-
-    const body =
-        $("usersBody");
-
-
-    body.innerHTML =
-        users.length
-            ? users.map(user => {
-
-                return `
-
-                    <tr>
-
-                        <td>
-                            ${escapeHtml(
-                                user.name
-                                || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                user.email
-                                || "-"
-                            )}
-                        </td>
-
-                        <td>
-                            ${
-                                user.role === "admin"
-                                ? "👑 Admin"
-                                : "Benutzer"
-                            }
-                        </td>
-
-                        <td>
-                            ${escapeHtml(
-                                formatDate(
-                                    user.createdAt
-                                )
-                            )}
-                        </td>
-
-                    </tr>
-
-                `;
-
-            }).join("")
-            : `
-                <tr>
-                    <td colspan="4">
-                        Keine Benutzer.
-                    </td>
-                </tr>
-              `;
-}
-
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-async function createNotification(
-    title,
-    text
-){
 
     try{
 
         await addDoc(
             collection(
                 db,
-                "notifications"
+                "requests"
             ),
             {
-                title,
-                text,
+
+                title:title,
+
+                text:text,
+
+                status:"offen",
 
                 createdBy:
-                    currentUser?.uid || null,
+                    currentUser.uid,
+
+                createdByName:
+                    userName(),
 
                 createdAt:
                     serverTimestamp()
             }
         );
 
-    }catch(error){
 
-        console.warn(
-            "Notification error:",
-            error
-        );
-
-    }
-
-}
-
-
-function renderNotifications(){
-
-    const list =
-        $("notificationsList");
-
-
-    list.innerHTML =
-        notifications.length
-            ? notifications.map(
-                notification =>
-                    `
-                    <div
-                        class="folderCard"
-                        style="margin-bottom:12px"
-                    >
-
-                        <div class="folderName">
-                            🔔
-                            ${escapeHtml(
-                                notification.title
-                            )}
-                        </div>
-
-                        <div class="folderDescription">
-                            ${escapeHtml(
-                                notification.text
-                            )}
-                        </div>
-
-                        <div class="infoRow">
-                            <span>Datum</span>
-                            <span>
-                                ${escapeHtml(
-                                    formatDate(
-                                        notification.createdAt
-                                    )
-                                )}
-                            </span>
-                        </div>
-
-                    </div>
-                    `
-            ).join("")
-            : `
-                <div class="empty">
-                    Keine Benachrichtigungen.
-                </div>
-              `;
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-$("saveSettingsBtn").addEventListener(
-    "click",
-    async () => {
-
-        const name =
-            $("settingsName")
-                .value
-                .trim();
-
-
-        if(!name){
-
-            showToast(
-                "Fehler",
-                "Bitte einen Namen eingeben.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        try{
-
-            await updateProfile(
-                currentUser,
-                {
-                    displayName:name
-                }
-            );
-
-
-            await setDoc(
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid
-                ),
-                {
-                    name
-                },
-                {
-                    merge:true
-                }
-            );
-
-
-            updateUserUI();
-
-
-            showToast(
-                "Gespeichert",
-                "Deine Einstellungen wurden gespeichert.",
-                "success"
-            );
-
-
-        }catch(error){
-
-            showToast(
-                "Fehler",
-                firebaseError(error),
-                "error"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const pageNames = {
-
-    dashboard:"Dashboard",
-    folders:"Ordner",
-    nfc:"NFC / Chips",
-    categories:"Kategorien",
-    requests:"Anfragen",
-    users:"Benutzer",
-    notifications:"Benachrichtigungen",
-    settings:"Einstellungen"
-
-};
-
-
-document.querySelectorAll(
-    ".navBtn"
-).forEach(button => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            const page =
-                button.dataset.page;
-
-            openPage(page);
-
-        }
-    );
-
-});
-
-
-function openPage(page){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(section => {
-
-            section.classList.add(
-                "hidden"
-            );
-
-        });
-
-
-    const target =
-        $(`page-${page}`);
-
-
-    if(target){
-
-        target.classList.remove(
-            "hidden"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(".navBtn")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.page === page
-            );
-
-        });
-
-
-    $("pageTitle").textContent =
-        pageNames[page]
-        || "OrdnerSystem";
-
-
-    $("sidebar")
-        .classList
-        .remove("open");
-
-
-    if(page === "nfc"){
-
-        renderNfcTable();
-        checkNfcSupport();
-
-    }
-
-}
-
-
-/* =========================================================
-   MOBILE MENU
-========================================================= */
-
-$("mobileMenuBtn").addEventListener(
-    "click",
-    () => {
-
-        $("sidebar")
-            .classList
-            .toggle("open");
-
-    }
-);
-
-
-/* =========================================================
-   SEARCH / FILTER
-========================================================= */
-
-$("folderSearch").addEventListener(
-    "input",
-    renderFolders
-);
-
-$("folderCategoryFilter").addEventListener(
-    "change",
-    renderFolders
-);
-
-$("folderStatusFilter").addEventListener(
-    "change",
-    renderFolders
-);
-
-
-/* =========================================================
-   NFC BUTTONS
-========================================================= */
-
-$("startNfcBtn").addEventListener(
-    "click",
-    startNfcScan
-);
-
-$("stopNfcBtn").addEventListener(
-    "click",
-    stopNfcScan
-);
-
-$("writeTestChipBtn").addEventListener(
-    "click",
-    writeTestChip
-);
-
-$("dashboardNfcBtn").addEventListener(
-    "click",
-    startNfcScan
-);
-
-$("quickNfcBtn").addEventListener(
-    "click",
-    () => {
-
-        openPage("nfc");
-
-        setTimeout(
-            startNfcScan,
-            150
-        );
-
-    }
-);
-
-$("openNfcPageBtn").addEventListener(
-    "click",
-    () => openPage("nfc")
-);
-
-
-/* =========================================================
-   REFRESH
-========================================================= */
-
-$("refreshBtn").addEventListener(
-    "click",
-    () => {
-
-        renderEverything();
-        checkNfcSupport();
+        closeModal();
 
         showToast(
-            "Aktualisiert",
-            "Die Ansicht wurde aktualisiert.",
+            "Anfrage gesendet",
+            "Die Anfrage wurde gespeichert.",
             "success"
         );
 
+
+    }catch(error){
+
+        showToast(
+            "Fehler",
+            firebaseError(error),
+            "error"
+        );
     }
-);
+};
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+/* =========================================
+   USERS
+========================================= */
 
-$("logoutBtn").addEventListener(
-    "click",
-    async () => {
+function renderUsers(){
 
-        stopNfcScan();
+    $("pageContent").innerHTML = `
 
-        await signOut(auth);
+        <div class="page">
 
-    }
-);
+            <div class="page-head">
+
+                <div>
+
+                    <h1 class="page-title">
+                        Benutzer
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Benutzer des OrdnerSystems.
+                    </p>
+
+                </div>
+
+            </div>
 
 
-/* =========================================================
-   MODALS
-========================================================= */
+            <div class="card">
 
-function openModal(id){
+                <div class="table-wrap">
 
-    $(id)
-        .classList
-        .add("open");
+                    <table>
 
+                        <thead>
+
+                            <tr>
+                                <th>Name</th>
+                                <th>E-Mail</th>
+                                <th>Rolle</th>
+                                <th>UID</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${
+                                users.length
+                                ? users.map(item=>`
+
+                                    <tr>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                item.name ||
+                                                "Unbekannt"
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            ${escapeHtml(
+                                                item.email ||
+                                                "-"
+                                            )}
+                                        </td>
+
+                                        <td>
+
+                                            ${
+                                                (
+                                                    item.uid === ADMIN1 ||
+                                                    item.uid === ADMIN2
+                                                )
+                                                ? "Administrator"
+                                                : "Benutzer"
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            <span class="tag">
+                                                ${escapeHtml(
+                                                    item.uid ||
+                                                    item.id
+                                                )}
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                `).join("")
+                                : `
+
+                                    <tr>
+
+                                        <td colspan="4">
+
+                                            <div class="empty">
+                                                Keine Benutzer gefunden.
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                `
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
 }
 
 
-function closeModal(id){
+/* =========================================
+   CATEGORIES
+========================================= */
 
-    $(id)
-        .classList
-        .remove("open");
+function renderCategories(){
 
+    $("pageContent").innerHTML = `
+
+        <div class="page">
+
+            <div class="page-head">
+
+                <div>
+
+                    <h1 class="page-title">
+                        Kategorien
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Kategorien für deine Ordner.
+                    </p>
+
+                </div>
+
+                ${
+                    isAdmin()
+                    ? `
+                        <button
+                            class="btn btn-primary"
+                            onclick="openCategoryModal()">
+                            ＋ Kategorie
+                        </button>
+                    `
+                    : ""
+                }
+
+            </div>
+
+
+            <div class="grid">
+
+                ${
+                    categories.length
+                    ? categories.map(category=>`
+
+                        <div class="card">
+
+                            <div class="card-body">
+
+                                <div style="
+                                    font-size:20px;
+                                    font-weight:900;
+                                ">
+                                    🏷️
+                                    ${escapeHtml(
+                                        category.name ||
+                                        "Kategorie"
+                                    )}
+                                </div>
+
+                                ${
+                                    category.description
+                                    ? `
+                                        <div style="
+                                            color:var(--muted);
+                                            margin-top:8px;
+                                            font-size:13px;
+                                        ">
+                                            ${escapeHtml(
+                                                category.description
+                                            )}
+                                        </div>
+                                    `
+                                    : ""
+                                }
+
+                                ${
+                                    isAdmin()
+                                    ? `
+                                        <button
+                                            class="btn btn-danger"
+                                            style="margin-top:15px;width:100%"
+                                            onclick="deleteCategory('${category.id}')">
+                                            Löschen
+                                        </button>
+                                    `
+                                    : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    `).join("")
+                    : `
+
+                        <div
+                            class="card"
+                            style="grid-column:1/-1">
+
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    🏷️
+                                </div>
+
+                                Noch keine Kategorien.
+
+                            </div>
+
+                        </div>
+
+                    `
+                }
+
+            </div>
+
+        </div>
+    `;
 }
 
 
-document.addEventListener(
+window.openCategoryModal =
+function(){
+
+    if(!isAdmin()){
+
+        showToast(
+            "Keine Berechtigung",
+            "Nur Administratoren können Kategorien erstellen.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    openModal(
+
+        "Neue Kategorie",
+
+        `
+
+            <div class="form-group">
+
+                <label>Name</label>
+
+                <input
+                    id="categoryName"
+                    class="input"
+                    placeholder="z. B. Schule">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Beschreibung</label>
+
+                <textarea
+                    id="categoryDescription"
+                    class="input"
+                    rows="3"
+                    placeholder="Optional"></textarea>
+
+            </div>
+
+        `,
+
+        `
+
+            <button
+                class="btn btn-secondary"
+                onclick="closeModal()">
+                Abbrechen
+            </button>
+
+            <button
+                class="btn btn-primary"
+                onclick="saveCategory()">
+                Erstellen
+            </button>
+
+        `
+    );
+};
+
+
+window.saveCategory =
+async function(){
+
+    if(!isAdmin()){
+        return;
+    }
+
+
+    const name =
+        $("categoryName")
+            .value
+            .trim();
+
+    const description =
+        $("categoryDescription")
+            .value
+            .trim();
+
+
+    if(!name){
+
+        showToast(
+            "Name fehlt",
+            "Bitte einen Namen eingeben.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(
+                db,
+                "categories"
+            ),
+            {
+
+                name:name,
+
+                description:
+                    description || "",
+
+                createdBy:
+                    currentUser.uid,
+
+                createdAt:
+                    serverTimestamp()
+            }
+        );
+
+
+        closeModal();
+
+        showToast(
+            "Kategorie erstellt",
+            "Die Kategorie wurde angelegt.",
+            "success"
+        );
+
+
+    }catch(error){
+
+        showToast(
+            "Fehler",
+            firebaseError(error),
+            "error"
+        );
+    }
+};
+
+
+window.deleteCategory =
+async function(id){
+
+    if(!isAdmin()){
+        return;
+    }
+
+
+    if(!confirm(
+        "Kategorie wirklich löschen?"
+    )){
+        return;
+    }
+
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "categories",
+                id
+            )
+        );
+
+
+        showToast(
+            "Kategorie gelöscht",
+            "Die Kategorie wurde entfernt.",
+            "success"
+        );
+
+
+    }catch(error){
+
+        showToast(
+            "Fehler",
+            firebaseError(error),
+            "error"
+        );
+    }
+};
+
+
+/* =========================================
+   SETTINGS
+========================================= */
+
+function renderSettings(){
+
+    $("pageContent").innerHTML = `
+
+        <div class="page">
+
+            <div class="page-head">
+
+                <div>
+
+                    <h1 class="page-title">
+                        Einstellungen
+                    </h1>
+
+                    <p class="page-subtitle">
+                        Informationen und Systemeinstellungen.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <h2 class="card-title">
+                            Konto
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <strong>
+                            ${escapeHtml(userName())}
+                        </strong>
+
+                        <div style="
+                            color:var(--muted);
+                            margin-top:5px;
+                        ">
+                            ${escapeHtml(
+                                currentUser.email ||
+                                ""
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <h2 class="card-title">
+                            NFC-System
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <p style="
+                            color:var(--muted);
+                            line-height:1.6;
+                        ">
+
+                            Die NFC-Chips funktionieren als
+                            normale NFC-Links.
+
+                            <br><br>
+
+                            Es wird kein Browser-NFC-Scanner
+                            benötigt.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <h2 class="card-title">
+                            System
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="tag">
+                            Ordner: ${folders.length}
+                        </div>
+
+                        <div
+                            class="tag"
+                            style="margin-top:7px">
+                            Benutzer: ${users.length}
+                        </div>
+
+                        <div
+                            class="tag"
+                            style="margin-top:7px">
+                            Kategorien: ${categories.length}
+                        </div>
+
+                        <div
+                            class="tag"
+                            style="margin-top:7px">
+                            Rolle:
+                            ${
+                                isAdmin()
+                                ? "Administrator"
+                                : "Benutzer"
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+function openModal(
+    title,
+    body,
+    footer=""
+){
+
+    $("modalTitle").textContent =
+        title;
+
+    $("modalBody").innerHTML =
+        body;
+
+    $("modalFooter").innerHTML =
+        footer;
+
+    $("modalBg")
+        .classList
+        .remove("hidden");
+}
+
+
+window.closeModal =
+function(){
+
+    $("modalBg")
+        .classList
+        .add("hidden");
+};
+
+
+$("modalClose").addEventListener(
     "click",
-    event => {
+    closeModal
+);
 
-        const close =
-            event.target.closest(
-                "[data-close]"
-            );
 
-        if(close){
+$("modalBg").addEventListener(
+    "click",
+    event=>{
 
-            closeModal(
-                close.dataset.close
-            );
-
+        if(event.target === $("modalBg")){
+            closeModal();
         }
 
     }
 );
 
 
-document
-    .querySelectorAll(".modalOverlay")
-    .forEach(overlay => {
+/* =========================================
+   QUICK NAV
+========================================= */
 
-        overlay.addEventListener(
-            "click",
-            event => {
+window.goToFolders =
+function(){
 
-                if(
-                    event.target === overlay
-                ){
+    currentPage = "folders";
 
-                    overlay.classList.remove(
-                        "open"
-                    );
+    updateNavigation();
 
-                }
-
-            }
-        );
-
-    });
+    renderCurrentPage();
+};
 
 
-/* =========================================================
-   INITIAL
-========================================================= */
+window.goToDashboard =
+function(){
 
-setAuthMode(false);
+    currentPage = "dashboard";
 
-checkNfcSupport();
+    updateNavigation();
+
+    renderCurrentPage();
+};
 
 
-/* =========================================================
-   GLOBAL ERROR HANDLER
-========================================================= */
+window.goToScan =
+function(){
 
-window.addEventListener(
-    "unhandledrejection",
-    event => {
+    currentPage = "scan";
 
-        console.error(
-            "Unhandled:",
-            event.reason
-        );
+    updateNavigation();
+
+    renderCurrentPage();
+};
+
+
+function updateNavigation(){
+
+    document
+        .querySelectorAll(
+            ".nav-item,.mobile-nav button"
+        )
+        .forEach(item=>{
+
+            item.classList.toggle(
+                "active",
+                item.dataset.page === currentPage
+            );
+
+        });
+}
+
+
+/* =========================================
+   ENTER KEY LOGIN
+========================================= */
+
+$("passwordInput").addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key === "Enter"){
+            $("loginButton").click();
+        }
 
     }
 );
+
+
+/* =========================================
+   DEBUG / GLOBAL
+========================================= */
+
+window.OrdnerSystem = {
+
+    firebaseApp,
+
+    auth,
+
+    db,
+
+    get currentUser(){
+        return currentUser;
+    },
+
+    get folders(){
+        return folders;
+    },
+
+    scanFolderTransaction,
+
+    handleNfcLink
+
+};
 
 </script>
 
 </body>
 </html>
+```
