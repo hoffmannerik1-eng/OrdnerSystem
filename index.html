@@ -3926,6 +3926,7 @@ window.take = async firestoreId => {
     }
 
     await writeActivity("Übernommen",newChipName,chip.chipId,{previousOwner:oldOwner?.name||""});
+    await notifyAll("Ordner übernommen",nameOf()+" hat den Ordner „"+newChipName+"“ übernommen.",{type:"folder_taken",chipId:chip.chipId||""});
     announceEvent("Ordner übernommen",nameOf()+" hat "+newChipName+" übernommen.");
     toast(
       oldOwner
@@ -3989,6 +3990,7 @@ window.release = async firestoreId => {
     );
 
     await writeActivity("Freigegeben",chip.name,chip.chipId);
+    await notifyAll("Ordner freigegeben",nameOf()+" hat den Ordner „"+(chip.name||"Ordner")+"“ freigegeben.",{type:"folder_released",chipId:chip.chipId||""});
     announceEvent("Ordner freigegeben",nameOf()+" hat "+(chip.name||"einen Ordner")+" freigegeben.");
     toast(
       "Chip freigegeben"
