@@ -1628,15 +1628,16 @@ body.dark{
           <aside class="os-overview">
             <div class="os-overview-head">
               <div><span class="os-overview-kicker">DEIN ÜBERBLICK</span><h2>Alles im Blick.</h2></div>
-              <span class="os-status"><i></i> System bereit</span>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="gray" id="fullscreenBtn" type="button">⛶ Vollbild</button><span class="os-status"><i></i> System bereit</span></div>
             </div>
             <p class="os-overview-desc">Deine aktuelle Ordner- und Chipübersicht.</p>
             <section class="stats">
               <div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div>
-              <div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div>
-              <div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div>
+              <div class="stat"><div class="statLabel">🟢 FREI / GRÜN</div><div id="greenCount" class="num greenText">0</div></div>
+              <div class="stat"><div class="statLabel">🔴 BELEGT / ROT</div><div id="redCount" class="num redText">0</div></div>
             </section>
-            <div class="os-overview-foot"><span class="os-live-dot"></span> Deine Daten werden live synchronisiert.</div>
+            <div style="height:10px;border-radius:99px;overflow:hidden;background:var(--border);display:flex;margin-top:14px"><div id="greenBar" style="width:0;background:#16a34a;transition:width .3s"></div><div id="redBar" style="width:0;background:#dc2626;transition:width .3s"></div></div>
+            <div class="os-overview-foot"><span class="os-live-dot"></span> Grün = frei · Rot = gerade vergeben oder aktiv. Live synchronisiert.</div>
           </aside>
         </section>
 
@@ -1668,6 +1669,7 @@ body.dark{
             <button id="newPurpose" class="blue">
               ＋ Zweck hinzufügen
             </button>
+            <button id="assignFolderAdmin" class="blue">👤 Ordner einem Benutzer zuweisen</button>
 
             <button id="showUsers" class="gray">
               👥 Benutzer
@@ -1993,6 +1995,9 @@ body.dark{
 
   </div>
 </div>
+
+<!-- ADMIN: ORDNER ZUWEISEN -->
+<div id="assignFolderModal" class="modal hidden"><div class="modalBox"><div class="modalHead"><h2>Ordner einem Benutzer zuweisen</h2><button class="closeBtn" onclick="closeModal('assignFolderModal')">×</button></div><p class="muted">Wähle einen Ordner und den Benutzer. Die Zuweisung wird protokolliert und der Benutzer benachrichtigt.</p><div class="field"><label for="assignFolderSelect">Ordner</label><select id="assignFolderSelect"></select></div><div class="field"><label for="assignUserSelect">Benutzer</label><select id="assignUserSelect"></select></div><div id="assignFolderMsg" class="formMessage"></div><div class="modalActions"><button class="gray" onclick="closeModal('assignFolderModal')">Abbrechen</button><button class="blue" id="confirmAssignFolder">Zuweisen</button></div></div></div>
 
 <!-- ============================================================ PROFILE MODAL ============================================================ -->
 
@@ -3792,11 +3797,10 @@ function updateStats(){
   $("redCount").textContent =
     active;
 
-  $("greenCount").textContent =
-    Math.max(
-      0,
-      total - active
-    );
+  const free=Math.max(0,total-active);
+  $("greenCount").textContent=free;
+  if($("greenBar"))$("greenBar").style.width=(total?free/total*100:0)+"%";
+  if($("redBar"))$("redBar").style.width=(total?active/total*100:0)+"%";
 
 }
 
@@ -6219,8 +6223,39 @@ $("settingsAdminBtn").onclick =
 $("closeAdmin").onclick =
   () => window.exitAdminMode();
 
+$("assignFolderAdmin").onclick=async()=>{
+  if(!isAdmin()||!admin){toast("Nur Administratoren dürfen Ordner zuweisen.");return;}
+  try{
+    const usersSnap=await getDocs(collection(db,"users"));
+    const us=usersSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(a.name||a.email||"").localeCompare(String(b.name||b.email||""),"de"));
+    const freeChips=chips.filter(c=>!chipActive(c));
+    $("assignFolderSelect").innerHTML=freeChips.map(c=>`<option value="${esc(c.firestoreId)}">${esc(c.name||"Ordner")} · ${esc(c.chipId||"")}</option>`).join("");
+    $("assignUserSelect").innerHTML=us.map(u=>`<option value="${esc(u.id)}">${esc(u.name||u.email||u.id)}</option>`).join("");
+    $("assignFolderMsg").textContent=freeChips.length?"":"Aktuell gibt es keine freien Ordner.";
+    $("confirmAssignFolder").disabled=!freeChips.length||!us.length;
+    open("assignFolderModal");
+  }catch(e){console.error(e);toast("Benutzer konnten nicht geladen werden: "+e.message);}
+};
+$("confirmAssignFolder").onclick=async()=>{
+  if(!isAdmin()||!admin)return;
+  const chip=chips.find(c=>c.firestoreId===$("assignFolderSelect").value),uid=$("assignUserSelect").value;
+  if(!chip||!uid){$("assignFolderMsg").textContent="Bitte Ordner und Benutzer auswählen.";return;}
+  try{
+    $("confirmAssignFolder").disabled=true;
+    const us=await getDoc(doc(db,"users",uid));if(!us.exists())throw new Error("Benutzer nicht gefunden.");
+    const p=us.data(),n=p.name||p.email||"Benutzer";
+    await runTransaction(db,async tx=>{const ref=doc(db,"chips",chip.firestoreId),snap=await tx.get(ref);if(!snap.exists()||chipActive(snap.data()))throw new Error("Dieser Ordner ist nicht mehr frei.");tx.update(ref,{assignedTo:uid,assignedEmail:p.email||"",assignedName:n,assignedProfileImageData:p.profileImageData||"",scanActive:false});});
+    await writeActivity("Administrativ zugewiesen",chip.name,chip.chipId,{assignedTo:uid,assignedName:n});
+    await addDoc(collection(db,"notifications"),{recipientUid:uid,title:"Ordner wurde dir zugewiesen",message:"Der Ordner „"+(chip.name||"Ordner")+"“ wurde dir von "+nameOf()+" zugewiesen.",fromUid:user.uid,fromName:nameOf(),createdAt:serverTimestamp(),read:false,type:"folder_assigned",chipId:chip.chipId||""});
+    close("assignFolderModal");toast("Ordner wurde "+n+" zugewiesen.");
+  }catch(e){console.error(e);$("assignFolderMsg").textContent=e.message||"Zuweisung fehlgeschlagen.";}finally{$("confirmAssignFolder").disabled=false;}
+};
+
 $("showUsers").onclick =
   () => window.showPage("pageUsers");
+
+const fullscreenButton=$("fullscreenBtn");
+if(fullscreenButton){fullscreenButton.onclick=async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen();}catch(e){toast("Vollbild ist in diesem Browser nicht verfügbar.");}};document.addEventListener("fullscreenchange",()=>{fullscreenButton.textContent=document.fullscreenElement?"⛶ Vollbild verlassen":"⛶ Vollbild";});}
 
 $("themeLight2").onchange =
   () => applyTheme("light");
