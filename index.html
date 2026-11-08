@@ -4522,6 +4522,43 @@ $("saveUser").onclick =
 
   };
 
+window.changeUserRole = async (uid, nextRole) => {
+
+  if(!isAdmin()){
+    toast("Keine Berechtigung.");
+    return;
+  }
+
+  if(!uid || uid === user?.uid){
+    toast("Deine eigene Rolle kannst du hier nicht ändern.");
+    loadUsers();
+    return;
+  }
+
+  if(!["admin","user"].includes(nextRole)){
+    toast("Ungültige Benutzerrolle.");
+    loadUsers();
+    return;
+  }
+
+  try{
+    await updateDoc(
+      doc(db,"users",uid),
+      { role:nextRole }
+    );
+
+    toast(
+      nextRole === "admin"
+        ? "Benutzer ist jetzt Administrator."
+        : "Benutzer ist jetzt normaler Benutzer."
+    );
+  }catch(error){
+    console.error("Rollenänderung fehlgeschlagen:",error);
+    toast("Rolle konnte nicht geändert werden. Prüfe die Firestore-Sicherheitsregeln.");
+    loadUsers();
+  }
+};
+
 function loadUsers(){
 
   if(!isAdmin()) return;
@@ -4625,6 +4662,18 @@ function loadUsers(){
                       <span class="badge">
                         ${esc(role)}
                       </span>
+                    </div>
+
+                    <div style="margin-top:9px">
+                      <select
+                        aria-label="Benutzerrolle ändern"
+                        style="padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text)"
+                        ${item.id === user.uid ? "disabled" : ""}
+                        onchange="changeUserRole('${esc(item.id)}',this.value)"
+                      >
+                        <option value="user" ${item.role === "admin" ? "" : "selected"}>Normaler Benutzer</option>
+                        <option value="admin" ${item.role === "admin" ? "selected" : ""}>Administrator</option>
+                      </select>
                     </div>
 
                   </div>
