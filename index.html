@@ -852,6 +852,9 @@ body.dark{
 
     <div id="loginError" class="loginError"></div>
     <button id="login" class="blue">Anmelden</button>
+    <button id="forgotPassword" class="outline" style="width:100%;margin-top:12px">
+      Passwort vergessen?
+    </button>
   </div>
 </div>
 
@@ -1753,6 +1756,7 @@ import {
 import {
   getAuth,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
   signOut,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
@@ -2189,6 +2193,64 @@ $("login").onclick = async () => {
   }finally{
 
     $("login").disabled = false;
+
+  }
+
+};
+
+$("forgotPassword").onclick = async () => {
+
+  const email = $("email").value.trim();
+
+  $("loginError").textContent = "";
+
+  if(!email){
+
+    $("loginError").textContent =
+      "Bitte zuerst deine E-Mail-Adresse eingeben.";
+
+    $("email").focus();
+
+    return;
+  }
+
+  try{
+
+    $("forgotPassword").disabled = true;
+
+    await sendPasswordResetEmail(auth,email);
+
+    $("loginError").style.color = "var(--green)";
+
+    $("loginError").textContent =
+      "Falls ein Konto zu dieser Adresse gehört, wurde eine E-Mail zum Zurücksetzen gesendet. Prüfe auch deinen Spam-Ordner.";
+
+  }catch(error){
+
+    console.error("Passwort-Reset:",error);
+
+    $("loginError").style.color = "var(--red)";
+
+    if(error.code === "auth/invalid-email"){
+
+      $("loginError").textContent =
+        "Bitte gib eine gültige E-Mail-Adresse ein.";
+
+    }else if(error.code === "auth/too-many-requests"){
+
+      $("loginError").textContent =
+        "Zu viele Versuche. Bitte warte kurz und versuche es später erneut.";
+
+    }else{
+
+      $("loginError").textContent =
+        "Die E-Mail konnte gerade nicht gesendet werden. Prüfe deine Verbindung und versuche es erneut.";
+
+    }
+
+  }finally{
+
+    $("forgotPassword").disabled = false;
 
   }
 
