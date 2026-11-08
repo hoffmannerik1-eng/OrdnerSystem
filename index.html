@@ -1734,9 +1734,12 @@ body.dark{
           <div id="lastScan">
             <div class="empty">Noch kein Scan.</div>
           </div>
-
         </section>
-
+        <section class="card">
+          <div class="sectionTitle"><h2>📋 Ordner-Protokoll</h2></div>
+          <p class="smallNote">Wer hat welchen Ordner wann übernommen, freigegeben oder gescannt?</p>
+          <div id="activityLog"><div class="empty">Protokoll wird geladen...</div></div>
+        </section>
       </section>
 
       <!-- KATEGORIE -->
@@ -1922,6 +1925,16 @@ body.dark{
 
         </div>
 
+      </section>
+
+      <section class="card">
+        <div class="sectionTitle"><h2>Live-Benachrichtigungen</h2></div>
+        <p class="muted">Solange OrdnerSystem in diesem Browser geöffnet und angemeldet ist, werden neue Übernahmen und Scans live gemeldet.</p>
+        <label class="settingsOption"><input type="checkbox" id="notifyBrowser"><span><b>Browser-Benachrichtigungen</b><br><span class="smallNote">Meldungen auch außerhalb des Tabs anzeigen (Berechtigung nötig).</span></span></label>
+        <label class="settingsOption"><input type="checkbox" id="notifySound"><span><b>Signalton</b><br><span class="smallNote">Kurzer Ton bei neuen Ereignissen.</span></span></label>
+        <label class="settingsOption"><input type="checkbox" id="notifyVoice"><span><b>Sprachausgabe</b><br><span class="smallNote">OrdnerSystem liest neue Ereignisse vor – ähnlich wie ein Sprachassistent.</span></span></label>
+        <button class="outline" id="enableBrowserNotifications" type="button">Browser-Benachrichtigungen erlauben</button>
+        <div class="smallNote" id="notificationStatus" style="margin-top:9px">Diese Meldungen funktionieren, solange die Website geöffnet ist.</div>
       </section>
 
       <section class="card">
@@ -2469,6 +2482,9 @@ let removeImage = false;
 let unsub = [];
 let nfcHandled = false;
 let toastTimer = null;
+let knownNotificationIds = new Set();
+let notificationSnapshotReady = false;
+let logUnsub = null;
 
 /* ============================================================
    HELPERS
@@ -2505,6 +2521,16 @@ const nameOf = () =>
   profile.name ||
   user?.email?.split("@")[0] ||
   "Benutzer";
+
+function notifyPreference(key){return localStorage.getItem("ordnersystem-"+key)==="true";}
+function announceEvent(title,message){
+  if(notifyPreference("notifySound")){try{const Ctx=window.AudioContext||window.webkitAudioContext;if(Ctx){const c=new Ctx();const o=c.createOscillator();const g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;g.gain.setValueAtTime(.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.22);o.start();o.stop(c.currentTime+.23);}}catch(e){console.warn(e);}}
+  if(notifyPreference("notifyVoice")&&"speechSynthesis"in window){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(title+". "+message);u.lang="de-DE";u.rate=.96;speechSynthesis.speak(u);}catch(e){console.warn(e);}}
+  if(notifyPreference("notifyBrowser")&&"Notification"in window&&Notification.permission==="granted"&&document.visibilityState!=="visible"){new Notification(title,{body:message});}
+}
+async function writeActivity(action,chipName,chipId,details={}){if(!user)return;await addDoc(collection(db,"activityLogs"),{action,chipName:chipName||"Ordner",chipId:String(chipId||""),userUid:user.uid,userName:nameOf(),userEmail:user.email||"",createdAt:serverTimestamp(),...details});}
+function loadActivityLog(){if(logUnsub)logUnsub();logUnsub=onSnapshot(query(collection(db,"activityLogs"),orderBy("createdAt","desc")),snap=>{const box=$("activityLog");if(!box)return;const rows=snap.docs.slice(0,80);box.innerHTML=rows.length?rows.map(d=>{const x=d.data();const dt=x.createdAt?.toDate?x.createdAt.toDate().toLocaleString("de-DE"):"Zeit wird geladen";return `<article class="chip" style="margin:8px 0;padding:12px"><b>${esc(x.chipName||"Ordner")}</b><div class="chipMeta">${esc(x.action||"Ereignis")} · ${esc(x.userName||x.userEmail||"Unbekannt")}</div><div class="smallNote">${esc(dt)} · Chip-ID: ${esc(x.chipId||"-")}</div></article>`;}).join(""):`<div class="empty">Noch keine Aktivitäten.</div>`;},err=>{$("activityLog").innerHTML='<div class="empty">Protokoll konnte nicht geladen werden. Firestore-Regeln für activityLogs prüfen.</div>';console.error(err);});}
+function setupNotificationSettings(){["notifyBrowser","notifySound","notifyVoice"].forEach(id=>{const el=$(id);if(!el)return;el.checked=notifyPreference(id);el.onchange=()=>localStorage.setItem("ordnersystem-"+id,String(el.checked));});const status=$("notificationStatus");if(status&&"Notification"in window)status.textContent="Browser-Berechtigung: "+Notification.permission+". Live-Meldungen benötigen einen geöffneten Tab.";const btn=$("enableBrowserNotifications");if(btn)btn.onclick=async()=>{if(!("Notification"in window)){toast("Dieser Browser unterstützt keine Benachrichtigungen.");return;}const p=await Notification.requestPermission();if(status)status.textContent="Browser-Berechtigung: "+p;if(p==="granted"){$("notifyBrowser").checked=true;localStorage.setItem("ordnersystem-notifyBrowser","true");toast("Browser-Benachrichtigungen aktiviert.");}else toast("Keine Berechtigung erteilt.");};}
 
 const open = id =>
   $(id)?.classList.remove("hidden");
@@ -2544,6 +2570,8 @@ function avatar(id,url,name){
 }
 
 function clearListeners(){
+  knownNotificationIds=new Set();notificationSnapshotReady=false;
+  if(logUnsub){logUnsub();logUnsub=null;}
 
   unsub.forEach(fn => {
 
@@ -3897,6 +3925,8 @@ window.take = async firestoreId => {
 
     }
 
+    await writeActivity("Übernommen",newChipName,chip.chipId,{previousOwner:oldOwner?.name||""});
+    announceEvent("Ordner übernommen",nameOf()+" hat "+newChipName+" übernommen.");
     toast(
       oldOwner
         ? "Ordner übernommen – der vorherige Besitzer wurde informiert."
@@ -3958,6 +3988,8 @@ window.release = async firestoreId => {
       }
     );
 
+    await writeActivity("Freigegeben",chip.name,chip.chipId);
+    announceEvent("Ordner freigegeben",nameOf()+" hat "+(chip.name||"einen Ordner")+" freigegeben.");
     toast(
       "Chip freigegeben"
     );
@@ -5528,14 +5560,10 @@ function loadInbox(){
 
       snap => {
 
-        const list =
-          snap.docs.map(
-            d => ({
-              firestoreId:d.id,
-              ...d.data()
-            })
-          );
-
+        const list = snap.docs.map(d => ({firestoreId:d.id,...d.data()}));
+        if(notificationSnapshotReady){snap.docChanges().filter(c=>c.type==="added"&&!knownNotificationIds.has(c.doc.id)).forEach(c=>{const n=c.doc.data();if(n.fromUid!==user.uid)announceEvent(n.title||"Neue Nachricht",n.message||"Es gibt eine neue Aktivität.");});}
+        snap.docs.forEach(d=>knownNotificationIds.add(d.id));
+        notificationSnapshotReady=true;
         renderInbox(list);
 
       },
@@ -6427,6 +6455,8 @@ async function scanNFC(){
       }
     );
 
+    await writeActivity("NFC-Scan",scanResult.chipName,scanResult.chipId,{purpose,active:scanResult.active});
+
     await setDoc(
       doc(
         db,
@@ -6570,6 +6600,8 @@ onAuthStateChanged(
       loadScan();
 
       loadInbox();
+      loadActivityLog();
+      setupNotificationSettings();
 
       window.showPage(
         "pageFolders"
