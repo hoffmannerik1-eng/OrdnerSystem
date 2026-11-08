@@ -1225,6 +1225,246 @@ body.dark{
   }
 }
 
+
+
+/* =========================================================
+   HOFFMANN-INSPIRED LAYOUT – burgundy, horizontal menu, split hero
+   Original OrdnerSystem functionality and data IDs are preserved.
+   ========================================================= */
+:root{
+  --bg:#f5f5f4;--surface:#fff;--surface2:#faf9f8;
+  --text:#202a35;--muted:#727982;--border:#e7e5e3;
+  --blue:#7b2d36;--blue2:#64232d;--green:#3b805e;
+  --greenBg:#edf5ef;--red:#b85b59;--redBg:#f9eeee;
+  --shadow:0 18px 48px rgba(31,35,39,.07);--radius:18px;--header:86px
+}
+body{
+  background:linear-gradient(180deg,#fafafa 0,#f5f5f4 60%,#f8f8f7 100%);
+  color:#202a35
+}
+header{
+  min-height:86px;height:auto;padding:12px clamp(18px,5vw,76px);
+  display:flex;gap:28px;align-items:center;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid #e8e5e3;
+  box-shadow:0 4px 22px rgba(31,35,39,.035);
+  backdrop-filter:blur(16px)
+}
+.headerBrand{gap:13px;min-width:235px;color:#202a35}
+.headerMark{
+  width:52px;height:52px;border-radius:0;background:transparent;
+  box-shadow:none;position:relative;display:block;overflow:visible
+}
+.headerMark i,.headerMark b{
+  position:absolute;display:block;border:5px solid #7b2d36;
+  width:29px;height:29px;border-radius:50% 50% 50% 8%;
+  transform:rotate(-42deg)
+}
+.headerMark i{left:3px;top:5px;border-right-color:transparent;border-bottom-color:transparent}
+.headerMark b{right:1px;bottom:4px;border-left-color:transparent;border-top-color:transparent}
+.brandWords{display:flex;flex-direction:column;gap:3px}
+.brandWords strong{font-size:19px;letter-spacing:.055em;line-height:1;color:#202a35;font-weight:850}
+.brandWords strong span{font-weight:500;margin-left:4px;color:#7b2d36}
+.brandWords small{font-size:10px;letter-spacing:.04em;color:#777d83}
+.head{margin-left:auto;gap:13px}
+.headName{color:#222b35}
+.avatar{background:#f5eeee;border:1px solid #ead9d9;color:#7b2d36}
+.gray,.blue,.danger,.outline{border-radius:7px;min-height:43px}
+.blue{background:#7b2d36;box-shadow:0 7px 18px rgba(123,45,54,.13)}
+.blue:hover{background:#64232d;box-shadow:0 10px 23px rgba(123,45,54,.2)}
+.outline{color:#7b2d36;border-color:#b9878c;background:#fff}
+.outline:hover{background:#faf1f1}
+.gray{background:#f0efed;color:#4f555b}
+.gray:hover{background:#e7e5e2}
+.danger{background:#f8eaea;color:#a34b4b}
+.workspace{display:block;min-height:calc(100vh - 86px)}
+.sidebar{
+  position:relative;top:auto;height:auto;overflow:visible;
+  display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,28px);
+  flex-wrap:wrap;padding:10px clamp(16px,5vw,76px);
+  background:#fff;border:0;border-bottom:1px solid #e8e5e3;
+  box-shadow:0 5px 15px rgba(31,35,39,.025)
+}
+.sidebarHead{display:none}
+.sideSection{position:relative;margin:0}
+.sideToggle{
+  width:auto;padding:11px 12px;border-radius:6px;
+  color:#41464c;font-size:13px;font-weight:650;white-space:nowrap
+}
+.sideToggle:hover,.sideLink:hover{background:#f8f1f1;color:#7b2d36}
+.sideSection.open .sideLinks{
+  display:flex;align-items:center;gap:5px
+}
+.sideLinks{display:none;padding:0}
+.sideLink{
+  width:auto;white-space:nowrap;padding:10px 12px;margin:0;
+  border-radius:6px;color:#555b60;font-size:12px
+}
+.sideLink:hover{transform:translateY(-1px)}
+.sideLink.active{
+  color:#7b2d36;background:#f8eeee;
+  box-shadow:inset 0 -2px 0 #7b2d36;font-weight:800
+}
+.categoryHead{display:flex;align-items:center;gap:5px}
+.categoryPlus{width:30px;min-width:30px;height:30px;border-radius:6px;background:#7b2d36;color:white}
+.mainContent{max-width:1420px;padding:clamp(25px,5vw,70px) clamp(18px,5vw,76px);margin:0 auto}
+.os-hero{
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);
+  align-items:center;gap:clamp(35px,6vw,90px);
+  min-height:440px;margin:4px 0 45px
+}
+.os-hero-copy{padding:25px 0;max-width:690px}
+.os-eyebrow{
+  display:flex;align-items:center;gap:11px;
+  font-size:10px;letter-spacing:.18em;font-weight:800;color:#666b70;
+  margin-bottom:24px
+}
+.os-eyebrow span{width:35px;height:2px;background:#7b2d36;display:block}
+.os-hero-title{
+  font-size:clamp(42px,5vw,68px);line-height:1.04;
+  letter-spacing:-.065em;font-weight:850;color:#202a35;margin:0 0 23px
+}
+.os-hero-title em{
+  display:block;font-family:"Segoe Script","Brush Script MT",cursive;
+  font-style:italic;font-weight:600;color:#7b2d36;
+  letter-spacing:-.055em;font-size:1.02em;margin-top:3px
+}
+.os-hero-text{
+  max-width:620px;font-size:15px;line-height:1.85;color:#646b72;margin:0 0 21px
+}
+.os-hero-points{list-style:none;padding:0;margin:0 0 27px;display:grid;gap:11px}
+.os-hero-points li{display:flex;align-items:center;gap:11px;font-size:13px;color:#414a50}
+.os-hero-points li span{
+  width:21px;height:21px;display:grid;place-items:center;border-radius:50%;
+  background:#f5e9e9;color:#7b2d36;font-weight:900;font-size:12px;flex:none
+}
+.os-hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+.os-primary-cta,.os-secondary-cta{
+  min-height:49px;padding:0 20px;border-radius:6px;font-size:13px;font-weight:800;
+  display:inline-flex;align-items:center;justify-content:center;gap:15px
+}
+.os-primary-cta{background:#7b2d36;color:#fff;box-shadow:0 9px 20px rgba(123,45,54,.16)}
+.os-primary-cta:hover{background:#64232d;transform:translateY(-2px)}
+.os-primary-cta span{font-size:18px}
+.os-secondary-cta{background:#fff;color:#7b2d36;border:1px solid #b9878c}
+.os-secondary-cta:hover{background:#faf1f1;transform:translateY(-2px)}
+.os-overview{
+  position:relative;padding:30px;background:#fff;border:1px solid #e9e4e2;
+  border-radius:5px;box-shadow:0 18px 45px rgba(33,36,40,.07);overflow:hidden
+}
+.os-overview:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#7b2d36}
+.os-overview-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.os-overview-kicker{font-size:9px;letter-spacing:.16em;font-weight:850;color:#8a6a6c}
+.os-overview-head h2{font-size:25px;letter-spacing:-.045em;color:#202a35;margin:7px 0 0}
+.os-status{white-space:nowrap;display:flex;align-items:center;gap:7px;font-size:10px;color:#4e755c;background:#eff6f0;padding:8px 10px;border-radius:3px}
+.os-status i,.os-live-dot{width:7px;height:7px;border-radius:50%;background:#4d9865;display:inline-block;box-shadow:0 0 0 4px rgba(77,152,101,.12)}
+.os-overview-desc{font-size:12px;color:#85898d;margin:13px 0 22px}
+.os-overview .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0}
+.os-overview .stat{
+  padding:14px 12px;border:1px solid #eee9e7;border-radius:4px;
+  background:#faf9f8;box-shadow:none;min-width:0
+}
+.os-overview .stat:after{display:none}
+.os-overview .statLabel{font-size:8px;letter-spacing:.08em;color:#888}
+.os-overview .num{font-size:30px;margin-top:7px;color:#26313a}
+.os-overview .greenText{color:#3b805e}
+.os-overview .redText{color:#b85b59}
+.os-overview-foot{
+  display:flex;align-items:center;gap:10px;border-top:1px solid #eee9e7;
+  margin-top:19px;padding-top:16px;font-size:10px;color:#777e82
+}
+.card,.stat{
+  background:#fff;border:1px solid #e9e5e3;border-radius:5px;
+  box-shadow:0 8px 25px rgba(31,35,39,.035)
+}
+.card{padding:25px;margin-bottom:22px}
+.sectionTitle h2{font-size:20px;color:#202a35;letter-spacing:-.035em}
+.chip{border-radius:5px;border-color:#e9e5e3;box-shadow:none}
+.chip:hover{border-color:#cdaeb0;box-shadow:0 10px 24px rgba(60,35,37,.07)}
+.chipName{color:#242d36}
+.searchWrap input,.filterSelect,.field input,.field select,.field textarea{
+  border-radius:6px;border-color:#e2ddda;background:#fff
+}
+.field input:focus,.field select:focus,.field textarea:focus,.searchWrap input:focus,.filterSelect:focus{
+  border-color:#a66d72;box-shadow:0 0 0 3px rgba(123,45,54,.09)
+}
+.modalBox{border-radius:7px}
+.loginPage{
+  background:radial-gradient(ellipse at 82% 15%,#f2e7e7,transparent 34%),#f5f5f4
+}
+.loginBox{border-radius:7px;border:1px solid #e8e1df;box-shadow:0 20px 55px rgba(35,33,33,.1)}
+.loginBox h1{color:#202a35;letter-spacing:-.055em}
+.loginBox .headerMark{width:52px;height:52px}
+.loginBox .blue{background:#7b2d36}
+.loginBox .blue:hover{background:#64232d}
+#toast{background:#632a32;border-radius:5px}
+@media(max-width:1050px){
+  header{padding:12px 22px;gap:14px}
+  .headerBrand{min-width:205px}
+  .sidebar{justify-content:flex-start}
+  .os-hero{grid-template-columns:minmax(0,1fr) minmax(300px,.85fr);gap:28px}
+  .os-overview{padding:23px}
+}
+@media(max-width:760px){
+  :root{--header:70px}
+  header{min-height:70px;padding:9px 13px;gap:8px}
+  .headerBrand{min-width:0;gap:8px}
+  .headerMark{width:42px;height:42px;transform:scale(.85);transform-origin:left center;margin-right:-5px}
+  .brandWords strong{font-size:14px}
+  .brandWords small{font-size:8px}
+  .head{gap:7px}
+  .headUser{gap:6px}
+  .avatar{width:34px;height:34px}
+  #logout{font-size:11px;padding:8px}
+  .sidebar{padding:8px 10px;gap:4px;justify-content:flex-start}
+  .sideSection{max-width:100%}
+  .sideToggle{font-size:11px;padding:9px 8px}
+  .sideSection.open .sideLinks{display:flex;flex-wrap:wrap}
+  .sideLink{font-size:10px;padding:8px}
+  .mainContent{padding:25px 14px}
+  .os-hero{grid-template-columns:1fr;gap:22px;margin:0 0 28px;min-height:0}
+  .os-hero-copy{padding:15px 0 0}
+  .os-eyebrow{font-size:9px;margin-bottom:17px}
+  .os-hero-title{font-size:clamp(40px,11vw,55px);margin-bottom:17px}
+  .os-hero-text{font-size:14px}
+  .os-overview{padding:22px 17px}
+  .os-overview-head{flex-wrap:wrap}
+  .os-overview .num{font-size:25px}
+  .os-primary-cta,.os-secondary-cta{min-height:46px;padding:0 14px;font-size:12px}
+  .card{padding:16px}
+}
+@media(max-width:390px){
+  .brandWords small{display:none}
+  .brandWords strong{font-size:12px}
+  .headUser{display:none}
+  .os-overview .stats{gap:5px}
+  .os-overview .stat{padding:12px 8px}
+  .os-overview .statLabel{font-size:7px}
+  .os-overview .num{font-size:23px}
+}
+body.dark{
+  --bg:#171719;--surface:#232326;--surface2:#1d1d20;
+  --text:#f0eeee;--muted:#aaa4a3;--border:#3b3738;
+  --blue:#9b5058;--blue2:#7b2d36
+}
+.dark header,.dark .sidebar{background:#222225;border-color:#3b3738}
+.dark .brandWords strong,.dark .headName,.dark .pageTitle,.dark .sectionTitle h2,.dark .chipName{color:#f1eeee}
+.dark .brandWords small,.dark .sideToggle,.dark .sideLink{color:#c5bfc0}
+.dark .sideLink.active{background:#422a2e;color:#f0c9cd;box-shadow:inset 0 -2px #bd7c83}
+.dark .os-hero-title{color:#f1eeee}
+.dark .os-hero-text,.dark .os-hero-points li{color:#c6c0c0}
+.dark .os-overview,.dark .card,.dark .stat,.dark .chip{background:#252528;border-color:#413a3b;color:#eee}
+.dark .os-overview-head h2,.dark .os-overview .num{color:#f0eeee}
+.dark .os-overview .stat{background:#2d2c30;border-color:#454043}
+.dark .os-overview-desc,.dark .os-overview-foot{color:#b5adae}
+.dark .os-secondary-cta{background:#292629;color:#e4b7bc;border-color:#85535a}
+.dark .os-primary-cta,.dark .blue{background:#8c3c46}
+.dark .searchWrap input,.dark .filterSelect,.dark .field input,.dark .field select,.dark .field textarea{background:#1d1d20;color:#eee;border-color:#51484a}
+.dark .loginPage{background:#19191c}
+.dark .loginBox{background:#252528;border-color:#413a3b}
+.dark .loginBox h1{color:#f1eeee}
+@media(prefers-reduced-motion:reduce){.os-hero-copy,.os-overview{animation:none!important}}
+
 </style>
 </head>
 
@@ -1234,8 +1474,8 @@ body.dark{
 <div id="loginPage" class="loginPage">
   <div class="loginBox">
     <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
+      <div class="headerMark" aria-label="OrdnerSystem Logo"><i></i><b></b></div>
+      <span class="brandWords"><strong>ORDNER<span>SYSTEM</span></strong><small>Ordnung. Einfach. Digital.</small></span>
     </div>
 
     <h1>Anmelden</h1>
@@ -1264,8 +1504,8 @@ body.dark{
 
   <header>
     <div class="headerBrand">
-      <div class="headerMark">OS</div>
-      <span>OrdnerSystem</span>
+      <div class="headerMark" aria-label="OrdnerSystem Logo"><i></i><b></b></div>
+      <span class="brandWords"><strong>ORDNER<span>SYSTEM</span></strong><small>Ordnung. Einfach. Digital.</small></span>
     </div>
 
     <div class="head">
@@ -1370,29 +1610,34 @@ body.dark{
       <!-- ALLE ORDNER -->
       <section id="pageFolders" class="page">
 
-        <h1 class="pageTitle">Alle Ordner</h1>
-
-        <p class="pageSub">
-          Alle Ordner und NFC-Chips im OrdnerSystem.
-        </p>
-
-        <section class="stats">
-
-          <div class="stat">
-            <div class="statLabel">ALLE CHIPS</div>
-            <div id="total" class="num">0</div>
+        <section class="os-hero">
+          <div class="os-hero-copy">
+            <div class="os-eyebrow"><span></span> DEIN DIGITALES ORDNERSYSTEM</div>
+            <h1 class="os-hero-title">Deine Ordner in <em>guten Händen.</em></h1>
+            <p class="os-hero-text">Alle Ordner, NFC-Chips und Abläufe an einem Ort. Behalte den Überblick, finde Informationen schneller und verwalte alles ganz einfach digital.</p>
+            <ul class="os-hero-points">
+              <li><span>✓</span> Alle Ordner zentral verwalten</li>
+              <li><span>✓</span> NFC-Chips schnell wiederfinden</li>
+              <li><span>✓</span> Jederzeit den aktuellen Status sehen</li>
+            </ul>
+            <div class="os-hero-actions">
+              <button class="os-primary-cta" onclick="document.getElementById('folderListCard').scrollIntoView({behavior:'smooth',block:'start'})">Ordner ansehen <span>↗</span></button>
+              <button class="os-secondary-cta" onclick="showPage('pageLastScan')">Letzten Scan ansehen</button>
+            </div>
           </div>
-
-          <div class="stat">
-            <div class="statLabel">FREI</div>
-            <div id="greenCount" class="num greenText">0</div>
-          </div>
-
-          <div class="stat">
-            <div class="statLabel">AKTIV</div>
-            <div id="redCount" class="num redText">0</div>
-          </div>
-
+          <aside class="os-overview">
+            <div class="os-overview-head">
+              <div><span class="os-overview-kicker">DEIN ÜBERBLICK</span><h2>Alles im Blick.</h2></div>
+              <span class="os-status"><i></i> System bereit</span>
+            </div>
+            <p class="os-overview-desc">Deine aktuelle Ordner- und Chipübersicht.</p>
+            <section class="stats">
+              <div class="stat"><div class="statLabel">ALLE CHIPS</div><div id="total" class="num">0</div></div>
+              <div class="stat"><div class="statLabel">FREI</div><div id="greenCount" class="num greenText">0</div></div>
+              <div class="stat"><div class="statLabel">AKTIV</div><div id="redCount" class="num redText">0</div></div>
+            </section>
+            <div class="os-overview-foot"><span class="os-live-dot"></span> Deine Daten werden live synchronisiert.</div>
+          </aside>
         </section>
 
         <section id="adminPanel" class="card hidden">
@@ -1435,7 +1680,7 @@ body.dark{
           </div>
         </section>
 
-        <section class="card">
+        <section class="card" id="folderListCard">
 
           <div class="sectionTitle">
             <h2>Ordner & Chips</h2>
