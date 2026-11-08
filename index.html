@@ -824,6 +824,407 @@ body.dark{
     transition:none!important
   }
 }
+
+
+/* ============================================================
+   ORDNER SYSTEM – PREMIUM REDESIGN
+   Inspired by the clean, spacious Kanzlei Hoffmann website.
+   Existing app structure and functionality remain unchanged.
+   ============================================================ */
+:root{
+  --bg:#f4f5f1;
+  --surface:#ffffff;
+  --surface2:#f7f8f5;
+  --text:#182b25;
+  --muted:#718078;
+  --border:#e3e9e4;
+  --blue:#17483d;
+  --blue2:#10392f;
+  --green:#27845f;
+  --greenBg:#eaf5ee;
+  --red:#c65a52;
+  --redBg:#fbefed;
+  --shadow:0 14px 38px rgba(25,54,43,.07);
+  --radius:20px;
+  --header:78px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+body{
+  background:
+    radial-gradient(ellipse at 80% 0%,rgba(216,231,218,.42),transparent 34rem),
+    var(--bg);
+  color:var(--text);
+  letter-spacing:-.012em;
+}
+::selection{background:#d6e9dc;color:#153c31}
+button,input,select,textarea{transition:background-color .22s ease,border-color .22s ease,box-shadow .22s ease,color .22s ease,transform .22s ease}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(39,132,95,.24);
+  outline-offset:2px
+}
+
+/* Header – clean and spacious */
+header{
+  height:var(--header);
+  padding:0 clamp(18px,4vw,56px);
+  background:rgba(255,255,255,.92);
+  border-bottom:1px solid rgba(220,230,222,.85);
+  box-shadow:0 4px 24px rgba(23,55,42,.035);
+  backdrop-filter:blur(18px);
+}
+.headerBrand{gap:13px;font-size:20px;letter-spacing:-.045em;color:#183b30}
+.headerMark{
+  width:43px;height:43px;border-radius:14px;
+  background:linear-gradient(145deg,#245d4b,#123d32);
+  box-shadow:0 8px 18px rgba(23,72,61,.2);
+  font-size:12px;letter-spacing:.08em
+}
+.headName{color:#1d382e}
+.role{color:#829087}
+.avatar{border:2px solid #e5eee7;background:#edf4ee;color:#285b47}
+
+/* Main app frame */
+.workspace{grid-template-columns:274px minmax(0,1fr)}
+.sidebar{
+  background:rgba(250,251,248,.92);
+  border-right:1px solid #e4eae4;
+  padding:24px 15px;
+}
+.sidebarHead{
+  color:#1b4034;
+  padding:13px 15px 22px;
+  font-size:18px;
+  letter-spacing:-.035em
+}
+.sidebarHead small{color:#89958d;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.sideSection{margin-bottom:10px}
+.sideToggle{
+  padding:13px 14px;
+  color:#52645a;
+  border-radius:12px;
+  font-size:13px;
+  letter-spacing:.01em
+}
+.sideToggle:hover,.sideLink:hover{background:#edf3ed}
+.sideLink{
+  padding:11px 14px;
+  border-radius:11px;
+  color:#58695f;
+  font-size:13px;
+  transition:background .2s ease,color .2s ease,transform .2s ease
+}
+.sideLink:hover{transform:translateX(3px)}
+.sideLink.active{
+  background:#e5f0e7;
+  color:#17483d;
+  font-weight:800;
+  box-shadow:inset 3px 0 0 #398263
+}
+.categoryPlus{background:#e8f1e9;color:#245b45}
+.categoryPlus:hover{background:#dceade;transform:translateY(-2px)}
+
+/* Content typography and spacing */
+.mainContent{
+  padding:clamp(24px,4vw,54px);
+  max-width:1600px
+}
+.pageTitle{
+  color:#173c30;
+  font-size:clamp(30px,3vw,42px);
+  line-height:1.08;
+  letter-spacing:-.055em;
+  font-weight:800;
+  margin-bottom:10px
+}
+.pageSub{
+  max-width:720px;
+  color:#718078;
+  font-size:15px;
+  line-height:1.75;
+  margin-bottom:30px
+}
+.sectionTitle h2{
+  color:#203d32;
+  font-size:19px;
+  letter-spacing:-.035em
+}
+.muted{color:#819087}
+
+/* Soft, elevated cards */
+.stat,.card{
+  background:rgba(255,255,255,.94);
+  border:1px solid #e6ece6;
+  border-radius:21px;
+  box-shadow:0 5px 20px rgba(27,57,44,.035);
+}
+.stat{
+  padding:23px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.stat:after{
+  content:"";
+  position:absolute;
+  width:90px;height:90px;
+  right:-35px;bottom:-48px;
+  border-radius:50%;
+  background:rgba(220,235,222,.36);
+  pointer-events:none
+}
+.statLabel{
+  color:#829087;
+  font-size:10px;
+  letter-spacing:.13em
+}
+.num{
+  color:#1c4939;
+  font-size:36px;
+  letter-spacing:-.06em
+}
+.greenText{color:#32815c}
+.redText{color:#bd665d}
+.card{
+  padding:25px;
+  margin-bottom:22px;
+}
+.sectionTitle{margin-bottom:19px}
+
+/* Buttons */
+.gray,.blue,.danger,.outline{
+  min-height:43px;
+  padding:11px 17px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:750;
+  letter-spacing:-.01em;
+}
+.blue{
+  color:#fff;
+  background:linear-gradient(135deg,#245d4b,#17483d);
+  box-shadow:0 6px 15px rgba(23,72,61,.14)
+}
+.blue:hover{
+  background:linear-gradient(135deg,#1b4e3f,#10392f);
+  box-shadow:0 10px 22px rgba(23,72,61,.2);
+  transform:translateY(-2px)
+}
+.gray{background:#edf2ed;color:#40574a}
+.gray:hover{background:#e2ebe3;transform:translateY(-1px)}
+.outline{border:1px solid #cbdacf;color:#245b45;background:#fff}
+.outline:hover{background:#f0f6f0;border-color:#9eb9a6;transform:translateY(-1px)}
+.danger{background:#fbefed;color:#a94842}
+.danger:hover{background:#f7e1de;transform:translateY(-1px)}
+
+/* Search and form fields */
+.searchWrap input,.filterSelect{
+  border:1px solid #dfe7df;
+  border-radius:12px;
+  background:#fbfcfa;
+  color:#263c31;
+  min-height:45px
+}
+.searchWrap input{height:45px}
+.searchWrap input:focus,.filterSelect:focus{
+  border-color:#76a58a;
+  box-shadow:0 0 0 4px rgba(62,132,91,.1);
+  background:#fff
+}
+.field input,.field select,.field textarea{
+  border:1px solid #dce5dd;
+  border-radius:12px;
+  background:#fbfcfa;
+  padding:13px 14px
+}
+.field label{color:#3d5548;font-size:13px}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:#78a58b;
+  box-shadow:0 0 0 4px rgba(62,132,91,.1)
+}
+
+/* Folder cards and activity rows */
+.chip{
+  border:1px solid #e3eae3;
+  border-radius:17px;
+  padding:18px;
+  margin:12px 0;
+  background:#fff;
+  box-shadow:0 3px 12px rgba(25,54,43,.025);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease,border-color .25s ease
+}
+.chip:hover{
+  border-color:#cbdccf;
+  box-shadow:0 12px 28px rgba(25,54,43,.08);
+  transform:translateY(-3px)
+}
+.chipName{color:#203d32;letter-spacing:-.025em}
+.chipMeta,.person{color:#77867d}
+.chipStripe{background:#48a477}
+.chipStripe.redStripe{background:#cf746b}
+.badge{background:#edf2ed;color:#52665a;border-radius:999px;padding:6px 10px}
+.badge.green{background:#e9f4ec;color:#26734f}
+.badge.red{background:#faecea;color:#ae514a}
+.empty{border-color:#d9e4da;color:#87958c;border-radius:15px;background:#fbfcfa}
+
+/* Settings and modals */
+.settingsOption{
+  border:1px solid #e3eae3;
+  border-radius:14px;
+  background:#fff;
+  transition:transform .2s ease,border-color .2s ease,background .2s ease
+}
+.settingsOption:hover{transform:translateY(-2px);border-color:#c8d9cc;background:#fbfdfb}
+.settingsProfileCard{gap:24px}
+.modal{
+  background:rgba(17,39,30,.48);
+  backdrop-filter:blur(8px)
+}
+.modalBox{
+  border:1px solid rgba(222,233,224,.9);
+  border-radius:22px;
+  box-shadow:0 30px 90px rgba(12,35,25,.22);
+  animation:os-modal-in .32s cubic-bezier(.2,.8,.2,1) both
+}
+.modalHead h2{color:#1c4033;letter-spacing:-.04em}
+.closeBtn{background:#edf3ed;color:#40584a;border-radius:11px}
+.closeBtn:hover{background:#e1ece2;transform:rotate(90deg)}
+
+/* Login screen */
+.loginPage{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 18% 15%,rgba(205,226,207,.8),transparent 34%),
+    radial-gradient(ellipse at 90% 85%,rgba(222,233,218,.85),transparent 38%),
+    #f3f6f1;
+}
+.loginPage:before,.loginPage:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(57,111,79,.11);
+  border-radius:50%;
+  pointer-events:none
+}
+.loginPage:before{width:520px;height:520px;right:-230px;top:-270px}
+.loginPage:after{width:360px;height:360px;left:-210px;bottom:-200px}
+.loginBox{
+  position:relative;
+  z-index:1;
+  width:min(460px,100%);
+  padding:40px;
+  border:1px solid rgba(221,232,222,.95);
+  border-radius:25px;
+  box-shadow:0 25px 75px rgba(31,65,44,.11);
+  animation:os-rise-in .7s cubic-bezier(.2,.8,.2,1) both
+}
+.loginBox h1{
+  color:#183e31;
+  font-size:34px;
+  letter-spacing:-.06em;
+  margin-top:32px
+}
+.loginBox p{font-size:14px;line-height:1.7}
+.loginBox .headerMark{width:47px;height:47px;border-radius:15px}
+
+/* Toast and scan */
+.scanBox{
+  border:1px solid #e0e9e1;
+  border-radius:17px;
+  background:#f7faf6
+}
+.scanIcon{background:#e8f2e9;color:#245d46;border-radius:15px}
+#toast{border-radius:13px;background:#183e31;box-shadow:0 12px 35px rgba(17,52,36,.2)}
+
+/* Motion – subtle entrances and responsive hover movement */
+@keyframes os-rise-in{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes os-soft-in{
+  from{opacity:0;transform:translateY(10px) scale(.99)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes os-modal-in{
+  from{opacity:0;transform:translateY(15px) scale(.975)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.page:not(.hidden)>.pageTitle{animation:os-rise-in .55s cubic-bezier(.2,.8,.2,1) both}
+.page:not(.hidden)>.pageSub{animation:os-rise-in .62s .05s cubic-bezier(.2,.8,.2,1) both}
+.page:not(.hidden)>.stats .stat{animation:os-soft-in .58s cubic-bezier(.2,.8,.2,1) both}
+.page:not(.hidden)>.stats .stat:nth-child(2){animation-delay:.08s}
+.page:not(.hidden)>.stats .stat:nth-child(3){animation-delay:.16s}
+.page:not(.hidden)>.card{animation:os-rise-in .62s .1s cubic-bezier(.2,.8,.2,1) both}
+#chips .chip{animation:os-soft-in .42s cubic-bezier(.2,.8,.2,1) both}
+#chips .chip:nth-child(2){animation-delay:.04s}
+#chips .chip:nth-child(3){animation-delay:.08s}
+.sideLink:active,.blue:active,.gray:active,.outline:active{transform:scale(.975)}
+.sideLink,.sideToggle,.categoryPlus,.chipButtons button{transition:all .22s cubic-bezier(.2,.8,.2,1)}
+header,.sidebar,.card,.stat,.chip,.settingsOption{transition:background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+@media(hover:hover){
+  .stat:hover{transform:translateY(-3px);box-shadow:0 13px 30px rgba(25,54,43,.075)}
+}
+@media(max-width:1000px){
+  .workspace{grid-template-columns:235px minmax(0,1fr)}
+}
+@media(max-width:720px){
+  :root{--header:66px}
+  header{padding:9px 13px}
+  .headerBrand{font-size:16px}
+  .sidebar{background:#f8faf7}
+  .mainContent{padding:22px 14px}
+  .pageTitle{font-size:29px}
+  .pageSub{font-size:14px;margin-bottom:22px}
+  .card{padding:17px;border-radius:17px}
+  .stat{padding:16px;border-radius:16px}
+  .num{font-size:30px}
+  .loginBox{padding:27px 21px;border-radius:21px}
+  .loginBox h1{font-size:30px}
+}
+body.dark{
+  --bg:#101b17;
+  --surface:#1b2b24;
+  --surface2:#14221b;
+  --text:#e7eee8;
+  --muted:#a4b4a8;
+  --border:#34483b;
+  --blue:#34785c;
+  --blue2:#28664d;
+  --green:#6fbd8c;
+  --greenBg:#203c2c;
+  --red:#e08a80;
+  --redBg:#422b2a;
+  --shadow:0 14px 38px rgba(0,0,0,.2)
+}
+.dark body,.dark header,.dark .sidebar,.dark .card,.dark .stat,.dark .chip,.dark .modalBox,.dark .loginBox{
+  background:var(--surface);
+  border-color:var(--border);
+  color:var(--text)
+}
+.dark .loginPage{background:radial-gradient(ellipse at 18% 15%,rgba(45,85,60,.35),transparent 34%),#101b17}
+.dark .loginBox h1,.dark .headerBrand,.dark .sidebarHead,.dark .pageTitle,.dark .sectionTitle h2,.dark .chipName,.dark .modalHead h2,.dark .headName{color:#e5f0e7}
+.dark .sideToggle,.dark .sideLink{color:#c1d0c4}
+.dark .sideToggle:hover,.dark .sideLink:hover{background:#263a2e}
+.dark .sideLink.active{background:#284737;color:#cce7d3;box-shadow:inset 3px 0 #75b68b}
+.dark .blue{background:linear-gradient(135deg,#34785c,#245c45);color:#fff}
+.dark .gray{background:#2b4033;color:#dce9de}
+.dark .outline{background:#1b2b24;border-color:#4c6855;color:#b9dfc4}
+.dark .searchWrap input,.dark .filterSelect,.dark .field input,.dark .field select,.dark .field textarea{background:#14221b;color:#e7eee8;border-color:#405747}
+.dark .chip{background:#1b2b24}
+.dark .empty{background:#14221b;border-color:#405747}
+.dark .scanBox{background:#14221b;border-color:#405747}
+.dark .scanIcon{background:#263e2e;color:#a8d7b5}
+.dark .settingsOption{background:#1b2b24;border-color:#405747}
+.dark .statLabel,.dark .muted,.dark .pageSub,.dark .chipMeta,.dark .person{color:#a4b4a8}
+.dark .num{color:#d9ebdc}
+.dark .modal{background:rgba(0,0,0,.68)}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important
+  }
+}
+
 </style>
 </head>
 
